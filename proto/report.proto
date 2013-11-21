@@ -1,4 +1,5 @@
 package com.islandturtlewatch.nests;
+option java_outer_classname = "ReportProto";
 
 message Report {
   // Timestamp crawl was found, in seconds.
@@ -13,7 +14,6 @@ message Report {
   optional Intervention intervention = 7;
 
   optional string additional_notes = 8;
-
 }
 
 message Activity {
@@ -23,71 +23,6 @@ message Activity {
   optional bool false_crawl = 4;
   optional bool abandoned_body_pits = 5;
   optional bool abandoned_egg_cavities = 6;
-}
-
-message Intervention {
-  optional bool adopted = 1;
-  optional string adopted_by = 2;
-  
-  message ProtectionEvent {
-    optional int64 timestamp = 1;
-    
-    enum Type {
-      SELF_RELEASING_CAGE = 1;
-      SELF_RELEASING_FLAT = 2;
-      RESTRAINING_CAGE = 3; 
-    }
-    optional Type type = 2;
-
-    enum Reason {
-      BEFORE_PREDITATION = 1;
-      AFTER_PREDITATION = 2;
-      FOR_LIGHT_PROBLEMS = 3;
-    }
-    optional Reason reason = 3;
-  }
-  repeated ProtectionEvent protection_event = 3;
-
-  optional Relocation relocation = 4;
-  optional Excavation excavation = 5;
-
-}
-
-message Excavation {
-  optional int32 timestamp = 1;
-  optional bool excavated = 2;
-
-  enum ExcavationFailureReason {
-    EGGS_NOT_FOUND = 1;
-    EGGS_HATCHLINGS_TOO_DECAYED = 2;
-    OTHER = 3;
-  }
-  optional ExcavationFailureReason failure_reason = 3;
-  optional string failure_other = 4;
-
-  optional int32 dead_in_nest = 5;
-  optional int32 live_in_nest = 6;
-  optional int32 hatched_shells = 7;
-  optional int32 dead_pipped = 8;
-  optional int32 live_pipped = 9;
-  optional int32 whole_unhatched = 10;
-  optional int32 eggs_destroyed = 11;
-}
-
-message Relocation {
-  optional int64 timestamp = 1;
-  optional string new_address = 2;
-  optional GpsCoordinates coordinates = 3;
-  optional int32 eggs_relocated = 4;
-  optional int32 eggs_destroyed = 5;
-
-  enum RelocationReason {
-    HIGH_WATER = 1;
-    PREDATION = 2;
-    WASHING_OUT = 3;
-    CONSTRUCTION_RENOURISHMENT = 4;
-  }
-  optional RelocationReason reason = 6;
 }
 
 message NestCondition {
@@ -143,6 +78,70 @@ message NestLocation {
     optional string other = 4;
   }
   optional NestObstructions obstructions = 6;
+}
+
+message Intervention {
+  optional bool adopted = 1;
+  optional string adopted_by = 2;
+  
+  message ProtectionEvent {
+    optional int64 timestamp = 1;
+    
+    enum Type {
+      SELF_RELEASING_CAGE = 1;
+      SELF_RELEASING_FLAT = 2;
+      RESTRAINING_CAGE = 3; 
+    }
+    optional Type type = 2;
+
+    enum Reason {
+      BEFORE_PREDITATION = 1;
+      AFTER_PREDITATION = 2;
+      FOR_LIGHT_PROBLEMS = 3;
+    }
+    optional Reason reason = 3;
+  }
+  repeated ProtectionEvent protection_event = 3;
+
+  optional Relocation relocation = 4;
+  optional Excavation excavation = 5;
+}
+
+message Excavation {
+  optional int32 timestamp = 1;
+  optional bool excavated = 2;
+
+  enum ExcavationFailureReason {
+    EGGS_NOT_FOUND = 1;
+    EGGS_HATCHLINGS_TOO_DECAYED = 2;
+    OTHER = 3;
+  }
+  optional ExcavationFailureReason failure_reason = 3;
+  optional string failure_other = 4;
+
+  optional int32 dead_in_nest = 5;
+  optional int32 live_in_nest = 6;
+  optional int32 hatched_shells = 7;
+  optional int32 dead_pipped = 8;
+  optional int32 live_pipped = 9;
+  optional int32 whole_unhatched = 10;
+  optional int32 eggs_destroyed = 11;
+}
+
+message Relocation {
+  optional int64 timestamp = 1;
+  optional string new_address = 2;
+  optional GpsCoordinates coordinates = 3;
+  optional int32 eggs_relocated = 4;
+  optional int32 eggs_destroyed = 5;
+
+  enum RelocationReason {
+    HIGH_WATER = 1;
+    PREDATION = 2;
+    WASHING_OUT = 3;
+    CONSTRUCTION_RENOURISHMENT = 4;
+  }
+  optional RelocationReason reason = 6;
 }
 
 message GpsCoordinates {
