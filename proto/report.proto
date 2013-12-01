@@ -1,4 +1,4 @@
-package com.islandturtlewatch.nests;
+package com.islandturtlewatch.nest.data;
 option java_outer_classname = "ReportProto";
 
 message Report {
