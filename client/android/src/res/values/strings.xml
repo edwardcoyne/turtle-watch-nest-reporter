@@ -2,6 +2,16 @@
 <resources>
 
     <string name="app_name">Island Watch Nest Reporter</string>
-    <string name="title_report_detail">Report Detail</string>
-
+    
+    <string name="edit_info_label_date_found">Date Crawl Found</string>
+    <string name="edit_info_label_date_incubation">55 Day Incubation Date</string>
+    <string name="edit_info_label_observers">Observers</string>
+    <string name="edit_info_label_activity_details">Activity Details</string>
+    <string name="edit_info_label_nest_verified">Nest Verified</string>
+    <string name="edit_info_label_nest_not_verified">Nest Not Verified</string>
+    <string name="edit_info_label_nest_relocated">Nest Relocated</string>
+    <string name="edit_info_label_false_crawl">False Crawl</string>
+    <string name="edit_info_label_abandoned_body_pits">Abandoned Body Pits</string>
+    <string name="edit_info_label_abandoned_egg_cavities">Abandoned Egg Cavities</string>
+    
 </resources>
