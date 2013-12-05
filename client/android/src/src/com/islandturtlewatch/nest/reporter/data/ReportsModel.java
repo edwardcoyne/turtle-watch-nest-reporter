@@ -5,6 +5,10 @@ import com.islandturtlewatch.nest.data.ReportProto.Report;
 public class ReportsModel {
 	private Report activeReport;
 	
+	public ReportsModel() {
+		startNewActiveReport();
+	}
+	
 	/**
 	 * Creates a new report and sets it active.
 	 * 

@@ -1,10 +1,11 @@
 package com.islandturtlewatch.nest.reporter;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.islandturtlewatch.nest.reporter.ui.EditFragment;
 
 /**
  * A fragment representing a single Report detail screen.
@@ -12,7 +13,7 @@ import android.view.ViewGroup;
  * in two-pane mode (on tablets) or a {@link ReportDetailActivity}
  * on handsets.
  */
-public class ReportDetailFragment extends Fragment {
+public class ReportDetailFragment extends EditFragment {
     /**
      * The fragment argument representing the item ID that this fragment
      * represents.
