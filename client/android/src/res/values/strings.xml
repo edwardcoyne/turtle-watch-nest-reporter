@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">Island Watch Nest Reporter</string>
+    <string name="other">Other</string>
     
     <string name="edit_info_label_date_found">Date Crawl Found</string>
     <string name="edit_info_label_date_incubation">55 Day Incubation Date</string>
@@ -14,4 +15,19 @@
     <string name="edit_info_label_abandoned_body_pits">Abandoned Body Pits</string>
     <string name="edit_info_label_abandoned_egg_cavities">Abandoned Egg Cavities</string>
     
+    <string name="edit_nest_location_label_gps">GPS Coordinates</string>
+    <string name="edit_nest_location_button_gps">Set Location</string>
+    <string name="edit_nest_location_original_address">Original Address</string>
+    <string name="edit_nest_location_section_number">Section Number</string>
+    <string name="edit_nest_location_details">Details</string>
+    <string name="edit_nest_location_location">Location</string>
+    <string name="edit_nest_location_open_beach">Open Beach</string>
+    <string name="edit_nest_location_in_vegitation">In Vegitation</string>
+    <string name="edit_nest_location_at_vegitation">At Vegitation</string>
+    <string name="edit_nest_location_at_escarpment">At Escarpment</string>
+    <string name="edit_nest_location_on_escarpment">On Escarpment</string>
+    <string name="edit_nest_location_obstructions">Obstructions</string>
+    <string name="edit_nest_location_seawall_rocks">Seawall / Rocks</string>
+    <string name="edit_nest_location_furniture">Furniture</string>
+    <string name="edit_nest_location_escarpment">Escarpment</string>
 </resources>

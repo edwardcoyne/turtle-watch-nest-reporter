@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 public class EditFragmentInfo extends EditFragment {
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater,
+    		ViewGroup container,
         Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.edit_fragment_info, container, false);
     }
 }

@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableMap;
 import com.islandturtlewatch.nest.reporter.data.ReportsModel;
 import com.islandturtlewatch.nest.reporter.ui.EditFragment;
 import com.islandturtlewatch.nest.reporter.ui.EditFragmentInfo;
+import com.islandturtlewatch.nest.reporter.ui.EditFragmentNestLocation;
 import com.islandturtlewatch.nest.reporter.ui.EditView;
 import com.islandturtlewatch.nest.reporter.ui.ReportSection;
 import com.islandturtlewatch.nest.reporter.ui.ReportSectionListFragment;
@@ -14,7 +15,7 @@ public class EditPresenter {
 	private static final ImmutableMap<ReportSection, EditFragment> fragmentMap = 
 			ImmutableMap.<ReportSection, EditFragment>builder()
 				.put(ReportSection.INFO, new EditFragmentInfo())
-				.put(ReportSection.NEST_LOCATION, new EditFragment())
+				.put(ReportSection.NEST_LOCATION, new EditFragmentNestLocation())
 				.put(ReportSection.NEST_CONDITION, new EditFragment())
 				.put(ReportSection.NEST_INTERVENTION, new EditFragment())
 				.put(ReportSection.NEST_CARE, new EditFragment())
@@ -22,7 +23,8 @@ public class EditPresenter {
 				.put(ReportSection.NOTES, new EditFragment())
 				.build();
 	
-	private final ReportsModel model;
+	@SuppressWarnings("unused")
+  private final ReportsModel model;
 	private final EditView view;
 
 	public EditPresenter(ReportsModel model, EditView activity) {

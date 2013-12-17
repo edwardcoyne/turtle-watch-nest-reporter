@@ -1,187 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:layout_height="wrap_content" >
 
-    <TableLayout
-        android:layout_width="match_parent"
+    <TableRow
+        android:id="@+id/tableRowDateFound"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
 
-        <TableRow
-            android:id="@+id/tableRowDateFound"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+        <TextView
+            android:id="@+id/labelDateFound"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/edit_info_label_date_found" />
 
-            <TextView
-                android:id="@+id/labelDateFound"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/edit_info_label_date_found" />
+        <EditText
+            android:id="@+id/fieldDateFound"
+            android:inputType="date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10" >
 
-            <EditText
-                android:id="@+id/fieldDateFound"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10" >
+            <requestFocus />
+        </EditText>
+    </TableRow>
+    <TableRow
+        android:id="@+id/tableRowIncubationDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
 
-                <requestFocus />
-            </EditText>
-        </TableRow>
-        <TableRow
-            android:id="@+id/tableRowIncubationDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+        <TextView
+            android:id="@+id/labelIncubationDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/edit_info_label_date_incubation" />
 
-            <TextView
-                android:id="@+id/labelIncubationDate"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/edit_info_label_date_incubation" />
+        <EditText
+            android:id="@+id/fieldIncubationDate"
+            android:inputType="date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10" >
+        </EditText>
+    </TableRow>
+    <TableRow
+        android:id="@+id/tableRowObservers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
 
-            <EditText
-                android:id="@+id/fieldIncubationDate"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10" >
-            </EditText>
-        </TableRow>
-        <TableRow
-            android:id="@+id/tableRowObservers"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+        <TextView
+            android:id="@+id/labelObservers"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/edit_info_label_observers" />
 
-            <TextView
-                android:id="@+id/labelObservers"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/edit_info_label_observers" />
+        <EditText
+            android:id="@+id/fieldObservers"
+            android:inputType="textPersonName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10" >
 
-            <EditText
-                android:id="@+id/fieldObservers"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10" >
+        </EditText>
+   </TableRow>
+   <TableRow
+       android:id="@+id/tableRowActivityDetails"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" >
+        
+       <TextView
+           android:id="@+id/labelActivityDetails"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_info_label_activity_details" />
+   </TableRow>
+   <TableRow
+       android:id="@+id/tableRowActivityDetailsValues1"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" >
 
-            </EditText>
-       </TableRow>
 
-       <TableRow
-           android:id="@+id/tableRowActivityDetails1"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content" >
+       <CheckBox
+           android:id="@+id/fieldNestVerified"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_info_label_nest_verified" />
+       <CheckBox
+           android:id="@+id/fieldNestNotVerified"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_info_label_nest_not_verified" />
+       <CheckBox
+           android:id="@+id/fieldNestRelocated"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_info_label_nest_relocated" />
+   </TableRow>
+   <TableRow
+       android:id="@+id/tableRowActivityDetailsValues2"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" >
 
-           <TextView
-               android:id="@+id/labelActivityDetails"
-               android:layout_width="0dp"
-               android:layout_height="wrap_content"
-               android:layout_weight="1"
-               android:text="@string/edit_info_label_activity_details" />
-
-           <CheckBox
-               android:id="@+id/fieldNestVerified"
-               android:layout_width="0dp"
-               android:layout_height="wrap_content"
-               android:layout_weight="1"
-               android:text="@string/edit_info_label_nest_verified" />
-       </TableRow>
-       <TableRow
-           android:id="@+id/tableRowActivityDetails2"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content" >
-
-           <TextView
-               android:id="@+id/labelActivityDetails2"
-               android:layout_width="0dp"
-               android:layout_height="wrap_content"
-               android:layout_weight="1"/>
-
-           <CheckBox
-               android:id="@+id/fieldNestNotVerified"
-               android:layout_width="0dp"
-               android:layout_height="wrap_content"
-               android:layout_weight="1"
-               android:text="@string/edit_info_label_nest_not_verified" />
-       </TableRow>
-
-       <TableRow
-           android:id="@+id/tableRowActivityDetails3"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content" >
-
-           <TextView
-               android:id="@+id/labelActivityDetails3"
-               android:layout_width="0dp"
-               android:layout_height="wrap_content"
-               android:layout_weight="1" />
-
-           <CheckBox
-               android:id="@+id/fieldNestRelocated"
-               android:layout_width="0dp"
-               android:layout_height="wrap_content"
-               android:layout_weight="1"
-               android:text="@string/edit_info_label_nest_relocated" />
-       </TableRow>
-       <TableRow
-           android:id="@+id/tableRowActivityDetails4"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content" >
-
-           <TextView
-               android:id="@+id/labelActivityDetails4"
-               android:layout_width="0dp"
-               android:layout_height="wrap_content"
-               android:layout_weight="1" />
-
-           <CheckBox
-               android:id="@+id/fieldFalseCrawl"
-               android:layout_width="0dp"
-               android:layout_height="wrap_content"
-               android:layout_weight="1"
-               android:text="@string/edit_info_label_nest_relocated" />
-       </TableRow>
-       <TableRow
-           android:id="@+id/tableRowActivityDetails5"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content" >
-
-           <TextView
-               android:id="@+id/labelActivityDetails5"
-               android:layout_width="0dp"
-               android:layout_height="wrap_content"
-               android:layout_weight="1" />
-
-           <CheckBox
-               android:id="@+id/fieldAbandonedBodyPits"
-               android:layout_width="0dp"
-               android:layout_height="wrap_content"
-               android:layout_weight="1"
-               android:text="@string/edit_info_label_abandoned_body_pits" />
-       </TableRow>
-       <TableRow
-           android:id="@+id/tableRowActivityDetails6"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content" >
-
-           <TextView
-               android:id="@+id/labelActivityDetails6"
-               android:layout_width="0dp"
-               android:layout_height="wrap_content"
-               android:layout_weight="1" />
-
-           <CheckBox
-               android:id="@+id/fieldAbandonedEggCavities"
-               android:layout_width="0dp"
-               android:layout_height="wrap_content"
-               android:layout_weight="1"
-               android:text="@string/edit_info_label_abandoned_egg_cavities" />
-       </TableRow>
-    </TableLayout>
-
-</LinearLayout>
+       <CheckBox
+           android:id="@+id/fieldFalseCrawl"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_info_label_nest_relocated" />
+       <CheckBox
+           android:id="@+id/fieldAbandonedBodyPits"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_info_label_abandoned_body_pits" />
+       <CheckBox
+           android:id="@+id/fieldAbandonedEggCavities"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_info_label_abandoned_egg_cavities" />
+   </TableRow>
+</TableLayout>

@@ -1,6 +1,5 @@
 package com.islandturtlewatch.nest.reporter.ui.split;
 
-import com.google.common.base.Preconditions;
 import com.islandturtlewatch.nest.reporter.EditPresenter;
 import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.data.ReportsModel;
@@ -13,7 +12,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
 public class SplitEditActivity extends FragmentActivity implements EditView {
-	private EditPresenter presenter;
+	@SuppressWarnings("unused")
+  private EditPresenter presenter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+   <TableRow
+        android:id="@+id/tableRowGps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/labelGps"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/edit_nest_location_label_gps" />
+
+        <Button
+            android:id="@+id/takeGps"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/edit_nest_location_button_gps" />
+    </TableRow>
+    <TableRow
+        android:id="@+id/tableRowOriginalAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/labelOriginalAddress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/edit_nest_location_original_address" />
+
+        <EditText
+            android:id="@+id/fieldOriginalAddress"
+            android:inputType="textPostalAddress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10" >
+        </EditText>
+   </TableRow>
+   <TableRow
+        android:id="@+id/tableRowSectionNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/labelSectionNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/edit_nest_location_section_number" />
+
+        <EditText
+            android:id="@+id/fieldSectionNumber"
+            android:inputType="numberDecimal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10" >
+        </EditText>
+   </TableRow>
+   <TableRow
+        android:id="@+id/tableRowDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/labelDetails"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/edit_nest_location_details" />
+
+        <EditText
+            android:id="@+id/fieldDetails"
+            android:inputType="textMultiLine"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10" >
+        </EditText>
+   </TableRow>
+   
+   <TableRow
+       android:id="@+id/tableRowLocation"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" >
+       <TextView
+           android:id="@+id/labelLocation"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_nest_location_location" />
+   </TableRow>
+   <TableRow
+       android:id="@+id/tableRowLocationValues1"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" >
+
+       <CheckBox
+           android:id="@+id/fieldLocationOpenBeach"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_nest_location_open_beach" />
+       
+       <CheckBox
+           android:id="@+id/fieldLocationInVegitation"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_nest_location_in_vegitation" />
+       
+       <CheckBox
+           android:id="@+id/fieldLocationAtVegitation"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_nest_location_at_vegitation" />
+       
+   </TableRow>
+   <TableRow
+       android:id="@+id/tableRowLocationValues2"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" >
+
+       <CheckBox
+           android:id="@+id/fieldLocationAtEscarpment"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_nest_location_at_escarpment" />
+       <CheckBox
+           android:id="@+id/fieldLocationOnEscarpment"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_nest_location_on_escarpment" />
+   </TableRow>
+   
+   
+   <TableRow
+       android:id="@+id/tableRowObstructions"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" >
+       <TextView
+           android:id="@+id/labelObstructions"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_nest_location_obstructions" />
+   </TableRow>
+   <TableRow
+       android:id="@+id/tableRowObstructionsValues1"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" >
+
+       <CheckBox
+           android:id="@+id/fieldObstructionsSeawallRocks"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_nest_location_seawall_rocks" />
+       
+       <CheckBox
+           android:id="@+id/fieldObstructionsFurniture"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_nest_location_furniture" />
+       
+       <CheckBox
+           android:id="@+id/fieldObstructionsEscarpment"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_nest_location_escarpment" />
+   </TableRow>
+   <TableRow
+       android:id="@+id/tableRowObstructionsValues2"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" >
+
+       <CheckBox
+           android:id="@+id/fieldObstructionsOther"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/other" />
+       
+       <EditText
+            android:id="@+id/fieldObstructionsOtherValue"
+            android:inputType="textMultiLine"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10" >
+        </EditText>
+   </TableRow>
+   
+</TableLayout>
