@@ -4,38 +4,34 @@
     android:layout_height="wrap_content" >
 
    <TableRow
-        android:id="@+id/tableRowGps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
 
         <TextView
-            android:id="@+id/labelGps"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/edit_nest_location_label_gps" />
 
         <Button
-            android:id="@+id/takeGps"
+            android:id="@+id/buttonGps"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/edit_nest_location_button_gps" />
     </TableRow>
     <TableRow
-        android:id="@+id/tableRowOriginalAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
 
         <TextView
-            android:id="@+id/labelOriginalAddress"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/edit_nest_location_original_address" />
 
         <EditText
-            android:id="@+id/fieldOriginalAddress"
+            android:id="@+id/fieldAddress"
             android:inputType="textPostalAddress"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -44,12 +40,10 @@
         </EditText>
    </TableRow>
    <TableRow
-        android:id="@+id/tableRowSectionNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
 
         <TextView
-            android:id="@+id/labelSectionNumber"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -65,12 +59,10 @@
         </EditText>
    </TableRow>
    <TableRow
-        android:id="@+id/tableRowDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
 
         <TextView
-            android:id="@+id/labelDetails"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -87,18 +79,15 @@
    </TableRow>
    
    <TableRow
-       android:id="@+id/tableRowLocation"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content" >
        <TextView
-           android:id="@+id/labelLocation"
            android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"
            android:text="@string/edit_nest_location_location" />
    </TableRow>
    <TableRow
-       android:id="@+id/tableRowLocationValues1"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content" >
 
@@ -125,7 +114,6 @@
        
    </TableRow>
    <TableRow
-       android:id="@+id/tableRowLocationValues2"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content" >
 
@@ -143,9 +131,7 @@
            android:text="@string/edit_nest_location_on_escarpment" />
    </TableRow>
    
-   
    <TableRow
-       android:id="@+id/tableRowObstructions"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content" >
        <TextView
@@ -156,7 +142,6 @@
            android:text="@string/edit_nest_location_obstructions" />
    </TableRow>
    <TableRow
-       android:id="@+id/tableRowObstructionsValues1"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content" >
 
@@ -182,7 +167,6 @@
            android:text="@string/edit_nest_location_escarpment" />
    </TableRow>
    <TableRow
-       android:id="@+id/tableRowObstructionsValues2"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content" >
 
@@ -203,4 +187,150 @@
         </EditText>
    </TableRow>
    
+   <TableRow
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" >
+       <TextView
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_nest_location_was_relocated" />
+       
+       <ToggleButton
+           android:textOn="Yes"
+           android:textOff="No"
+           android:id="@+id/fieldNestRelocated"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content" />
+   </TableRow>
+   <TableLayout
+     android:id="@+id/tableRelocated"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content" >
+	   <TableRow
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content" >
+	       <TextView
+	           android:layout_width="0dp"
+	           android:layout_height="wrap_content"
+	           android:layout_weight="1"
+	           android:text="@string/edit_nest_location_date_relocated" />
+	       
+        <Button
+            android:id="@+id/buttonRelocatedDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/date_button"
+            android:enabled="false" />
+	   </TableRow>
+	   <TableRow
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content" >
+         <TextView
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_weight="1"
+             android:text="@string/edit_nest_location_new_address" />
+         
+        <EditText
+            android:id="@+id/fieldNewAddress"
+            android:inputType="textPostalAddress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10" >
+        </EditText>
+     </TableRow>
+     <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/edit_nest_location_new_gps_coordinates" />
+
+        <Button
+            android:id="@+id/buttonNewGps"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/edit_nest_location_button_gps" />
+    </TableRow>
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/edit_nest_location_num_eggs_relocated" />
+        <EditText
+            android:id="@+id/fieldEggsRelocated"
+            android:inputType="number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </TableRow>
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/edit_nest_location_num_eggs_destroyed" />
+        <EditText
+            android:id="@+id/fieldEggsDestroyed"
+            android:inputType="number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </TableRow>
+    <TableRow
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" >
+       <TextView
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_nest_location_relocation_reason" />
+    </TableRow>
+    <TableRow
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" >
+       <CheckBox
+           android:id="@+id/fieldHighWater"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_nest_location_relocation_high_water" />
+       <CheckBox
+           android:id="@+id/fieldPredation"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_nest_location_relocation_predation" />     
+   </TableRow>
+   <TableRow
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" >  
+       <CheckBox
+           android:id="@+id/fieldWashingOut"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_nest_location_relocation_washing_out" />  
+       <CheckBox
+           android:id="@+id/fieldConstruction"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_nest_location_relocation_construction" />  
+   </TableRow>
+  </TableLayout>
 </TableLayout>
