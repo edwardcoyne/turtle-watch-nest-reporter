@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableMap;
 import com.islandturtlewatch.nest.reporter.data.ReportsModel;
 import com.islandturtlewatch.nest.reporter.ui.EditFragment;
 import com.islandturtlewatch.nest.reporter.ui.EditFragmentInfo;
+import com.islandturtlewatch.nest.reporter.ui.EditFragmentNestCondition;
 import com.islandturtlewatch.nest.reporter.ui.EditFragmentNestLocation;
 import com.islandturtlewatch.nest.reporter.ui.EditView;
 import com.islandturtlewatch.nest.reporter.ui.ReportSection;
@@ -16,7 +17,7 @@ public class EditPresenter {
 			ImmutableMap.<ReportSection, EditFragment>builder()
 				.put(ReportSection.INFO, new EditFragmentInfo())
 				.put(ReportSection.NEST_LOCATION, new EditFragmentNestLocation())
-				.put(ReportSection.NEST_CONDITION, new EditFragment())
+				.put(ReportSection.NEST_CONDITION, new EditFragmentNestCondition())
 				.put(ReportSection.NEST_INTERVENTION, new EditFragment())
 				.put(ReportSection.NEST_CARE, new EditFragment())
 				.put(ReportSection.MEDIA, new EditFragment())
@@ -26,6 +27,8 @@ public class EditPresenter {
 	@SuppressWarnings("unused")
   private final ReportsModel model;
 	private final EditView view;
+	
+	private ReportSection currentSection;
 
 	public EditPresenter(ReportsModel model, EditView activity) {
 		this.model = model;
@@ -38,13 +41,18 @@ public class EditPresenter {
 	      
 	  Bundle arguments = new Bundle();
 	  //arguments.putString(ReportDetailFragment.ARG_ITEM_ID, id);
-      fragment.setArguments(arguments);
-      view.setEditFragment(fragment);
+    fragment.setArguments(arguments);
+    view.setEditFragment(fragment);
 	}
 	
 	private class SectionListEventHandler 
 			implements ReportSectionListFragment.EventHandler {
 		public void onSectionSelected(ReportSection section) {
+			if (currentSection == section) {
+				return;
+			}
+			currentSection = section;
+			
 			setSection(section);
 		}
 	}
