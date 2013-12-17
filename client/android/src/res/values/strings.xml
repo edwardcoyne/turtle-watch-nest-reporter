@@ -31,17 +31,18 @@
     <string name="edit_nest_location_seawall_rocks">Seawall / Rocks</string>
     <string name="edit_nest_location_furniture">Furniture</string>
     <string name="edit_nest_location_escarpment">Escarpment</string>
-    <string name="edit_nest_location_was_relocated">Was nest relocated?</string>
-    <string name="edit_nest_location_date_relocated">Date relocated</string>
-    <string name="edit_nest_location_new_address">New address</string>
-    <string name="edit_nest_location_new_gps_coordinates">New GPS coordinates</string>
-    <string name="edit_nest_location_num_eggs_relocated">Number of eggs relocated</string>
-    <string name="edit_nest_location_num_eggs_destroyed">Number of eggs destroyed</string>
-    <string name="edit_nest_location_relocation_reason">Reason for relocation</string>
-    <string name="edit_nest_location_relocation_high_water">High water</string>
-    <string name="edit_nest_location_relocation_predation">Predation</string>
-    <string name="edit_nest_location_relocation_washing_out">Washing Out</string>
-    <string name="edit_nest_location_relocation_construction">Construction / Renourishment</string>
+    
+    <string name="edit_nest_relocation_was_relocated">Was nest relocated?</string>
+    <string name="edit_nest_relocation_date_relocated">Date relocated</string>
+    <string name="edit_nest_relocation_new_address">New address</string>
+    <string name="edit_nest_relocation_new_gps_coordinates">New GPS coordinates</string>
+    <string name="edit_nest_relocation_num_eggs_relocated">Number of eggs relocated</string>
+    <string name="edit_nest_relocation_num_eggs_destroyed">Number of eggs destroyed</string>
+    <string name="edit_nest_relocation_reason">Reason for relocation</string>
+    <string name="edit_nest_relocation_high_water">High water</string>
+    <string name="edit_nest_relocation_predation">Predation</string>
+    <string name="edit_nest_relocation_washing_out">Washing Out</string>
+    <string name="edit_nest_relocation_construction">Construction / Renourishment</string>
     
     
     <string name="edit_nest_condition_wash_over">Nest Wash Over</string>
