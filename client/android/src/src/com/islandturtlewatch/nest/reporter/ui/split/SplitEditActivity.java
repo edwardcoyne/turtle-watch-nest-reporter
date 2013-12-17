@@ -22,7 +22,8 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
       
       presenter = new EditPresenter(new ReportsModel(), this);
 	}
-	
+
+	@Override
 	public void setEditFragment(Fragment fragment) {
 	  getSupportFragmentManager().beginTransaction()
         .replace(R.id.section_edit_container, fragment)

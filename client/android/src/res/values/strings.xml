@@ -3,6 +3,7 @@
 
     <string name="app_name">Island Watch Nest Reporter</string>
     <string name="other">Other</string>
+    <string name="date_button">Set Date</string>
     
     <string name="edit_info_label_date_found">Date Crawl Found</string>
     <string name="edit_info_label_date_incubation">55 Day Incubation Date</string>
@@ -30,4 +31,18 @@
     <string name="edit_nest_location_seawall_rocks">Seawall / Rocks</string>
     <string name="edit_nest_location_furniture">Furniture</string>
     <string name="edit_nest_location_escarpment">Escarpment</string>
+    
+    
+    <string name="edit_nest_condition_wash_over">Nest Wash Over</string>
+    <string name="edit_nest_condition_washout">Washout</string>
+    <string name="edit_nest_condition_storm_name">Storm Name</string>
+    <string name="edit_nest_condition_predataion">Nest Predation - Eggs Only</string>
+    <string name="edit_nest_condition_damage">Nest damage</string>
+    <string name="edit_nest_condition_damage_contact_suzi">
+        Please contact Suzi for any human damages
+    </string>
+    <string name="edit_nest_condition_damage_vandalized">Vandalized</string>
+    <string name="edit_nest_condition_damage_poached">Poached</string>
+    <string name="edit_nest_condition_damage_roots_invaded">Roots invaded eggshells</string>
+    <string name="edit_nest_condition_damage_eggs_scattered">Eggs scattered by another</string>
 </resources>
