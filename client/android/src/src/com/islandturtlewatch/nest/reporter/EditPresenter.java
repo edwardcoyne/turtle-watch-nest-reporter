@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableMap;
 import com.islandturtlewatch.nest.reporter.data.ReportsModel;
 import com.islandturtlewatch.nest.reporter.ui.EditFragment;
 import com.islandturtlewatch.nest.reporter.ui.EditFragmentInfo;
+import com.islandturtlewatch.nest.reporter.ui.EditFragmentNestCare;
 import com.islandturtlewatch.nest.reporter.ui.EditFragmentNestCondition;
 import com.islandturtlewatch.nest.reporter.ui.EditFragmentNestLocation;
 import com.islandturtlewatch.nest.reporter.ui.EditView;
@@ -18,8 +19,8 @@ public class EditPresenter {
 				.put(ReportSection.INFO, new EditFragmentInfo())
 				.put(ReportSection.NEST_LOCATION, new EditFragmentNestLocation())
 				.put(ReportSection.NEST_CONDITION, new EditFragmentNestCondition())
-				.put(ReportSection.NEST_INTERVENTION, new EditFragment())
-				.put(ReportSection.NEST_CARE, new EditFragment())
+				.put(ReportSection.NEST_CARE, new EditFragmentNestCare())
+				.put(ReportSection.NEST_RESOLUTION, new EditFragment())
 				.put(ReportSection.MEDIA, new EditFragment())
 				.put(ReportSection.NOTES, new EditFragment())
 				.build();

@@ -4,8 +4,8 @@ public enum ReportSection {
 	INFO("Info"),
 	NEST_LOCATION("Nest Location"),
 	NEST_CONDITION("Nest Condition"),
-	NEST_INTERVENTION("Nest Intervention"),
 	NEST_CARE("Nest Care"),
+	NEST_RESOLUTION("Nest Resolution"),
 	MEDIA("Pictures and Diagrams"),
 	NOTES("Notes");
 	

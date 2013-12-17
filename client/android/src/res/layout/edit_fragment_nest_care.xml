@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+   <TableRow
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" >
+		   <TextView
+		       android:layout_width="0dp"
+		       android:layout_height="wrap_content"
+		       android:layout_weight="1"
+		       android:text="@string/edit_nest_care_adopted" />
+		   
+		   <ToggleButton
+		       android:textOn="Yes"
+		       android:textOff="No"
+		       android:id="@+id/fieldNestAdopted"
+		       android:layout_width="wrap_content"
+		       android:layout_height="wrap_content" />
+   </TableRow>
+   
+   <TableRow
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" >
+       <TextView
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_nest_care_date_protected" />
+       
+       <Button
+            android:id="@+id/buttonProtectedDate1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/date_button"
+            android:enabled="false" />
+   </TableRow>
+   <TableRow
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" >
+       <TextView
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_nest_care_date_protected" />
+       
+       <Button
+            android:id="@+id/buttonProtectedDate1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/date_button"
+            android:enabled="false" />
+   </TableRow>
+   
+   <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/edit_nest_care_type_of_protection" />
+   </TableRow>
+   <TableRow
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" >
+
+       <CheckBox
+           android:id="@+id/fieldSelfReleasingCage"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_nest_care_self_releasing_cage" />
+       
+       <CheckBox
+           android:id="@+id/fieldSelfReleasingFlat"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_nest_care_self_releasing_flat" />
+       
+       <CheckBox
+           android:id="@+id/fieldRestrainingCage"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_nest_care_restraining_cage" />
+   </TableRow>
+
+   <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/edit_nest_care_when_protected" />
+   </TableRow>
+   <TableRow
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" >
+
+       <CheckBox
+           android:id="@+id/fieldBeforePredation"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_nest_care_before_predation" />
+       
+       <CheckBox
+           android:id="@+id/fieldAfterPredation"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_nest_care_after_predation" />
+       
+       <CheckBox
+           android:id="@+id/fieldForLightProblem"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_nest_care_for_light_problem" />
+   </TableRow>
+</TableLayout>

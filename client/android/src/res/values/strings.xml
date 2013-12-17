@@ -45,4 +45,16 @@
     <string name="edit_nest_condition_damage_poached">Poached</string>
     <string name="edit_nest_condition_damage_roots_invaded">Roots invaded eggshells</string>
     <string name="edit_nest_condition_damage_eggs_scattered">Eggs scattered by another</string>
+
+    
+    <string name="edit_nest_care_adopted">Is nest adopted?</string>
+    <string name="edit_nest_care_date_protected">Date Protected</string>
+    <string name="edit_nest_care_type_of_protection">Type of protection?</string>
+    <string name="edit_nest_care_self_releasing_cage">Self releasing cage</string>
+    <string name="edit_nest_care_self_releasing_flat">Self releasing flat</string>
+    <string name="edit_nest_care_restraining_cage">Restraining cage</string>
+    <string name="edit_nest_care_when_protected">When protected?</string>
+    <string name="edit_nest_care_before_predation">Before predation</string>
+    <string name="edit_nest_care_after_predation">After predation</string>
+    <string name="edit_nest_care_for_light_problem">For light problem</string>
 </resources>
