@@ -7,12 +7,12 @@ import android.view.ViewGroup;
 
 import com.islandturtlewatch.nest.reporter.R;
 
-public class EditFragmentPictures extends EditFragment {
+public class EditFragmentMedia extends EditFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			ViewGroup container,
 			Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.edit_fragment_pictures, container, false);
+		return inflater.inflate(R.layout.edit_fragment_media, container, false);
 	}
 
 }
