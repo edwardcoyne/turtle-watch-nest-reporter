@@ -1,9 +1,6 @@
 package com.islandturtlewatch.nest.reporter.ui;
 
-import android.support.v4.app.Fragment;
-
-
 public interface EditView {
-	void setEditFragment(Fragment fragment);
+	void setEditFragment(EditFragment fragment);
 	void setSectionListEventHandler(ReportSectionListFragment.EventHandler handler);
 }
