@@ -15,19 +15,12 @@
 
         <Button
             android:id="@+id/buttonGps"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/edit_nest_location_button_gps" />
     </TableRow>
     <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
-
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/edit_nest_location_original_address" />
 
         <EditText
@@ -42,7 +35,6 @@
    <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
-
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -51,21 +43,14 @@
 
         <EditText
             android:id="@+id/fieldSectionNumber"
-            android:inputType="numberDecimal"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10" >
+            android:inputType="number"
+            android:ems="1" >
         </EditText>
    </TableRow>
    <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
-
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/edit_nest_location_details" />
 
         <EditText
@@ -89,9 +74,7 @@
         <EditText
             android:id="@+id/fieldApexToBarrier"
             android:inputType="textNoSuggestions"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:ems="1">
         </EditText>
    </TableRow>
    <TableRow
@@ -106,9 +89,7 @@
         <EditText
             android:id="@+id/fieldWaterToApex"
             android:inputType="textNoSuggestions"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:ems="1">
         </EditText>
    </TableRow>
    <TableRow
@@ -205,9 +186,6 @@
 
        <CheckBox
            android:id="@+id/fieldObstructionsOther"
-           android:layout_width="0dp"
-           android:layout_height="wrap_content"
-           android:layout_weight="1"
            android:text="@string/other" />
        
        <EditText

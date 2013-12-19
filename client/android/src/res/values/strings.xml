@@ -51,6 +51,8 @@
     <string name="edit_nest_condition_washout">Washout</string>
     <string name="edit_nest_condition_storm_name">Storm Name</string>
     <string name="edit_nest_condition_predataion">Nest Predation - Eggs Only</string>
+    <string name="edit_nest_condition_predator">Predator</string>
+    <string name="edit_nest_condition_num_eggs"># of Eggs</string>
     <string name="edit_nest_condition_damage">Nest damage</string>
     <string name="edit_nest_condition_damage_contact_suzi">
         Please contact Suzi for any human damages
@@ -92,4 +94,5 @@
     <string name="excavation_data_eggs_destroyed">Eggs destroyed</string>
     <string name="excavation_data_total_eggs">Total eggs</string>
    
+    <string name="edit_pictures_capture_image">Capture Image</string>
 </resources>
