@@ -130,7 +130,7 @@
            android:text="@string/edit_nest_condition_damage_vandalized" />
        
        <Button
-            android:id="@+id/buttonDamageVandalizedDate1"
+            android:id="@+id/buttonDamageVandalizedDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -149,12 +149,13 @@
            android:text="@string/edit_nest_condition_damage_poached" />
        
        <Button
-            android:id="@+id/buttonDamagePoachedDate1"
+            android:id="@+id/buttonDamagePoachedDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/date_button"
             android:enabled="false" />
+
    </TableRow>
    <TableRow
        android:layout_width="wrap_content"

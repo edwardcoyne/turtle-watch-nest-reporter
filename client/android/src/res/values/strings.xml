@@ -31,6 +31,8 @@
     <string name="edit_nest_location_seawall_rocks">Seawall / Rocks</string>
     <string name="edit_nest_location_furniture">Furniture</string>
     <string name="edit_nest_location_escarpment">Escarpment</string>
+    <string name="edit_nest_location_apex_to_barrier">Apex to upland barrier</string>
+    <string name="edit_nest_location_water_to_apex">Water line to apex</string>
     
     <string name="edit_nest_relocation_was_relocated">Was nest relocated?</string>
     <string name="edit_nest_relocation_date_relocated">Date relocated</string>
@@ -69,4 +71,25 @@
     <string name="edit_nest_care_before_predation">Before predation</string>
     <string name="edit_nest_care_after_predation">After predation</string>
     <string name="edit_nest_care_for_light_problem">For light problem</string>
+    
+    <string name="hatch_data_title">Hatch Data</string>
+    <string name="hatch_data_hatch_date">Actual hatch date</string>
+    <string name="hatch_data_hatch_add_date">Additional hatch date</string>
+    <string name="hatch_data_disorientation">Disorientation?</string>
+    
+    <string name="excavation_data_title">Excavation Data</string>
+    <string name="excavation_data_excavated">Excavated</string>
+    <string name="excavation_data_reason_no_excavation">Why not?</string>
+    <string name="excavation_data_eggs_not_found">Eggs not found</string>
+    <string name="excavation_data_eggs_too_decayed">Eggs / Hatchlings too decayed to inventory</string>
+    <string name="excavation_data_excavation_date">Excavation Date</string>
+    <string name="excavation_data_dead_in_nest">Dead in nest</string>
+    <string name="excavation_data_live_in_nest">Live in nest</string>
+    <string name="excavation_data_hatched_shells">Hatched shells</string>
+    <string name="excavation_data_dead_pipped">Dead pipped</string>
+    <string name="excavation_data_live_pipped">Live pipped</string>
+    <string name="excavation_data_whole_unhatched">Whole Unhatched</string>
+    <string name="excavation_data_eggs_destroyed">Eggs destroyed</string>
+    <string name="excavation_data_total_eggs">Total eggs</string>
+   
 </resources>

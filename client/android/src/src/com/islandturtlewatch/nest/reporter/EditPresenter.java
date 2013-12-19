@@ -9,6 +9,7 @@ import com.islandturtlewatch.nest.reporter.ui.EditFragmentInfo;
 import com.islandturtlewatch.nest.reporter.ui.EditFragmentNestCare;
 import com.islandturtlewatch.nest.reporter.ui.EditFragmentNestCondition;
 import com.islandturtlewatch.nest.reporter.ui.EditFragmentNestLocation;
+import com.islandturtlewatch.nest.reporter.ui.EditFragmentNestResolution;
 import com.islandturtlewatch.nest.reporter.ui.EditView;
 import com.islandturtlewatch.nest.reporter.ui.ReportSection;
 import com.islandturtlewatch.nest.reporter.ui.ReportSectionListFragment;
@@ -20,7 +21,7 @@ public class EditPresenter {
 				.put(ReportSection.NEST_LOCATION, new EditFragmentNestLocation())
 				.put(ReportSection.NEST_CONDITION, new EditFragmentNestCondition())
 				.put(ReportSection.NEST_CARE, new EditFragmentNestCare())
-				.put(ReportSection.NEST_RESOLUTION, new EditFragment())
+				.put(ReportSection.NEST_RESOLUTION, new EditFragmentNestResolution())
 				.put(ReportSection.MEDIA, new EditFragment())
 				.put(ReportSection.NOTES, new EditFragment())
 				.build();
