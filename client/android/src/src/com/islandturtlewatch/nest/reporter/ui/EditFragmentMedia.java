@@ -1,18 +1,23 @@
 package com.islandturtlewatch.nest.reporter.ui;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.common.collect.ImmutableMap;
 import com.islandturtlewatch.nest.reporter.R;
 
 public class EditFragmentMedia extends EditFragment {
 	private static final String TAG = EditFragmentMedia.class.getSimpleName();
-	private static final ImmutableMap<Integer, ClickHandler> clickHandlerMap = ClickHandler.toMap(
-			new HandleCaptureImage());
+
+	public EditFragmentMedia() {
+	  super();
+	  addClickHandler(new HandleCaptureImage());
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -21,19 +26,18 @@ public class EditFragmentMedia extends EditFragment {
 		return inflater.inflate(R.layout.edit_fragment_media, container, false);
 	}
 
-	@Override
-  public ImmutableMap<Integer, ClickHandler> getClickHandlers() {
-		return clickHandlerMap;
-  }
-
 	private static class HandleCaptureImage extends ClickHandler {
+		private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 		HandleCaptureImage() {
 			super(R.id.buttonCaptureImage);
 		}
 
 		@Override
     public void handleClick(View view) {
-			Log.w(TAG, "Take picture");
+			Log.v(TAG, "Capture Image clicked.");
+			Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+			Activity activity = (Activity) view.getContext();
+			activity.startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
     }
 	}
 }

@@ -1,6 +1,10 @@
 package com.islandturtlewatch.nest.reporter.ui;
 
+import com.islandturtlewatch.nest.data.ReportProto.Report;
+
+/**
+ * Interface that provides an abstract view of the UI.
+ */
 public interface EditView {
-	void setEditFragment(EditFragment fragment);
-	void setSectionListEventHandler(ReportSectionListFragment.EventHandler handler);
+	void updateDisplay(Report report);
 }
