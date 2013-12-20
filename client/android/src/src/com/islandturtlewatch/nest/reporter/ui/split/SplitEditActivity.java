@@ -4,7 +4,10 @@ import java.util.Map;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
@@ -121,6 +124,17 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
       if (currentReport.isPresent()) {
         fragment.updateDisplay(currentReport.get());
       }
+      addTextMonitoring(fragment);
+    }
+
+    private void addTextMonitoring(EditFragment fragment) {
+      if (fragment.getView() instanceof ViewGroup) {
+        ViewGroup baseLayout = (ViewGroup)fragment.getView();
+        for (int i = 0; i < baseLayout.getChildCount(); i++) {
+          BROKEN!!!
+          View child = baseLayout.getChildAt(i);
+        }
+      }
     }
 
     private void setEditFragment(EditFragment fragment) {
@@ -143,5 +157,24 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
         setSection(section);
       }
     }
+  }
+
+  private class UdpatingTextWatcher implements TextWatcher {
+    private final int id;
+
+    public UdpatingTextWatcher(int id) {
+      this.id = id;
+    }
+
+    @Override
+    public void afterTextChanged(Editable newText) {
+
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
+
+    @Override
+    public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
   }
 }

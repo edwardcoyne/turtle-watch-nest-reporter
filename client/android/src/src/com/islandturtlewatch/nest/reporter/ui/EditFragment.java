@@ -3,7 +3,6 @@ package com.islandturtlewatch.nest.reporter.ui;
 import java.util.Map;
 
 import android.app.Fragment;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -36,6 +35,7 @@ public class EditFragment extends Fragment {
 
   }
 
+
   @Override
   public void onStart() {
     if (currentReport.isPresent()) {
@@ -49,12 +49,17 @@ public class EditFragment extends Fragment {
     return null;
   }
 
-  protected void addTextWatcher(int id, TextWatcher watcher) {
+//TODO(edcoyne): make abstract once we are no longer using generic EditFragments.
+ public Map<Integer, TextChangeHandler> getTextChangeHandlers() {
+   return null;
+ }
+
+  protected TextView getTextView(int id) {
     View view = getActivity().findViewById(id);
     if (view instanceof TextView) { // This includes buttons and TextEdits
-      ((TextView) view).addTextChangedListener(watcher);
+      return ((TextView) view);
     } else {
-      throw new UnsupportedOperationException("We don't support addTextWatcher on " + view);
+      throw new UnsupportedOperationException("We don't support getTextView on " + view);
     }
   }
 
@@ -116,5 +121,23 @@ public class EditFragment extends Fragment {
     }
 
     public abstract void handleClick(View view, DataUpdateHandler updateHandler);
+  }
+
+  public abstract static class TextChangeHandler{
+    protected final int resourceId;
+
+    protected TextChangeHandler(int resourceId) {
+      this.resourceId = resourceId;
+    }
+
+    static Map<Integer, TextChangeHandler> toMap(TextChangeHandler... handlers) {
+      ImmutableMap.Builder<Integer, TextChangeHandler> builder = ImmutableMap.builder();
+      for (TextChangeHandler handler : handlers) {
+        builder.put(handler.resourceId, handler);
+      }
+      return builder.build();
+    }
+
+    public abstract void handleTextChange(String newText, DataUpdateHandler updateHandler);
   }
 }

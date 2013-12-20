@@ -4,8 +4,6 @@ import java.util.Map;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,19 +18,29 @@ import com.islandturtlewatch.nest.reporter.util.DateUtil;
 public class EditFragmentInfo extends EditFragment {
   private static final String TAG = EditFragmentInfo.class.getSimpleName();
 
-  private static final Map<Integer, ClickHandler> CLICK_HANDLERS = ClickHandler.toMap(
-      new HandleSetInfoDate(),
-      new HandleSetObervers(),
-      new HandleSetNestVerified(),
-      new HandleSetNestNotVerified(),
-      new HandleSetNestRelocated(),
-      new HandleSetFalseCrawl(),
-      new HandleSetAbandonedBodyPits(),
-      new HandleSetAbandonedEggCavities());
+  private static final Map<Integer, ClickHandler> CLICK_HANDLERS =
+      ClickHandler.toMap(
+          new HandleSetInfoDate(),
+          new HandleSetObervers(),
+          new HandleSetNestVerified(),
+          new HandleSetNestNotVerified(),
+          new HandleSetNestRelocated(),
+          new HandleSetFalseCrawl(),
+          new HandleSetAbandonedBodyPits(),
+          new HandleSetAbandonedEggCavities());
+
+  private static final Map<Integer, TextChangeHandler> TEXT_CHANGE_HANDLERS =
+      TextChangeHandler.toMap(
+          new HandleUpdateObservers());
 
   @Override
   public Map<Integer, ClickHandler> getClickHandlers() {
     return CLICK_HANDLERS;
+  }
+
+  @Override
+  public Map<Integer, TextChangeHandler> getTextChangeHandlers() {
+    return TEXT_CHANGE_HANDLERS;
   }
 
   @Override
@@ -56,7 +64,6 @@ public class EditFragmentInfo extends EditFragment {
     }
 
     setText(R.id.fieldObservers, report.getObservers());
-    addTextWatcher(R.id.fieldObservers, new HandleUpdateObserver());
 
     setChecked(R.id.fieldNestVerified, report.getActivity().getNestVerified());
     setChecked(R.id.fieldNestNotVerified, report.getActivity().getNestNotVerified());
@@ -67,18 +74,16 @@ public class EditFragmentInfo extends EditFragment {
     setChecked(R.id.fieldAbandonedEggCavities, report.getActivity().getAbandonedEggCavities());
   }
 
-  private static class HandleUpdateObserver implements TextWatcher {
-
-    @Override
-    public void afterTextChanged(Editable text) {
-      Log.i(TAG,"Updated: " + text);
+  private static class HandleUpdateObservers extends TextChangeHandler {
+    protected HandleUpdateObservers() {
+      super(R.id.fieldObservers);
     }
 
     @Override
-    public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
-
-    @Override
-    public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
+    public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
+      Log.d(TAG, "Updating observers: " + newText);
+      updateHandler.updateObservers(newText);
+    }
   }
 
   private static class HandleSetInfoDate extends ClickHandler
