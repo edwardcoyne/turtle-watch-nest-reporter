@@ -4,13 +4,11 @@ import java.util.Map;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
-import com.google.protobuf.InvalidProtocolBufferException;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter;
 import com.islandturtlewatch.nest.reporter.R;
@@ -29,10 +27,9 @@ import com.islandturtlewatch.nest.reporter.ui.ReportSectionListFragment;
 import com.islandturtlewatch.nest.reporter.ui.ReportSectionListFragment.EventHandler;
 
 public class SplitEditActivity extends FragmentActivity implements EditView {
-  private static final String TAG = EditFragment.class.getSimpleName();
+  //private static final String TAG = SplitEditActivity.class.getSimpleName();
 
   private static final String KEY_SECTION = "Section";
-  private static final String KEY_REPORT = "CurrentReport";
 
   private static final ImmutableMap<ReportSection, EditFragment> FRAGMENT_MAP =
       ImmutableMap.<ReportSection, EditFragment>builder()
@@ -66,25 +63,17 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
   protected void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
     outState.putString(KEY_SECTION, sectionManager.currentSection.name());
-    if (sectionManager.currentReport.isPresent()) {
-      outState.putByteArray(KEY_REPORT, sectionManager.currentReport.get().toByteArray());
-    }
+    presenter.persistToBundle(outState);
   }
 
   @Override
   protected void onRestoreInstanceState(Bundle inState) {
     super.onRestoreInstanceState(inState);
+    presenter.restoreFromBundle(inState);
     if (inState.containsKey(KEY_SECTION)) {
       sectionManager = new SectionManager();
       sectionManager.setSection(ReportSection.valueOf(inState.getString(KEY_SECTION)));
-      if (inState.containsKey("CurrentReport")) {
-        try {
-          Report currentReport = Report.parseFrom(inState.getByteArray("CurrentReport"));
-          sectionManager.updateSections(currentReport);
-        } catch (InvalidProtocolBufferException e) {
-          Log.e(TAG,"Could not restore proto from seriazlied state, " + e.getMessage());
-        }
-      }
+      sectionManager.updateSections(presenter.getCurrentReport());
     }
   }
 

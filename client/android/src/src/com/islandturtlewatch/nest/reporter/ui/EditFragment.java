@@ -3,6 +3,7 @@ package com.islandturtlewatch.nest.reporter.ui;
 import java.util.Map;
 
 import android.app.Fragment;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -48,9 +49,18 @@ public class EditFragment extends Fragment {
     return null;
   }
 
+  protected void addTextWatcher(int id, TextWatcher watcher) {
+    View view = getActivity().findViewById(id);
+    if (view instanceof TextView) { // This includes buttons and TextEdits
+      ((TextView) view).addTextChangedListener(watcher);
+    } else {
+      throw new UnsupportedOperationException("We don't support addTextWatcher on " + view);
+    }
+  }
+
   protected void setText(int id, String value) {
     View view = getActivity().findViewById(id);
-    if (view instanceof TextView) {
+    if (view instanceof TextView) { // This includes buttons and TextEdits
       ((TextView) view).setText(value);
     } else {
       throw new UnsupportedOperationException("We don't support setText on " + view);
@@ -66,14 +76,26 @@ public class EditFragment extends Fragment {
     }
   }
 
+  protected static boolean isChecked(View view) {
+    if (view instanceof CheckBox) {
+      return ((CheckBox) view).isChecked();
+    } else {
+      throw new UnsupportedOperationException("We don't support isChecked on " + view);
+    }
+  }
+
+  protected static String getText(View view) {
+    if (view instanceof TextView) {
+      return ((TextView) view).getText().toString();
+    } else {
+      throw new UnsupportedOperationException("We don't support getText on " + view);
+    }
+  }
+
   public static abstract class ClickHandler {
-    private final int resourceId;
+    protected final int resourceId;
     protected ClickHandler(int resourceId) {
       this.resourceId = resourceId;
-    }
-
-    int getResourceId() {
-      return resourceId;
     }
 
     protected void displayResult(DataUpdateResult result) {

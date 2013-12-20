@@ -69,13 +69,15 @@
            android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"
-           android:text="@string/edit_info_label_nest_verified" />
+           android:text="@string/edit_info_label_nest_verified"
+           android:onClick="handleClick" />
        <CheckBox
            android:id="@+id/fieldNestNotVerified"
            android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"
-           android:text="@string/edit_info_label_nest_not_verified" />
+           android:text="@string/edit_info_label_nest_not_verified"
+           android:onClick="handleClick" />
    </TableRow>
    <TableRow
        android:layout_width="wrap_content"
@@ -85,13 +87,15 @@
            android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"
-           android:text="@string/edit_info_label_nest_relocated" />
+           android:text="@string/edit_info_label_nest_relocated" 
+           android:onClick="handleClick" />
        <CheckBox
            android:id="@+id/fieldFalseCrawl"
            android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"
-           android:text="@string/edit_info_label_nest_relocated" />
+           android:text="@string/edit_info_label_false_crawl"
+           android:onClick="handleClick"/>
    </TableRow>
    <TableRow
        android:layout_width="wrap_content"
@@ -101,12 +105,14 @@
            android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"
-           android:text="@string/edit_info_label_abandoned_body_pits" />
+           android:text="@string/edit_info_label_abandoned_body_pits"
+           android:onClick="handleClick" />
        <CheckBox
            android:id="@+id/fieldAbandonedEggCavities"
            android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"
-           android:text="@string/edit_info_label_abandoned_egg_cavities" />
+           android:text="@string/edit_info_label_abandoned_egg_cavities"
+           android:onClick="handleClick" />
    </TableRow>
 </TableLayout>

@@ -4,6 +4,8 @@ import java.util.Map;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +18,18 @@ import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.util.DateUtil;
 
 public class EditFragmentInfo extends EditFragment {
+  private static final String TAG = EditFragmentInfo.class.getSimpleName();
+
   private static final Map<Integer, ClickHandler> CLICK_HANDLERS = ClickHandler.toMap(
-      new HandleSetInfoDate());
+      new HandleSetInfoDate(),
+      new HandleSetObervers(),
+      new HandleSetNestVerified(),
+      new HandleSetNestNotVerified(),
+      new HandleSetNestRelocated(),
+      new HandleSetFalseCrawl(),
+      new HandleSetAbandonedBodyPits(),
+      new HandleSetAbandonedEggCavities());
+
   @Override
   public Map<Integer, ClickHandler> getClickHandlers() {
     return CLICK_HANDLERS;
@@ -37,18 +49,36 @@ public class EditFragmentInfo extends EditFragment {
       return;
     }
 
-    setText(R.id.buttonDateFound, DateUtil.getFormattedDate(report.getTimestampFoundMs()));
-    setText(R.id.labelIncubationDate,
-        DateUtil.getFormattedDate(DateUtil.plusDays(report.getTimestampFoundMs(), 55)));
+    if (report.hasTimestampFoundMs()) {
+      setText(R.id.buttonDateFound, DateUtil.getFormattedDate(report.getTimestampFoundMs()));
+      setText(R.id.labelIncubationDate,
+          DateUtil.getFormattedDate(DateUtil.plusDays(report.getTimestampFoundMs(), 55)));
+    }
 
     setText(R.id.fieldObservers, report.getObservers());
+    addTextWatcher(R.id.fieldObservers, new HandleUpdateObserver());
 
     setChecked(R.id.fieldNestVerified, report.getActivity().getNestVerified());
     setChecked(R.id.fieldNestNotVerified, report.getActivity().getNestNotVerified());
     setChecked(R.id.fieldNestRelocated, report.getActivity().getNestRelocated());
     setChecked(R.id.fieldFalseCrawl, report.getActivity().getFalseCrawl());
     setChecked(R.id.fieldAbandonedBodyPits, report.getActivity().getAbandonedBodyPits());
+
     setChecked(R.id.fieldAbandonedEggCavities, report.getActivity().getAbandonedEggCavities());
+  }
+
+  private static class HandleUpdateObserver implements TextWatcher {
+
+    @Override
+    public void afterTextChanged(Editable text) {
+      Log.i(TAG,"Updated: " + text);
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
+
+    @Override
+    public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
   }
 
   private static class HandleSetInfoDate extends ClickHandler
@@ -73,6 +103,83 @@ public class EditFragmentInfo extends EditFragment {
       Log.d(EditFragmentInfo.class.getSimpleName(),
           "Set date to " + year + "/" + month + "/" + day);
       displayResult(updateHandler.updateDateFound(year, month, day));
+    }
+  }
+
+  private static class HandleSetObervers extends ClickHandler {
+    protected HandleSetObervers() {
+      super(R.id.fieldObservers);
+    }
+
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+       updateHandler.updateObservers(getText(view));
+    }
+  }
+
+  private static class HandleSetNestVerified extends ClickHandler {
+    protected HandleSetNestVerified() {
+      super(R.id.fieldNestVerified);
+    }
+
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+       updateHandler.updateNestVerified(isChecked(view));
+    }
+  }
+
+  private static class HandleSetNestNotVerified extends ClickHandler {
+    protected HandleSetNestNotVerified() {
+      super(R.id.fieldNestNotVerified);
+    }
+
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+       updateHandler.updateNestNotVerified(isChecked(view));
+    }
+  }
+
+  private static class HandleSetNestRelocated extends ClickHandler {
+    protected HandleSetNestRelocated() {
+      super(R.id.fieldNestRelocated);
+    }
+
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+       updateHandler.updateNestRelocated(isChecked(view));
+    }
+  }
+
+  private static class HandleSetFalseCrawl extends ClickHandler {
+    protected HandleSetFalseCrawl() {
+      super(R.id.fieldFalseCrawl);
+    }
+
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+       updateHandler.updateFalseCrawl(isChecked(view));
+    }
+  }
+
+  private static class HandleSetAbandonedBodyPits extends ClickHandler {
+    protected HandleSetAbandonedBodyPits() {
+      super(R.id.fieldAbandonedBodyPits);
+    }
+
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+       updateHandler.updateAbandonedBodyPits(isChecked(view));
+    }
+  }
+
+  private static class HandleSetAbandonedEggCavities extends ClickHandler {
+    protected HandleSetAbandonedEggCavities() {
+      super(R.id.fieldAbandonedEggCavities);
+    }
+
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+       updateHandler.updateAbandonedEggCavities(isChecked(view));
     }
   }
 }

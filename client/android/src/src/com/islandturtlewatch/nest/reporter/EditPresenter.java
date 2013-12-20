@@ -1,5 +1,7 @@
 package com.islandturtlewatch.nest.reporter;
 
+import android.os.Bundle;
+
 import com.google.common.base.Optional;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.data.ReportsModel;
@@ -21,21 +23,88 @@ public class EditPresenter {
 		return this.updateHandler;
 	}
 
+	public void persistToBundle(Bundle outState) {
+	  this.model.persistToBundle(outState);
+	}
+
+	public void restoreFromBundle(Bundle inState) {
+	  this.model.restoreFromBundle(inState);
+	}
+
+	public Report getCurrentReport() {
+	  return model.getActiveReport();
+	}
+
 	private void updateView() {
 		Report report = model.getActiveReport();
 		view.updateDisplay(report);
 	}
 
+	private void writeChangesAndUpdate(Report udpatedReport) {
+	  model.setActiveReport(udpatedReport);
+	  updateView();
+	}
+
 	public class DataUpdateHandler {
 		public DataUpdateResult updateDateFound(int year, int month, int day) {
-			Report.Builder activeReport = model.getActiveReport().toBuilder();
-			activeReport.setTimestampFoundMs(DateUtil.getTimestampInMs(year, month, day));
+			Report updatedReport = model.getActiveReport().toBuilder()
+			    .setTimestampFoundMs(DateUtil.getTimestampInMs(year, month, day))
+			    .build();
 
-			model.setActiveReport(activeReport.build());
-			updateView();
-
+			writeChangesAndUpdate(updatedReport);
 			return DataUpdateResult.success();
 		}
+
+		public DataUpdateResult updateObservers(String observers) {
+          Report updatedReport = model.getActiveReport().toBuilder()
+              .setObservers(observers)
+              .build();
+
+          writeChangesAndUpdate(updatedReport);
+          return DataUpdateResult.success();
+        }
+
+		public DataUpdateResult updateNestVerified(boolean value) {
+		  Report.Builder updatedReport = model.getActiveReport().toBuilder();
+		  updatedReport.getActivityBuilder().setNestVerified(value);
+          writeChangesAndUpdate(updatedReport.build());
+          return DataUpdateResult.success();
+		}
+
+		public DataUpdateResult updateNestNotVerified(boolean value) {
+          Report.Builder updatedReport = model.getActiveReport().toBuilder();
+          updatedReport.getActivityBuilder().setNestNotVerified(value);
+          writeChangesAndUpdate(updatedReport.build());
+          return DataUpdateResult.success();
+        }
+
+		public DataUpdateResult updateNestRelocated(boolean value) {
+          Report.Builder updatedReport = model.getActiveReport().toBuilder();
+          updatedReport.getActivityBuilder().setNestRelocated(value);
+          writeChangesAndUpdate(updatedReport.build());
+          return DataUpdateResult.success();
+        }
+
+		public DataUpdateResult updateFalseCrawl(boolean value) {
+          Report.Builder updatedReport = model.getActiveReport().toBuilder();
+          updatedReport.getActivityBuilder().setFalseCrawl(value);
+          writeChangesAndUpdate(updatedReport.build());
+          return DataUpdateResult.success();
+        }
+
+		public DataUpdateResult updateAbandonedBodyPits(boolean value) {
+          Report.Builder updatedReport = model.getActiveReport().toBuilder();
+          updatedReport.getActivityBuilder().setAbandonedBodyPits(value);
+          writeChangesAndUpdate(updatedReport.build());
+          return DataUpdateResult.success();
+        }
+
+		public DataUpdateResult updateAbandonedEggCavities(boolean value) {
+          Report.Builder updatedReport = model.getActiveReport().toBuilder();
+          updatedReport.getActivityBuilder().setAbandonedEggCavities(value);
+          writeChangesAndUpdate(updatedReport.build());
+          return DataUpdateResult.success();
+        }
 	}
 
 	public static class DataUpdateResult {
