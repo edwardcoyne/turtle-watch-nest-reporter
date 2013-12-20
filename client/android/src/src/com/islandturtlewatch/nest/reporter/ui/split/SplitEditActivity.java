@@ -37,7 +37,6 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
 					.put(ReportSection.NOTES, new EditFragment())
 					.build();
 
-	@SuppressWarnings("unused")
 	private EditPresenter presenter;
 	private SectionManager sectionManager;
 
@@ -62,7 +61,7 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
 		Preconditions.checkArgument(clickHandlers.containsKey(view.getId()),
 				"No click handler registered for %s", view.getId());
 
-		clickHandlers.get(view.getId()).handleClick(view);
+		clickHandlers.get(view.getId()).handleClick(view, presenter.getUpdateHandler());
 	}
 
 	/**

@@ -2,18 +2,16 @@ package com.islandturtlewatch.nest.data;
 option java_outer_classname = "ReportProto";
 
 message Report {
-  // Timestamp crawl was found, in seconds.
-  optional int64 timestamp_found = 1;
-  // Timestamp of 55 day incubation, in seconds.
-  optional int64 timestamp_incubation = 2;
+  // Timestamp for start of day the crawl was found, in milli seconds.
+  optional int64 timestamp_found_ms = 1;
 
-  optional NestLocation location = 3;
-  optional string observers = 4;
-  optional Activity activity = 5;
-  optional NestCondition condition = 6;
-  optional Intervention intervention = 7;
+  optional NestLocation location = 2;
+  optional string observers = 3;
+  optional Activity activity = 4;
+  optional NestCondition condition = 5;
+  optional Intervention intervention = 6;
 
-  optional string additional_notes = 8;
+  optional string additional_notes = 7;
 }
 
 message Activity {

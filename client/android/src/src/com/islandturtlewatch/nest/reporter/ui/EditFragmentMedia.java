@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
 
 public class EditFragmentMedia extends EditFragment {
@@ -33,7 +34,7 @@ public class EditFragmentMedia extends EditFragment {
 		}
 
 		@Override
-    public void handleClick(View view) {
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
 			Log.v(TAG, "Capture Image clicked.");
 			Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 			Activity activity = (Activity) view.getContext();
