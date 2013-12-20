@@ -3,14 +3,13 @@ package com.islandturtlewatch.nest.reporter.ui;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.ListFragment;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.google.common.collect.ImmutableList;
-import com.islandturtlewatch.nest.reporter.ui.ReportSection;
 
 public class ReportSectionListFragment extends ListFragment {
 
@@ -22,20 +21,20 @@ public class ReportSectionListFragment extends ListFragment {
      * activated item position. Only used on tablets.
      */
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
-    
+
     /**
      * The current activated item position. Only used on tablets.
      */
     private int mActivatedPosition = ListView.INVALID_POSITION;
 
-    
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
     public ReportSectionListFragment() {
     }
-    
+
     public void setEventHandler(EventHandler eventHandler) {
     	this.eventHandler = eventHandler;
     }
@@ -43,7 +42,7 @@ public class ReportSectionListFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         reportSections = new ReportSectionAdapter();
         setListAdapter(reportSections);
     }
@@ -97,10 +96,10 @@ public class ReportSectionListFragment extends ListFragment {
 
         mActivatedPosition = position;
     }
-    
+
     private class ReportSectionAdapter extends ArrayAdapter<ReportSection> {
     	private final List<ReportSection> sections = ImmutableList.copyOf(ReportSection.values());
-    	
+
     	ReportSectionAdapter() {
     		super(getActivity(),
     		    android.R.layout.simple_list_item_activated_1,
@@ -117,15 +116,15 @@ public class ReportSectionListFragment extends ListFragment {
 		public boolean isEnabled(int position) {
 			return sections.get(position).isEnabled();
 		}
-		
+
 		ReportSection getSection(int position) {
 			return sections.get(position);
 		}
-  }	
-	
+  }
+
 	public interface EventHandler {
 	  public void onSectionSelected(ReportSection section);
-		
+
 	  public class Dummy implements EventHandler {
 		@Override
 		public void onSectionSelected(ReportSection section) {}

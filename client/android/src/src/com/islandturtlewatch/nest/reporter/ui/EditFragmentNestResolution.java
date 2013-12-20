@@ -11,8 +11,8 @@ public class EditFragmentNestResolution extends EditFragment {
 
   @Override
   public View onCreateView(LayoutInflater inflater,
-  		ViewGroup container,
+      ViewGroup container,
       Bundle savedInstanceState) {
-      return inflater.inflate(R.layout.edit_fragment_nest_resolution, container, false);
+    return inflater.inflate(R.layout.edit_fragment_nest_resolution, container, false);
   }
 }

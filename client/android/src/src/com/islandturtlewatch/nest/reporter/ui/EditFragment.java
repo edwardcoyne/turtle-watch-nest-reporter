@@ -2,69 +2,97 @@ package com.islandturtlewatch.nest.reporter.ui;
 
 import java.util.Map;
 
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.google.common.collect.Maps;
+import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableMap;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateResult;
 
 public class EditFragment extends Fragment {
-	private static final String TAG = EditFragment.class.getSimpleName();
+  private static final String TAG = EditFragment.class.getSimpleName();
 
-	private final Map<Integer, ClickHandler> clickHandlers = Maps.newHashMap();
+  protected Optional<Report> currentReport = Optional.absent();
 
-	/**
-	 * Will be called to update the display contents based on information in report.
-	 */
-	public void updateDisplay(Report report) {
+  /**
+   * Will be called to update the display contents based on information in report.
+   */
+  public final void updateDisplay(Report report) {
+    currentReport = Optional.of(report);
+    updateSection(report);
+  }
 
-	}
+  /**
+   * Override to update fragment's display.
+   */
+  // TODO(edcoyne): make abstract once we are no longer using generic EditFragments.
+  protected void updateSection(Report report) {
 
-	public Map<Integer, ClickHandler> getClickHandlers() {
-		return clickHandlers;
-	}
+  }
 
-	protected void addClickHandler(ClickHandler handler) {
-		clickHandlers.put(handler.getResourceId(), handler);
-	}
+  @Override
+  public void onStart() {
+    if (currentReport.isPresent()) {
+      updateSection(currentReport.get());
+    }
+    super.onStart();
+  }
 
-	protected EditText getEditTextById(int id) {
-		return (EditText) getActivity().findViewById(id);
-	}
+  // TODO(edcoyne): make abstract once we are no longer using generic EditFragments.
+  public Map<Integer, ClickHandler> getClickHandlers() {
+    return null;
+  }
 
-	protected Button getButtonById(int id) {
-		return (Button) getActivity().findViewById(id);
-	}
+  protected void setText(int id, String value) {
+    View view = getActivity().findViewById(id);
+    if (view instanceof TextView) {
+      ((TextView) view).setText(value);
+    } else {
+      throw new UnsupportedOperationException("We don't support setText on " + view);
+    }
+  }
 
-	protected TextView getTextViewById(int id) {
-		return (TextView) getActivity().findViewById(id);
-	}
+  protected void setChecked(int id, boolean checked) {
+    View view = getActivity().findViewById(id);
+    if (view instanceof CheckBox) {
+      ((CheckBox) view).setChecked(checked);
+    } else {
+      throw new UnsupportedOperationException("We don't support setChecked on " + view);
+    }
+  }
 
-	public static abstract class ClickHandler {
-		private final int resourceId;
-		protected ClickHandler(int resourceId) {
-	    this.resourceId = resourceId;
+  public static abstract class ClickHandler {
+    private final int resourceId;
+    protected ClickHandler(int resourceId) {
+      this.resourceId = resourceId;
     }
 
-		int getResourceId() {
-			return resourceId;
-		}
+    int getResourceId() {
+      return resourceId;
+    }
 
-		protected void displayResult(DataUpdateResult result) {
-			if (result.isSuccess()) {
-				Log.d(TAG, "Update successful");
-			} else {
-				Log.e(TAG, "Update failed: " + ((result.hasErrorMessage()) ? result.getErrorMessage() : ""));
-				//TODO (edcoyne): add dialog with error message for user.
-			}
-		}
+    protected void displayResult(DataUpdateResult result) {
+      if (result.isSuccess()) {
+        Log.d(TAG, "Update successful");
+      } else {
+        Log.e(TAG, "Update failed: " + ((result.hasErrorMessage()) ? result.getErrorMessage() : ""));
+        //TODO (edcoyne): add dialog with error message for user.
+      }
+    }
 
-		public abstract void handleClick(View view, DataUpdateHandler updateHandler);
-	}
+    static Map<Integer, ClickHandler> toMap(ClickHandler... clickHandlers) {
+      ImmutableMap.Builder<Integer, ClickHandler> builder = ImmutableMap.builder();
+      for (ClickHandler handler : clickHandlers) {
+        builder.put(handler.resourceId, handler);
+      }
+      return builder.build();
+    }
+
+    public abstract void handleClick(View view, DataUpdateHandler updateHandler);
+  }
 }

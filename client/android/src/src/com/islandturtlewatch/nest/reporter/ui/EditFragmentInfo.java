@@ -1,5 +1,7 @@
 package com.islandturtlewatch.nest.reporter.ui;
 
+import java.util.Map;
+
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,48 +16,63 @@ import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.util.DateUtil;
 
 public class EditFragmentInfo extends EditFragment {
-  public EditFragmentInfo() {
-	  super();
-	  addClickHandler(new HandleSetInfoDate());
-  }
-
-	@Override
-  public View onCreateView(LayoutInflater inflater,
-  		ViewGroup container,
-      Bundle savedInstanceState) {
-      return inflater.inflate(R.layout.edit_fragment_info, container, false);
+  private static final Map<Integer, ClickHandler> CLICK_HANDLERS = ClickHandler.toMap(
+      new HandleSetInfoDate());
+  @Override
+  public Map<Integer, ClickHandler> getClickHandlers() {
+    return CLICK_HANDLERS;
   }
 
   @Override
-  public void updateDisplay(Report report) {
-  	getButtonById(R.id.buttonDateFound).setText(
-  			DateUtil.getFormattedDate(report.getTimestampFoundMs()));
-  	getTextViewById(R.id.labelIncubationDate).setText(
-  			DateUtil.getFormattedDate(DateUtil.plusDays(report.getTimestampFoundMs(), 55)));
+  public View onCreateView(LayoutInflater inflater,
+      ViewGroup container,
+      Bundle savedInstanceState) {
+    return inflater.inflate(R.layout.edit_fragment_info, container, false);
   }
 
-	private static class HandleSetInfoDate extends ClickHandler
-  		implements DatePickerDialog.OnDateSetListener {
-  	private DataUpdateHandler updateHandler;
+  @Override
+  public void updateSection(Report report) {
+    if (isDetached() || getActivity() == null) {
+      // Will be updated when attached.
+      return;
+    }
 
-		protected HandleSetInfoDate() {
+    setText(R.id.buttonDateFound, DateUtil.getFormattedDate(report.getTimestampFoundMs()));
+    setText(R.id.labelIncubationDate,
+        DateUtil.getFormattedDate(DateUtil.plusDays(report.getTimestampFoundMs(), 55)));
+
+    setText(R.id.fieldObservers, report.getObservers());
+
+    setChecked(R.id.fieldNestVerified, report.getActivity().getNestVerified());
+    setChecked(R.id.fieldNestNotVerified, report.getActivity().getNestNotVerified());
+    setChecked(R.id.fieldNestRelocated, report.getActivity().getNestRelocated());
+    setChecked(R.id.fieldFalseCrawl, report.getActivity().getFalseCrawl());
+    setChecked(R.id.fieldAbandonedBodyPits, report.getActivity().getAbandonedBodyPits());
+    setChecked(R.id.fieldAbandonedEggCavities, report.getActivity().getAbandonedEggCavities());
+  }
+
+  private static class HandleSetInfoDate extends ClickHandler
+      implements DatePickerDialog.OnDateSetListener {
+    private DataUpdateHandler updateHandler;
+
+    protected HandleSetInfoDate() {
       super(R.id.buttonDateFound);
     }
 
-		@Override
+    @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-			this.updateHandler = updateHandler;
-			CurrentDatePicker.showOnView(view, this);
+      this.updateHandler = updateHandler;
+      CurrentDatePicker.showOnView(view, this);
     }
 
-		@Override
+    @Override
     public void onDateSet(DatePicker view,
-    		int year,
-    		int month,
+        int year,
+        int month,
         int day) {
-			Log.d(EditFragmentInfo.class.getSimpleName(),
-					"Set date to " + year + "/" + month + "/" + day);
-			displayResult(updateHandler.updateDateFound(year, month, day));
+      Log.d(EditFragmentInfo.class.getSimpleName(),
+          "Set date to " + year + "/" + month + "/" + day);
+      displayResult(updateHandler.updateDateFound(year, month, day));
     }
   }
 }
