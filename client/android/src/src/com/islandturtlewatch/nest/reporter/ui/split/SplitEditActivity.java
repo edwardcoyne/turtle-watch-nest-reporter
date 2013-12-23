@@ -4,10 +4,7 @@ import java.util.Map;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
@@ -18,6 +15,7 @@ import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.data.ReportsModel;
 import com.islandturtlewatch.nest.reporter.ui.EditFragment;
 import com.islandturtlewatch.nest.reporter.ui.EditFragment.ClickHandler;
+import com.islandturtlewatch.nest.reporter.ui.EditFragment.TextChangeHandler;
 import com.islandturtlewatch.nest.reporter.ui.EditFragmentInfo;
 import com.islandturtlewatch.nest.reporter.ui.EditFragmentMedia;
 import com.islandturtlewatch.nest.reporter.ui.EditFragmentNestCare;
@@ -88,6 +86,17 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
     clickHandlers.get(view.getId()).handleClick(view, presenter.getUpdateHandler());
   }
 
+  public void handleTextChange(View view, String newText) {
+    Map<Integer, TextChangeHandler> changeHandlers =
+        sectionManager.getCurrentTextChangeHandlers();
+
+    int id = view.getId();
+    Preconditions.checkArgument(changeHandlers.containsKey(id),
+        "Missing text change handler for " + id);
+
+    changeHandlers.get(id).handleTextChange(newText.toString(), presenter.getUpdateHandler());
+  }
+
   /**
    * Responsible for managing the current section and updating the display to change sections.
    */
@@ -110,6 +119,10 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
       return currentFragment.getClickHandlers();
     }
 
+    Map<Integer, TextChangeHandler> getCurrentTextChangeHandlers() {
+      return currentFragment.getTextChangeHandlers();
+    }
+
     private void setSection(ReportSection section) {
       if (currentSection == section) {
         return;
@@ -123,17 +136,6 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
       setEditFragment(fragment);
       if (currentReport.isPresent()) {
         fragment.updateDisplay(currentReport.get());
-      }
-      addTextMonitoring(fragment);
-    }
-
-    private void addTextMonitoring(EditFragment fragment) {
-      if (fragment.getView() instanceof ViewGroup) {
-        ViewGroup baseLayout = (ViewGroup)fragment.getView();
-        for (int i = 0; i < baseLayout.getChildCount(); i++) {
-          BROKEN!!!
-          View child = baseLayout.getChildAt(i);
-        }
       }
     }
 
@@ -157,24 +159,5 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
         setSection(section);
       }
     }
-  }
-
-  private class UdpatingTextWatcher implements TextWatcher {
-    private final int id;
-
-    public UdpatingTextWatcher(int id) {
-      this.id = id;
-    }
-
-    @Override
-    public void afterTextChanged(Editable newText) {
-
-    }
-
-    @Override
-    public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
-
-    @Override
-    public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
   }
 }

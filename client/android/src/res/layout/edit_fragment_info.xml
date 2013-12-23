@@ -40,15 +40,14 @@
             android:id="@+id/labelObservers"
             android:text="@string/edit_info_label_observers" />
 
-        <EditText
+        <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
             android:id="@+id/fieldObservers"
             android:inputType="textPersonName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:tag="monitored">
+            onTextChangeHandler="handleTextChange"/>
 
-        </EditText>
    </TableRow>
    <TableRow
        android:layout_width="wrap_content"

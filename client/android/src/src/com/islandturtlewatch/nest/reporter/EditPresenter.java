@@ -56,7 +56,12 @@ public class EditPresenter {
 		}
 
 		public DataUpdateResult updateObservers(String observers) {
-          Report updatedReport = model.getActiveReport().toBuilder()
+		  Report activeReport = model.getActiveReport();
+		  if (activeReport.getObservers().equals(observers)) {
+		    return DataUpdateResult.success();
+		  }
+
+          Report updatedReport = activeReport.toBuilder()
               .setObservers(observers)
               .build();
 
