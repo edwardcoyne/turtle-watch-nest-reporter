@@ -81,7 +81,7 @@ public class EditFragmentInfo extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      Log.d(TAG, "Updating observers: " + newText);
+      Log.i(TAG, "Updating observers: " + newText);
       updateHandler.updateObservers(newText);
     }
   }

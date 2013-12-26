@@ -66,10 +66,7 @@ public class EditFragment extends Fragment {
   protected void setText(int id, String value) {
     View view = getActivity().findViewById(id);
     if (view instanceof TextView) { // This includes buttons and TextEdits
-      TextView textView = ((TextView) view);
-      if (!textView.getText().equals(value)) {
-        textView.setText(value);
-      }
+      ((TextView) view).setTextKeepState(value);
     } else {
       throw new UnsupportedOperationException("We don't support setText on " + view);
     }

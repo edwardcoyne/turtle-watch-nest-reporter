@@ -14,11 +14,14 @@ import android.widget.EditText;
 import com.google.common.base.Optional;
 
 /**
- * {@link EditText} that has a xml attribute of onTextChangeHandler and will notify that method
- * when there are changes made to the text.
+ * {@link EditText} that has a xml attribute of onTextChangeHandler and will be notified when there
+ * are changes made to the value.
+ *
+ * <p> Programmatic changes through setText* will not be reported to the listener.
  */
 public class MonitoredEditText extends EditText {
   private Optional<String> textListenerMethodName = Optional.absent();
+  private boolean isUpdating = false;
 
   public MonitoredEditText(Context context, AttributeSet attrs) {
     super(context, attrs);
@@ -32,6 +35,14 @@ public class MonitoredEditText extends EditText {
     addTextChangedListener(new TextMonitor(this));
   }
 
+
+  @Override
+  public void setText(CharSequence text, BufferType type) {
+    isUpdating = true;
+    super.setText(text, type);
+    isUpdating = false;
+  }
+
   private class TextMonitor implements TextWatcher {
     private final View view;
     private Optional<Method> handler = Optional.absent();
@@ -42,6 +53,10 @@ public class MonitoredEditText extends EditText {
 
     @Override
     public void afterTextChanged(Editable newText) {
+      if (isUpdating) {
+        return;
+      }
+
       if (textListenerMethodName.isPresent()) {
         if (!handler.isPresent()) {
           try {
@@ -51,6 +66,7 @@ public class MonitoredEditText extends EditText {
             throw new IllegalStateException(e);
           }
         }
+
         try {
           handler.get().invoke(getContext(), view, newText.toString());
         } catch (IllegalAccessException e) {
@@ -64,9 +80,9 @@ public class MonitoredEditText extends EditText {
     }
 
     @Override
-    public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
     @Override
-    public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
+    public void onTextChanged(CharSequence s, int start, int before, int count) {}
   }
 }
