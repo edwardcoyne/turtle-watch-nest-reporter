@@ -72,12 +72,22 @@
             android:text="@string/edit_nest_location_apex_to_barrier" />
 
         <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
-            android:id="@+id/fieldApexToBarrier"
-            android:inputType="textNoSuggestions"
+            android:id="@+id/fieldApexToBarrier_ft"
+            android:inputType="number"
             android:ems="1"
             onTextChangeHandler="handleTextChange"/>
         <TextView
-            android:text="@string/feet_short" />
+            android:text="@string/feet_short" 
+            android:ems="1"/>
+        
+        <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+            android:id="@+id/fieldApexToBarrier_in"
+            android:inputType="number"
+            android:ems="2"
+            onTextChangeHandler="handleTextChange"/>
+        <TextView
+            android:text="@string/inches_short" 
+            android:ems="1"/>
    </TableRow>
    <TableRow
         android:layout_width="wrap_content"
@@ -89,12 +99,20 @@
             android:text="@string/edit_nest_location_water_to_apex" />
 
         <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
-            android:id="@+id/fieldWaterToApex"
-            android:inputType="textNoSuggestions"
+            android:id="@+id/fieldWaterToApex_ft"
+            android:inputType="number"
             android:ems="1"
             onTextChangeHandler="handleTextChange"/>
         <TextView
             android:text="@string/feet_short" />
+        
+        <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+            android:id="@+id/fieldWaterToApex_in"
+            android:inputType="number"
+            android:ems="1"
+            onTextChangeHandler="handleTextChange"/>
+        <TextView
+            android:text="@string/inches_short" />
    </TableRow>
    <TableRow
        android:layout_width="wrap_content"
@@ -114,21 +132,24 @@
            android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"
-           android:text="@string/edit_nest_location_open_beach" />
+           android:text="@string/edit_nest_location_open_beach"
+           android:onClick="handleClick" />
        
        <CheckBox
            android:id="@+id/fieldLocationInVegitation"
            android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"
-           android:text="@string/edit_nest_location_in_vegitation" />
+           android:text="@string/edit_nest_location_in_vegitation"
+           android:onClick="handleClick" />
        
        <CheckBox
            android:id="@+id/fieldLocationAtVegitation"
            android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"
-           android:text="@string/edit_nest_location_at_vegitation" />
+           android:text="@string/edit_nest_location_at_vegitation"
+           android:onClick="handleClick" />
        
    </TableRow>
    <TableRow
@@ -140,13 +161,15 @@
            android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"
-           android:text="@string/edit_nest_location_at_escarpment" />
+           android:text="@string/edit_nest_location_at_escarpment"
+           android:onClick="handleClick" />
        <CheckBox
            android:id="@+id/fieldLocationOnEscarpment"
            android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"
-           android:text="@string/edit_nest_location_on_escarpment" />
+           android:text="@string/edit_nest_location_on_escarpment"
+           android:onClick="handleClick" />
    </TableRow>
    
    <TableRow
@@ -157,7 +180,8 @@
            android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"
-           android:text="@string/edit_nest_location_obstructions" />
+           android:text="@string/edit_nest_location_obstructions"
+           android:onClick="handleClick" />
    </TableRow>
    <TableRow
        android:layout_width="wrap_content"
@@ -168,32 +192,34 @@
            android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"
-           android:text="@string/edit_nest_location_seawall_rocks" />
+           android:text="@string/edit_nest_location_seawall_rocks"
+           android:onClick="handleClick" />
        
        <CheckBox
            android:id="@+id/fieldObstructionsFurniture"
            android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"
-           android:text="@string/edit_nest_location_furniture" />
+           android:text="@string/edit_nest_location_furniture"
+           android:onClick="handleClick" />
        
        <CheckBox
            android:id="@+id/fieldObstructionsEscarpment"
            android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"
-           android:text="@string/edit_nest_location_escarpment" />
+           android:text="@string/edit_nest_location_escarpment"
+           android:onClick="handleClick" />
    </TableRow>
    <TableRow
        android:layout_width="wrap_content"
        android:layout_height="wrap_content" >
-
-       <CheckBox
-           android:id="@+id/fieldObstructionsOther"
-           android:text="@string/other" />
+       
+       <TextView
+            android:text="@string/other" />
        
        <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
-            android:id="@+id/fieldObstructionsOtherValue"
+            android:id="@+id/fieldObstructionsOther"
             android:inputType="textMultiLine"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

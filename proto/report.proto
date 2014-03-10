@@ -54,18 +54,20 @@ message NestLocation {
   optional string details = 3;
 
   enum City {
-    AM = 1;
-    BB = 2;
-    HB = 3;    
+    UNSET_CITY = 1;
+    AM = 2;
+    BB = 3;
+    HB = 4;    
   }
   optional City city = 4;
 
   enum Placement {
-    OPEN_BEACH = 1;
-    IN_VEGITATION = 2;
-    AT_VEGITATION = 3;
-    AT_ESCARPMENT = 4;
-    ON_ESCARPMENT = 5;
+    UNSET_PLACEMENT = 1;
+    OPEN_BEACH = 2;
+    IN_VEGITATION = 3;
+    AT_VEGITATION = 4;
+    AT_ESCARPMENT = 5;
+    ON_ESCARPMENT = 6;
   }
   optional Placement placement = 5;
 
@@ -77,8 +79,10 @@ message NestLocation {
   }
   optional NestObstructions obstructions = 6;
 
-  optional float apex_to_barrier_ft = 7;
-  optional float water_to_apex_ft = 8;
+  optional int32 apex_to_barrier_ft = 7;
+  optional int32 apex_to_barrier_in = 8;
+  optional int32 water_to_apex_ft = 9;
+  optional int32 water_to_apex_in = 10;
 }
 
 message Intervention {
@@ -89,16 +93,18 @@ message Intervention {
     optional int64 timestamp = 1;
     
     enum Type {
-      SELF_RELEASING_CAGE = 1;
-      SELF_RELEASING_FLAT = 2;
-      RESTRAINING_CAGE = 3; 
+      UNSET_TYPE = 1;
+      SELF_RELEASING_CAGE = 2;
+      SELF_RELEASING_FLAT = 3;
+      RESTRAINING_CAGE = 4; 
     }
     optional Type type = 2;
 
     enum Reason {
-      BEFORE_PREDITATION = 1;
-      AFTER_PREDITATION = 2;
-      FOR_LIGHT_PROBLEMS = 3;
+      UNSET_REASON = 1;
+      BEFORE_PREDITATION = 2;
+      AFTER_PREDITATION = 3;
+      FOR_LIGHT_PROBLEMS = 4;
     }
     optional Reason reason = 3;
   }
@@ -113,9 +119,10 @@ message Excavation {
   optional bool excavated = 2;
 
   enum ExcavationFailureReason {
-    EGGS_NOT_FOUND = 1;
-    EGGS_HATCHLINGS_TOO_DECAYED = 2;
-    OTHER = 3;
+    UNSET_REASON = 1;
+    EGGS_NOT_FOUND = 2;
+    EGGS_HATCHLINGS_TOO_DECAYED = 3;
+    OTHER = 4;
   }
   optional ExcavationFailureReason failure_reason = 3;
   optional string failure_other = 4;
@@ -137,10 +144,11 @@ message Relocation {
   optional int32 eggs_destroyed = 5;
 
   enum RelocationReason {
-    HIGH_WATER = 1;
-    PREDATION = 2;
-    WASHING_OUT = 3;
-    CONSTRUCTION_RENOURISHMENT = 4;
+    UNSET_REASON = 1;
+    HIGH_WATER = 2;
+    PREDATION = 3;
+    WASHING_OUT = 4;
+    CONSTRUCTION_RENOURISHMENT = 5;
   }
   optional RelocationReason reason = 6;
 }

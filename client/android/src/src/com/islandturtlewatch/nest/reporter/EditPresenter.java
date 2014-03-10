@@ -3,6 +3,8 @@ package com.islandturtlewatch.nest.reporter;
 import android.os.Bundle;
 
 import com.google.common.base.Optional;
+import com.islandturtlewatch.nest.data.ReportProto.NestLocation.Builder;
+import com.islandturtlewatch.nest.data.ReportProto.NestLocation.Placement;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.data.ReportsModel;
 import com.islandturtlewatch.nest.reporter.ui.EditView;
@@ -127,16 +129,97 @@ public class EditPresenter {
           return DataUpdateResult.success();
         }
 
-		public DataUpdateResult updateApexToBarrier(float apexToBarrierFt) {
+		public DataUpdateResult updateApexToBarrierFt(Optional<Integer> apexToBarrierFt) {
           Report.Builder updatedReport = model.getActiveReport().toBuilder();
-          updatedReport.getLocationBuilder().setApexToBarrierFt(apexToBarrierFt);
+          Builder location = updatedReport.getLocationBuilder();
+
+          if (apexToBarrierFt.isPresent()) {
+            location.setApexToBarrierFt(apexToBarrierFt.get());
+          } else {
+            location.clearApexToBarrierFt();
+          }
+
           writeChangesAndUpdate(updatedReport.build());
           return DataUpdateResult.success();
         }
 
-		public DataUpdateResult updateWaterToApex(float waterToApexFt) {
+		public DataUpdateResult updateApexToBarrierIn(Optional<Integer> apexToBarrierIn) {
           Report.Builder updatedReport = model.getActiveReport().toBuilder();
-          updatedReport.getLocationBuilder().setWaterToApexFt(waterToApexFt);
+          Builder location = updatedReport.getLocationBuilder();
+
+          if (apexToBarrierIn.isPresent()) {
+            location.setApexToBarrierIn(apexToBarrierIn.get());
+          } else {
+            location.clearApexToBarrierIn();
+          }
+
+          writeChangesAndUpdate(updatedReport.build());
+          return DataUpdateResult.success();
+        }
+
+		public DataUpdateResult updateWaterToApexFt(Optional<Integer> waterToApexFt) {
+          Report.Builder updatedReport = model.getActiveReport().toBuilder();
+
+          Builder location = updatedReport.getLocationBuilder();
+          if (waterToApexFt.isPresent()) {
+            location.setWaterToApexFt(waterToApexFt.get());
+          } else {
+            location.clearWaterToApexFt();
+          }
+
+          writeChangesAndUpdate(updatedReport.build());
+          return DataUpdateResult.success();
+        }
+
+        public DataUpdateResult updateWaterToApexIn(Optional<Integer> waterToApexIn) {
+          Report.Builder updatedReport = model.getActiveReport().toBuilder();
+          Builder location = updatedReport.getLocationBuilder();
+
+          if (waterToApexIn.isPresent()) {
+            location.setWaterToApexIn(waterToApexIn.get());
+          } else {
+            location.clearWaterToApexIn();
+          }
+
+          writeChangesAndUpdate(updatedReport.build());
+          return DataUpdateResult.success();
+        }
+
+		public DataUpdateResult updateLocationPlacement(Placement value) {
+          Report.Builder updatedReport = model.getActiveReport().toBuilder();
+          updatedReport.getLocationBuilder().setPlacement(value);
+          writeChangesAndUpdate(updatedReport.build());
+          return DataUpdateResult.success();
+        }
+
+		public DataUpdateResult updateObstructionsSeawallRocks(boolean value) {
+          Report.Builder updatedReport = model.getActiveReport().toBuilder();
+          updatedReport.getLocationBuilder().getObstructionsBuilder().setSeawallRocks(value);
+          writeChangesAndUpdate(updatedReport.build());
+          return DataUpdateResult.success();
+		}
+
+		public DataUpdateResult updateObstructionsFurniture(boolean value) {
+          Report.Builder updatedReport = model.getActiveReport().toBuilder();
+          updatedReport.getLocationBuilder().getObstructionsBuilder().setFurniture(value);
+          writeChangesAndUpdate(updatedReport.build());
+          return DataUpdateResult.success();
+		}
+
+		public DataUpdateResult updateObstructionsEscarpment(boolean value) {
+          Report.Builder updatedReport = model.getActiveReport().toBuilder();
+          updatedReport.getLocationBuilder().getObstructionsBuilder().setEscarpment(value);
+          writeChangesAndUpdate(updatedReport.build());
+          return DataUpdateResult.success();
+        }
+
+		public DataUpdateResult updateObstructionsOther(Optional<String> value) {
+          Report.Builder updatedReport = model.getActiveReport().toBuilder();
+          if (value.isPresent()) {
+            updatedReport.getLocationBuilder().getObstructionsBuilder().setOther(value.get());
+          } else {
+            updatedReport.getLocationBuilder().getObstructionsBuilder().clearOther();
+          }
           writeChangesAndUpdate(updatedReport.build());
           return DataUpdateResult.success();
         }
