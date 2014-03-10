@@ -1,5 +1,6 @@
 package com.islandturtlewatch.nest.reporter.ui;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import android.app.Fragment;
@@ -9,7 +10,12 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.google.common.base.Optional;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableMap.Builder;
+import com.google.protobuf.Descriptors.FieldDescriptor;
+import com.google.protobuf.Descriptors.FieldDescriptor.Type;
+import com.google.protobuf.Message;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateResult;
@@ -18,12 +24,20 @@ public class EditFragment extends Fragment {
   private static final String TAG = EditFragment.class.getSimpleName();
 
   protected Optional<Report> currentReport = Optional.absent();
+  protected Map<Message, Map<String, FieldDescriptor>> descriptors =
+      new HashMap<Message, Map<String, FieldDescriptor>>();
 
   /**
    * Will be called to update the display contents based on information in report.
    */
   public final void updateDisplay(Report report) {
     currentReport = Optional.of(report);
+
+    if (isDetached() || getActivity() == null) {
+      // Will be updated when attached.
+      return;
+    }
+
     updateSection(report);
   }
 
@@ -61,6 +75,41 @@ public class EditFragment extends Fragment {
     } else {
       throw new UnsupportedOperationException("We don't support getTextView on " + view);
     }
+  }
+
+  // Sets text iff field is set on proto.
+  protected void setTextIfPresent(int viewId, Message proto, String fieldName) {
+    FieldDescriptor descriptor = getDescriptorMapFor(proto).get(fieldName);
+    Preconditions.checkNotNull(descriptor, "Unknown field: " + fieldName);
+    if (!proto.hasField(descriptor)) {
+      return;
+    }
+    if (descriptor.getType() == Type.STRING) {
+      setText(viewId, (String)proto.getField(descriptor));
+    } else if (descriptor.getType() == Type.INT32) {
+      setText(viewId, Integer.toString((Integer)proto.getField(descriptor)));
+    } else if (descriptor.getType() == Type.INT64) {
+      setText(viewId, Long.toString((Long)proto.getField(descriptor)));
+    } else if (descriptor.getType() == Type.FLOAT) {
+      setText(viewId, Float.toString((Float)proto.getField(descriptor)));
+    } else if (descriptor.getType() == Type.DOUBLE) {
+      setText(viewId, Double.toString((Double)proto.getField(descriptor)));
+    } else {
+      throw new IllegalArgumentException("Unsupported Text type: " + descriptor.getType());
+    }
+  }
+
+  private Map<String, FieldDescriptor> getDescriptorMapFor(Message proto) {
+    if (!descriptors.containsKey(proto)) {
+      Builder<String, FieldDescriptor> builder = ImmutableMap.builder();
+      for (FieldDescriptor descriptor : proto.getAllFields().keySet()) {
+        Log.d(TAG, "Adding descriptor to map:" + descriptor.getName() + " for proto " + proto);
+        builder.put(descriptor.getName(), descriptor);
+      }
+      descriptors.put(proto, builder.build());
+    }
+
+    return descriptors.get(proto);
   }
 
   protected void setText(int id, String value) {

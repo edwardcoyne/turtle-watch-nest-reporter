@@ -56,12 +56,7 @@ public class EditPresenter {
 		}
 
 		public DataUpdateResult updateObservers(String observers) {
-		  Report activeReport = model.getActiveReport();
-		  if (activeReport.getObservers().equals(observers)) {
-		    return DataUpdateResult.success();
-		  }
-
-          Report updatedReport = activeReport.toBuilder()
+          Report updatedReport = model.getActiveReport().toBuilder()
               .setObservers(observers)
               .build();
 
@@ -107,6 +102,41 @@ public class EditPresenter {
 		public DataUpdateResult updateAbandonedEggCavities(boolean value) {
           Report.Builder updatedReport = model.getActiveReport().toBuilder();
           updatedReport.getActivityBuilder().setAbandonedEggCavities(value);
+          writeChangesAndUpdate(updatedReport.build());
+          return DataUpdateResult.success();
+        }
+
+		public DataUpdateResult updateStreetAddress(String address) {
+          Report.Builder updatedReport = model.getActiveReport().toBuilder();
+          updatedReport.getLocationBuilder().setStreetAddress(address);
+          writeChangesAndUpdate(updatedReport.build());
+          return DataUpdateResult.success();
+        }
+
+		public DataUpdateResult updateSectionNumber(int sectionNumber) {
+          Report.Builder updatedReport = model.getActiveReport().toBuilder();
+          updatedReport.getLocationBuilder().setSection(sectionNumber);
+          writeChangesAndUpdate(updatedReport.build());
+          return DataUpdateResult.success();
+        }
+
+		public DataUpdateResult updateDetails(String details) {
+          Report.Builder updatedReport = model.getActiveReport().toBuilder();
+          updatedReport.getLocationBuilder().setDetails(details);
+          writeChangesAndUpdate(updatedReport.build());
+          return DataUpdateResult.success();
+        }
+
+		public DataUpdateResult updateApexToBarrier(float apexToBarrierFt) {
+          Report.Builder updatedReport = model.getActiveReport().toBuilder();
+          updatedReport.getLocationBuilder().setApexToBarrierFt(apexToBarrierFt);
+          writeChangesAndUpdate(updatedReport.build());
+          return DataUpdateResult.success();
+        }
+
+		public DataUpdateResult updateWaterToApex(float waterToApexFt) {
+          Report.Builder updatedReport = model.getActiveReport().toBuilder();
+          updatedReport.getLocationBuilder().setWaterToApexFt(waterToApexFt);
           writeChangesAndUpdate(updatedReport.build());
           return DataUpdateResult.success();
         }

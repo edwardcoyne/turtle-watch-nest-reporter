@@ -76,6 +76,9 @@ message NestLocation {
     optional string other = 4;
   }
   optional NestObstructions obstructions = 6;
+
+  optional float apex_to_barrier_ft = 7;
+  optional float water_to_apex_ft = 8;
 }
 
 message Intervention {

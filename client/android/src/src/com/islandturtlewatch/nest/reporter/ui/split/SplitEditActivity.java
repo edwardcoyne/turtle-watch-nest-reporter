@@ -22,6 +22,7 @@ import com.islandturtlewatch.nest.reporter.ui.EditFragmentNestCare;
 import com.islandturtlewatch.nest.reporter.ui.EditFragmentNestCondition;
 import com.islandturtlewatch.nest.reporter.ui.EditFragmentNestLocation;
 import com.islandturtlewatch.nest.reporter.ui.EditFragmentNestResolution;
+import com.islandturtlewatch.nest.reporter.ui.EditFragmentNotes;
 import com.islandturtlewatch.nest.reporter.ui.EditView;
 import com.islandturtlewatch.nest.reporter.ui.ReportSection;
 import com.islandturtlewatch.nest.reporter.ui.ReportSectionListFragment;
@@ -40,7 +41,7 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
           .put(ReportSection.NEST_CARE, new EditFragmentNestCare())
           .put(ReportSection.NEST_RESOLUTION, new EditFragmentNestResolution())
           .put(ReportSection.MEDIA, new EditFragmentMedia())
-          .put(ReportSection.NOTES, new EditFragment())
+          .put(ReportSection.NOTES, new EditFragmentNotes())
           .build();
 
   private EditPresenter presenter;

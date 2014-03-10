@@ -52,18 +52,13 @@ public class EditFragmentInfo extends EditFragment {
 
   @Override
   public void updateSection(Report report) {
-    if (isDetached() || getActivity() == null) {
-      // Will be updated when attached.
-      return;
-    }
-
     if (report.hasTimestampFoundMs()) {
       setText(R.id.buttonDateFound, DateUtil.getFormattedDate(report.getTimestampFoundMs()));
       setText(R.id.labelIncubationDate,
           DateUtil.getFormattedDate(DateUtil.plusDays(report.getTimestampFoundMs(), 55)));
     }
 
-    setText(R.id.fieldObservers, report.getObservers());
+    setText(R.id.fieldObservers, report.hasObservers() ? report.getObservers() : "");
 
     setChecked(R.id.fieldNestVerified, report.getActivity().getNestVerified());
     setChecked(R.id.fieldNestNotVerified, report.getActivity().getNestNotVerified());
