@@ -3,10 +3,11 @@ package com.islandturtlewatch.nest.reporter.ui;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.util.Log;
 import android.view.View;
-import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.google.common.base.Optional;
@@ -85,16 +86,26 @@ public class EditFragment extends Fragment {
 
   protected void setChecked(int id, boolean checked) {
     View view = getActivity().findViewById(id);
-    if (view instanceof CheckBox) {
-      ((CheckBox) view).setChecked(checked);
+    if (view instanceof CompoundButton) { // This includes CheckBoxes and ToggleButtons.
+      ((CompoundButton) view).setChecked(checked);
     } else {
       throw new UnsupportedOperationException("We don't support setChecked on " + view);
     }
   }
 
+  protected void setVisible(int id, boolean visible) {
+    View view = getActivity().findViewById(id);
+    view.setVisibility((visible) ? View.VISIBLE : View.INVISIBLE);
+  }
+
+  protected boolean isChecked(int id) {
+    View view = getActivity().findViewById(id);
+    return isChecked(view);
+  }
+
   protected static boolean isChecked(View view) {
-    if (view instanceof CheckBox) {
-      return ((CheckBox) view).isChecked();
+    if (view instanceof CompoundButton) {
+      return ((CompoundButton) view).isChecked();
     } else {
       throw new UnsupportedOperationException("We don't support isChecked on " + view);
     }
@@ -132,6 +143,20 @@ public class EditFragment extends Fragment {
     }
 
     public abstract void handleClick(View view, DataUpdateHandler updateHandler);
+  }
+
+  public abstract static class DatePickerClickHandler extends ClickHandler
+      implements DatePickerDialog.OnDateSetListener{
+    protected DataUpdateHandler updateHandler;
+    public DatePickerClickHandler(int viewId) {
+      super(viewId);
+    }
+
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      this.updateHandler = updateHandler;
+      CurrentDatePicker.showOnView(view, this);
+    }
   }
 
   public abstract static class TextChangeHandler{

@@ -24,13 +24,13 @@ message Activity {
 }
 
 message NestCondition {
-  optional int64 vandalized_timestamp = 1;
-  optional int64 poached_timestamp = 2;
+  optional int64 vandalized_timestamp_ms = 1;
+  optional int64 poached_timestamp_ms = 2;
   optional bool roots_invaded_eggshells = 3;
   optional bool eggs_scattered_by_another = 4;
 
   message WashEvent {
-    optional int64 timestamp = 1;
+    optional int64 timestamp_ms = 1;
     optional string storm_name = 2;
   }
 
@@ -38,13 +38,13 @@ message NestCondition {
   optional WashEvent wash_out = 6;
 
   message PreditationEvent {
-    optional int64 timestamp = 1;
+    optional int64 timestamp_ms = 1;
     optional string predator = 2;
     optional int32 number_of_eggs = 3;
   }
   repeated PreditationEvent preditation = 7;
 
-  repeated int64 hatch_timestamp = 8;
+  repeated int64 hatch_timestamp_ms = 8;
   optional bool disorientation = 9;
 }
 
@@ -90,7 +90,7 @@ message Intervention {
   optional string adopted_by = 2;
   
   message ProtectionEvent {
-    optional int64 timestamp = 1;
+    optional int64 timestamp_ms = 1;
     
     enum Type {
       UNSET_TYPE = 1;
@@ -108,14 +108,14 @@ message Intervention {
     }
     optional Reason reason = 3;
   }
-  repeated ProtectionEvent protection_event = 3;
+  optional ProtectionEvent protection_event = 3;
 
   optional Relocation relocation = 4;
   optional Excavation excavation = 5;
 }
 
 message Excavation {
-  optional int32 timestamp = 1;
+  optional int64 timestamp_ms = 1;
   optional bool excavated = 2;
 
   enum ExcavationFailureReason {
@@ -137,20 +137,17 @@ message Excavation {
 }
 
 message Relocation {
-  optional int64 timestamp = 1;
-  optional string new_address = 2;
-  optional GpsCoordinates coordinates = 3;
-  optional int32 eggs_relocated = 4;
-  optional int32 eggs_destroyed = 5;
+  optional bool was_relocated = 1;
+  optional int64 timestamp_ms = 2;
+  optional string new_address = 3;
+  optional GpsCoordinates coordinates = 4;
+  optional int32 eggs_relocated = 5;
+  optional int32 eggs_destroyed = 6;
 
-  enum RelocationReason {
-    UNSET_REASON = 1;
-    HIGH_WATER = 2;
-    PREDATION = 3;
-    WASHING_OUT = 4;
-    CONSTRUCTION_RENOURISHMENT = 5;
-  }
-  optional RelocationReason reason = 6;
+  optional bool reason_high_water = 7;
+  optional bool reason_predation = 8;
+  optional bool reason_washing_out = 9;
+  optional bool reason_construction_renourishment = 10;
 }
 
 message GpsCoordinates {

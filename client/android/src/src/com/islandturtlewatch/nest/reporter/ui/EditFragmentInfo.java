@@ -2,7 +2,6 @@ package com.islandturtlewatch.nest.reporter.ui;
 
 import java.util.Map;
 
-import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -81,20 +80,10 @@ public class EditFragmentInfo extends EditFragment {
     }
   }
 
-  private static class HandleSetInfoDate extends ClickHandler
-      implements DatePickerDialog.OnDateSetListener {
-    private DataUpdateHandler updateHandler;
-
+  private static class HandleSetInfoDate extends DatePickerClickHandler {
     protected HandleSetInfoDate() {
       super(R.id.buttonDateFound);
     }
-
-    @Override
-    public void handleClick(View view, DataUpdateHandler updateHandler) {
-      this.updateHandler = updateHandler;
-      CurrentDatePicker.showOnView(view, this);
-    }
-
     @Override
     public void onDateSet(DatePicker view,
         int year,

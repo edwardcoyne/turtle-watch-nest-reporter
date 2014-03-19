@@ -17,7 +17,8 @@
 		       android:textOff="No"
 		       android:id="@+id/fieldNestAdopted"
 		       android:layout_width="wrap_content"
-		       android:layout_height="wrap_content" />
+		       android:layout_height="wrap_content"
+           android:onClick="handleClick"  />
    </TableRow>
    
    <TableRow
@@ -30,12 +31,12 @@
            android:text="@string/edit_nest_care_date_protected" />
        
        <Button
-            android:id="@+id/buttonProtectedDate1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/date_button"
-            android:enabled="false" />
+           android:id="@+id/buttonProtectedDate"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/date_button"
+           android:onClick="handleClick" />
    </TableRow>
    
    <TableRow
@@ -57,21 +58,24 @@
            android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"
-           android:text="@string/edit_nest_care_self_releasing_cage" />
+           android:text="@string/edit_nest_care_self_releasing_cage"
+           android:onClick="handleClick"  />
        
        <CheckBox
            android:id="@+id/fieldSelfReleasingFlat"
            android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"
-           android:text="@string/edit_nest_care_self_releasing_flat" />
+           android:text="@string/edit_nest_care_self_releasing_flat"
+           android:onClick="handleClick"  />
        
        <CheckBox
            android:id="@+id/fieldRestrainingCage"
            android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"
-           android:text="@string/edit_nest_care_restraining_cage" />
+           android:text="@string/edit_nest_care_restraining_cage"
+           android:onClick="handleClick"  />
    </TableRow>
 
    <TableRow
@@ -93,23 +97,25 @@
            android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"
-           android:text="@string/edit_nest_care_before_predation" />
+           android:text="@string/edit_nest_care_before_predation"
+           android:onClick="handleClick"  />
        
        <CheckBox
            android:id="@+id/fieldAfterPredation"
            android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"
-           android:text="@string/edit_nest_care_after_predation" />
+           android:text="@string/edit_nest_care_after_predation"
+           android:onClick="handleClick"  />
        
        <CheckBox
            android:id="@+id/fieldForLightProblem"
            android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"
-           android:text="@string/edit_nest_care_for_light_problem" />
+           android:text="@string/edit_nest_care_for_light_problem"
+           android:onClick="handleClick"  />
    </TableRow>
-   
    <TableRow
        android:layout_width="wrap_content"
        android:layout_height="wrap_content" >
@@ -124,12 +130,14 @@
            android:textOff="No"
            android:id="@+id/fieldNestRelocated"
            android:layout_width="wrap_content"
-           android:layout_height="wrap_content" />
+           android:layout_height="wrap_content"
+           android:onClick="handleClick"  />
    </TableRow>
    <TableLayout
      android:id="@+id/tableRelocated"
      android:layout_width="match_parent"
-     android:layout_height="wrap_content" >
+     android:layout_height="wrap_content"
+     android:visibility="invisible" >
      <TableRow
          android:layout_width="wrap_content"
          android:layout_height="wrap_content" >
@@ -145,7 +153,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/date_button"
-            android:enabled="false" />
+            android:onClick="handleClick" />
      </TableRow>
      <TableRow
          android:layout_width="wrap_content"
@@ -231,13 +239,15 @@
            android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"
-           android:text="@string/edit_nest_relocation_high_water" />
+           android:text="@string/edit_nest_relocation_high_water"
+           android:onClick="handleClick"  />
        <CheckBox
            android:id="@+id/fieldPredation"
            android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"
-           android:text="@string/edit_nest_relocation_predation" />     
+           android:text="@string/edit_nest_relocation_predation"
+           android:onClick="handleClick"  />     
    </TableRow>
    <TableRow
        android:layout_width="wrap_content"
@@ -247,13 +257,15 @@
            android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"
-           android:text="@string/edit_nest_relocation_washing_out" />  
+           android:text="@string/edit_nest_relocation_washing_out" 
+           android:onClick="handleClick" />  
        <CheckBox
            android:id="@+id/fieldConstruction"
            android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"
-           android:text="@string/edit_nest_relocation_construction" />  
+           android:text="@string/edit_nest_relocation_construction"
+           android:onClick="handleClick"  />  
    </TableRow>
   </TableLayout>
 </TableLayout>
