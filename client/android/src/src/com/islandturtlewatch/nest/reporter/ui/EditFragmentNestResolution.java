@@ -38,7 +38,8 @@ public class EditFragmentNestResolution extends EditFragment {
           new HandleUpdateHatchedShells(),
           new HandleUpdateLiveInNest(),
           new HandleUpdateLivePipped(),
-          new HandleUpdateWholeUnhatched());
+          new HandleUpdateWholeUnhatched(),
+          new HandleUpdateReasonOther());
 
   @Override
   public Map<Integer, ClickHandler> getClickHandlers() {
@@ -317,6 +318,16 @@ public class EditFragmentNestResolution extends EditFragment {
       }
       //TODO(edcoyne): display error if not parsable
       updateHandler.updateEggsDestroyed(newValue);
+    }
+  }
+  private static class HandleUpdateReasonOther extends TextChangeHandler {
+    protected HandleUpdateReasonOther() {
+      super(R.id.fieldNoExcavationOtherValue);
+    }
+
+    @Override
+    public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
+      updateHandler.updateExcavationFailureOther(newText);
     }
   }
 

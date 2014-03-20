@@ -462,6 +462,44 @@ public class EditPresenter {
         writeChangesAndUpdate(updatedReport.build());
         return DataUpdateResult.success();
       }
+      public DataUpdateResult updateVandalizedDate(int year, int month, int day) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        updatedReport.getConditionBuilder()
+            .setVandalizedTimestampMs(DateUtil.getTimestampInMs(year, month, day));
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+      public DataUpdateResult updatePoachedDate(int year, int month, int day) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        updatedReport.getConditionBuilder()
+            .setPoachedTimestampMs(DateUtil.getTimestampInMs(year, month, day));
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+      public DataUpdateResult updateVandalized(boolean value) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        updatedReport.getConditionBuilder().setVandalized(value);
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+      public DataUpdateResult updatePoached(boolean value) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        updatedReport.getConditionBuilder().setPoached(value);
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+      public DataUpdateResult updateRootsInvaded(boolean value) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        updatedReport.getConditionBuilder().setRootsInvadedEggshells(value);
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+      public DataUpdateResult updateEggsScattered(boolean value) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        updatedReport.getConditionBuilder().setEggsScatteredByAnother(value);
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
     }
 
 	public static class DataUpdateResult {

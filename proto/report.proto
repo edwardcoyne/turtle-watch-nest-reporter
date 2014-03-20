@@ -24,29 +24,31 @@ message Activity {
 }
 
 message NestCondition {
-  optional int64 vandalized_timestamp_ms = 1;
-  optional int64 poached_timestamp_ms = 2;
-  optional bool roots_invaded_eggshells = 3;
-  optional bool eggs_scattered_by_another = 4;
+  optional bool vandalized = 1;
+  optional int64 vandalized_timestamp_ms = 2;
+  optional bool poached = 3;
+  optional int64 poached_timestamp_ms = 4;
+  optional bool roots_invaded_eggshells = 5;
+  optional bool eggs_scattered_by_another = 6;
 
   message WashEvent {
     optional int64 timestamp_ms = 1;
     optional string storm_name = 2;
   }
 
-  repeated WashEvent wash_over = 5;
-  optional WashEvent wash_out = 6;
+  repeated WashEvent wash_over = 7;
+  optional WashEvent wash_out = 8;
 
   message PreditationEvent {
     optional int64 timestamp_ms = 1;
     optional string predator = 2;
     optional int32 number_of_eggs = 3;
   }
-  repeated PreditationEvent preditation = 7;
+  repeated PreditationEvent preditation = 9;
 
-  optional int64 hatch_timestamp_ms = 8;
-  optional int64 additional_hatch_timestamp_ms = 9;
-  optional bool disorientation = 10;
+  optional int64 hatch_timestamp_ms = 10;
+  optional int64 additional_hatch_timestamp_ms = 11;
+  optional bool disorientation = 12;
 }
 
 message NestLocation {

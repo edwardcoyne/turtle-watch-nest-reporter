@@ -21,7 +21,7 @@
         
         <EditText
             android:id="@+id/fieldWashOverStormName1"
-            android:inputType="date"
+            android:inputType="text"
             android:layout_weight="1" 
             android:hint="@string/edit_nest_condition_storm_name"/>
    </TableRow>
@@ -116,12 +116,14 @@
            android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"
-           android:text="@string/edit_nest_condition_damage_vandalized" />
+           android:text="@string/edit_nest_condition_damage_vandalized" 
+           android:onClick="handleClick"/>
        
        <Button
             android:id="@+id/buttonDamageVandalizedDate"
             android:text="@string/date_button"
-            android:enabled="false" />
+            android:enabled="false"
+           android:onClick="handleClick" />
    </TableRow>
    <TableRow
        android:layout_width="wrap_content"
@@ -132,12 +134,14 @@
            android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"
-           android:text="@string/edit_nest_condition_damage_poached" />
+           android:text="@string/edit_nest_condition_damage_poached"
+           android:onClick="handleClick" />
        
        <Button
             android:id="@+id/buttonDamagePoachedDate"
             android:text="@string/date_button"
-            android:enabled="false" />
+            android:enabled="false"
+           android:onClick="handleClick" />
 
    </TableRow>
    <TableRow
@@ -149,13 +153,15 @@
            android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"
-           android:text="@string/edit_nest_condition_damage_roots_invaded" />
+           android:text="@string/edit_nest_condition_damage_roots_invaded"
+           android:onClick="handleClick" />
        
        <CheckBox
            android:id="@+id/fieldDamageEggsScattered"
            android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"
-           android:text="@string/edit_nest_condition_damage_eggs_scattered" />
+           android:text="@string/edit_nest_condition_damage_eggs_scattered"
+           android:onClick="handleClick" />
    </TableRow>
 </TableLayout>
