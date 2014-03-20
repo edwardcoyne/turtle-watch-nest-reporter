@@ -138,6 +138,8 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
       if (currentReport.isPresent()) {
         fragment.updateDisplay(currentReport.get());
       }
+
+      presenter.updateView();
     }
 
     private void setEditFragment(EditFragment fragment) {

@@ -44,8 +44,9 @@ message NestCondition {
   }
   repeated PreditationEvent preditation = 7;
 
-  repeated int64 hatch_timestamp_ms = 8;
-  optional bool disorientation = 9;
+  optional int64 hatch_timestamp_ms = 8;
+  optional int64 additional_hatch_timestamp_ms = 9;
+  optional bool disorientation = 10;
 }
 
 message NestLocation {

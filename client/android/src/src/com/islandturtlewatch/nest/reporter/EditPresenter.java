@@ -3,6 +3,8 @@ package com.islandturtlewatch.nest.reporter;
 import android.os.Bundle;
 
 import com.google.common.base.Optional;
+import com.islandturtlewatch.nest.data.ReportProto.Excavation;
+import com.islandturtlewatch.nest.data.ReportProto.Excavation.ExcavationFailureReason;
 import com.islandturtlewatch.nest.data.ReportProto.Intervention.ProtectionEvent;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation.Builder;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation.Placement;
@@ -39,7 +41,7 @@ public class EditPresenter {
 	  return model.getActiveReport();
 	}
 
-	private void updateView() {
+	public void updateView() {
 		Report report = model.getActiveReport();
 		view.updateDisplay(report);
 	}
@@ -328,8 +330,139 @@ public class EditPresenter {
           writeChangesAndUpdate(updatedReport.build());
           return DataUpdateResult.success();
       }
-
-	}
+      public DataUpdateResult updateHatchDate(int year, int month, int day) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        updatedReport.getConditionBuilder()
+            .setHatchTimestampMs(DateUtil.getTimestampInMs(year, month, day));
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+      public DataUpdateResult updateAdditionalHatchDate(int year, int month, int day) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        updatedReport.getConditionBuilder()
+            .setAdditionalHatchTimestampMs(DateUtil.getTimestampInMs(year, month, day));
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+      public DataUpdateResult updateDisorentation(boolean value) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        updatedReport.getConditionBuilder().setDisorientation(value);
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+      public DataUpdateResult updateExcavated(boolean value) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        updatedReport.getInterventionBuilder().getExcavationBuilder()
+            .setExcavated(value);
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+      public DataUpdateResult updateExcavationFailure(ExcavationFailureReason reason) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        updatedReport.getInterventionBuilder().getExcavationBuilder()
+            .setFailureReason(reason);
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+      public DataUpdateResult updateExcavationFailureOther(String value) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        updatedReport.getInterventionBuilder().getExcavationBuilder()
+            .setFailureOther(value);
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+      public DataUpdateResult updateExcavationDate(int year, int month, int day) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        updatedReport.getInterventionBuilder().getExcavationBuilder()
+            .setTimestampMs(DateUtil.getTimestampInMs(year, month, day));
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+      public DataUpdateResult updateDeadInNest(Optional<Integer> value) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        Excavation.Builder excavationBuilder =
+            updatedReport.getInterventionBuilder().getExcavationBuilder();
+        if (value.isPresent()) {
+          excavationBuilder.setDeadInNest(value.get());
+        } else {
+          excavationBuilder.clearDeadInNest();
+        }
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+      public DataUpdateResult updateLiveInNest(Optional<Integer> value) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        Excavation.Builder excavationBuilder =
+            updatedReport.getInterventionBuilder().getExcavationBuilder();
+        if (value.isPresent()) {
+          excavationBuilder.setLiveInNest(value.get());
+        } else {
+          excavationBuilder.clearLiveInNest();
+        }
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+  	public DataUpdateResult updateHatchedShells(Optional<Integer> value) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        Excavation.Builder excavationBuilder =
+            updatedReport.getInterventionBuilder().getExcavationBuilder();
+        if (value.isPresent()) {
+          excavationBuilder.setHatchedShells(value.get());
+        } else {
+          excavationBuilder.clearHatchedShells();
+        }
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+  	public DataUpdateResult updateDeadPipped(Optional<Integer> value) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        Excavation.Builder excavationBuilder =
+            updatedReport.getInterventionBuilder().getExcavationBuilder();
+        if (value.isPresent()) {
+          excavationBuilder.setDeadPipped(value.get());
+        } else {
+          excavationBuilder.clearDeadPipped();
+        }
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+  	public DataUpdateResult updateLivePipped(Optional<Integer> value) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        Excavation.Builder excavationBuilder =
+            updatedReport.getInterventionBuilder().getExcavationBuilder();
+        if (value.isPresent()) {
+          excavationBuilder.setLivePipped(value.get());
+        } else {
+          excavationBuilder.clearLivePipped();
+        }
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+  	public DataUpdateResult updateWholeUnhatched(Optional<Integer> value) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        Excavation.Builder excavationBuilder =
+            updatedReport.getInterventionBuilder().getExcavationBuilder();
+        if (value.isPresent()) {
+          excavationBuilder.setWholeUnhatched(value.get());
+        } else {
+          excavationBuilder.clearWholeUnhatched();
+        }
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+  	public DataUpdateResult updateEggsDestroyed(Optional<Integer> value) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        Excavation.Builder excavationBuilder =
+            updatedReport.getInterventionBuilder().getExcavationBuilder();
+        if (value.isPresent()) {
+          excavationBuilder.setEggsDestroyed(value.get());
+        } else {
+          excavationBuilder.clearEggsDestroyed();
+        }
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+    }
 
 	public static class DataUpdateResult {
 		private final boolean success;

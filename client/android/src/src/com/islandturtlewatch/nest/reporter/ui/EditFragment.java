@@ -95,7 +95,22 @@ public class EditFragment extends Fragment {
 
   protected void setVisible(int id, boolean visible) {
     View view = getActivity().findViewById(id);
-    view.setVisibility((visible) ? View.VISIBLE : View.INVISIBLE);
+    view.setVisibility((visible) ? View.VISIBLE : View.GONE);
+  }
+
+  protected void setVisible(boolean visible, Iterable<Integer> ids) {
+    for (Integer id : ids) {
+      setVisible(id, visible);
+    }
+  }
+
+  protected void setEnabled(int id, boolean enabled) {
+    View view = getActivity().findViewById(id);
+    if (view instanceof TextView) {
+      ((TextView)view).setEnabled(enabled);
+    } else {
+      throw new UnsupportedOperationException("We don't support setEnabled on " + view);
+    }
   }
 
   protected boolean isChecked(int id) {
