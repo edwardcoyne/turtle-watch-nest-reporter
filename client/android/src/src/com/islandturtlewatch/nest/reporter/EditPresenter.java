@@ -500,6 +500,12 @@ public class EditPresenter {
         writeChangesAndUpdate(updatedReport.build());
         return DataUpdateResult.success();
       }
+      public DataUpdateResult updateNotes(String value) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        updatedReport.setAdditionalNotes(value);
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
     }
 
 	public static class DataUpdateResult {
