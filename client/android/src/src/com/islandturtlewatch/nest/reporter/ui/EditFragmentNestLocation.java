@@ -15,7 +15,7 @@ import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
 
 public class EditFragmentNestLocation extends EditFragment {
-  private static final String TAG = EditFragmentNestLocation.class.getSimpleName();
+  //private static final String TAG = EditFragmentNestLocation.class.getSimpleName();
 
   private static final Map<Integer, ClickHandler> CLICK_HANDLERS =
       ClickHandler.toMap(

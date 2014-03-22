@@ -12,23 +12,14 @@
             android:layout_weight="1"
             android:text="@string/edit_nest_condition_wash_over" />
    </TableRow>
+   <TableLayout
+       android:id="@+id/tableWashOver">
+      <!-- Will be dynamically populated -->
+   </TableLayout>
+   
    <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
-        <Button
-            android:id="@+id/buttonWashOverDate1"
-            android:text="@string/date_button" />
-        
-        <EditText
-            android:id="@+id/fieldWashOverStormName1"
-            android:inputType="text"
-            android:layout_weight="1" 
-            android:hint="@string/edit_nest_condition_storm_name"/>
-   </TableRow>
-   <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -42,15 +33,17 @@
 
         <Button
             android:id="@+id/buttonWashOutDate"
-            android:text="@string/date_button" />
+            android:text="@string/date_button"
+            android:onClick="handleClick"  />
         
-        <EditText
+        <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
             android:id="@+id/fieldWashOutStormName"
             android:inputType="text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" 
-            android:hint="@string/edit_nest_condition_storm_name"/>
+            android:hint="@string/edit_nest_condition_storm_name"
+            onTextChangeHandler="handleTextChange" />
    </TableRow>
    
    <TableRow
@@ -62,35 +55,14 @@
             android:layout_weight="1"
             android:text="@string/edit_nest_condition_predataion" />
    </TableRow>
+   <TableLayout
+       android:id="@+id/tablePredatitation">
+      <!-- Will be dynamically populated -->
+   </TableLayout>
+   
    <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
-        <Button
-            android:id="@+id/buttonPredationDate1"
-            android:text="@string/date_button" />
-        
-        <EditText
-            android:id="@+id/fieldPredationNumEggs1"
-            android:inputType="text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="1" 
-            android:hint="@string/edit_nest_condition_num_eggs"/>
-        
-        <EditText
-            android:id="@+id/fieldPredationPredator1"
-            android:inputType="text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" 
-            android:hint="@string/edit_nest_condition_predator"/>
-   </TableRow>
-
-   <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -100,7 +72,6 @@
    <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
-
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -123,7 +94,7 @@
             android:id="@+id/buttonDamageVandalizedDate"
             android:text="@string/date_button"
             android:enabled="false"
-           android:onClick="handleClick" />
+            android:onClick="handleClick" />
    </TableRow>
    <TableRow
        android:layout_width="wrap_content"

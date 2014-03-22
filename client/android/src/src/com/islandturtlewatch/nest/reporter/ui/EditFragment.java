@@ -17,6 +17,7 @@ import com.google.protobuf.Message;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateResult;
+import com.islandturtlewatch.nest.reporter.ui.split.SplitEditActivity.ListenerProvider;
 
 public class EditFragment extends Fragment {
   private static final String TAG = EditFragment.class.getSimpleName();
@@ -24,6 +25,7 @@ public class EditFragment extends Fragment {
   protected Optional<Report> currentReport = Optional.absent();
   protected Map<Message, Map<String, FieldDescriptor>> descriptors =
       new HashMap<Message, Map<String, FieldDescriptor>>();
+  protected ListenerProvider listenerProvider;
 
   /**
    * Will be called to update the display contents based on information in report.
@@ -54,6 +56,10 @@ public class EditFragment extends Fragment {
       updateSection(currentReport.get());
     }
     super.onStart();
+  }
+
+  public void setListenerProvider(ListenerProvider listenerProvider) {
+    this.listenerProvider = listenerProvider;
   }
 
   // TODO(edcoyne): make abstract once we are no longer using generic EditFragments.
@@ -134,7 +140,7 @@ public class EditFragment extends Fragment {
     }
   }
 
-  public static abstract class ClickHandler {
+  public static abstract class ClickHandler implements ClickHandlerSimple {
     protected final int resourceId;
     protected ClickHandler(int resourceId) {
       this.resourceId = resourceId;
@@ -156,8 +162,10 @@ public class EditFragment extends Fragment {
       }
       return builder.build();
     }
+  }
 
-    public abstract void handleClick(View view, DataUpdateHandler updateHandler);
+  public interface ClickHandlerSimple {
+    void handleClick(View view, DataUpdateHandler updateHandler);
   }
 
   public abstract static class DatePickerClickHandler extends ClickHandler
@@ -174,7 +182,7 @@ public class EditFragment extends Fragment {
     }
   }
 
-  public abstract static class TextChangeHandler{
+  public abstract static class TextChangeHandler implements TextChangeHandlerSimple {
     protected final int resourceId;
 
     protected TextChangeHandler(int resourceId) {
@@ -188,7 +196,9 @@ public class EditFragment extends Fragment {
       }
       return builder.build();
     }
+  }
 
-    public abstract void handleTextChange(String newText, DataUpdateHandler updateHandler);
+  public interface TextChangeHandlerSimple {
+    void handleTextChange(String newText, DataUpdateHandler updateHandler);
   }
 }

@@ -4,7 +4,10 @@ import java.util.Map;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.view.View.OnClickListener;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
@@ -15,7 +18,9 @@ import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.data.ReportsModel;
 import com.islandturtlewatch.nest.reporter.ui.EditFragment;
 import com.islandturtlewatch.nest.reporter.ui.EditFragment.ClickHandler;
+import com.islandturtlewatch.nest.reporter.ui.EditFragment.ClickHandlerSimple;
 import com.islandturtlewatch.nest.reporter.ui.EditFragment.TextChangeHandler;
+import com.islandturtlewatch.nest.reporter.ui.EditFragment.TextChangeHandlerSimple;
 import com.islandturtlewatch.nest.reporter.ui.EditFragmentInfo;
 import com.islandturtlewatch.nest.reporter.ui.EditFragmentMedia;
 import com.islandturtlewatch.nest.reporter.ui.EditFragmentNestCare;
@@ -24,6 +29,7 @@ import com.islandturtlewatch.nest.reporter.ui.EditFragmentNestLocation;
 import com.islandturtlewatch.nest.reporter.ui.EditFragmentNestResolution;
 import com.islandturtlewatch.nest.reporter.ui.EditFragmentNotes;
 import com.islandturtlewatch.nest.reporter.ui.EditView;
+import com.islandturtlewatch.nest.reporter.ui.FocusMonitoredEditText;
 import com.islandturtlewatch.nest.reporter.ui.ReportSection;
 import com.islandturtlewatch.nest.reporter.ui.ReportSectionListFragment;
 import com.islandturtlewatch.nest.reporter.ui.ReportSectionListFragment.EventHandler;
@@ -138,6 +144,7 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
       if (currentReport.isPresent()) {
         fragment.updateDisplay(currentReport.get());
       }
+      fragment.setListenerProvider(new ListenerProvider());
 
       presenter.updateView();
     }
@@ -161,6 +168,39 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
       public void onSectionSelected(ReportSection section) {
         setSection(section);
       }
+    }
+  }
+
+  public class ListenerProvider {
+    private ListenerProvider() {};
+
+    public OnClickListener getOnClickListener(final ClickHandlerSimple handler) {
+      return new OnClickListener() {
+        @Override public void onClick(View view) {
+           handler.handleClick(view, presenter.getUpdateHandler());
+        }
+      };
+    }
+
+    public TextWatcher getTextchangedListener(final TextChangeHandlerSimple handler) {
+      return new TextWatcher() {
+        @Override
+        public void afterTextChanged(Editable newText) {
+          handler.handleTextChange(newText.toString(), presenter.getUpdateHandler());
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+      };
+    }
+
+    public void setFocusLossListener(FocusMonitoredEditText editText,
+        TextChangeHandlerSimple handler) {
+      editText.setTextChangeHandler(handler);
+      editText.setDataUpdateHandler(presenter.getUpdateHandler());
     }
   }
 }

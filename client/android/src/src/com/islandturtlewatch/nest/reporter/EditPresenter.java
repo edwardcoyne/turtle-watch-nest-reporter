@@ -6,6 +6,9 @@ import com.google.common.base.Optional;
 import com.islandturtlewatch.nest.data.ReportProto.Excavation;
 import com.islandturtlewatch.nest.data.ReportProto.Excavation.ExcavationFailureReason;
 import com.islandturtlewatch.nest.data.ReportProto.Intervention.ProtectionEvent;
+import com.islandturtlewatch.nest.data.ReportProto.NestCondition;
+import com.islandturtlewatch.nest.data.ReportProto.NestCondition.PreditationEvent;
+import com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation.Builder;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation.Placement;
 import com.islandturtlewatch.nest.data.ReportProto.Relocation;
@@ -503,6 +506,97 @@ public class EditPresenter {
       public DataUpdateResult updateNotes(String value) {
         Report.Builder updatedReport = model.getActiveReport().toBuilder();
         updatedReport.setAdditionalNotes(value);
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+      public DataUpdateResult updateWashoutDate(int year, int month, int day) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        updatedReport.getConditionBuilder()
+            .getWashOutBuilder().setTimestampMs(DateUtil.getTimestampInMs(year, month, day));
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+      public DataUpdateResult updateWashoutStorm(String value) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        updatedReport.getConditionBuilder().getWashOutBuilder().setStormName(value);
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+      public DataUpdateResult updateWashOverDate(int ordinal, int year, int month, int day) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        NestCondition.Builder condition = updatedReport.getConditionBuilder();
+
+        WashEvent.Builder washOver = (condition.getWashOverCount() <= ordinal)
+            ? condition.addWashOverBuilder()
+                : condition.getWashOverBuilder(ordinal);
+        washOver.setTimestampMs(DateUtil.getTimestampInMs(year, month, day));
+
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+      public DataUpdateResult updateWashOverStorm(int ordinal, String value) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        NestCondition.Builder condition = updatedReport.getConditionBuilder();
+
+        WashEvent.Builder washOver = (condition.getWashOverCount() <= ordinal)
+            ? condition.addWashOverBuilder()
+                : condition.getWashOverBuilder(ordinal);
+        washOver.setStormName(value);
+
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+      public DataUpdateResult deleteWashOver(int ordinal) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        NestCondition.Builder condition = updatedReport.getConditionBuilder();
+        condition.removeWashOver(ordinal);
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+      public DataUpdateResult updatePreditationDate(int ordinal, int year, int month, int day) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        NestCondition.Builder condition = updatedReport.getConditionBuilder();
+
+        PreditationEvent.Builder preditation = (condition.getPreditationCount() <= ordinal)
+            ? condition.addPreditationBuilder()
+                : condition.getPreditationBuilder(ordinal);
+        preditation.setTimestampMs(DateUtil.getTimestampInMs(year, month, day));
+
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+      public DataUpdateResult updatePreditationNumEggs(int ordinal, Optional<Integer> numEggs) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        NestCondition.Builder condition = updatedReport.getConditionBuilder();
+
+        PreditationEvent.Builder preditation = (condition.getPreditationCount() <= ordinal)
+            ? condition.addPreditationBuilder()
+                : condition.getPreditationBuilder(ordinal);
+        if (numEggs.isPresent()) {
+          preditation.setNumberOfEggs(numEggs.get());
+        } else {
+          preditation.clearNumberOfEggs();
+        }
+
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+      public DataUpdateResult updatePreditationPredator(int ordinal, String predator) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        NestCondition.Builder condition = updatedReport.getConditionBuilder();
+
+        PreditationEvent.Builder preditation = (condition.getPreditationCount() <= ordinal)
+            ? condition.addPreditationBuilder()
+                : condition.getPreditationBuilder(ordinal);
+        preditation.setPredator(predator);
+
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+      public DataUpdateResult deletePreditation(int ordinal) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        NestCondition.Builder condition = updatedReport.getConditionBuilder();
+        condition.removePreditation(ordinal);
         writeChangesAndUpdate(updatedReport.build());
         return DataUpdateResult.success();
       }
