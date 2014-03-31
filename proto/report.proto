@@ -1,6 +1,14 @@
 package com.islandturtlewatch.nest.data;
 option java_outer_classname = "ReportProto";
 
+// Represents a saved report with metadata.
+message ReportWrapper {
+  optional Report report = 1;
+  optional uint64 owner_id = 2;
+  optional uint64 report_id = 3;
+  optional uint64 version = 4;
+}
+
 message Report {
   // Timestamp for start of day the crawl was found, in milli seconds.
   optional int64 timestamp_found_ms = 1;
