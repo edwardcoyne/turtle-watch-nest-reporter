@@ -5,6 +5,7 @@ import junit.framework.TestCase;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import com.google.common.collect.ImmutableList;
+import com.googlecode.objectify.ObjectifyFilter;
 import com.googlecode.objectify.ObjectifyService;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
@@ -28,6 +29,8 @@ public class ReportStoreTest extends TestCase {
 
   @Override
   protected void tearDown() throws Exception {
+    // Cleans up any existing session.
+    ObjectifyFilter.complete();
     helper.tearDown();
     super.tearDown();
   }
