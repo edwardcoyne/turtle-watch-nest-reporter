@@ -1,0 +1,126 @@
+{
+ "kind": "discovery#restDescription",
+ "etag": "\"OqxT57NU1DEATg4yJjzJs2FozZE/Tkt3oDmOG0DnTcif0LUauVk-Pyg\"",
+ "discoveryVersion": "v1",
+ "id": "userEndpoint:v1",
+ "name": "userEndpoint",
+ "version": "v1",
+ "description": "This is an API",
+ "ownerDomain": "islandturtlewatch.com",
+ "ownerName": "islandturtlewatch.com",
+ "packagePath": "nest.reporter.transport",
+ "icons": {
+  "x16": "http://www.google.com/images/icons/product/search-16.gif",
+  "x32": "http://www.google.com/images/icons/product/search-32.gif"
+ },
+ "protocol": "rest",
+ "baseUrl": "https://myapp.appspot.com/_ah/api/userEndpoint/v1/createUser/",
+ "basePath": "/_ah/api/userEndpoint/v1/createUser/",
+ "rootUrl": "https://myapp.appspot.com/_ah/api/",
+ "servicePath": "userEndpoint/v1/createUser/",
+ "batchPath": "batch",
+ "parameters": {
+  "alt": {
+   "type": "string",
+   "description": "Data format for the response.",
+   "default": "json",
+   "enum": [
+    "json"
+   ],
+   "enumDescriptions": [
+    "Responses with Content-Type of application/json"
+   ],
+   "location": "query"
+  },
+  "fields": {
+   "type": "string",
+   "description": "Selector specifying which fields to include in a partial response.",
+   "location": "query"
+  },
+  "key": {
+   "type": "string",
+   "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+   "location": "query"
+  },
+  "oauth_token": {
+   "type": "string",
+   "description": "OAuth 2.0 token for the current user.",
+   "location": "query"
+  },
+  "prettyPrint": {
+   "type": "boolean",
+   "description": "Returns response with indentations and line breaks.",
+   "default": "true",
+   "location": "query"
+  },
+  "quotaUser": {
+   "type": "string",
+   "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.",
+   "location": "query"
+  },
+  "userIp": {
+   "type": "string",
+   "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
+   "location": "query"
+  }
+ },
+ "auth": {
+  "oauth2": {
+   "scopes": {
+    "https://www.googleapis.com/auth/userinfo.email": {
+     "description": "View your email address"
+    }
+   }
+  }
+ },
+ "schemas": {
+  "Code": {
+   "id": "Code",
+   "type": "string",
+   "enum": [
+    "FAILED",
+    "OK"
+   ],
+   "enumDescriptions": [
+    "",
+    ""
+   ]
+  },
+  "CreateUserResponse": {
+   "id": "CreateUserResponse",
+   "type": "object",
+   "properties": {
+    "code": {
+     "$ref": "Code"
+    },
+    "errorMessage": {
+     "type": "string"
+    }
+   }
+  }
+ },
+ "methods": {
+  "createUser": {
+   "id": "userEndpoint.createUser",
+   "path": "{user_id}",
+   "httpMethod": "POST",
+   "parameters": {
+    "user_id": {
+     "type": "string",
+     "required": true,
+     "format": "int64",
+     "location": "path"
+    }
+   },
+   "parameterOrder": [
+    "user_id"
+   ],
+   "response": {
+    "$ref": "CreateUserResponse"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  }
+ }
+}
