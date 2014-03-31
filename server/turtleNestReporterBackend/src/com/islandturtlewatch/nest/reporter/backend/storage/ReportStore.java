@@ -9,6 +9,7 @@ import com.google.common.collect.ImmutableList;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Ref;
+import com.googlecode.objectify.Work;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
 import com.islandturtlewatch.nest.data.ReportProto.ReportWrapper;
@@ -25,6 +26,7 @@ public class ReportStore {
   }
 
   public boolean addUser(long userId) {
+    Preconditions.checkArgument(!hasUser(userId), "Trying to insert duplicate user: " + userId);
     User user = User.builder()
         .setId(userId)
         .build();
@@ -32,7 +34,46 @@ public class ReportStore {
     return true;
   }
 
-  public ReportWrapper addReport(long userId, Report report) {
+  public boolean hasUser(long userId) {
+    return tryLoadUser(userId).isPresent();
+  }
+
+  public ReportWrapper addReport(final long userId, final Report report) {
+    return backend().transact(new Work<ReportWrapper>(){
+      @Override
+      public ReportWrapper run() {
+        return doAddReport(userId, report);
+      }});
+  }
+
+  public ReportWrapper updateReport(final ReportWrapper wrapper) {
+    return backend().transact(new Work<ReportWrapper>(){
+      @Override
+      public ReportWrapper run() {
+        return doUpdateReport(wrapper);
+      }});
+  }
+
+  public ReportWrapper getReportLatestVersion(long userId, final long reportId) {
+    final User user = loadUser(userId);
+    return backend().transact(new Work<ReportWrapper>(){
+      @Override
+      public ReportWrapper run() {
+        StoredReport report = loadReport(user, reportId);
+        StoredReportVersion reportVersion = loadReportVersion(report, report.getLatestVersion());
+        return reportVersion.toReportWrapper();
+      }});
+  }
+
+  public ImmutableList<ReportWrapper> getLatestReportsForUser(final long userId) {
+    return backend().transact(new Work<ImmutableList<ReportWrapper>>(){
+      @Override
+      public ImmutableList<ReportWrapper> run() {
+        return doGetLatestReportsForUser(userId);
+      }});
+  }
+
+  private ReportWrapper doAddReport(long userId, Report report) {
     User user = loadUser(userId);
 
     StoredReport storedReport = StoredReport.builder()
@@ -51,11 +92,12 @@ public class ReportStore {
     backend().save().entities(storedReport, reportVersion).now();
 
     user.setHighestReportId(storedReport.getReportId());
+    backend().save().entity(user);
 
     return reportVersion.toReportWrapper();
   }
 
-  public ReportWrapper updateReport(ReportWrapper wrapper) {
+  private ReportWrapper doUpdateReport(ReportWrapper wrapper) {
     ReportRef ref = wrapper.getRef();
     User user = loadUser(ref.getOwnerId());
     StoredReport report = loadReport(user, ref.getReportId());
@@ -79,18 +121,7 @@ public class ReportStore {
     return reportVersion.toReportWrapper();
   }
 
-  public boolean hasUser(long userId) {
-    return tryLoadUser(userId).isPresent();
-  }
-
-  public ReportWrapper getReportLatestVersion(long userId, long reportId) {
-    User user = loadUser(userId);
-    StoredReport report = loadReport(user, reportId);
-    StoredReportVersion reportVersion = loadReportVersion(report, report.getLatestVersion());
-    return reportVersion.toReportWrapper();
-  }
-
-  public ImmutableList<ReportWrapper> getLatestReportsForUser(long userId) {
+  private ImmutableList<ReportWrapper> doGetLatestReportsForUser(long userId) {
     User user = loadUser(userId);
     List<StoredReport> reports = backend().load().type(StoredReport.class).ancestor(user).list();
     List<ReportWrapper> versions = new ArrayList<>();

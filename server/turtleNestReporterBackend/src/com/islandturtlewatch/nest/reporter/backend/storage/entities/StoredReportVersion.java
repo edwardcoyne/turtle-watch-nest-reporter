@@ -1,6 +1,5 @@
 package com.islandturtlewatch.nest.reporter.backend.storage.entities;
 
-import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
 import lombok.AccessLevel;
@@ -10,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.experimental.Builder;
 
+import com.google.common.base.Preconditions;
 import com.google.common.base.Throwables;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.googlecode.objectify.Ref;
@@ -18,6 +18,7 @@ import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Load;
 import com.googlecode.objectify.annotation.OnLoad;
+import com.googlecode.objectify.annotation.OnSave;
 import com.googlecode.objectify.annotation.Parent;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
@@ -46,13 +47,14 @@ public class StoredReportVersion {
 
   byte[] reportBytes;
 
-  @PrePersist
+  @OnSave
   void persistReport() {
     reportBytes = report.toByteArray();
   }
 
   @OnLoad
   void restoreReport() {
+    Preconditions.checkNotNull(reportBytes, "Trying to init from a null version.");
     try {
       report = Report.parseFrom(reportBytes);
     } catch (InvalidProtocolBufferException e) {

@@ -5,6 +5,7 @@ import junit.framework.TestCase;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import com.google.common.collect.ImmutableList;
+import com.googlecode.objectify.ObjectifyService;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
 import com.islandturtlewatch.nest.data.ReportProto.ReportWrapper;
@@ -19,6 +20,8 @@ public class ReportStoreTest extends TestCase {
   protected void setUp() throws Exception {
     super.setUp();
     helper.setUp();
+    // Need to clear Objectify caches.
+    ObjectifyService.ofy().clear();
     store = new ReportStore();
     store.init();
   }
