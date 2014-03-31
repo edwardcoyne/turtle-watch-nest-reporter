@@ -1,13 +1,13 @@
 {
   "files": [
     {
-      "downloadUrl": "/downloads/reportEndpoint/v1/20140331044609/java/1.16.0-rc/islandturtlewatch.com-reportEndpoint-v1-20140331044609-java-1.16.0-rc-sources.jar", 
-      "path": "islandturtlewatch.com-reportEndpoint-v1-20140331044609-java-1.16.0-rc-sources.jar", 
+      "downloadUrl": "/downloads/reportEndpoint/v1/20140331061716/java/1.16.0-rc/islandturtlewatch.com-reportEndpoint-v1-20140331061716-java-1.16.0-rc-sources.jar", 
+      "path": "islandturtlewatch.com-reportEndpoint-v1-20140331061716-java-1.16.0-rc-sources.jar", 
       "type": "source", 
-      "timestamp": "2014-03-31 04:46"
+      "timestamp": "2014-03-31 06:17"
     }, 
     {
-      "path": "islandturtlewatch.com-reportEndpoint-v1-20140331044609-java-1.16.0-rc.jar.properties", 
+      "path": "islandturtlewatch.com-reportEndpoint-v1-20140331061716-java-1.16.0-rc.jar.properties", 
       "type": "android.properties"
     }
   ], 
@@ -702,5 +702,5 @@
   "packagePath": "nest.reporter.transport", 
   "language_version": "1.16.0-rc", 
   "id": "reportEndpoint:v1", 
-  "revision": 20140331044609
+  "revision": 20140331061716
 }

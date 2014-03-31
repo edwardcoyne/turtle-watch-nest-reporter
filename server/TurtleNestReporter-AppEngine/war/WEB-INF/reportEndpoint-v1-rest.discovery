@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"OqxT57NU1DEATg4yJjzJs2FozZE/hA6Gri38yydtIgxVh3TUMzo1J2c\"",
+ "etag": "\"OqxT57NU1DEATg4yJjzJs2FozZE/x9blTXFY6VADd4p4DCm2BhfnCdM\"",
  "discoveryVersion": "v1",
  "id": "reportEndpoint:v1",
  "name": "reportEndpoint",
@@ -14,10 +14,10 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "protocol": "rest",
- "baseUrl": "https://myapp.appspot.com/_ah/api/reportEndpoint/v1/latestForUser/",
- "basePath": "/_ah/api/reportEndpoint/v1/latestForUser/",
+ "baseUrl": "https://myapp.appspot.com/_ah/api/reportEndpoint/v1/",
+ "basePath": "/_ah/api/reportEndpoint/v1/",
  "rootUrl": "https://myapp.appspot.com/_ah/api/",
- "servicePath": "reportEndpoint/v1/latestForUser/",
+ "servicePath": "reportEndpoint/v1/",
  "batchPath": "batch",
  "parameters": {
   "alt": {
@@ -74,6 +74,20 @@
   }
  },
  "schemas": {
+  "Code": {
+   "id": "Code",
+   "type": "string",
+   "enum": [
+    "FAILED",
+    "INVALID_REQUEST",
+    "OK"
+   ],
+   "enumDescriptions": [
+    "",
+    "",
+    ""
+   ]
+  },
   "CollectionResponse_ReportRef": {
    "id": "CollectionResponse_ReportRef",
    "type": "object",
@@ -93,21 +107,66 @@
    "id": "ReportRef",
    "type": "object",
    "properties": {
-    "id": {
-     "type": "string",
-     "format": "int64"
+    "refEncoded": {
+     "type": "string"
+    }
+   }
+  },
+  "ReportRequest": {
+   "id": "ReportRequest",
+   "type": "object",
+   "properties": {
+    "reportEncoded": {
+     "type": "string"
+    }
+   }
+  },
+  "ReportResponse": {
+   "id": "ReportResponse",
+   "type": "object",
+   "properties": {
+    "code": {
+     "$ref": "Code"
     },
-    "ref": {
-     "type": "string",
-     "format": "byte"
+    "errorMessage": {
+     "type": "string"
+    },
+    "reportRefEncoded": {
+     "type": "string"
     }
    }
   }
  },
  "methods": {
-  "getLatestForUser": {
-   "id": "reportEndpoint.getLatestForUser",
-   "path": "{user_id}",
+  "createReport": {
+   "id": "reportEndpoint.createReport",
+   "path": "createReport/{user_id}",
+   "httpMethod": "POST",
+   "parameters": {
+    "user_id": {
+     "type": "string",
+     "required": true,
+     "format": "int64",
+     "location": "path"
+    }
+   },
+   "parameterOrder": [
+    "user_id"
+   ],
+   "request": {
+    "$ref": "ReportRequest",
+    "parameterName": "resource"
+   },
+   "response": {
+    "$ref": "ReportResponse"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "getLatestRefsForUser": {
+   "id": "reportEndpoint.getLatestRefsForUser",
+   "path": "latestRefsForUser/{user_id}",
    "httpMethod": "POST",
    "parameters": {
     "user_id": {

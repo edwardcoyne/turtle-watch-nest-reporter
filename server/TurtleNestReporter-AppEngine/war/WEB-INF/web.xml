@@ -5,7 +5,7 @@
   <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
   <init-param>
    <param-name>services</param-name>
-   <param-value>com.islandturtlewatch.nest.reporter.backend.endpoints.ReportRefEndpoint,com.islandturtlewatch.nest.reporter.backend.endpoints.UserEndpoint</param-value>
+   <param-value>com.islandturtlewatch.nest.reporter.backend.endpoints.ReportEndpoint,com.islandturtlewatch.nest.reporter.backend.endpoints.UserEndpoint</param-value>
   </init-param>
  </servlet>
  <servlet-mapping>

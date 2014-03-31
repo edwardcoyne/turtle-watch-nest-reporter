@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
 import com.islandturtlewatch.nest.reporter.CloudEndpointUtils;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
@@ -55,7 +56,10 @@ public class EditFragmentMedia extends EditFragment {
         @Override
         protected Long doInBackground(Context... params) {
           if(!BackendClient.addUser()) {
-            CloudEndpointUtils.showError((Activity)params[0], "Failed to create");
+            CloudEndpointUtils.showError((Activity)params[0], "Failed to create user");
+          }
+          if(!BackendClient.addReport(Report.newBuilder().setTimestampFoundMs(1L).setAdditionalNotes("TEST").build()).isPresent()) {
+            CloudEndpointUtils.showError((Activity)params[0], "Failed to create report");
           }
           List<ReportRef> refs = BackendClient.getLatestRefs();
           CloudEndpointUtils.showError((Activity)params[0], Arrays.toString(refs.toArray()));

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"OqxT57NU1DEATg4yJjzJs2FozZE/hA6Gri38yydtIgxVh3TUMzo1J2c\"",
+ "etag": "\"OqxT57NU1DEATg4yJjzJs2FozZE/x9blTXFY6VADd4p4DCm2BhfnCdM\"",
  "discoveryVersion": "v1",
  "id": "reportEndpoint:v1",
  "name": "reportEndpoint",
@@ -72,6 +72,20 @@
   }
  },
  "schemas": {
+  "Code": {
+   "id": "Code",
+   "type": "string",
+   "enum": [
+    "FAILED",
+    "INVALID_REQUEST",
+    "OK"
+   ],
+   "enumDescriptions": [
+    "",
+    "",
+    ""
+   ]
+  },
   "CollectionResponse_ReportRef": {
    "id": "CollectionResponse_ReportRef",
    "type": "object",
@@ -91,20 +105,62 @@
    "id": "ReportRef",
    "type": "object",
    "properties": {
-    "id": {
-     "type": "string",
-     "format": "int64"
+    "refEncoded": {
+     "type": "string"
+    }
+   }
+  },
+  "ReportRequest": {
+   "id": "ReportRequest",
+   "type": "object",
+   "properties": {
+    "reportEncoded": {
+     "type": "string"
+    }
+   }
+  },
+  "ReportResponse": {
+   "id": "ReportResponse",
+   "type": "object",
+   "properties": {
+    "code": {
+     "$ref": "Code"
     },
-    "ref": {
-     "type": "string",
-     "format": "byte"
+    "errorMessage": {
+     "type": "string"
+    },
+    "reportRefEncoded": {
+     "type": "string"
     }
    }
   }
  },
  "methods": {
-  "reportEndpoint.getLatestForUser": {
-   "id": "reportEndpoint.getLatestForUser",
+  "reportEndpoint.createReport": {
+   "id": "reportEndpoint.createReport",
+   "parameters": {
+    "resource": {
+     "$ref": "ReportRequest"
+    },
+    "user_id": {
+     "type": "string",
+     "required": true,
+     "format": "int64"
+    }
+   },
+   "parameterOrder": [
+    "resource",
+    "user_id"
+   ],
+   "returns": {
+    "$ref": "ReportResponse"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "reportEndpoint.getLatestRefsForUser": {
+   "id": "reportEndpoint.getLatestRefsForUser",
    "parameters": {
     "user_id": {
      "type": "string",

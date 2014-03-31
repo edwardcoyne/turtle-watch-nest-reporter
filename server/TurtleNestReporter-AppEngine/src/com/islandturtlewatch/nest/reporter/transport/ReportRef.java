@@ -1,50 +1,33 @@
 package com.islandturtlewatch.nest.reporter.transport;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Builder;
+
+import com.google.common.io.BaseEncoding;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.islandturtlewatch.nest.data.ReportProto;
 
 @Entity
+@Builder(fluent=false)
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ReportRef {
-  private static final int MODIFIER = 50_000;
-
-  @Id
-  long id;
-
-  byte[] ref;
-
-  public ReportRef() {
-  }
-
-  public long getId() {
-    return id;
-  }
-
-  public void setId(long id) {
-    this.id = id;
-  }
-
-  public byte[] getRef() {
-    return ref;
-  }
-
-  public void setRef(byte[] ref) {
-    this.ref = ref;
-  }
+  @Getter @Setter
+  private String refEncoded;
 
   public static ReportRef fromProto(ReportProto.ReportRef protoRef) {
     ReportRef ref = new ReportRef();
-    // Pack all ids together.
-    ref.setId((protoRef.getOwnerId() * MODIFIER)
-        + (protoRef.getReportId() * MODIFIER)
-        + (protoRef.getVersion() * MODIFIER));
-    ref.setRef(protoRef.toByteArray());
+    ref.setRefEncoded(BaseEncoding.base64().encode(protoRef.toByteArray()));
     return ref;
   }
 
   public ReportProto.ReportRef toProto() throws InvalidProtocolBufferException {
-    return ReportProto.ReportRef.parseFrom(this.ref);
+    return ReportProto.ReportRef.parseFrom(BaseEncoding.base64().decode(this.refEncoded));
   }
 }
