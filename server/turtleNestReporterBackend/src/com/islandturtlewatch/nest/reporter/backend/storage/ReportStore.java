@@ -10,12 +10,14 @@ import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Ref;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
+import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
 import com.islandturtlewatch.nest.data.ReportProto.ReportWrapper;
 import com.islandturtlewatch.nest.reporter.backend.storage.entities.StoredReport;
 import com.islandturtlewatch.nest.reporter.backend.storage.entities.StoredReportVersion;
 import com.islandturtlewatch.nest.reporter.backend.storage.entities.User;
 
 public class ReportStore {
+
   public void init() {
     ObjectifyService.register(User.class);
     ObjectifyService.register(StoredReport.class);
@@ -54,12 +56,14 @@ public class ReportStore {
   }
 
   public ReportWrapper updateReport(ReportWrapper wrapper) {
-    User user = loadUser(wrapper.getOwnerId());
-    StoredReport report = loadReport(user, wrapper.getReportId());
+    ReportRef ref = wrapper.getRef();
+    User user = loadUser(ref.getOwnerId());
+    StoredReport report = loadReport(user, ref.getReportId());
 
-    if (report.getLatestVersion() != wrapper.getVersion()) {
+    if (report.getLatestVersion() != ref.getVersion()) {
       // TODO(edcoyne): plug in conflict handling here.
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException(
+          "Attempting to update with old version, We don't support conflict resultion yet...");
     }
     long newVersion = report.getLatestVersion() + 1;
 
@@ -123,6 +127,7 @@ public class ReportStore {
   }
 
   private static Objectify backend() {
+    // Docs suggest never caching the result of this.
     return ObjectifyService.ofy();
   }
 }

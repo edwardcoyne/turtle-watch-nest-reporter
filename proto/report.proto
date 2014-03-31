@@ -4,6 +4,11 @@ option java_outer_classname = "ReportProto";
 // Represents a saved report with metadata.
 message ReportWrapper {
   optional Report report = 1;
+  optional ReportRef ref = 2;
+}
+
+// Uniquely identifies this version of the report.
+message ReportRef {
   optional uint64 owner_id = 2;
   optional uint64 report_id = 3;
   optional uint64 version = 4;

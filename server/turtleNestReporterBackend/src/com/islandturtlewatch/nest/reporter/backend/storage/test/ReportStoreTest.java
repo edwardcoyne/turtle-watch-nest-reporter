@@ -6,6 +6,7 @@ import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestC
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import com.google.common.collect.ImmutableList;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
+import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
 import com.islandturtlewatch.nest.data.ReportProto.ReportWrapper;
 import com.islandturtlewatch.nest.reporter.backend.storage.ReportStore;
 
@@ -43,12 +44,13 @@ public class ReportStoreTest extends TestCase {
     ReportWrapper result = store.addReport(userId, report);
 
     assertEquals(report, result.getReport());
-    assertEquals(1L, result.getReportId());
-    assertEquals(1L, result.getVersion());
-    assertEquals(userId, result.getOwnerId());
+    ReportRef ref = result.getRef();
+    assertEquals(1L, ref.getReportId());
+    assertEquals(1L, ref.getVersion());
+    assertEquals(userId, ref.getOwnerId());
 
     assertEquals(result,
-        store.getReportLatestVersion(userId, result.getReportId()));
+        store.getReportLatestVersion(userId, ref.getReportId()));
   }
 
   public void testUpdateReport() {
@@ -62,12 +64,13 @@ public class ReportStoreTest extends TestCase {
     ReportWrapper update = createResult.toBuilder().setReport(updateReport).build();
     ReportWrapper result = store.updateReport(update);
     assertEquals(updateReport, result.getReport());
-    assertEquals(2L, result.getVersion());
-    assertEquals(1L, result.getReportId());
-    assertEquals(userId, result.getOwnerId());
+    ReportRef ref = result.getRef();
+    assertEquals(2L, ref.getVersion());
+    assertEquals(1L, ref.getReportId());
+    assertEquals(userId, ref.getOwnerId());
 
     assertEquals(result,
-        store.getReportLatestVersion(userId, result.getReportId()));
+        store.getReportLatestVersion(userId, ref.getReportId()));
   }
 
   public void testUpdateReport_conflicts() {
@@ -76,7 +79,9 @@ public class ReportStoreTest extends TestCase {
 
     Report report = Report.newBuilder().setTimestampFoundMs(500L).build();
     ReportWrapper createResult = store.addReport(userId, report);
-    ReportWrapper update =  createResult.toBuilder().setVersion(0L).build();
+    ReportWrapper update =  createResult.toBuilder()
+        .setRef(createResult.getRef().toBuilder().setVersion(0L))
+        .build();
     try {
       store.updateReport(update);
       fail("Should have thrown exception, version is not latest.");

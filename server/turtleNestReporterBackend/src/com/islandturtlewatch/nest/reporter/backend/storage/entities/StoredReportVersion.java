@@ -20,6 +20,7 @@ import com.googlecode.objectify.annotation.Load;
 import com.googlecode.objectify.annotation.OnLoad;
 import com.googlecode.objectify.annotation.Parent;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
+import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
 import com.islandturtlewatch.nest.data.ReportProto.ReportWrapper;
 
 /**
@@ -62,9 +63,10 @@ public class StoredReportVersion {
   public ReportWrapper toReportWrapper() {
     ReportWrapper.Builder builder = ReportWrapper.newBuilder();
     builder.setReport(this.report);
-    builder.setReportId(this.storedReport.get().getReportId());
-    builder.setOwnerId(this.storedReport.get().getUser().getId());
-    builder.setVersion(this.version);
+    ReportRef.Builder refBuilder = builder.getRefBuilder();
+    refBuilder.setReportId(this.storedReport.get().getReportId());
+    refBuilder.setOwnerId(this.storedReport.get().getUser().getId());
+    refBuilder.setVersion(this.version);
     return builder.build();
   }
 }
