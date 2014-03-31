@@ -4,6 +4,7 @@ import junit.framework.TestCase;
 
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
+import com.google.common.collect.ImmutableList;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.ReportWrapper;
 import com.islandturtlewatch.nest.reporter.backend.storage.ReportStore;
@@ -58,8 +59,7 @@ public class ReportStoreTest extends TestCase {
     ReportWrapper createResult = store.addReport(userId, report);
 
     Report updateReport = report.toBuilder().setAdditionalNotes("TEST").build();
-    ReportWrapper update =
-        createResult.toBuilder().setReport(updateReport).build();
+    ReportWrapper update = createResult.toBuilder().setReport(updateReport).build();
     ReportWrapper result = store.updateReport(update);
     assertEquals(updateReport, result.getReport());
     assertEquals(2L, result.getVersion());
@@ -76,13 +76,35 @@ public class ReportStoreTest extends TestCase {
 
     Report report = Report.newBuilder().setTimestampFoundMs(500L).build();
     ReportWrapper createResult = store.addReport(userId, report);
-    ReportWrapper update =
-        createResult.toBuilder().setVersion(0L).build();
+    ReportWrapper update =  createResult.toBuilder().setVersion(0L).build();
     try {
       store.updateReport(update);
       fail("Should have thrown exception, version is not latest.");
     } catch (UnsupportedOperationException ex) {
       // Expected
     }
+  }
+
+  public void testGetLatestReportsForUser() {
+    long userId = 3L;
+    store.addUser(userId);
+
+    Report report1 = Report.newBuilder().setTimestampFoundMs(100L).build();
+    Report report2 = Report.newBuilder().setTimestampFoundMs(200L).build();
+
+    ReportWrapper createResult1_1 = store.addReport(userId, report1);
+    ReportWrapper createResult2_1 = store.addReport(userId, report2);
+
+    ReportWrapper createResult1_2 = store.updateReport(createResult1_1);
+    ReportWrapper createResult2_2 = store.updateReport(createResult2_1);
+
+    ReportWrapper createResult2_3 = store.updateReport(createResult2_2);
+
+    ImmutableList<ReportWrapper> latest = store.getLatestReportsForUser(userId);
+    assertTrue(latest.contains(createResult1_2));
+    assertTrue(latest.contains(createResult2_3));
+
+    assertFalse(latest.contains(createResult1_1));
+    assertFalse(latest.contains(createResult2_2));
   }
 }

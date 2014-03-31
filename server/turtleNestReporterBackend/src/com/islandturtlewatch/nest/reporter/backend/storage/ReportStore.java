@@ -1,7 +1,11 @@
 package com.islandturtlewatch.nest.reporter.backend.storage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Ref;
@@ -80,6 +84,16 @@ public class ReportStore {
     StoredReport report = loadReport(user, reportId);
     StoredReportVersion reportVersion = loadReportVersion(report, report.getLatestVersion());
     return reportVersion.toReportWrapper();
+  }
+
+  public ImmutableList<ReportWrapper> getLatestReportsForUser(long userId) {
+    User user = loadUser(userId);
+    List<StoredReport> reports = backend().load().type(StoredReport.class).ancestor(user).list();
+    List<ReportWrapper> versions = new ArrayList<>();
+    for (StoredReport report : reports) {
+      versions.add(loadReportVersion(report, report.getLatestVersion()).toReportWrapper());
+    }
+    return ImmutableList.copyOf(versions);
   }
 
   private User loadUser(long userId) {
