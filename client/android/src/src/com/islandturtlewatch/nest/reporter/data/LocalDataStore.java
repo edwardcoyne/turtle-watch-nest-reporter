@@ -14,12 +14,14 @@ import android.provider.BaseColumns;
 
 import com.google.api.client.repackaged.com.google.common.base.Preconditions;
 import com.google.api.client.util.Throwables;
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.MessageLite;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
+import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
 import com.islandturtlewatch.nest.data.ReportProto.ReportWrapper;
-import com.islandturtlewatch.nest.reporter.data.LocalDataStore.StorageDefinition.Column.Type;
+import com.islandturtlewatch.nest.reporter.data.LocalDataStore.Column.Type;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore.StorageDefinition.ReportsTable;
 
 public class LocalDataStore {
@@ -29,17 +31,31 @@ public class LocalDataStore {
     storageHelper = new StorageDefinition.DbHelper(context);
   }
 
-  public CachedReportWrapper getReport(long localId) {
+  public ImmutableList<CachedReportWrapper> listActiveReports() {
     SQLiteDatabase db = storageHelper.getReadableDatabase();
-
-    String[] returnColumns = {
-      ReportsTable.COLUMN_ACTIVE.name,
-      ReportsTable.COLUMN_SYNCED.name,
-      ReportsTable.COLUMN_REPORT.name};
 
     Cursor cursor = db.query(
         ReportsTable.TABLE_NAME,
-        returnColumns,
+        CachedReportWrapper.requiredColumns,
+        isTrue(ReportsTable.COLUMN_ACTIVE),
+        null, // don't need selection args
+        null, // don't group
+        null, // don't filter
+        null // don't sort
+        );
+    ImmutableList.Builder<CachedReportWrapper> output = ImmutableList.builder();
+    while (cursor.moveToNext()) {
+      output.add(CachedReportWrapper.from(cursor));
+    }
+    return output.build();
+  }
+
+  public CachedReportWrapper getReport(long localId) {
+    SQLiteDatabase db = storageHelper.getReadableDatabase();
+
+    Cursor cursor = db.query(
+        ReportsTable.TABLE_NAME,
+        CachedReportWrapper.requiredColumns,
         ReportsTable.keyEquals(localId),
         null, // don't need selection args
         null, // don't group
@@ -47,19 +63,12 @@ public class LocalDataStore {
         null // don't sort
         );
     Preconditions.checkArgument(cursor.moveToFirst(), "Failed to find report for:" + localId);
-    return CachedReportWrapper.builder()
-      .setActive(getBool(cursor, ReportsTable.COLUMN_ACTIVE))
-      .setSynched(getBool(cursor, ReportsTable.COLUMN_SYNCED))
-      .setReport(getProto(cursor, ReportsTable.COLUMN_REPORT, Report.getDefaultInstance()))
-      .build();
+    return CachedReportWrapper.from(cursor);
   }
 
-  // Saves changes from sync.
-  public void saveReport(ReportWrapper reportWrapper) {
-
-  }
-
-  // Saves local changes to report.
+  /**
+   * Saves local changes to a report.
+   */
   public void saveReport(long localId, Report report) {
     SQLiteDatabase db = storageHelper.getWritableDatabase();
 
@@ -68,49 +77,134 @@ public class LocalDataStore {
     values.put(ReportsTable.COLUMN_SYNCED.name, false);
     values.put(ReportsTable.COLUMN_TS_LOCAL_UPDATE.name, System.currentTimeMillis());
 
-    db.update(ReportsTable.TABLE_NAME,
+    int numberUpdated = db.update(ReportsTable.TABLE_NAME,
         values,
-        StorageDefinition.whereEquals(ReportsTable.COLUMN_LOCAL_ID, localId),
+        ReportsTable.keyEquals(localId),
         null);
+    Preconditions.checkArgument(numberUpdated == 1,
+        "Save should update one row not " + numberUpdated);
+  }
+
+  /**
+   * Saves updates from server.
+   *
+   * Requires InitReportId to have been called for existing report, else we will add a new row.
+   */
+  public void saveReport(ReportWrapper reportWrapper) {
+    SQLiteDatabase db = storageHelper.getWritableDatabase();
+
+    ContentValues values = new ContentValues();
+    values.put(ReportsTable.COLUMN_ACTIVE.name, reportWrapper.getActive());
+    values.put(ReportsTable.COLUMN_REPORT_ID.name, reportWrapper.getRef().getReportId());
+    values.put(ReportsTable.COLUMN_VERSION.name, reportWrapper.getRef().getVersion());
+    values.put(ReportsTable.COLUMN_REPORT.name, reportWrapper.getReport().toByteArray());
+    values.put(ReportsTable.COLUMN_SYNCED.name, true);
+
+    int numberUpdated = db.update(ReportsTable.TABLE_NAME,
+        values,
+        whereEquals(ReportsTable.COLUMN_REPORT_ID, reportWrapper.getRef().getReportId()),
+        null);
+    if (numberUpdated < 1) {
+      // We don't have this report yet, add it.
+      values.put(ReportsTable.COLUMN_TS_LOCAL_ADD.name, System.currentTimeMillis());
+      long result = db.insert(ReportsTable.TABLE_NAME, null, values);
+      Preconditions.checkArgument(result != -1, "Failed to insert new row");
+    }
+  }
+
+  /**
+   * Should be called after first checking in a new report so we can find it on future updates.
+   */
+  public void setServerSideData(long localId, ReportRef ref) {
+    SQLiteDatabase db = storageHelper.getWritableDatabase();
+
+    ContentValues values = new ContentValues();
+    values.put(ReportsTable.COLUMN_REPORT_ID.name, ref.getReportId());
+    values.put(ReportsTable.COLUMN_VERSION.name, ref.getVersion());
+
+    int numberUpdated = db.update(ReportsTable.TABLE_NAME,
+        values,
+        ReportsTable.keyEquals(localId),
+        null);
+    Preconditions.checkArgument(numberUpdated == 1,
+        "setServerSideData should update one row not " + numberUpdated);
   }
 
   /**
    * Creates empty report record and returns the local id.
-   * @return local_id
+   * @return local_id local identifier of a report, not the same as report_id on server.
    */
-  public long createReport() {
+  public CachedReportWrapper createReport() {
     SQLiteDatabase db = storageHelper.getWritableDatabase();
 
     ContentValues values = new ContentValues();
+    values.put(ReportsTable.COLUMN_REPORT.name, Report.getDefaultInstance().toByteArray());
     values.put(ReportsTable.COLUMN_ACTIVE.name, true);
     values.put(ReportsTable.COLUMN_TS_LOCAL_UPDATE.name, System.currentTimeMillis());
     values.put(ReportsTable.COLUMN_TS_LOCAL_ADD.name, System.currentTimeMillis());
 
-    return db.insert(ReportsTable.TABLE_NAME, null, values);
+    long localId = db.insert(ReportsTable.TABLE_NAME, null, values);
+    Preconditions.checkArgument(localId != -1, "Failed to insert new row");
+    return getReport(localId);
   }
 
-  private boolean getBool(Cursor cursor, StorageDefinition.Column column) {
+  private static boolean getBool(Cursor cursor, Column column) {
     return cursor.getInt(cursor.getColumnIndexOrThrow(column.name)) == 1;
   }
 
+  private static long getLong(Cursor cursor, Column column) {
+    return cursor.getLong(cursor.getColumnIndexOrThrow(column.name));
+  }
+
   @SuppressWarnings("unchecked")
-  private <T extends MessageLite> T getProto(
-      Cursor cursor, StorageDefinition.Column column, T proto) {
+  private static <T extends MessageLite> Optional<T> getProto(Cursor cursor, Column column, T proto) {
+    int index = cursor.getColumnIndexOrThrow(column.name);
+    if (cursor.isNull(index)) {
+      return Optional.absent();
+    }
     try {
-      return (T)proto.newBuilderForType().mergeFrom(
-          cursor.getBlob(cursor.getColumnIndexOrThrow(column.name)))
-          .build();
+      return Optional.of((T)proto.newBuilderForType().mergeFrom(
+          cursor.getBlob(index))
+          .build());
     } catch (InvalidProtocolBufferException | IllegalArgumentException e) {
       throw Throwables.propagate(e);
     }
   }
 
+  static <T extends Object> String whereEquals(Column column, T value) {
+    return column.name + " = " + value.toString();
+  }
+
+  static String isTrue(Column column) {
+    return column.name + " = 1";
+  }
+
   @Data
   @Builder(fluent=false)
   public static class CachedReportWrapper {
+    private long localId;
     private boolean synched;
     private boolean active;
     @NonNull private Report report;
+
+    static final String [] requiredColumns = {
+      ReportsTable.COLUMN_LOCAL_ID.name,
+      ReportsTable.COLUMN_ACTIVE.name,
+      ReportsTable.COLUMN_SYNCED.name,
+      ReportsTable.COLUMN_REPORT.name};
+
+    static CachedReportWrapper from(Cursor cursor) {
+      CachedReportWrapperBuilder builder = CachedReportWrapper.builder()
+          .setLocalId(getLong(cursor, ReportsTable.COLUMN_LOCAL_ID))
+          .setActive(getBool(cursor, ReportsTable.COLUMN_ACTIVE))
+          .setSynched(getBool(cursor, ReportsTable.COLUMN_SYNCED));
+      Optional<Report> proto =
+          getProto(cursor, ReportsTable.COLUMN_REPORT, Report.getDefaultInstance());
+      if (proto.isPresent()) {
+        builder.setReport(proto.get());
+      }
+      return builder.build();
+    }
   }
 
   final static class StorageDefinition {
@@ -120,13 +214,13 @@ public class LocalDataStore {
 
     static class ReportsTable implements BaseColumns, Table {
       static final String TABLE_NAME = "reports";
-      static final Column COLUMN_LOCAL_ID = new Column("local_id", Type.INTEGER, true);
-      static final Column COLUMN_REPORT_ID = new Column("report_id", Type.INTEGER);
-      static final Column COLUMN_VERSION = new Column("version", Type.INTEGER);
+      static final Column COLUMN_LOCAL_ID = new Column("local_id", Type.LONG, true);
+      static final Column COLUMN_REPORT_ID = new Column("report_id", Type.LONG);
+      static final Column COLUMN_VERSION = new Column("version", Type.LONG);
       static final Column COLUMN_ACTIVE = new Column("active", Type.BOOLEAN);
-      static final Column COLUMN_TS_LOCAL_ADD = new Column("local_add_timestamp", Type.INTEGER);
+      static final Column COLUMN_TS_LOCAL_ADD = new Column("local_add_timestamp", Type.LONG);
       static final Column COLUMN_TS_LOCAL_UPDATE =
-          new Column("local_update_timestamp", Type.INTEGER);
+          new Column("local_update_timestamp", Type.LONG);
       static final Column COLUMN_SYNCED = new Column("synced", Type.BOOLEAN);
       static final Column COLUMN_REPORT = new Column("report", Type.BLOB);
 
@@ -153,10 +247,6 @@ public class LocalDataStore {
       }
     }
 
-    static <T extends Object> String whereEquals(StorageDefinition.Column column, T value) {
-      return column.name + " = " + value.toString();
-    }
-
     static class DbHelper extends SQLiteOpenHelper {
       // If you increment this must change onUpgrade to upgrade old versions up.
       static final int SCHEMA_VERSION = 1;
@@ -171,8 +261,10 @@ public class LocalDataStore {
 
       @Override
       public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Preconditions.checkArgument(newVersion == 1, "Upgrading to invalid version:" + newVersion);
-        // There is no old version yet.
+        Preconditions.checkArgument(newVersion <= SCHEMA_VERSION,
+            "Upgrading to invalid version:" + newVersion
+            + " we only support up to:" + SCHEMA_VERSION);
+        // TODO: First time we implement upgrading, need to support some UI telling user to wait.
       }
 
       private String getCreate(Table table) {
@@ -191,37 +283,37 @@ public class LocalDataStore {
       }
 
     }
+  }
 
-    static class Column {
-      public enum Type {
-        INTEGER("INTEGER"),
-        LONG("INTEGER"),
-        TEXT("TEXT"),
-        BOOLEAN("INTEGER"),
-        BLOB("BLOB");
-        public String sqlType;
-        private Type(String sqlType) {
-          this.sqlType = sqlType;
-        }
-      }
-      public final String name;
-      public final Type type;
-      public final boolean primaryKey;
-      public Column(String name, Type type) {
-        this.name = name;
-        this.type = type;
-        this.primaryKey = false;
-      }
-      public Column(String name, Type type, boolean primaryKey) {
-        this.name = name;
-        this.type = type;
-        this.primaryKey = primaryKey;
+  static class Column {
+    public enum Type {
+      INTEGER("INTEGER"),
+      LONG("INTEGER"),
+      TEXT("TEXT"),
+      BOOLEAN("INTEGER"),
+      BLOB("BLOB");
+      public String sqlType;
+      private Type(String sqlType) {
+        this.sqlType = sqlType;
       }
     }
-    interface Table {
-      public String getName();
-      public List<Column> getLayout();
+    public final String name;
+    public final Type type;
+    public final boolean primaryKey;
+    public Column(String name, Type type) {
+      this.name = name;
+      this.type = type;
+      this.primaryKey = false;
     }
+    public Column(String name, Type type, boolean primaryKey) {
+      this.name = name;
+      this.type = type;
+      this.primaryKey = primaryKey;
+    }
+  }
+  interface Table {
+    public String getName();
+    public List<Column> getLayout();
   }
 
 }

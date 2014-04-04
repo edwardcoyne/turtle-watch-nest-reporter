@@ -5,7 +5,7 @@ option java_outer_classname = "ReportProto";
 message ReportWrapper {
   optional Report report = 1;
   optional ReportRef ref = 2;
-  optional boolean active = 3;
+  optional bool active = 3;
 }
 
 // Uniquely identifies this version of the report.
