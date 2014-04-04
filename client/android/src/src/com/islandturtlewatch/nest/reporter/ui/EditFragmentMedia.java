@@ -1,24 +1,18 @@
 package com.islandturtlewatch.nest.reporter.ui;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
-import android.content.Context;
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.islandturtlewatch.nest.data.ReportProto.Report;
-import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
-import com.islandturtlewatch.nest.reporter.CloudEndpointUtils;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
-import com.islandturtlewatch.nest.reporter.net.BackendClient;
 
 public class EditFragmentMedia extends EditFragment {
   private static final Map<Integer, ClickHandler> CLICK_HANDLERS = ClickHandler.toMap(
@@ -46,26 +40,9 @@ public class EditFragmentMedia extends EditFragment {
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
       Log.v(TAG, "Capture Image clicked.");
-      /*
       Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
       Activity activity = (Activity) view.getContext();
       activity.startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-       */
-
-      new AsyncTask<Context, Integer, Long>() {
-        @Override
-        protected Long doInBackground(Context... params) {
-          if(!BackendClient.addUser()) {
-            CloudEndpointUtils.showError((Activity)params[0], "Failed to create user");
-          }
-          if(!BackendClient.addReport(Report.newBuilder().setTimestampFoundMs(1L).setAdditionalNotes("TEST").build()).isPresent()) {
-            CloudEndpointUtils.showError((Activity)params[0], "Failed to create report");
-          }
-          List<ReportRef> refs = BackendClient.getLatestRefs();
-          CloudEndpointUtils.showError((Activity)params[0], Arrays.toString(refs.toArray()));
-          return 0L;
-        }
-      }.execute(view.getContext());
-     }
+    }
   }
 }

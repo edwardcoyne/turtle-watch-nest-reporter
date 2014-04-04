@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"OqxT57NU1DEATg4yJjzJs2FozZE/x9blTXFY6VADd4p4DCm2BhfnCdM\"",
+ "etag": "\"gWnWV7fYC80JM0beuSxOtzgfiS0/x9blTXFY6VADd4p4DCm2BhfnCdM\"",
  "discoveryVersion": "v1",
  "id": "reportEndpoint:v1",
  "name": "reportEndpoint",

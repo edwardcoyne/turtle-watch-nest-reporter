@@ -63,7 +63,8 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
   }
 
   @Override
-  public void updateDisplay(Report report) {
+  public void updateDisplay(String title, Report report) {
+    setTitle(title);
     sectionManager.updateSections(report);
   }
 

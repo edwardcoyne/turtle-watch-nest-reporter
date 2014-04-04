@@ -45,8 +45,9 @@ public class EditPresenter {
 	}
 
 	public void updateView() {
-		Report report = model.getActiveReport();
-		view.updateDisplay(report);
+	  String title = model.getActiveReportShortName();
+	  Report report = model.getActiveReport();
+	  view.updateDisplay(title, report);
 	}
 
 	private void writeChangesAndUpdate(Report udpatedReport) {
@@ -268,7 +269,8 @@ public class EditPresenter {
 
         public DataUpdateResult updateNumberOfEggsRelocated(Optional<Integer> value) {
           Report.Builder updatedReport = model.getActiveReport().toBuilder();
-          Relocation.Builder relocationBuilder = updatedReport.getInterventionBuilder().getRelocationBuilder();
+          Relocation.Builder relocationBuilder =
+              updatedReport.getInterventionBuilder().getRelocationBuilder();
           if (value.isPresent()) {
             relocationBuilder.setEggsRelocated(value.get());
           } else {
