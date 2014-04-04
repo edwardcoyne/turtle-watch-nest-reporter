@@ -66,11 +66,13 @@ public class EditPresenter {
 		}
 
 		public DataUpdateResult updateObservers(String observers) {
-          Report updatedReport = model.getActiveReport().toBuilder()
-              .setObservers(observers)
-              .build();
-
-          writeChangesAndUpdate(updatedReport);
+          Report.Builder updatedReport = model.getActiveReport().toBuilder();
+          if (observers.isEmpty()) {
+            updatedReport.clearObservers();
+          } else {
+            updatedReport.setObservers(observers);
+          }
+          writeChangesAndUpdate(updatedReport.build());
           return DataUpdateResult.success();
         }
 
@@ -118,7 +120,11 @@ public class EditPresenter {
 
 		public DataUpdateResult updateStreetAddress(String address) {
           Report.Builder updatedReport = model.getActiveReport().toBuilder();
-          updatedReport.getLocationBuilder().setStreetAddress(address);
+          if (address.isEmpty()) {
+            updatedReport.getLocationBuilder().clearStreetAddress();
+          } else {
+            updatedReport.getLocationBuilder().setStreetAddress(address);
+          }
           writeChangesAndUpdate(updatedReport.build());
           return DataUpdateResult.success();
         }
@@ -132,7 +138,11 @@ public class EditPresenter {
 
 		public DataUpdateResult updateDetails(String details) {
           Report.Builder updatedReport = model.getActiveReport().toBuilder();
-          updatedReport.getLocationBuilder().setDetails(details);
+          if (details.isEmpty()) {
+            updatedReport.getLocationBuilder().clearDetails();
+          } else {
+            updatedReport.getLocationBuilder().setDetails(details);
+          }
           writeChangesAndUpdate(updatedReport.build());
           return DataUpdateResult.success();
         }
@@ -507,7 +517,11 @@ public class EditPresenter {
       }
       public DataUpdateResult updateNotes(String value) {
         Report.Builder updatedReport = model.getActiveReport().toBuilder();
-        updatedReport.setAdditionalNotes(value);
+        if (value.isEmpty()) {
+          updatedReport.clearAdditionalNotes();
+        } else {
+          updatedReport.setAdditionalNotes(value);
+        }
         writeChangesAndUpdate(updatedReport.build());
         return DataUpdateResult.success();
       }
