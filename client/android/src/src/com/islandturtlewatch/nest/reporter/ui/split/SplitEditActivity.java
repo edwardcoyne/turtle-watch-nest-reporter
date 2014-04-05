@@ -2,6 +2,7 @@ package com.islandturtlewatch.nest.reporter.ui.split;
 
 import java.util.Map;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
@@ -15,6 +16,7 @@ import com.google.common.collect.ImmutableMap;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter;
 import com.islandturtlewatch.nest.reporter.R;
+import com.islandturtlewatch.nest.reporter.data.LocalDataStore;
 import com.islandturtlewatch.nest.reporter.data.ReportsModel;
 import com.islandturtlewatch.nest.reporter.ui.EditFragment;
 import com.islandturtlewatch.nest.reporter.ui.EditFragment.ClickHandler;
@@ -58,7 +60,9 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.split_edit_activity);
 
-    presenter = new EditPresenter(new ReportsModel(), this);
+    presenter = new EditPresenter(
+        new ReportsModel(new LocalDataStore(this), getPreferences(Context.MODE_PRIVATE)),
+        this);
     sectionManager = new SectionManager();
   }
 
