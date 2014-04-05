@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
+import android.util.Log;
 
 import com.google.api.client.repackaged.com.google.common.base.Preconditions;
 import com.google.api.client.util.Throwables;
@@ -25,6 +26,7 @@ import com.islandturtlewatch.nest.reporter.data.LocalDataStore.Column.Type;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore.StorageDefinition.ReportsTable;
 
 public class LocalDataStore {
+  private static final String TAG = LocalDataStore.class.getCanonicalName();
   private final StorageDefinition.DbHelper storageHelper;
 
   public LocalDataStore(Context context) {
@@ -70,6 +72,7 @@ public class LocalDataStore {
    * Saves local changes to a report.
    */
   public void saveReport(long localId, Report report) {
+    Log.d(TAG, "saving report " + localId);
     SQLiteDatabase db = storageHelper.getWritableDatabase();
 
     ContentValues values = new ContentValues();

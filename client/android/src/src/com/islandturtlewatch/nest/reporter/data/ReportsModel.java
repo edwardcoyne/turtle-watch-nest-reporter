@@ -15,7 +15,6 @@ public class ReportsModel {
   private static final String TAG = ReportsModel.class.getSimpleName();
   private static final String PREFERENCE_KEY_ACTIVE_REPORT_ID = "model.active_report_id";
 
-  //private static final String KEY_REPORT = "CurrentReport";
   LocalDataStore dataStore;
   SharedPreferences preferences;
   ActiveReportManager activeReport = new ActiveReportManager();
@@ -28,25 +27,16 @@ public class ReportsModel {
     if (lastActiveReportId.isPresent()) {
       loadReport(lastActiveReportId.get());
     } else {
+      Log.d(TAG, "Previous report id not found, creating new.");
       createReport();
     }
   }
 
   public void persistToBundle(Bundle outState) {
-    //outState.putByteArray(KEY_REPORT, activeReport.get().toByteArray());
-    //outState.putByteArray(KEY_REPORT_ID, activeReport.get().toByteArray());
     saveLastActiveReportId(activeReport.getId());
   }
 
   public void restoreFromBundle(Bundle inState) {
-    /*if (inState.containsKey("CurrentReport")) {
-      try {
-        activeReport = Report.parseFrom(inState.getByteArray("CurrentReport"));
-      } catch (InvalidProtocolBufferException e) {
-        Log.e(TAG,
-            "Could not restore proto from seriazlied state, " + e.getMessage());
-      }
-    }*/
     Optional<Long> idOpt = getLastActiveReportId();
     Preconditions.checkArgument(idOpt.isPresent(), "Missing saved id on restore.");
     Preconditions.checkArgument(loadReport(idOpt.get()), "Failed to load id on restore");

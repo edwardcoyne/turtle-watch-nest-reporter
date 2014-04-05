@@ -7,7 +7,6 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -27,7 +26,6 @@ public class MonitoredEditText extends EditText {
     super(context, attrs);
     for (int i=0; i < attrs.getAttributeCount(); i++) {
       String name = attrs.getAttributeName(i);
-      Log.d(MonitoredEditText.class.getSimpleName(), name);
       if (name.equals("onTextChangeHandler")) {
         textListenerMethodName = Optional.of(attrs.getAttributeValue(i));
       }
