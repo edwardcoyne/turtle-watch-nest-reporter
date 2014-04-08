@@ -15,6 +15,12 @@ public class ReportsModel {
   private static final String TAG = ReportsModel.class.getSimpleName();
   private static final String PREFERENCE_KEY_ACTIVE_REPORT_ID = "model.active_report_id";
 
+  private static final int REPORT_SHORT_NAME_LENGTH = 35;
+  // Arguments for pattern: time_stamp, address
+  private static final String REPORT_SHORT_NAME_PATTERN =
+      "%tm%1$td-%." + REPORT_SHORT_NAME_LENGTH + "s";
+
+
   LocalDataStore dataStore;
   SharedPreferences preferences;
   ActiveReportManager activeReport = new ActiveReportManager();
@@ -152,7 +158,7 @@ public class ReportsModel {
       if (activeReport.hasTimestampFoundMs()
           && activeReport.getLocation().hasStreetAddress()) {
         return String
-            .format(Locale.US, "%tm%1$td-%.25s", activeReport
+            .format(Locale.US, REPORT_SHORT_NAME_PATTERN, activeReport
                 .getTimestampFoundMs(), activeReport.getLocation()
                 .getStreetAddress());
       }

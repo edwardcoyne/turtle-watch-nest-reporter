@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -64,6 +67,27 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
         new ReportsModel(new LocalDataStore(this), getPreferences(Context.MODE_PRIVATE)),
         this);
     sectionManager = new SectionManager();
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    // Inflate the menu items for use in the action bar
+    MenuInflater inflater = getMenuInflater();
+    inflater.inflate(R.menu.split_edit_activity_menu, menu);
+
+    return super.onCreateOptionsMenu(menu);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    // Handle presses on the action bar items
+    switch (item.getItemId()) {
+        case R.id.action_change_reports:
+            //openSearch();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+    }
   }
 
   @Override

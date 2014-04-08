@@ -55,6 +55,7 @@ public class EditPresenter {
 	  updateView();
 	}
 
+	// TODO(edcoyne): break this into a separate class and add tests
 	public class DataUpdateHandler {
 		public DataUpdateResult updateDateFound(int year, int month, int day) {
 			Report updatedReport = model.getActiveReport().toBuilder()

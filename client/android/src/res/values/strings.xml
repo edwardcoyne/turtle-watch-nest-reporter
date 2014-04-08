@@ -6,6 +6,7 @@
     <string name="date_button">Set Date</string>
     <string name="feet_short">ft</string>
     <string name="inches_short">in</string>
+    <string name="action_change_reports">Change Report</string>
     
     <string name="edit_info_label_date_found">Date Crawl Found</string>
     <string name="edit_info_label_date_incubation">55 Day Incubation Date</string>
