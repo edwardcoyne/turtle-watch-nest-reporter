@@ -45,9 +45,8 @@ public class EditPresenter {
 	}
 
 	public void updateView() {
-	  String title = model.getActiveReportShortName();
 	  Report report = model.getActiveReport();
-	  view.updateDisplay(title, report);
+	  view.updateDisplay(report);
 	}
 
 	private void writeChangesAndUpdate(Report udpatedReport) {

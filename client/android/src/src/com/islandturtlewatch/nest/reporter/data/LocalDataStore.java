@@ -2,6 +2,7 @@ package com.islandturtlewatch.nest.reporter.data;
 
 import java.util.List;
 
+import lombok.Cleanup;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.experimental.Builder;
@@ -33,18 +34,28 @@ public class LocalDataStore {
     storageHelper = new StorageDefinition.DbHelper(context);
   }
 
-  public ImmutableList<CachedReportWrapper> listActiveReports() {
+  private Cursor getActiveReportsCursor() {
     SQLiteDatabase db = storageHelper.getReadableDatabase();
 
-    Cursor cursor = db.query(
-        ReportsTable.TABLE_NAME,
-        CachedReportWrapper.requiredColumns,
-        isTrue(ReportsTable.COLUMN_ACTIVE),
+    return db.query(
+        ReportsTable.TABLE_NAME, // table name
+        CachedReportWrapper.requiredColumns, // cols to select
+        isTrue(ReportsTable.COLUMN_ACTIVE), // where
         null, // don't need selection args
         null, // don't group
         null, // don't filter
-        null // don't sort
+        ReportsTable.COLUMN_TS_LOCAL_ADD.name // sort
         );
+  }
+
+  public int activeReportCount() {
+    @Cleanup Cursor cursor = getActiveReportsCursor();
+    return cursor.getCount();
+  }
+
+  public ImmutableList<CachedReportWrapper> listActiveReports() {
+    @Cleanup Cursor cursor = getActiveReportsCursor();
+
     ImmutableList.Builder<CachedReportWrapper> output = ImmutableList.builder();
     while (cursor.moveToNext()) {
       output.add(CachedReportWrapper.from(cursor));
@@ -55,7 +66,7 @@ public class LocalDataStore {
   public CachedReportWrapper getReport(long localId) {
     SQLiteDatabase db = storageHelper.getReadableDatabase();
 
-    Cursor cursor = db.query(
+    @Cleanup Cursor cursor = db.query(
         ReportsTable.TABLE_NAME,
         CachedReportWrapper.requiredColumns,
         ReportsTable.keyEquals(localId),

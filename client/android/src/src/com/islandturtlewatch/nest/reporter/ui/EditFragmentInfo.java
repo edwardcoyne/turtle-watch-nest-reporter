@@ -55,6 +55,9 @@ public class EditFragmentInfo extends EditFragment {
       setText(R.id.buttonDateFound, DateUtil.getFormattedDate(report.getTimestampFoundMs()));
       setText(R.id.labelIncubationDate,
           DateUtil.getFormattedDate(DateUtil.plusDays(report.getTimestampFoundMs(), 55)));
+    } else {
+      setText(R.id.buttonDateFound,  getString(R.string.date_button));
+      setText(R.id.labelIncubationDate, "");
     }
 
     setText(R.id.fieldObservers, report.hasObservers() ? report.getObservers() : "");

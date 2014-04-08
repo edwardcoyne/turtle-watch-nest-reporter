@@ -5,13 +5,21 @@ import java.util.Map;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
@@ -21,6 +29,7 @@ import com.islandturtlewatch.nest.reporter.EditPresenter;
 import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore;
 import com.islandturtlewatch.nest.reporter.data.ReportsModel;
+import com.islandturtlewatch.nest.reporter.data.ReportsModel.ReportsListItemViewFactory;
 import com.islandturtlewatch.nest.reporter.ui.EditFragment;
 import com.islandturtlewatch.nest.reporter.ui.EditFragment.ClickHandler;
 import com.islandturtlewatch.nest.reporter.ui.EditFragment.ClickHandlerSimple;
@@ -38,6 +47,7 @@ import com.islandturtlewatch.nest.reporter.ui.FocusMonitoredEditText;
 import com.islandturtlewatch.nest.reporter.ui.ReportSection;
 import com.islandturtlewatch.nest.reporter.ui.ReportSectionListFragment;
 import com.islandturtlewatch.nest.reporter.ui.ReportSectionListFragment.EventHandler;
+import com.islandturtlewatch.nest.reporter.util.ReportUtil;
 
 public class SplitEditActivity extends FragmentActivity implements EditView {
   //private static final String TAG = SplitEditActivity.class.getSimpleName();
@@ -56,6 +66,7 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
           .build();
 
   private EditPresenter presenter;
+  private ReportsModel model;
   private SectionManager sectionManager;
 
   @Override
@@ -63,10 +74,38 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.split_edit_activity);
 
-    presenter = new EditPresenter(
-        new ReportsModel(new LocalDataStore(this), getPreferences(Context.MODE_PRIVATE)),
-        this);
+    model = new ReportsModel(new LocalDataStore(this), getPreferences(Context.MODE_PRIVATE));
+    presenter = new EditPresenter(model, this);
     sectionManager = new SectionManager();
+    sectionManager.setSection(ReportSection.INFO);
+
+    //DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+    ListView drawerList = (ListView) findViewById(R.id.reports_drawer);
+
+    //TODO(edcoyne): Messy, cleanup.
+    drawerList.setAdapter(model.getReportsListAdapter(new ReportsListItemViewFactory(){
+      @Override
+      public View getView(Report report,
+          Optional<View> possibleConvertableView, ViewGroup parent) {
+        LayoutInflater inflator =
+            (LayoutInflater)parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        TextView view =
+            (TextView) inflator.inflate(R.layout.reports_list_item, parent, false);
+        view.setText(ReportUtil.getShortName(report));
+        return view;
+      }}));
+    drawerList.setOnItemClickListener(new OnItemClickListener() {
+      @Override
+      public void onItemClick(AdapterView<?> parent,
+          View view,
+          int position,
+          long id) {
+        model.switchActiveReport(id);
+        updateDisplay(model.getActiveReport());
+        DrawerLayout drawer = ((DrawerLayout) findViewById(R.id.drawer_layout));
+        drawer.closeDrawers();
+      }
+    });
   }
 
   @Override
@@ -80,19 +119,25 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
+    //TODO(edcoyne): move this logic out of the view.
     // Handle presses on the action bar items
     switch (item.getItemId()) {
         case R.id.action_change_reports:
-            //openSearch();
-            return true;
+          DrawerLayout drawer = ((DrawerLayout) findViewById(R.id.drawer_layout));
+          drawer.openDrawer(Gravity.LEFT);
+          return true;
+        case R.id.action_new_report:
+          model.startNewActiveReport();
+          updateDisplay(model.getActiveReport());
+          return true;
         default:
             return super.onOptionsItemSelected(item);
     }
   }
 
   @Override
-  public void updateDisplay(String title, Report report) {
-    setTitle(title);
+  public void updateDisplay(Report report) {
+    setTitle(ReportUtil.getShortName(report));
     sectionManager.updateSections(report);
   }
 

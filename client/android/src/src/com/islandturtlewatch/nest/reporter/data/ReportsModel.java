@@ -1,10 +1,12 @@
 package com.islandturtlewatch.nest.reporter.data;
 
-import java.util.Locale;
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ListAdapter;
 
 import com.google.api.client.repackaged.com.google.common.base.Preconditions;
 import com.google.common.base.Optional;
@@ -15,15 +17,10 @@ public class ReportsModel {
   private static final String TAG = ReportsModel.class.getSimpleName();
   private static final String PREFERENCE_KEY_ACTIVE_REPORT_ID = "model.active_report_id";
 
-  private static final int REPORT_SHORT_NAME_LENGTH = 35;
-  // Arguments for pattern: time_stamp, address
-  private static final String REPORT_SHORT_NAME_PATTERN =
-      "%tm%1$td-%." + REPORT_SHORT_NAME_LENGTH + "s";
-
-
   LocalDataStore dataStore;
   SharedPreferences preferences;
   ActiveReportManager activeReport = new ActiveReportManager();
+  ReportsListAdapter adapter;
 
   public ReportsModel(LocalDataStore dataStore, SharedPreferences preferences) {
     this.dataStore = dataStore;
@@ -55,7 +52,7 @@ public class ReportsModel {
    * The currently active report should be submitted or abandoned.
    */
   public void startNewActiveReport() {
-    setActiveReport(Report.getDefaultInstance());
+    createReport();
   }
 
   /**
@@ -65,15 +62,16 @@ public class ReportsModel {
     return activeReport.get();
   }
 
-  public String getActiveReportShortName() {
-    return activeReport.getShortName();
-  }
-
   /**
    * Set report we are currently working on.
    */
   public void setActiveReport(Report report) {
     activeReport.update(report);
+    adapter.notifyDataSetChanged();
+  }
+
+  public void switchActiveReport(long reportId) {
+    loadReport(reportId);
   }
 
   /**
@@ -97,9 +95,15 @@ public class ReportsModel {
     throw new UnsupportedOperationException("Not Implemented");
   }
 
+  public ListAdapter getReportsListAdapter(ReportsListItemViewFactory viewFactory) {
+    adapter = new ReportsListAdapter(viewFactory);
+    return adapter;
+  }
+
   private void createReport() {
     CachedReportWrapper wrapper = dataStore.createReport();
     activeReport.setFrom(wrapper);
+    adapter.notifyDataSetChanged();
   }
 
   private boolean loadReport(long id) {
@@ -111,7 +115,6 @@ public class ReportsModel {
     activeReport.setFrom(wrapper);
     return true;
   }
-
 
   private Optional<Long> getLastActiveReportId() {
     if (!preferences.contains(PREFERENCE_KEY_ACTIVE_REPORT_ID)) {
@@ -153,16 +156,39 @@ public class ReportsModel {
       dataStore.saveReport(activeReportId, report);
       activeReport = report;
     }
+  }
 
-    String getShortName() {
-      if (activeReport.hasTimestampFoundMs()
-          && activeReport.getLocation().hasStreetAddress()) {
-        return String
-            .format(Locale.US, REPORT_SHORT_NAME_PATTERN, activeReport
-                .getTimestampFoundMs(), activeReport.getLocation()
-                .getStreetAddress());
-      }
-      return "New Report";
+  public interface ReportsListItemViewFactory {
+    View getView(Report report, Optional<View> oldView, ViewGroup parent);
+  }
+
+  private class ReportsListAdapter extends BaseAdapter {
+    private final ReportsListItemViewFactory viewFactory;
+    public ReportsListAdapter(ReportsListItemViewFactory viewFactory) {
+      this.viewFactory = viewFactory;
+    }
+
+    @Override
+    public int getCount() {
+      return dataStore.activeReportCount();
+    }
+
+    //TODO(edcoyne): if performance is ever an issue, optimize this.
+    @Override
+    public Object getItem(int position) {
+      return dataStore.listActiveReports().get(position).getReport();
+    }
+
+    @Override
+    public long getItemId(int position) {
+      return dataStore.listActiveReports().get(position).getLocalId();
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+      return viewFactory.getView((Report)getItem(position),
+          Optional.fromNullable(convertView),
+          parent);
     }
   }
 }

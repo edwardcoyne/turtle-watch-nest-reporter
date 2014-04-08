@@ -95,4 +95,21 @@ public class LocalDataStoreTest extends AndroidTestCase {
       assertTrue(wrapper.isActive());
     }
   }
+
+  public void testCountActive() {
+    LocalDataStore store = new LocalDataStore(getContext());
+
+    // Should be ignored.
+    store.saveReport(
+        ReportWrapper.newBuilder().setActive(false).build());
+
+    Set<Long> localIds = new HashSet<>();
+    int numberToTest = 5;
+    for (int i = 0; i < numberToTest; i++) {
+      assertTrue("Id already returned",
+          localIds.add(store.createReport().getLocalId()));
+    }
+
+    assertEquals(numberToTest, store.activeReportCount());
+  }
 }
