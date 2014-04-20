@@ -63,6 +63,25 @@ public class LocalDataStore {
     return output.build();
   }
 
+  public ImmutableList<CachedReportWrapper> listUnsyncedReports() {
+    SQLiteDatabase db = storageHelper.getReadableDatabase();
+
+    @Cleanup Cursor cursor = db.query(
+        ReportsTable.TABLE_NAME, // table name
+        CachedReportWrapper.requiredColumns, // cols to select
+        and(isFalse(ReportsTable.COLUMN_SYNCED), isFalse(ReportsTable.COLUMN_DELETED)), // where
+        null, // don't need selection args
+        null, // don't group
+        null, // don't filter
+        null); // don't sort
+
+    ImmutableList.Builder<CachedReportWrapper> output = ImmutableList.builder();
+    while (cursor.moveToNext()) {
+      output.add(CachedReportWrapper.from(cursor));
+    }
+    return output.build();
+  }
+
   public CachedReportWrapper getReport(long localId) {
     SQLiteDatabase db = storageHelper.getReadableDatabase();
 
@@ -104,7 +123,7 @@ public class LocalDataStore {
    *
    * Requires InitReportId to have been called for existing report, else we will add a new row.
    */
-  public void saveReport(ReportWrapper reportWrapper) {
+  public void updateFromServer(ReportWrapper reportWrapper) {
     SQLiteDatabase db = storageHelper.getWritableDatabase();
 
     ContentValues values = new ContentValues();
@@ -184,6 +203,10 @@ public class LocalDataStore {
     return cursor.getInt(cursor.getColumnIndexOrThrow(column.name)) == 1;
   }
 
+  private static int getInt(Cursor cursor, Column column) {
+    return cursor.getInt(cursor.getColumnIndexOrThrow(column.name));
+  }
+
   private static long getLong(Cursor cursor, Column column) {
     return cursor.getLong(cursor.getColumnIndexOrThrow(column.name));
   }
@@ -222,22 +245,25 @@ public class LocalDataStore {
   @Data
   @Builder(fluent=false)
   public static class CachedReportWrapper {
-    private long localId;
+    private int localId;
     private boolean synched;
     private boolean active;
+    private long lastUpdatedTimestamp;
     @NonNull private Report report;
 
     static final String [] requiredColumns = {
       ReportsTable.COLUMN_LOCAL_ID.name,
       ReportsTable.COLUMN_ACTIVE.name,
       ReportsTable.COLUMN_SYNCED.name,
-      ReportsTable.COLUMN_REPORT.name};
+      ReportsTable.COLUMN_REPORT.name,
+      ReportsTable.COLUMN_TS_LOCAL_UPDATE.name};
 
     static CachedReportWrapper from(Cursor cursor) {
       CachedReportWrapperBuilder builder = CachedReportWrapper.builder()
-          .setLocalId(getLong(cursor, ReportsTable.COLUMN_LOCAL_ID))
+          .setLocalId(getInt(cursor, ReportsTable.COLUMN_LOCAL_ID))
           .setActive(getBool(cursor, ReportsTable.COLUMN_ACTIVE))
-          .setSynched(getBool(cursor, ReportsTable.COLUMN_SYNCED));
+          .setSynched(getBool(cursor, ReportsTable.COLUMN_SYNCED))
+          .setLastUpdatedTimestamp(getLong(cursor, ReportsTable.COLUMN_TS_LOCAL_UPDATE));
       Optional<Report> proto =
           getProto(cursor, ReportsTable.COLUMN_REPORT, Report.getDefaultInstance());
       if (proto.isPresent()) {
@@ -254,7 +280,7 @@ public class LocalDataStore {
 
     static class ReportsTable implements BaseColumns, Table {
       static final String TABLE_NAME = "reports";
-      static final Column COLUMN_LOCAL_ID = new Column("local_id", Type.LONG, Column.PRIMARY);
+      static final Column COLUMN_LOCAL_ID = new Column("local_id", Type.INTEGER, Column.PRIMARY);
       static final Column COLUMN_REPORT_ID = new Column("report_id", Type.LONG);
       static final Column COLUMN_TS_LOCAL_ADD = new Column("local_add_timestamp", Type.LONG);
       static final Column COLUMN_TS_LOCAL_UPDATE =

@@ -70,7 +70,7 @@ public class LocalDataStoreTest extends AndroidTestCase {
             .setOwnerId(3))
         .setReport(Report.newBuilder().setTimestampFoundMs(4))
         .build();
-    store.saveReport(wrapper);
+    store.updateFromServer(wrapper);
     // No exceptions, working.
   }
 
@@ -78,10 +78,10 @@ public class LocalDataStoreTest extends AndroidTestCase {
     LocalDataStore store = new LocalDataStore(getContext());
 
     // Should be ignored.
-    store.saveReport(
+    store.updateFromServer(
         ReportWrapper.newBuilder().setActive(false).build());
 
-    Set<Long> localIds = new HashSet<>();
+    Set<Integer> localIds = new HashSet<>();
     int numberToTest = 5;
     for (int i = 0; i < numberToTest; i++) {
       assertTrue("Id already returned",
@@ -100,10 +100,10 @@ public class LocalDataStoreTest extends AndroidTestCase {
     LocalDataStore store = new LocalDataStore(getContext());
 
     // Should be ignored.
-    store.saveReport(
+    store.updateFromServer(
         ReportWrapper.newBuilder().setActive(false).build());
 
-    Set<Long> localIds = new HashSet<>();
+    Set<Integer> localIds = new HashSet<>();
     int numberToTest = 5;
     for (int i = 0; i < numberToTest; i++) {
       assertTrue("Id already returned",
@@ -121,5 +121,26 @@ public class LocalDataStoreTest extends AndroidTestCase {
 
     store.deleteReport(localIdToDelete);
     assertEquals(0, store.activeReportCount());
+  }
+
+  public void testListUnsycned() {
+    LocalDataStore store = new LocalDataStore(getContext());
+
+    // Unsynced
+    long unsynchedId = store.createReport().getLocalId();
+
+    // Synced
+    CachedReportWrapper syncedReport = store.createReport();
+    ReportRef syncedRef = ReportRef.newBuilder().setReportId(10).build();
+    store.setServerSideData(syncedReport.getLocalId(), syncedRef);
+    store.updateFromServer(
+        ReportWrapper.newBuilder()
+          .setRef(syncedRef)
+          .setReport(syncedReport.getReport()).build());
+
+    ImmutableList<CachedReportWrapper> wrappers =
+        store.listUnsyncedReports();
+    assertEquals(1, wrappers.size());
+    assertEquals(unsynchedId, wrappers.get(0).getLocalId());
   }
 }

@@ -9,7 +9,7 @@ public class ErrorUtil {
   private ErrorUtil() {} // Only static
 
   public static void showErrorMessage(Context context, String message) {
-    Toast.makeText(context, "My Service Stopped", Toast.LENGTH_LONG).show();
+    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     Log.e(TAG, "Displayed error: " + message);
   }
 }
