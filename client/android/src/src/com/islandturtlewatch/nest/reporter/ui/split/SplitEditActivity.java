@@ -130,6 +130,10 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
           model.startNewActiveReport();
           updateDisplay(model.getActiveReport());
           return true;
+        case R.id.action_delete_report:
+          model.deleteActiveReport();
+          updateDisplay(model.getActiveReport());
+          return true;
         default:
             return super.onOptionsItemSelected(item);
     }

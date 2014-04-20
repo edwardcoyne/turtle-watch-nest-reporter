@@ -10,6 +10,7 @@ import android.widget.ListAdapter;
 
 import com.google.api.client.repackaged.com.google.common.base.Preconditions;
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableList;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore.CachedReportWrapper;
 
@@ -20,7 +21,7 @@ public class ReportsModel {
   LocalDataStore dataStore;
   SharedPreferences preferences;
   ActiveReportManager activeReport = new ActiveReportManager();
-  ReportsListAdapter adapter;
+  ReportsListAdapter adapter = new ReportsListAdapter();
 
   public ReportsModel(LocalDataStore dataStore, SharedPreferences preferences) {
     this.dataStore = dataStore;
@@ -60,6 +61,23 @@ public class ReportsModel {
    */
   public Report getActiveReport() {
     return activeReport.get();
+  }
+
+  /**
+   * Get report we are currently working on.
+   */
+  public void deleteActiveReport() {
+    activeReport.delete();
+
+    // Set next active report, if non we create new otherwise first on list.
+    ImmutableList<CachedReportWrapper> activeReports = dataStore.listActiveReports();
+    if (activeReports.isEmpty()) {
+      createReport();
+    } else {
+      loadReport(activeReports.get(0).getLocalId());
+    }
+
+    adapter.notifyDataSetChanged();
   }
 
   /**
@@ -156,6 +174,10 @@ public class ReportsModel {
       dataStore.saveReport(activeReportId, report);
       activeReport = report;
     }
+
+    void delete() {
+      dataStore.deleteReport(activeReportId);
+    }
   }
 
   public interface ReportsListItemViewFactory {
@@ -163,9 +185,14 @@ public class ReportsModel {
   }
 
   private class ReportsListAdapter extends BaseAdapter {
-    private final ReportsListItemViewFactory viewFactory;
+    private final Optional<ReportsListItemViewFactory> viewFactory;
+
     public ReportsListAdapter(ReportsListItemViewFactory viewFactory) {
-      this.viewFactory = viewFactory;
+      this.viewFactory = Optional.of(viewFactory);
+    }
+
+    public ReportsListAdapter() {
+      this.viewFactory = Optional.absent();
     }
 
     @Override
@@ -186,7 +213,9 @@ public class ReportsModel {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-      return viewFactory.getView((Report)getItem(position),
+      Preconditions.checkArgument(viewFactory.isPresent(),
+          "Should not call getView on adapter without view factory.");
+      return viewFactory.get().getView((Report)getItem(position),
           Optional.fromNullable(convertView),
           parent);
     }

@@ -112,4 +112,14 @@ public class LocalDataStoreTest extends AndroidTestCase {
 
     assertEquals(numberToTest, store.activeReportCount());
   }
+
+  public void testDelete() {
+    LocalDataStore store = new LocalDataStore(getContext());
+
+    long localIdToDelete = store.createReport().getLocalId();
+    assertEquals(1, store.activeReportCount());
+
+    store.deleteReport(localIdToDelete);
+    assertEquals(0, store.activeReportCount());
+  }
 }

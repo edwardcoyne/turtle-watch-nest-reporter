@@ -40,7 +40,7 @@ public class LocalDataStore {
     return db.query(
         ReportsTable.TABLE_NAME, // table name
         CachedReportWrapper.requiredColumns, // cols to select
-        isTrue(ReportsTable.COLUMN_ACTIVE), // where
+        and(isTrue(ReportsTable.COLUMN_ACTIVE), isFalse(ReportsTable.COLUMN_DELETED) ), // where
         null, // don't need selection args
         null, // don't group
         null, // don't filter
@@ -162,6 +162,24 @@ public class LocalDataStore {
     return getReport(localId);
   }
 
+  /**
+   * Delete report.
+   */
+  public void deleteReport(long localId) {
+    Log.d(TAG, "deleting report " + localId);
+    SQLiteDatabase db = storageHelper.getWritableDatabase();
+
+    ContentValues values = new ContentValues();
+    values.put(ReportsTable.COLUMN_DELETED.name, true);
+
+    int numberUpdated = db.update(ReportsTable.TABLE_NAME,
+        values,
+        ReportsTable.keyEquals(localId),
+        null);
+    Preconditions.checkArgument(numberUpdated == 1,
+        "delete should update one row not " + numberUpdated);
+  }
+
   private static boolean getBool(Cursor cursor, Column column) {
     return cursor.getInt(cursor.getColumnIndexOrThrow(column.name)) == 1;
   }
@@ -191,6 +209,14 @@ public class LocalDataStore {
 
   static String isTrue(Column column) {
     return column.name + " = 1";
+  }
+
+  static String isFalse(Column column) {
+    return column.name + " != 1";
+  }
+
+  static String and(String cond1, String cond2) {
+    return cond1 + " and " + cond2;
   }
 
   @Data
@@ -228,23 +254,25 @@ public class LocalDataStore {
 
     static class ReportsTable implements BaseColumns, Table {
       static final String TABLE_NAME = "reports";
-      static final Column COLUMN_LOCAL_ID = new Column("local_id", Type.LONG, true);
+      static final Column COLUMN_LOCAL_ID = new Column("local_id", Type.LONG, Column.PRIMARY);
       static final Column COLUMN_REPORT_ID = new Column("report_id", Type.LONG);
-      static final Column COLUMN_VERSION = new Column("version", Type.LONG);
-      static final Column COLUMN_ACTIVE = new Column("active", Type.BOOLEAN);
       static final Column COLUMN_TS_LOCAL_ADD = new Column("local_add_timestamp", Type.LONG);
       static final Column COLUMN_TS_LOCAL_UPDATE =
           new Column("local_update_timestamp", Type.LONG);
-      static final Column COLUMN_SYNCED = new Column("synced", Type.BOOLEAN);
+      static final Column COLUMN_VERSION = new Column("version", Type.LONG);
+      static final Column COLUMN_ACTIVE = new Column("active", Type.BOOLEAN, "1");
+      static final Column COLUMN_DELETED = new Column("deleted", Type.BOOLEAN, "0");
+      static final Column COLUMN_SYNCED = new Column("synced", Type.BOOLEAN, "0");
       static final Column COLUMN_REPORT = new Column("report", Type.BLOB);
 
       static final List<Column> LAYOUT = ImmutableList.of(
           COLUMN_LOCAL_ID,
           COLUMN_REPORT_ID,
-          COLUMN_VERSION,
-          COLUMN_ACTIVE,
           COLUMN_TS_LOCAL_ADD,
           COLUMN_TS_LOCAL_UPDATE,
+          COLUMN_VERSION,
+          COLUMN_ACTIVE,
+          COLUMN_DELETED,
           COLUMN_SYNCED,
           COLUMN_REPORT);
 
@@ -289,6 +317,9 @@ public class LocalDataStore {
           if (column.primaryKey) {
             sql.append(" PRIMARY KEY ");
           }
+          if (column.defaultValue.isPresent()) {
+            sql.append(" DEFAULT " + column.defaultValue.get());
+          }
           sql.append(",");
         }
         sql.deleteCharAt(sql.length()-1); // last char is extra ','
@@ -300,6 +331,7 @@ public class LocalDataStore {
   }
 
   static class Column {
+    public static final boolean PRIMARY = true;
     public enum Type {
       INTEGER("INTEGER"),
       LONG("INTEGER"),
@@ -313,15 +345,27 @@ public class LocalDataStore {
     }
     public final String name;
     public final Type type;
+    public final Optional<String> defaultValue;
     public final boolean primaryKey;
+
     public Column(String name, Type type) {
       this.name = name;
       this.type = type;
+      this.defaultValue = Optional.absent();
       this.primaryKey = false;
     }
+
+    public Column(String name, Type type, String defaultValue) {
+      this.name = name;
+      this.type = type;
+      this.defaultValue = Optional.of(defaultValue);
+      this.primaryKey = false;
+    }
+
     public Column(String name, Type type, boolean primaryKey) {
       this.name = name;
       this.type = type;
+      this.defaultValue = Optional.absent();
       this.primaryKey = primaryKey;
     }
   }
