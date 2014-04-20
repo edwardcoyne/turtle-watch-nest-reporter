@@ -122,7 +122,7 @@ public class SyncService extends Service {
     } else if (!networkConnected.get()) {
       setNotification("Network disconnected, sleeping...");
     } else {
-      setNotification(String.format("Connected, Pending Uploads:%d CurrentProgress:%02.2f",
+      setNotification(String.format("Connected, Uploads Pending: %d Current: %02.1f%%",
           pendingUploads.size(), currentUploadProgress));
     }
   }
