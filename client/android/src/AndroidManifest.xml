@@ -18,6 +18,8 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <permission
         android:name="com.islandturtlewatch.nest.reporter.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
@@ -39,8 +41,19 @@
             </intent-filter>
         </activity>
 
+        <service
+          android:name=".service.SyncService"
+          android:icon="@drawable/ic_launcher"
+          android:label="@string/sync_service_name"/>
+        <receiver 
+            android:enabled="true" 
+            android:name=".service.SyncService$OnBoot">
+           <intent-filter>
+               <action android:name="android.intent.action.BOOT_COMPLETED" />
+           </intent-filter>
+        </receiver>
+        
         <service android:name=".GCMIntentService" />
-
         <receiver
             android:name="com.google.android.gcm.GCMBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >

@@ -30,6 +30,7 @@ import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore;
 import com.islandturtlewatch.nest.reporter.data.ReportsModel;
 import com.islandturtlewatch.nest.reporter.data.ReportsModel.ReportsListItemViewFactory;
+import com.islandturtlewatch.nest.reporter.service.SyncService;
 import com.islandturtlewatch.nest.reporter.ui.EditFragment;
 import com.islandturtlewatch.nest.reporter.ui.EditFragment.ClickHandler;
 import com.islandturtlewatch.nest.reporter.ui.EditFragment.ClickHandlerSimple;
@@ -113,6 +114,7 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
     // Inflate the menu items for use in the action bar
     MenuInflater inflater = getMenuInflater();
     inflater.inflate(R.menu.split_edit_activity_menu, menu);
+    SyncService.start(this);
 
     return super.onCreateOptionsMenu(menu);
   }

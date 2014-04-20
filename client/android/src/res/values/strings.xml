@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">Island Watch Nest Reporter</string>
+    <string name="sync_service_name">Nest Reporter Server Sync</string>
     <string name="other">Other</string>
     <string name="date_button">Set Date</string>
     <string name="feet_short">ft</string>
