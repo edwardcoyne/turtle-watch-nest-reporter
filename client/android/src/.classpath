@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="com/islandturtlewatch/nest/reporter/GCMIntentService.java|com/islandturtlewatch/nest/reporter/RegisterActivity.java|java/beans/ConstructorProperties.java" kind="src" path="src"/>
+	<classpathentry excluding="com/islandturtlewatch/nest/reporter/GCMIntentService.java|com/islandturtlewatch/nest/reporter/RegisterActivity.java|java/beans/ConstructorProperties.java|com/islandturtlewatch/nest/reporter/net/BackendClient.java" kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="src" path="proto_gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
-	<classpathentry kind="src" path="endpoint-libs/libreportEndpoint-v1/reportEndpoint/reportendpoint-v1-generated-source"/>
-	<classpathentry kind="src" path="endpoint-libs/libuserEndpoint-v1/userEndpoint/userendpoint-v1-generated-source"/>
 	<classpathentry kind="lib" path="libs/lombok-api.jar"/>
+	<classpathentry kind="src" path="endpoint-libs/libreportEndpoint-v1/reportEndpoint/reportendpoint-v1-generated-source"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

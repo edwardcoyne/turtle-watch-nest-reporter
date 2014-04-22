@@ -36,14 +36,14 @@ public class ReportStoreTest extends TestCase {
   }
 
   public void testAddUser_newUser() {
-    long userId = 3L;
+    String userId = "USER_ID";
     assertFalse(store.hasUser(userId));
     assertTrue(store.addUser(userId));
     assertTrue(store.hasUser(userId));
   }
 
   public void testAddReport() {
-    long userId = 3L;
+    String userId = "USER_ID";
     store.addUser(userId);
 
     Report report = Report.newBuilder().setTimestampFoundMs(500L).build();
@@ -60,7 +60,7 @@ public class ReportStoreTest extends TestCase {
   }
 
   public void testUpdateReport() {
-    long userId = 3L;
+    String userId = "USER_ID";
     store.addUser(userId);
 
     Report report = Report.newBuilder().setTimestampFoundMs(500L).build();
@@ -80,7 +80,7 @@ public class ReportStoreTest extends TestCase {
   }
 
   public void testUpdateReport_conflicts() {
-    long userId = 3L;
+    String userId = "USER_ID";
     store.addUser(userId);
 
     Report report = Report.newBuilder().setTimestampFoundMs(500L).build();
@@ -97,7 +97,7 @@ public class ReportStoreTest extends TestCase {
   }
 
   public void testGetLatestReportsForUser() {
-    long userId = 3L;
+    String userId = "USER_ID";
     store.addUser(userId);
 
     Report report1 = Report.newBuilder().setTimestampFoundMs(100L).build();

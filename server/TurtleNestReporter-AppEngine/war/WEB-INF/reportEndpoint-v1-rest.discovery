@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"gWnWV7fYC80JM0beuSxOtzgfiS0/x9blTXFY6VADd4p4DCm2BhfnCdM\"",
+ "etag": "\"IneSQDZRISaU6plvxbhHIOAs-WY/3Ie-3A69wwor7BC4F8Pca9stBKE\"",
  "discoveryVersion": "v1",
  "id": "reportEndpoint:v1",
  "name": "reportEndpoint",
@@ -140,19 +140,8 @@
  "methods": {
   "createReport": {
    "id": "reportEndpoint.createReport",
-   "path": "createReport/{user_id}",
+   "path": "createReport",
    "httpMethod": "POST",
-   "parameters": {
-    "user_id": {
-     "type": "string",
-     "required": true,
-     "format": "int64",
-     "location": "path"
-    }
-   },
-   "parameterOrder": [
-    "user_id"
-   ],
    "request": {
     "$ref": "ReportRequest",
     "parameterName": "resource"
@@ -166,21 +155,25 @@
   },
   "getLatestRefsForUser": {
    "id": "reportEndpoint.getLatestRefsForUser",
-   "path": "latestRefsForUser/{user_id}",
+   "path": "latestRefsForUser",
    "httpMethod": "POST",
-   "parameters": {
-    "user_id": {
-     "type": "string",
-     "required": true,
-     "format": "int64",
-     "location": "path"
-    }
-   },
-   "parameterOrder": [
-    "user_id"
-   ],
    "response": {
     "$ref": "CollectionResponse_ReportRef"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "updateReport": {
+   "id": "reportEndpoint.updateReport",
+   "path": "reportresponse",
+   "httpMethod": "PUT",
+   "request": {
+    "$ref": "ReportRequest",
+    "parameterName": "resource"
+   },
+   "response": {
+    "$ref": "ReportResponse"
    },
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"

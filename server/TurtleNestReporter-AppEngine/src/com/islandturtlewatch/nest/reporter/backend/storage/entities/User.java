@@ -23,7 +23,7 @@ import com.googlecode.objectify.annotation.Id;
 public class User {
   @Id
   @Getter
-  public long id;
+  public String id;
 
   @Getter @Setter
   public long highestReportId;

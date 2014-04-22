@@ -67,7 +67,7 @@ public class LocalDataStoreTest extends AndroidTestCase {
         .setRef(ReportRef.newBuilder()
             .setReportId(1)
             .setVersion(2)
-            .setOwnerId(3))
+            .setOwnerId("USER_ID"))
         .setReport(Report.newBuilder().setTimestampFoundMs(4))
         .build();
     store.updateFromServer(wrapper);

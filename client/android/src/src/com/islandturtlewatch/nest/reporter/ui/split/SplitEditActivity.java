@@ -2,7 +2,10 @@ package com.islandturtlewatch.nest.reporter.ui.split;
 
 import java.util.Map;
 
+import android.accounts.AccountManager;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
@@ -48,12 +51,14 @@ import com.islandturtlewatch.nest.reporter.ui.FocusMonitoredEditText;
 import com.islandturtlewatch.nest.reporter.ui.ReportSection;
 import com.islandturtlewatch.nest.reporter.ui.ReportSectionListFragment;
 import com.islandturtlewatch.nest.reporter.ui.ReportSectionListFragment.EventHandler;
+import com.islandturtlewatch.nest.reporter.util.AuthenticationUtil;
 import com.islandturtlewatch.nest.reporter.util.ReportUtil;
+import com.islandturtlewatch.nest.reporter.util.SettingsUtil;
 
 public class SplitEditActivity extends FragmentActivity implements EditView {
   //private static final String TAG = SplitEditActivity.class.getSimpleName();
-
   private static final String KEY_SECTION = "Section";
+  public static final int REQUEST_ACCOUNT_PICKER = 1;
 
   private static final ImmutableMap<ReportSection, EditFragment> FRAGMENT_MAP =
       ImmutableMap.<ReportSection, EditFragment>builder()
@@ -66,6 +71,7 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
           .put(ReportSection.NOTES, new EditFragmentNotes())
           .build();
 
+  private SharedPreferences settings;
   private EditPresenter presenter;
   private ReportsModel model;
   private SectionManager sectionManager;
@@ -74,13 +80,16 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.split_edit_activity);
+    settings = getSharedPreferences(SettingsUtil.SETTINGS_ID, MODE_PRIVATE);
+    ensureUsernameSet();
+    AuthenticationUtil.checkGooglePlayServicesAvailable(this);
+    AuthenticationUtil.testAuthentication(this);
 
     model = new ReportsModel(new LocalDataStore(this), getPreferences(Context.MODE_PRIVATE));
     presenter = new EditPresenter(model, this);
     sectionManager = new SectionManager();
     sectionManager.setSection(ReportSection.INFO);
 
-    //DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
     ListView drawerList = (ListView) findViewById(R.id.reports_drawer);
 
     //TODO(edcoyne): Messy, cleanup.
@@ -165,6 +174,26 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
     }
   }
 
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode,
+     Intent data) {
+   super.onActivityResult(requestCode, resultCode, data);
+   switch (requestCode) {
+     case REQUEST_ACCOUNT_PICKER:
+       if (data != null && data.getExtras() != null) {
+         String accountName =
+             data.getExtras().getString(
+                 AccountManager.KEY_ACCOUNT_NAME);
+         if (accountName != null) {
+           SharedPreferences.Editor editor = settings.edit();
+           editor.putString(SettingsUtil.KEY_USERNAME, accountName);
+           editor.commit();
+         }
+       }
+       break;
+   }
+  }
+
   public void handleClick(View view) {
     Map<Integer, ClickHandler> clickHandlers = sectionManager.getCurrentClickHandlers();
     Preconditions.checkArgument(clickHandlers.containsKey(view.getId()),
@@ -182,6 +211,13 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
         "Missing text change handler for " + id);
 
     changeHandlers.get(id).handleTextChange(newText.toString(), presenter.getUpdateHandler());
+  }
+
+  private void ensureUsernameSet() {
+    if (!settings.contains(SettingsUtil.KEY_USERNAME)) {
+      startActivityForResult(AuthenticationUtil.getCredential(this, "DUMMY").newChooseAccountIntent(),
+          REQUEST_ACCOUNT_PICKER);
+    }
   }
 
   /**

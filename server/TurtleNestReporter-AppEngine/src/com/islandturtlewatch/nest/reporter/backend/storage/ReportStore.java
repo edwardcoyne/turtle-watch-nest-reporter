@@ -25,7 +25,7 @@ public class ReportStore {
     ObjectifyService.register(StoredReportVersion.class);
   }
 
-  public boolean addUser(long userId) {
+  public boolean addUser(String userId) {
     Preconditions.checkArgument(!hasUser(userId), "Trying to insert duplicate user: " + userId);
     User user = User.builder()
         .setId(userId)
@@ -34,11 +34,11 @@ public class ReportStore {
     return true;
   }
 
-  public boolean hasUser(long userId) {
+  public boolean hasUser(String userId) {
     return tryLoadUser(userId).isPresent();
   }
 
-  public ReportWrapper addReport(final long userId, final Report report) {
+  public ReportWrapper addReport(final String userId, final Report report) {
     return backend().transact(new Work<ReportWrapper>(){
       @Override
       public ReportWrapper run() {
@@ -54,7 +54,7 @@ public class ReportStore {
       }});
   }
 
-  public ReportWrapper getReportLatestVersion(long userId, final long reportId) {
+  public ReportWrapper getReportLatestVersion(String userId, final long reportId) {
     final User user = loadUser(userId);
     return backend().transact(new Work<ReportWrapper>(){
       @Override
@@ -65,7 +65,7 @@ public class ReportStore {
       }});
   }
 
-  public ImmutableList<ReportWrapper> getLatestReportsForUser(final long userId) {
+  public ImmutableList<ReportWrapper> getLatestReportsForUser(final String userId) {
     return backend().transact(new Work<ImmutableList<ReportWrapper>>(){
       @Override
       public ImmutableList<ReportWrapper> run() {
@@ -73,7 +73,7 @@ public class ReportStore {
       }});
   }
 
-  private ReportWrapper doAddReport(long userId, Report report) {
+  private ReportWrapper doAddReport(String userId, Report report) {
     User user = loadUser(userId);
 
     StoredReport storedReport = StoredReport.builder()
@@ -121,7 +121,7 @@ public class ReportStore {
     return reportVersion.toReportWrapper();
   }
 
-  private ImmutableList<ReportWrapper> doGetLatestReportsForUser(long userId) {
+  private ImmutableList<ReportWrapper> doGetLatestReportsForUser(String userId) {
     User user = loadUser(userId);
     List<StoredReport> reports = backend().load().type(StoredReport.class).ancestor(user).list();
     List<ReportWrapper> versions = new ArrayList<>();
@@ -131,13 +131,13 @@ public class ReportStore {
     return ImmutableList.copyOf(versions);
   }
 
-  private User loadUser(long userId) {
+  private User loadUser(String userId) {
     Optional<User> userOpt = tryLoadUser(userId);
     Preconditions.checkArgument(userOpt.isPresent(), "Missing user: " + userId);
     return userOpt.get();
   }
 
-  private Optional<User> tryLoadUser(long userId) {
+  private Optional<User> tryLoadUser(String userId) {
     return Optional.fromNullable(
         backend().load().type(User.class).id(userId).now());
   }

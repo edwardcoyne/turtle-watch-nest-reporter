@@ -67,7 +67,7 @@ public class StoredReportVersion {
     builder.setReport(this.report);
     ReportRef.Builder refBuilder = builder.getRefBuilder();
     refBuilder.setReportId(this.storedReport.get().getReportId());
-    refBuilder.setOwnerId(this.storedReport.get().getUser().getId());
+    refBuilder.setOwnerId(this.storedReport.get().getUser().getName());
     refBuilder.setVersion(this.version);
     return builder.build();
   }

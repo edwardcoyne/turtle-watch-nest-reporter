@@ -27,21 +27,31 @@
   "ownerName" : "islandturtlewatch.com",
   "packagePath" : "nest.reporter.transport",
   "methods" : {
+    "reportEndpoint.updateReport" : {
+      "path" : "reportresponse",
+      "httpMethod" : "PUT",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "583713553896-skcjm9fesoo1nu0nqn0lufrud2j38k2f.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.islandturtlewatch.nest.reporter.backend.endpoints.ReportEndpoint.updateReport",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
     "reportEndpoint.getLatestRefsForUser" : {
-      "path" : "latestRefsForUser/{user_id}",
+      "path" : "latestRefsForUser",
       "httpMethod" : "POST",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "clientIds" : [ "583713553896-skcjm9fesoo1nu0nqn0lufrud2j38k2f.apps.googleusercontent.com" ],
       "rosyMethod" : "com.islandturtlewatch.nest.reporter.backend.endpoints.ReportEndpoint.latestRefsForUser",
       "request" : {
-        "parameters" : {
-          "user_id" : {
-            "type" : "int64",
-            "required" : true
-          }
-        },
         "body" : "empty"
       },
       "response" : {
@@ -49,20 +59,14 @@
       }
     },
     "reportEndpoint.createReport" : {
-      "path" : "createReport/{user_id}",
+      "path" : "createReport",
       "httpMethod" : "POST",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "clientIds" : [ "583713553896-skcjm9fesoo1nu0nqn0lufrud2j38k2f.apps.googleusercontent.com" ],
       "rosyMethod" : "com.islandturtlewatch.nest.reporter.backend.endpoints.ReportEndpoint.createReport",
       "request" : {
-        "parameters" : {
-          "user_id" : {
-            "type" : "int64",
-            "required" : true
-          }
-        },
         "body" : "autoTemplate(backendRequest)",
         "bodyName" : "resource"
       },
@@ -73,30 +77,6 @@
   },
   "descriptor" : {
     "schemas" : {
-      "CollectionResponse_ReportRef" : {
-        "id" : "CollectionResponse_ReportRef",
-        "type" : "object",
-        "properties" : {
-          "items" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "ReportRef"
-            }
-          },
-          "nextPageToken" : {
-            "type" : "string"
-          }
-        }
-      },
-      "ReportRef" : {
-        "id" : "ReportRef",
-        "type" : "object",
-        "properties" : {
-          "refEncoded" : {
-            "type" : "string"
-          }
-        }
-      },
       "ReportRequest" : {
         "id" : "ReportRequest",
         "type" : "object",
@@ -125,9 +105,41 @@
         "id" : "Code",
         "type" : "string",
         "enum" : [ "OK", "INVALID_REQUEST", "FAILED" ]
+      },
+      "CollectionResponse_ReportRef" : {
+        "id" : "CollectionResponse_ReportRef",
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "ReportRef"
+            }
+          },
+          "nextPageToken" : {
+            "type" : "string"
+          }
+        }
+      },
+      "ReportRef" : {
+        "id" : "ReportRef",
+        "type" : "object",
+        "properties" : {
+          "refEncoded" : {
+            "type" : "string"
+          }
+        }
       }
     },
     "methods" : {
+      "com.islandturtlewatch.nest.reporter.backend.endpoints.ReportEndpoint.updateReport" : {
+        "request" : {
+          "$ref" : "ReportRequest"
+        },
+        "response" : {
+          "$ref" : "ReportResponse"
+        }
+      },
       "com.islandturtlewatch.nest.reporter.backend.endpoints.ReportEndpoint.latestRefsForUser" : {
         "response" : {
           "$ref" : "CollectionResponse_ReportRef"

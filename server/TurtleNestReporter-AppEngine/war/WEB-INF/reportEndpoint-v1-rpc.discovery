@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"gWnWV7fYC80JM0beuSxOtzgfiS0/x9blTXFY6VADd4p4DCm2BhfnCdM\"",
+ "etag": "\"IneSQDZRISaU6plvxbhHIOAs-WY/3Ie-3A69wwor7BC4F8Pca9stBKE\"",
  "discoveryVersion": "v1",
  "id": "reportEndpoint:v1",
  "name": "reportEndpoint",
@@ -141,16 +141,10 @@
    "parameters": {
     "resource": {
      "$ref": "ReportRequest"
-    },
-    "user_id": {
-     "type": "string",
-     "required": true,
-     "format": "int64"
     }
    },
    "parameterOrder": [
-    "resource",
-    "user_id"
+    "resource"
    ],
    "returns": {
     "$ref": "ReportResponse"
@@ -161,18 +155,25 @@
   },
   "reportEndpoint.getLatestRefsForUser": {
    "id": "reportEndpoint.getLatestRefsForUser",
+   "returns": {
+    "$ref": "CollectionResponse_ReportRef"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "reportEndpoint.updateReport": {
+   "id": "reportEndpoint.updateReport",
    "parameters": {
-    "user_id": {
-     "type": "string",
-     "required": true,
-     "format": "int64"
+    "resource": {
+     "$ref": "ReportRequest"
     }
    },
    "parameterOrder": [
-    "user_id"
+    "resource"
    ],
    "returns": {
-    "$ref": "CollectionResponse_ReportRef"
+    "$ref": "ReportResponse"
    },
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"
