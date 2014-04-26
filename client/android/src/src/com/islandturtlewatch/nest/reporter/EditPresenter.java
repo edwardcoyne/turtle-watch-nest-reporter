@@ -13,6 +13,7 @@ import com.islandturtlewatch.nest.data.ReportProto.NestLocation.Builder;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation.Placement;
 import com.islandturtlewatch.nest.data.ReportProto.Relocation;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
+import com.islandturtlewatch.nest.data.ReportProto.Report.NestStatus;
 import com.islandturtlewatch.nest.reporter.data.ReportsModel;
 import com.islandturtlewatch.nest.reporter.ui.EditView;
 import com.islandturtlewatch.nest.reporter.util.DateUtil;
@@ -88,44 +89,23 @@ public class EditPresenter {
           return DataUpdateResult.success();
         }
 
-		public DataUpdateResult updateNestVerified(boolean value) {
-		  Report.Builder updatedReport = model.getActiveReport().toBuilder();
-		  updatedReport.getActivityBuilder().setNestVerified(value);
-          writeChangesAndUpdate(updatedReport.build());
-          return DataUpdateResult.success();
-		}
-
-		public DataUpdateResult updateNestNotVerified(boolean value) {
+		public DataUpdateResult updateNestStatus(NestStatus status) {
           Report.Builder updatedReport = model.getActiveReport().toBuilder();
-          updatedReport.getActivityBuilder().setNestNotVerified(value);
-          writeChangesAndUpdate(updatedReport.build());
-          return DataUpdateResult.success();
-        }
-
-		public DataUpdateResult updateNestRelocated(boolean value) {
-          Report.Builder updatedReport = model.getActiveReport().toBuilder();
-          updatedReport.getActivityBuilder().setNestRelocated(value);
-          writeChangesAndUpdate(updatedReport.build());
-          return DataUpdateResult.success();
-        }
-
-		public DataUpdateResult updateFalseCrawl(boolean value) {
-          Report.Builder updatedReport = model.getActiveReport().toBuilder();
-          updatedReport.getActivityBuilder().setFalseCrawl(value);
+          updatedReport.setStatus(status);
           writeChangesAndUpdate(updatedReport.build());
           return DataUpdateResult.success();
         }
 
 		public DataUpdateResult updateAbandonedBodyPits(boolean value) {
           Report.Builder updatedReport = model.getActiveReport().toBuilder();
-          updatedReport.getActivityBuilder().setAbandonedBodyPits(value);
+          updatedReport.getConditionBuilder().setAbandonedBodyPits(value);
           writeChangesAndUpdate(updatedReport.build());
           return DataUpdateResult.success();
         }
 
 		public DataUpdateResult updateAbandonedEggCavities(boolean value) {
           Report.Builder updatedReport = model.getActiveReport().toBuilder();
-          updatedReport.getActivityBuilder().setAbandonedEggCavities(value);
+          updatedReport.getConditionBuilder().setAbandonedEggCavities(value);
           writeChangesAndUpdate(updatedReport.build());
           return DataUpdateResult.success();
         }

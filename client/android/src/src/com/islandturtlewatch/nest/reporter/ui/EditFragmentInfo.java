@@ -11,6 +11,7 @@ import android.widget.DatePicker;
 
 import com.google.common.base.Optional;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
+import com.islandturtlewatch.nest.data.ReportProto.Report.NestStatus;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.util.DateUtil;
@@ -64,13 +65,13 @@ public class EditFragmentInfo extends EditFragment {
 
     setText(R.id.fieldObservers, report.hasObservers() ? report.getObservers() : "");
 
-    setChecked(R.id.fieldNestVerified, report.getActivity().getNestVerified());
-    setChecked(R.id.fieldNestNotVerified, report.getActivity().getNestNotVerified());
-    setChecked(R.id.fieldNestRelocated, report.getActivity().getNestRelocated());
-    setChecked(R.id.fieldFalseCrawl, report.getActivity().getFalseCrawl());
-    setChecked(R.id.fieldAbandonedBodyPits, report.getActivity().getAbandonedBodyPits());
+    setChecked(R.id.fieldNestVerified, report.getStatus() == NestStatus.NEST_VERIFIED);
+    setChecked(R.id.fieldNestNotVerified, report.getStatus() == NestStatus.NEST_NOT_VERIFIED);
+    setChecked(R.id.fieldNestRelocated, report.getStatus() == NestStatus.NEST_RELOCATED);
+    setChecked(R.id.fieldFalseCrawl, report.getStatus() == NestStatus.FALSE_CRAWL);
 
-    setChecked(R.id.fieldAbandonedEggCavities, report.getActivity().getAbandonedEggCavities());
+    setChecked(R.id.fieldAbandonedBodyPits, report.getCondition().getAbandonedBodyPits());
+    setChecked(R.id.fieldAbandonedEggCavities, report.getCondition().getAbandonedEggCavities());
   }
 
   private static class HandleUpdateNestNumber extends TextChangeHandler {
@@ -134,7 +135,7 @@ public class EditFragmentInfo extends EditFragment {
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateNestVerified(isChecked(view));
+       updateHandler.updateNestStatus(NestStatus.NEST_VERIFIED);
     }
   }
 
@@ -145,7 +146,7 @@ public class EditFragmentInfo extends EditFragment {
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateNestNotVerified(isChecked(view));
+      updateHandler.updateNestStatus(NestStatus.NEST_NOT_VERIFIED);
     }
   }
 
@@ -156,7 +157,7 @@ public class EditFragmentInfo extends EditFragment {
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateNestRelocated(isChecked(view));
+      updateHandler.updateNestStatus(NestStatus.NEST_RELOCATED);
     }
   }
 
@@ -167,7 +168,7 @@ public class EditFragmentInfo extends EditFragment {
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateFalseCrawl(isChecked(view));
+      updateHandler.updateNestStatus(NestStatus.FALSE_CRAWL);
     }
   }
 

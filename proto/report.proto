@@ -20,22 +20,21 @@ message Report {
   optional int64 timestamp_found_ms = 1;
   optional int32 nest_number = 2;
 
-  optional NestLocation location = 3;
-  optional string observers = 4;
-  optional Activity activity = 5;
+  enum NestStatus {
+    UNKNOWN = 1;
+    NEST_VERIFIED = 2;
+    NEST_NOT_VERIFIED = 3;
+    NEST_RELOCATED = 4;
+    FALSE_CRAWL = 5;
+  }
+  optional NestStatus status = 3;
+
+  optional NestLocation location = 4;
+  optional string observers = 5;
   optional NestCondition condition = 6;
   optional Intervention intervention = 7;
 
   optional string additional_notes = 8;
-}
-
-message Activity {
-  optional bool nest_verified = 1;
-  optional bool nest_not_verified = 2;
-  optional bool nest_relocated = 3;
-  optional bool false_crawl = 4;
-  optional bool abandoned_body_pits = 5;
-  optional bool abandoned_egg_cavities = 6;
 }
 
 message NestCondition {
@@ -64,6 +63,9 @@ message NestCondition {
   optional int64 hatch_timestamp_ms = 10;
   optional int64 additional_hatch_timestamp_ms = 11;
   optional bool disorientation = 12;
+  
+  optional bool abandoned_body_pits = 13;
+  optional bool abandoned_egg_cavities = 14;
 }
 
 message NestLocation {
