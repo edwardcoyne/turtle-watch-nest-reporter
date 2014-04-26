@@ -146,7 +146,8 @@ public class LocalDataStore {
   }
 
   /**
-   * Should be called after first checking in a new report so we can find it on future updates.
+   * Should be called after communicating with the server to sync the local copies of server-side
+   * information.
    */
   public void setServerSideData(long localId, ReportRef ref) {
     SQLiteDatabase db = storageHelper.getWritableDatabase();
@@ -154,6 +155,7 @@ public class LocalDataStore {
     ContentValues values = new ContentValues();
     values.put(ReportsTable.COLUMN_REPORT_ID.name, ref.getReportId());
     values.put(ReportsTable.COLUMN_VERSION.name, ref.getVersion());
+    values.put(ReportsTable.COLUMN_SYNCED.name, true);
 
     int numberUpdated = db.update(ReportsTable.TABLE_NAME,
         values,
@@ -211,6 +213,13 @@ public class LocalDataStore {
     return cursor.getLong(cursor.getColumnIndexOrThrow(column.name));
   }
 
+  private static Optional<Long> getOptLong(Cursor cursor, Column column) {
+    if (cursor.isNull(cursor.getColumnIndexOrThrow(column.name))) {
+      return Optional.absent();
+    }
+    return Optional.of(cursor.getLong(cursor.getColumnIndexOrThrow(column.name)));
+  }
+
   @SuppressWarnings("unchecked")
   private static <T extends MessageLite> Optional<T> getProto(Cursor cursor, Column column, T proto) {
     int index = cursor.getColumnIndexOrThrow(column.name);
@@ -246,6 +255,8 @@ public class LocalDataStore {
   @Builder(fluent=false)
   public static class CachedReportWrapper {
     private int localId;
+    private Optional<Long> reportId;
+    private Optional<Long> version;
     private boolean synched;
     private boolean active;
     private long lastUpdatedTimestamp;
@@ -256,11 +267,15 @@ public class LocalDataStore {
       ReportsTable.COLUMN_ACTIVE.name,
       ReportsTable.COLUMN_SYNCED.name,
       ReportsTable.COLUMN_REPORT.name,
-      ReportsTable.COLUMN_TS_LOCAL_UPDATE.name};
+      ReportsTable.COLUMN_TS_LOCAL_UPDATE.name,
+      ReportsTable.COLUMN_REPORT_ID.name,
+      ReportsTable.COLUMN_VERSION.name};
 
     static CachedReportWrapper from(Cursor cursor) {
       CachedReportWrapperBuilder builder = CachedReportWrapper.builder()
           .setLocalId(getInt(cursor, ReportsTable.COLUMN_LOCAL_ID))
+          .setReportId(getOptLong(cursor, ReportsTable.COLUMN_REPORT_ID))
+          .setVersion(getOptLong(cursor, ReportsTable.COLUMN_VERSION))
           .setActive(getBool(cursor, ReportsTable.COLUMN_ACTIVE))
           .setSynched(getBool(cursor, ReportsTable.COLUMN_SYNCED))
           .setLastUpdatedTimestamp(getLong(cursor, ReportsTable.COLUMN_TS_LOCAL_UPDATE));

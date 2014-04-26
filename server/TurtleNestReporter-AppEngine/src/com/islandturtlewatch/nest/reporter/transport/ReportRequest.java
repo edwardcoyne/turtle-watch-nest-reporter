@@ -15,5 +15,7 @@ import lombok.experimental.Builder;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ReportRequest {
   @Getter @Setter
+  private String reportRefEncoded;
+  @Getter @Setter
   private String reportEncoded;
 }

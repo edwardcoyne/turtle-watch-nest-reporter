@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ADiYQGKhdYR9rpbhIFHih-UBYRs/3eE7cIEV8opIvAngZ9Dfyf-N82k\"",
+ "etag": "\"ADiYQGKhdYR9rpbhIFHih-UBYRs/gqlnivlh8izQnmIBqN2D1HVsviM\"",
  "discoveryVersion": "v1",
  "id": "reportEndpoint:v1",
  "name": "reportEndpoint",
@@ -78,6 +78,7 @@
    "id": "Code",
    "type": "string",
    "enum": [
+    "AUTHENTICATION_FAILURE",
     "FAILED",
     "INVALID_REQUEST",
     "OK"
@@ -85,17 +86,18 @@
    "enumDescriptions": [
     "",
     "",
+    "",
     ""
    ]
   },
-  "CollectionResponse_ReportRef": {
-   "id": "CollectionResponse_ReportRef",
+  "CollectionResponse_EncodedReportRef": {
+   "id": "CollectionResponse_EncodedReportRef",
    "type": "object",
    "properties": {
     "items": {
      "type": "array",
      "items": {
-      "$ref": "ReportRef"
+      "$ref": "EncodedReportRef"
      }
     },
     "nextPageToken": {
@@ -103,8 +105,8 @@
     }
    }
   },
-  "ReportRef": {
-   "id": "ReportRef",
+  "EncodedReportRef": {
+   "id": "EncodedReportRef",
    "type": "object",
    "properties": {
     "refEncoded": {
@@ -117,6 +119,9 @@
    "type": "object",
    "properties": {
     "reportEncoded": {
+     "type": "string"
+    },
+    "reportRefEncoded": {
      "type": "string"
     }
    }
@@ -158,7 +163,7 @@
    "path": "latestRefsForUser",
    "httpMethod": "POST",
    "response": {
-    "$ref": "CollectionResponse_ReportRef"
+    "$ref": "CollectionResponse_EncodedReportRef"
    },
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"

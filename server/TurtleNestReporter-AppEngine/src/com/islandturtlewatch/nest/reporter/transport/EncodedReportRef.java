@@ -17,12 +17,12 @@ import com.islandturtlewatch.nest.data.ReportProto;
 @Builder(fluent=false)
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class ReportRef {
+public class EncodedReportRef {
   @Getter @Setter
   private String refEncoded;
 
-  public static ReportRef fromProto(ReportProto.ReportRef protoRef) {
-    ReportRef ref = new ReportRef();
+  public static EncodedReportRef fromProto(ReportProto.ReportRef protoRef) {
+    EncodedReportRef ref = new EncodedReportRef();
     ref.setRefEncoded(BaseEncoding.base64().encode(protoRef.toByteArray()));
     return ref;
   }

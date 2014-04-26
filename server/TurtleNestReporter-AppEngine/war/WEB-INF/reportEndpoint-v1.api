@@ -81,6 +81,9 @@
         "id" : "ReportRequest",
         "type" : "object",
         "properties" : {
+          "reportRefEncoded" : {
+            "type" : "string"
+          },
           "reportEncoded" : {
             "type" : "string"
           }
@@ -106,14 +109,14 @@
         "type" : "string",
         "enum" : [ "OK", "INVALID_REQUEST", "AUTHENTICATION_FAILURE", "FAILED" ]
       },
-      "CollectionResponse_ReportRef" : {
-        "id" : "CollectionResponse_ReportRef",
+      "CollectionResponse_EncodedReportRef" : {
+        "id" : "CollectionResponse_EncodedReportRef",
         "type" : "object",
         "properties" : {
           "items" : {
             "type" : "array",
             "items" : {
-              "$ref" : "ReportRef"
+              "$ref" : "EncodedReportRef"
             }
           },
           "nextPageToken" : {
@@ -121,8 +124,8 @@
           }
         }
       },
-      "ReportRef" : {
-        "id" : "ReportRef",
+      "EncodedReportRef" : {
+        "id" : "EncodedReportRef",
         "type" : "object",
         "properties" : {
           "refEncoded" : {
@@ -142,7 +145,7 @@
       },
       "com.islandturtlewatch.nest.reporter.backend.endpoints.ReportEndpoint.latestRefsForUser" : {
         "response" : {
-          "$ref" : "CollectionResponse_ReportRef"
+          "$ref" : "CollectionResponse_EncodedReportRef"
         }
       },
       "com.islandturtlewatch.nest.reporter.backend.endpoints.ReportEndpoint.createReport" : {

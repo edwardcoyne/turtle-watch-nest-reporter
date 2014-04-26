@@ -34,6 +34,7 @@ import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.common.base.Optional;
 import com.google.common.io.BaseEncoding;
+import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
 import com.islandturtlewatch.nest.data.Result.StorageResult.Code;
 import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore;
@@ -60,7 +61,6 @@ public class SyncService extends Service {
   private final AtomicBoolean networkConnected = new AtomicBoolean(false);
   private final Optional<String> errorMessage = Optional.absent();
   private final BlockingQueue<Upload> pendingUploads = new LinkedBlockingDeque<>();
-  private float currentUploadProgress;
   private final DbMonitor dbMonitor = new DbMonitor();
   private final Uploader uploader = new Uploader();
 
@@ -142,9 +142,10 @@ public class SyncService extends Service {
       setNotification(errorMessage.get());
     } else if (!networkConnected.get()) {
       setNotification("Network disconnected, sleeping...");
+    } else if (pendingUploads.size() == 0) {
+      setNotification("Connected.");
     } else {
-      setNotification(String.format("Connected, Uploads Pending: %d Current: %02.1f%%",
-          pendingUploads.size(), currentUploadProgress));
+      setNotification(String.format("Uploading, %d Pending", pendingUploads.size()));
     }
   }
 
@@ -256,6 +257,7 @@ public class SyncService extends Service {
                     Math.min(upload.getRetryDelayS() * 2, MAX_RETRY_DELAY_S)));
           } else {
             Log.i(TAG, "Upload finished successfully");
+            updateNotification();
           }
         } catch (InterruptedException e) {
           Log.e(TAG, "Interrupted while getting upload:", e);
@@ -303,19 +305,61 @@ public class SyncService extends Service {
         sleep(upload.getRetryDelayS());
       }
 
-      ReportRequest request = new ReportRequest();
-      request.setReportEncoded(BaseEncoding.base64().encode(
-          upload.report.getReport().toByteArray()));
       try {
-       ReportResponse response = reportService.createReport(request).execute();
-       if (!response.getCode().equals(Code.OK.name())) {
-         Log.e(TAG, "Call failed: " + response.getCode() + " :: " + response.getErrorMessage());
-         return false;
-       }
+        if (!upload.getReport().getReportId().isPresent()) {
+          return handleCreate(upload);
+        } else {
+          return handleUpdate(upload);
+        }
       } catch (IOException ex) {
         Log.e(TAG, "Call failed, exception:", ex);
         return false;
       }
+    }
+
+    private boolean handleCreate(Upload upload) throws IOException {
+      ReportRequest request = new ReportRequest();
+      request.setReportEncoded(BaseEncoding.base64().encode(
+          upload.report.getReport().toByteArray()));
+
+      ReportResponse response = reportService.createReport(request).execute();
+      if (!response.getCode().equals(Code.OK.name())) {
+        Log.e(TAG, "Call failed: " + response.getCode() + " :: " + response.getErrorMessage());
+        return false;
+      }
+
+      ReportRef reportRef = ReportRef.newBuilder()
+          .mergeFrom(BaseEncoding.base64().decode(response.getReportRefEncoded()))
+          .build();
+      LocalDataStore dataStore = new LocalDataStore(SyncService.this);
+      dataStore.setServerSideData(upload.getReport().getLocalId(), reportRef);
+
+      return true;
+    }
+
+    private boolean handleUpdate(Upload upload) throws IOException {
+      ReportRequest request = new ReportRequest();
+      ReportRef ref = ReportRef.newBuilder()
+          .setReportId(upload.getReport().getReportId().get())
+          .setVersion(upload.getReport().getVersion().get())
+          .build();
+      request.setReportRefEncoded(BaseEncoding.base64().encode(ref.toByteArray()));
+      request.setReportEncoded(BaseEncoding.base64().encode(
+          upload.report.getReport().toByteArray()));
+
+      ReportResponse response = reportService.updateReport(request).execute();
+      if (!response.getCode().equals(Code.OK.name())) {
+        Log.e(TAG, "Call failed: " + response.getCode() + " :: " + response.getErrorMessage());
+        return false;
+      }
+
+      ReportRef reportRef = ReportRef.newBuilder()
+          .mergeFrom(BaseEncoding.base64().decode(response.getReportRefEncoded()))
+          .build();
+      Log.d(TAG, "Updateing from server: " + reportRef.toString());
+      LocalDataStore dataStore = new LocalDataStore(SyncService.this);
+      dataStore.setServerSideData(upload.getReport().getLocalId(), reportRef);
+
       return true;
     }
   }

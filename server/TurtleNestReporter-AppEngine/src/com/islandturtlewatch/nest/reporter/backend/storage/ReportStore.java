@@ -17,6 +17,7 @@ import com.islandturtlewatch.nest.reporter.backend.storage.entities.StoredReport
 import com.islandturtlewatch.nest.reporter.backend.storage.entities.StoredReportVersion;
 import com.islandturtlewatch.nest.reporter.backend.storage.entities.User;
 
+// Needs to be thread safe.
 public class ReportStore {
 
   public void init() {
@@ -105,7 +106,9 @@ public class ReportStore {
     if (report.getLatestVersion() != ref.getVersion()) {
       // TODO(edcoyne): plug in conflict handling here.
       throw new UnsupportedOperationException(
-          "Attempting to update with old version, We don't support conflict resultion yet...");
+          "Attempting to update with old version, We don't support conflict resultion yet..."
+          + " Server version: " + report.getLatestVersion() + " Client version: "
+              + ref.getVersion());
     }
     long newVersion = report.getLatestVersion() + 1;
 
