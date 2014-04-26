@@ -9,14 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 
+import com.google.common.base.Optional;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.util.DateUtil;
 
 public class EditFragmentInfo extends EditFragment {
-  private static final String TAG = EditFragmentInfo.class.getSimpleName();
-
   private static final Map<Integer, ClickHandler> CLICK_HANDLERS =
       ClickHandler.toMap(
           new HandleSetInfoDate(),
@@ -30,6 +29,7 @@ public class EditFragmentInfo extends EditFragment {
 
   private static final Map<Integer, TextChangeHandler> TEXT_CHANGE_HANDLERS =
       TextChangeHandler.toMap(
+          new HandleUpdateNestNumber(),
           new HandleUpdateObservers());
 
   @Override
@@ -51,6 +51,8 @@ public class EditFragmentInfo extends EditFragment {
 
   @Override
   public void updateSection(Report report) {
+    setText(R.id.fieldNestNumber, Integer.toString(report.getNestNumber()));
+
     if (report.hasTimestampFoundMs()) {
       setDate(R.id.buttonDateFound, report.getTimestampFoundMs());
       setText(R.id.labelIncubationDate,
@@ -71,6 +73,23 @@ public class EditFragmentInfo extends EditFragment {
     setChecked(R.id.fieldAbandonedEggCavities, report.getActivity().getAbandonedEggCavities());
   }
 
+  private static class HandleUpdateNestNumber extends TextChangeHandler {
+    protected HandleUpdateNestNumber() {
+      super(R.id.fieldNestNumber);
+    }
+
+    @Override
+    public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
+      if (newText.isEmpty()) {
+        updateHandler.updateNestNumber(Optional.<Integer>absent());
+      } else {
+        int newValue = Integer.parseInt(newText);
+        //TODO(edcoyne): display error if not parsable
+        updateHandler.updateNestNumber(Optional.of(newValue));
+      }
+    }
+  }
+
   private static class HandleUpdateObservers extends TextChangeHandler {
     protected HandleUpdateObservers() {
       super(R.id.fieldObservers);
@@ -78,7 +97,6 @@ public class EditFragmentInfo extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      Log.i(TAG, "Updating observers: " + newText);
       updateHandler.updateObservers(newText);
     }
   }

@@ -170,10 +170,12 @@ public class LocalDataStore {
    * @return local_id local identifier of a report, not the same as report_id on server.
    */
   public CachedReportWrapper createReport() {
+    int nestNumber = getHighestNestNumber() + 1;
     SQLiteDatabase db = storageHelper.getWritableDatabase();
 
     ContentValues values = new ContentValues();
-    values.put(ReportsTable.COLUMN_REPORT.name, Report.getDefaultInstance().toByteArray());
+    values.put(ReportsTable.COLUMN_REPORT.name,
+        Report.newBuilder().setNestNumber(nestNumber).build().toByteArray());
     values.put(ReportsTable.COLUMN_ACTIVE.name, true);
     values.put(ReportsTable.COLUMN_TS_LOCAL_UPDATE.name, System.currentTimeMillis());
     values.put(ReportsTable.COLUMN_TS_LOCAL_ADD.name, System.currentTimeMillis());
@@ -199,6 +201,15 @@ public class LocalDataStore {
         null);
     Preconditions.checkArgument(numberUpdated == 1,
         "delete should update one row not " + numberUpdated);
+  }
+
+  private int getHighestNestNumber() {
+    int highestNestNumber = 0;
+    ImmutableList<CachedReportWrapper> activeReports = listActiveReports();
+    for (CachedReportWrapper wrapper : activeReports) {
+      highestNestNumber = Math.max(highestNestNumber, wrapper.getReport().getNestNumber());
+    }
+    return highestNestNumber;
   }
 
   private static boolean getBool(Cursor cursor, Column column) {

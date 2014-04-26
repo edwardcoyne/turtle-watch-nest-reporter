@@ -2,7 +2,19 @@
 <TableLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
+   <TableRow >
+        <TextView
+            android:id="@+id/labelNestNumber"
+            android:layout_weight="1"
+            android:text="@string/edit_info_label_nest_number" />
 
+        <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+            android:id="@+id/fieldNestNumber"
+            android:inputType="number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            onTextChangeHandler="handleTextChange"/>
+   </TableRow>
     <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >

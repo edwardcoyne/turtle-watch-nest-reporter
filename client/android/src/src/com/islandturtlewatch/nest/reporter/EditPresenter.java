@@ -56,6 +56,18 @@ public class EditPresenter {
 
 	// TODO(edcoyne): break this into a separate class and add tests
 	public class DataUpdateHandler {
+
+      public DataUpdateResult updateNestNumber(Optional<Integer> nestNumber) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        if (nestNumber.isPresent()) {
+          updatedReport.setNestNumber(nestNumber.get());
+        } else {
+          updatedReport.clearNestNumber();
+        }
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+
 		public DataUpdateResult updateDateFound(int year, int month, int day) {
 			Report updatedReport = model.getActiveReport().toBuilder()
 			    .setTimestampFoundMs(DateUtil.getTimestampInMs(year, month, day))
