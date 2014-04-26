@@ -10,8 +10,10 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
-import lombok.experimental.Builder;
+import lombok.experimental.Accessors;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -222,6 +224,8 @@ public class SyncService extends Service {
   }
 
   private class Uploader implements Runnable {
+    //private static final int MAX_RETRY_DELAY_S = 300; // 5 min.
+    private static final int MAX_RETRY_DELAY_S = 45;
     private ReportEndpoint reportService;
     private Thread thread;
     private final AtomicBoolean running = new AtomicBoolean(false);
@@ -244,11 +248,27 @@ public class SyncService extends Service {
         Log.i(TAG, "Starting uploader.");
         try {
           Upload upload = pendingUploads.take();
-          handleUpload(upload);
-        } catch (InterruptedException | IOException e) {
-          Log.e(TAG, "Exception while uploading: ", e);
+          if (!handleUpload(upload)) {
+            Log.i(TAG, "Upload failed adding back to queue.");
+            // Re-add with capped *2 delay.
+            pendingUploads.add(
+                upload.setRetryDelayS(
+                    Math.min(upload.getRetryDelayS() * 2, MAX_RETRY_DELAY_S)));
+          } else {
+            Log.i(TAG, "Upload finished successfully");
+          }
+        } catch (InterruptedException e) {
+          Log.e(TAG, "Interrupted while getting upload:", e);
         }
         Log.i(TAG, "Shutting down uploader.");
+      }
+    }
+    private void sleep(int seconds) {
+      try {
+        Thread.sleep(seconds * 1000);
+      } catch (InterruptedException e) {
+        Log.e(TAG, "Sleep interupted.", e);
+        // Don't care.
       }
     }
 
@@ -259,11 +279,7 @@ public class SyncService extends Service {
           return;
         }
         Log.i(TAG, "No username in settings, sleeping...");
-        try {
-          Thread.sleep(30000);
-        } catch (InterruptedException e) {
-          // Don't care.
-        }
+        sleep(30);
       }
       Log.d(TAG, "Using user : " + settings.getString(SettingsUtil.KEY_USERNAME, null));
 
@@ -280,22 +296,41 @@ public class SyncService extends Service {
       reportService = serviceBuilder.build();
     }
 
-    private void handleUpload(Upload upload) throws IOException {
+    private boolean handleUpload(Upload upload) {
       Log.d(TAG, "Uploading: " + upload.toString());
+      if (upload.getRetryDelayS() > 0) {
+        Log.d(TAG, "Sleeping before retry: " + upload.getRetryDelayS() + "s");
+        sleep(upload.getRetryDelayS());
+      }
+
       ReportRequest request = new ReportRequest();
       request.setReportEncoded(BaseEncoding.base64().encode(
           upload.report.getReport().toByteArray()));
+      try {
        ReportResponse response = reportService.createReport(request).execute();
-       if (response.getCode() != Code.OK.name()) {
+       if (!response.getCode().equals(Code.OK.name())) {
          Log.e(TAG, "Call failed: " + response.getCode() + " :: " + response.getErrorMessage());
+         return false;
        }
+      } catch (IOException ex) {
+        Log.e(TAG, "Call failed, exception:", ex);
+        return false;
+      }
+      return true;
     }
   }
 
-  @Builder
   @ToString
+  @Accessors(chain = true)
   private static class Upload {
+    @Getter
     private final CachedReportWrapper report;
+    @Getter @Setter
+    private int retryDelayS = 1;
+    private Upload(CachedReportWrapper report) {
+      this.report = report;
+    }
+
     @Override
     public boolean equals(Object o) {
       if (!(o instanceof Upload)) {

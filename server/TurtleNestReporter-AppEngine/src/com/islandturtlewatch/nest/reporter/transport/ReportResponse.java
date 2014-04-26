@@ -17,6 +17,7 @@ public class ReportResponse {
   public enum Code {
     OK,
     INVALID_REQUEST,
+    AUTHENTICATION_FAILURE,
     FAILED
   };
   @Getter @Setter

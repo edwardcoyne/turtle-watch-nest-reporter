@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"IneSQDZRISaU6plvxbhHIOAs-WY/3Ie-3A69wwor7BC4F8Pca9stBKE\"",
+ "etag": "\"ADiYQGKhdYR9rpbhIFHih-UBYRs/3eE7cIEV8opIvAngZ9Dfyf-N82k\"",
  "discoveryVersion": "v1",
  "id": "reportEndpoint:v1",
  "name": "reportEndpoint",
@@ -14,9 +14,9 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "protocol": "rest",
- "baseUrl": "https://myapp.appspot.com/_ah/api/reportEndpoint/v1/",
+ "baseUrl": "https://mesmerizing-app-536.appspot.com/_ah/api/reportEndpoint/v1/",
  "basePath": "/_ah/api/reportEndpoint/v1/",
- "rootUrl": "https://myapp.appspot.com/_ah/api/",
+ "rootUrl": "https://mesmerizing-app-536.appspot.com/_ah/api/",
  "servicePath": "reportEndpoint/v1/",
  "batchPath": "batch",
  "parameters": {

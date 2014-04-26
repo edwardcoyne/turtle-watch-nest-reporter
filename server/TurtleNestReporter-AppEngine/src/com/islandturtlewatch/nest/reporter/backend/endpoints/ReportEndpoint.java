@@ -18,6 +18,7 @@ import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.ReportWrapper;
 import com.islandturtlewatch.nest.reporter.backend.ClientIds;
 import com.islandturtlewatch.nest.reporter.backend.storage.ReportStore;
+import com.islandturtlewatch.nest.reporter.backend.util.UserUtil;
 import com.islandturtlewatch.nest.reporter.transport.ReportRef;
 import com.islandturtlewatch.nest.reporter.transport.ReportRequest;
 import com.islandturtlewatch.nest.reporter.transport.ReportResponse;
@@ -25,6 +26,7 @@ import com.islandturtlewatch.nest.reporter.transport.ReportResponse.Code;
 
 @Api(name = "reportEndpoint",
 clientIds = ClientIds.ANDROID_CLIENT_ID,
+audiences = ClientIds.CLIENT_ID,
 scopes = {"https://www.googleapis.com/auth/userinfo.email"},
 namespace = @ApiNamespace(ownerDomain = "islandturtlewatch.com",
                           ownerName = "islandturtlewatch.com",
@@ -62,7 +64,7 @@ public class ReportEndpoint {
       User user,
       ReportRequest request) throws OAuthRequestException {
     if (user == null) {
-      throw new OAuthRequestException("Not authorized");
+      return ReportResponse.builder().setCode(Code.AUTHENTICATION_FAILURE).build();
     }
 
     Report report;
@@ -77,7 +79,7 @@ public class ReportEndpoint {
 
     ReportStore store = new ReportStore();
     store.init();
-    ReportWrapper addedReport = store.addReport(user.getUserId(), report);
+    ReportWrapper addedReport = store.addReport(UserUtil.getUserId(user), report);
     return ReportResponse.builder()
         .setCode(Code.OK)
         .setReportRefEncoded(BaseEncoding.base64().encode(addedReport.toByteArray()))

@@ -55,7 +55,7 @@ public class ReportStore {
   }
 
   public ReportWrapper getReportLatestVersion(String userId, final long reportId) {
-    final User user = loadUser(userId);
+    final User user = loadOrCreateUser(userId);
     return backend().transact(new Work<ReportWrapper>(){
       @Override
       public ReportWrapper run() {
@@ -74,7 +74,7 @@ public class ReportStore {
   }
 
   private ReportWrapper doAddReport(String userId, Report report) {
-    User user = loadUser(userId);
+    User user = loadOrCreateUser(userId);
 
     StoredReport storedReport = StoredReport.builder()
         .setReportId(user.getHighestReportId() + 1)
@@ -99,7 +99,7 @@ public class ReportStore {
 
   private ReportWrapper doUpdateReport(ReportWrapper wrapper) {
     ReportRef ref = wrapper.getRef();
-    User user = loadUser(ref.getOwnerId());
+    User user = loadOrCreateUser(ref.getOwnerId());
     StoredReport report = loadReport(user, ref.getReportId());
 
     if (report.getLatestVersion() != ref.getVersion()) {
@@ -122,7 +122,7 @@ public class ReportStore {
   }
 
   private ImmutableList<ReportWrapper> doGetLatestReportsForUser(String userId) {
-    User user = loadUser(userId);
+    User user = loadOrCreateUser(userId);
     List<StoredReport> reports = backend().load().type(StoredReport.class).ancestor(user).list();
     List<ReportWrapper> versions = new ArrayList<>();
     for (StoredReport report : reports) {
@@ -131,9 +131,13 @@ public class ReportStore {
     return ImmutableList.copyOf(versions);
   }
 
-  private User loadUser(String userId) {
+  private User loadOrCreateUser(String userId) {
     Optional<User> userOpt = tryLoadUser(userId);
-    Preconditions.checkArgument(userOpt.isPresent(), "Missing user: " + userId);
+    if (!userOpt.isPresent()) {
+      addUser(userId);
+      userOpt = tryLoadUser(userId);
+    }
+    Preconditions.checkArgument(userOpt.isPresent(), "Unable to create user: " + userId);
     return userOpt.get();
   }
 
