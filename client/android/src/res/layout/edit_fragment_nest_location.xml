@@ -17,6 +17,26 @@
             android:id="@+id/buttonGps"
             android:text="@string/edit_nest_location_button_gps" />
     </TableRow>
+   <TableRow
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" >
+       <TextView
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_nest_location_triangulation"/>
+   </TableRow>
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/buttonGpsNorth"
+            android:text="@string/edit_nest_location_triangulation_north" />
+
+        <Button
+            android:id="@+id/buttonGpsSouth"
+            android:text="@string/edit_nest_location_triangulation_south" />
+    </TableRow>
     <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >

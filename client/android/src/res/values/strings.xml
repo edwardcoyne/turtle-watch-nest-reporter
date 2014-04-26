@@ -26,6 +26,9 @@
     <string name="edit_info_label_abandoned_egg_cavities">Abandoned Egg Cavities</string>
     
     <string name="edit_nest_location_label_gps">GPS Coordinates</string>
+    <string name="edit_nest_location_triangulation">Triangulation</string>
+    <string name="edit_nest_location_triangulation_north">Set North</string>
+    <string name="edit_nest_location_triangulation_south">Set South</string>
     <string name="edit_nest_location_button_gps">Set Location</string>
     <string name="edit_nest_location_original_address">Original Address</string>
     <string name="edit_nest_location_anna_maria_short">AM</string>
