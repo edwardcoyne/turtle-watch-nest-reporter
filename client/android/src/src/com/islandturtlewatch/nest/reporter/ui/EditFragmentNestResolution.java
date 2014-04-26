@@ -97,13 +97,12 @@ public class EditFragmentNestResolution extends EditFragment {
 
     setVisible(R.id.tableExcavationCounts, excavation.getExcavated());
 
-    Adder adder = new Adder();
     setText(R.id.fieldDeadInNest,
-        excavation.hasDeadInNest() ? Integer.toString(adder.add(excavation.getDeadInNest()))
-            : "");
+        excavation.hasDeadInNest() ? Integer.toString(excavation.getDeadInNest()) : "");
     setText(R.id.fieldLiveInNest,
-        excavation.hasLiveInNest() ? Integer.toString(adder.add(excavation.getLiveInNest()))
-            : "");
+        excavation.hasLiveInNest() ? Integer.toString(excavation.getLiveInNest()) : "");
+
+    Adder adder = new Adder();
     setText(R.id.fieldHatchedShells,
         excavation.hasHatchedShells() ? Integer.toString(adder.add(excavation.getHatchedShells()))
             : "");

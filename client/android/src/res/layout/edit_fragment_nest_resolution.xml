@@ -159,42 +159,7 @@
    </TableRow>
    <TableLayout 
             android:id="@+id/tableExcavationCounts">
-	   <TableRow
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content" >
-	
-	        <TextView
-	            android:layout_width="0dp"
-	            android:layout_height="wrap_content"
-	            android:layout_weight="1"
-	            android:text="@string/excavation_data_dead_in_nest" />
-	
-	        <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
-	            android:id="@+id/fieldDeadInNest"
-	            android:inputType="number"
-	            android:layout_width="0dp"
-	            android:layout_height="wrap_content"
-	            android:layout_weight="1"
-              onTextChangeHandler="handleTextChange"/>
-	   </TableRow> 
-	   <TableRow
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content" >
-	
-	        <TextView
-	            android:layout_width="0dp"
-	            android:layout_height="wrap_content"
-	            android:layout_weight="1"
-	            android:text="@string/excavation_data_live_in_nest" />
-	
-	        <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
-	            android:id="@+id/fieldLiveInNest"
-	            android:inputType="number"
-	            android:layout_width="0dp"
-	            android:layout_height="wrap_content"
-	            android:layout_weight="1"
-              onTextChangeHandler="handleTextChange"/>
-	   </TableRow> 
+	   
 	   <TableRow
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content" >
@@ -300,5 +265,41 @@
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"/>
 	   </TableRow>
+	   <TableRow
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content" >
+  
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:text="@string/excavation_data_dead_in_nest" />
+  
+          <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+              android:id="@+id/fieldDeadInNest"
+              android:inputType="number"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              onTextChangeHandler="handleTextChange"/>
+     </TableRow> 
+     <TableRow
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content" >
+  
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:text="@string/excavation_data_live_in_nest" />
+  
+          <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+              android:id="@+id/fieldLiveInNest"
+              android:inputType="number"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              onTextChangeHandler="handleTextChange"/>
+     </TableRow> 
    </TableLayout>
 </TableLayout>
