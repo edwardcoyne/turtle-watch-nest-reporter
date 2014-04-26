@@ -31,7 +31,6 @@ public class EditFragmentNestLocation extends EditFragment {
   private static final Map<Integer, TextChangeHandler> TEXT_CHANGE_HANDLERS =
       TextChangeHandler.toMap(
           new HandleUpdateAddress(),
-          new HandleUpdateSectionNumber(),
           new HandleUpdateDetails(),
           new HandleUpdateApexToBarrierFt(),
           new HandleUpdateApexToBarrierIn(),
@@ -62,8 +61,6 @@ public class EditFragmentNestLocation extends EditFragment {
 
     setText(R.id.fieldAddress, location.hasStreetAddress() ?
         location.getStreetAddress() : "");
-    setText(R.id.fieldSectionNumber, location.hasSection() ?
-        Integer.toString(location.getSection()) : "");
     setText(R.id.fieldDetails, location.hasDetails() ?
         location.getDetails() : "");
 
@@ -98,19 +95,6 @@ public class EditFragmentNestLocation extends EditFragment {
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
       updateHandler.updateStreetAddress(newText);
-    }
-  }
-
-  private static class HandleUpdateSectionNumber extends TextChangeHandler {
-    protected HandleUpdateSectionNumber() {
-      super(R.id.fieldSectionNumber);
-    }
-
-    @Override
-    public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      int newValue = Integer.parseInt(newText);
-      //TODO(edcoyne): display error if not parsable
-      updateHandler.updateSectionNumber(newValue);
     }
   }
 

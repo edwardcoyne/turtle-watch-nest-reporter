@@ -141,13 +141,6 @@ public class EditPresenter {
           return DataUpdateResult.success();
         }
 
-		public DataUpdateResult updateSectionNumber(int sectionNumber) {
-          Report.Builder updatedReport = model.getActiveReport().toBuilder();
-          updatedReport.getLocationBuilder().setSection(sectionNumber);
-          writeChangesAndUpdate(updatedReport.build());
-          return DataUpdateResult.success();
-        }
-
 		public DataUpdateResult updateDetails(String details) {
           Report.Builder updatedReport = model.getActiveReport().toBuilder();
           if (details.isEmpty()) {

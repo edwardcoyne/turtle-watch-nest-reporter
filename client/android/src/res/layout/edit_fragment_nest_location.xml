@@ -36,21 +36,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/edit_nest_location_section_number" />
-
-        <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
-            android:id="@+id/fieldSectionNumber"
-            android:inputType="number"
-            android:ems="1"
-            onTextChangeHandler="handleTextChange" /> 
-   </TableRow>
-   <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-        <TextView
             android:text="@string/edit_nest_location_details" />
 
         <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
