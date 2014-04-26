@@ -245,8 +245,8 @@ public class SyncService extends Service {
     @Override
     public void run() {
       initService();
+      Log.i(TAG, "Starting uploader.");
       while (running.get()) {
-        Log.i(TAG, "Starting uploader.");
         try {
           Upload upload = pendingUploads.take();
           if (!handleUpload(upload)) {
@@ -262,15 +262,14 @@ public class SyncService extends Service {
         } catch (InterruptedException e) {
           Log.e(TAG, "Interrupted while getting upload:", e);
         }
-        Log.i(TAG, "Shutting down uploader.");
       }
+      Log.i(TAG, "Shutting down uploader.");
     }
     private void sleep(int seconds) {
       try {
         Thread.sleep(seconds * 1000);
       } catch (InterruptedException e) {
         Log.e(TAG, "Sleep interupted.", e);
-        // Don't care.
       }
     }
 

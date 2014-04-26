@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="com/islandturtlewatch/nest/reporter/GCMIntentService.java|com/islandturtlewatch/nest/reporter/RegisterActivity.java|java/beans/ConstructorProperties.java|com/islandturtlewatch/nest/reporter/net/BackendClient.java" kind="src" path="src"/>
+	<classpathentry excluding="com/islandturtlewatch/nest/reporter/GCMIntentService.java|com/islandturtlewatch/nest/reporter/RegisterActivity.java|java/beans/ConstructorProperties.java|com/islandturtlewatch/nest/reporter/net/BackendClient.java|com/islandturtlewatch/nest/reporter/CloudEndpointUtils.java" kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="src" path="proto_gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
