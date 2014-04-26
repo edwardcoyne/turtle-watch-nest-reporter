@@ -1,5 +1,6 @@
 package com.islandturtlewatch.nest.reporter.ui;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import android.app.Fragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.google.common.base.Optional;
@@ -17,10 +19,13 @@ import com.google.protobuf.Message;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateResult;
+import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.ui.split.SplitEditActivity.ListenerProvider;
+import com.islandturtlewatch.nest.reporter.util.DateUtil;
 
 public class EditFragment extends Fragment {
   private static final String TAG = EditFragment.class.getSimpleName();
+  public static final int UNDEFINED_VIEW_ID = -1;
 
   protected Optional<Report> currentReport = Optional.absent();
   protected Map<Message, Map<String, FieldDescriptor>> descriptors =
@@ -87,6 +92,26 @@ public class EditFragment extends Fragment {
       ((TextView) view).setTextKeepState(value);
     } else {
       throw new UnsupportedOperationException("We don't support setText on " + view);
+    }
+  }
+
+  protected void setDate(int id, long timestampMs) {
+    setText(id, DateUtil.getFormattedDate(timestampMs));
+    ClickHandler clickHandler = getClickHandlers().get(id);
+    if (clickHandler instanceof DatePickerClickHandler) {
+      ((DatePickerClickHandler)clickHandler).setDate(timestampMs);
+    } else {
+      throw new UnsupportedOperationException("We don't support setDate on " + clickHandler);
+    }
+  }
+
+  protected void clearDate(int id) {
+    setText(id, getString(R.string.date_button));
+    ClickHandler clickHandler = getClickHandlers().get(id);
+    if (clickHandler instanceof DatePickerClickHandler) {
+      ((DatePickerClickHandler)clickHandler).clearDate();
+    } else {
+      throw new UnsupportedOperationException("We don't support setDate on " + clickHandler);
     }
   }
 
@@ -171,14 +196,60 @@ public class EditFragment extends Fragment {
   public abstract static class DatePickerClickHandler extends ClickHandler
       implements DatePickerDialog.OnDateSetListener{
     protected DataUpdateHandler updateHandler;
+    private Optional<Integer> year = Optional.absent();
+    private Optional<Integer> month = Optional.absent();
+    private Optional<Integer> day = Optional.absent();
+
     public DatePickerClickHandler(int viewId) {
       super(viewId);
+    }
+
+    public void setDate(long timstampMs) {
+      Calendar cal = Calendar.getInstance();
+      cal.setTimeInMillis(timstampMs);
+      int year = this.year.or(cal.get(Calendar.YEAR));
+      int month = this.month.or(cal.get(Calendar.MONTH));
+      int day = this.day.or(cal.get(Calendar.DAY_OF_MONTH));
+      setDate(year, month, day);
+    }
+
+    public void setDate(int year, int month, int day) {
+      this.year = Optional.of(year);
+      this.month = Optional.of(month);
+      this.day = Optional.of(day);
+    }
+
+    public void clearDate() {
+      this.year = Optional.absent();
+      this.month = Optional.absent();
+      this.day = Optional.absent();
     }
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
       this.updateHandler = updateHandler;
-      CurrentDatePicker.showOnView(view, this);
+      if (this.year.isPresent() && this.month.isPresent() && this.day.isPresent()) {
+        CurrentDatePicker.showOnView(view, new DateSetListener(),
+            this.year.get(), this.month.get(), this.day.get());
+      } else {
+        CurrentDatePicker.showOnView(view, new DateSetListener());
+      }
+    }
+
+    // Hide the stupid implementation detail of months being '0' indexed.
+    private class DateSetListener implements DatePickerDialog.OnDateSetListener {
+      @Override
+      public void onDateSet(DatePicker view,
+          int year, int monthOfYear, int dayOfMonth) {
+        DatePickerClickHandler.this.onDateSet(view, year, monthOfYear + 1, dayOfMonth);
+      }
+    }
+  }
+
+  // Should only be used in places that don't care about view_id, e.g. dynamically generated.
+  public abstract static class SimpleDatePickerClickHandler extends DatePickerClickHandler {
+    public SimpleDatePickerClickHandler() {
+      super(UNDEFINED_VIEW_ID);
     }
   }
 

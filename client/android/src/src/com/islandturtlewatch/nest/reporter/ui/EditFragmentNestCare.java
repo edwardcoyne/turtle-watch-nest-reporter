@@ -18,7 +18,6 @@ import com.islandturtlewatch.nest.data.ReportProto.Relocation;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
-import com.islandturtlewatch.nest.reporter.util.DateUtil;
 
 public class EditFragmentNestCare extends EditFragment {
   private static final Map<Integer, ClickHandler> CLICK_HANDLERS =
@@ -67,8 +66,9 @@ public class EditFragmentNestCare extends EditFragment {
     setChecked(R.id.fieldNestAdopted, intervention.getAdopted());
 
     if (intervention.getProtectionEvent().hasTimestampMs()) {
-      setText(R.id.buttonProtectedDate,
-          DateUtil.getFormattedDate(intervention.getProtectionEvent().getTimestampMs()));
+      setDate(R.id.buttonProtectedDate, intervention.getProtectionEvent().getTimestampMs());
+    } else {
+      clearDate(R.id.buttonProtectedDate);
     }
 
     setChecked(R.id.fieldSelfReleasingCage,
@@ -90,7 +90,9 @@ public class EditFragmentNestCare extends EditFragment {
     setVisible(R.id.tableRelocated, isChecked(R.id.fieldNestRelocated));
 
     if (relocation.hasTimestampMs()) {
-      setText(R.id.buttonRelocatedDate, DateUtil.getFormattedDate(relocation.getTimestampMs()));
+      setDate(R.id.buttonRelocatedDate, relocation.getTimestampMs());
+    } else {
+      clearDate(R.id.buttonRelocatedDate);
     }
 
     setText(R.id.fieldNewAddress, relocation.getNewAddress());

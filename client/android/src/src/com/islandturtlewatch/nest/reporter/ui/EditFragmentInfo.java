@@ -52,11 +52,11 @@ public class EditFragmentInfo extends EditFragment {
   @Override
   public void updateSection(Report report) {
     if (report.hasTimestampFoundMs()) {
-      setText(R.id.buttonDateFound, DateUtil.getFormattedDate(report.getTimestampFoundMs()));
+      setDate(R.id.buttonDateFound, report.getTimestampFoundMs());
       setText(R.id.labelIncubationDate,
           DateUtil.getFormattedDate(DateUtil.plusDays(report.getTimestampFoundMs(), 55)));
     } else {
-      setText(R.id.buttonDateFound,  getString(R.string.date_button));
+      clearDate(R.id.buttonDateFound);
       setText(R.id.labelIncubationDate, "");
     }
 

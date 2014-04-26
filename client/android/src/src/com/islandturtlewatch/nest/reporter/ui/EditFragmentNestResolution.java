@@ -16,7 +16,6 @@ import com.islandturtlewatch.nest.data.ReportProto.NestCondition;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
-import com.islandturtlewatch.nest.reporter.util.DateUtil;
 
 public class EditFragmentNestResolution extends EditFragment {
   private static final Map<Integer, ClickHandler> CLICK_HANDLERS =
@@ -63,12 +62,14 @@ public class EditFragmentNestResolution extends EditFragment {
   public void updateSection(Report report) {
     NestCondition condition = report.getCondition();
     if (condition.hasHatchTimestampMs()) {
-      setText(R.id.buttonHatchDate,
-          DateUtil.getFormattedDate(condition.getHatchTimestampMs()));
+      setDate(R.id.buttonHatchDate, condition.getHatchTimestampMs());
+    } else {
+      clearDate(R.id.buttonHatchDate);
     }
     if (condition.hasAdditionalHatchTimestampMs()) {
-      setText(R.id.buttonAdditionalHatchDate,
-          DateUtil.getFormattedDate(condition.getAdditionalHatchTimestampMs()));
+      setDate(R.id.buttonAdditionalHatchDate, condition.getAdditionalHatchTimestampMs());
+    } else {
+      clearDate(R.id.buttonAdditionalHatchDate);
     }
     setChecked(R.id.fieldDisorientation, condition.getDisorientation());
 
@@ -89,8 +90,9 @@ public class EditFragmentNestResolution extends EditFragment {
     setText(R.id.fieldNoExcavationOtherValue, excavation.getFailureOther());
 
     if (excavation.hasTimestampMs()) {
-      setText(R.id.buttonExcavationDate,
-          DateUtil.getFormattedDate(excavation.getTimestampMs()));
+      setDate(R.id.buttonExcavationDate, excavation.getTimestampMs());
+    } else {
+      clearDate(R.id.buttonExcavationDate);
     }
 
     setVisible(R.id.tableExcavationCounts, excavation.getExcavated());

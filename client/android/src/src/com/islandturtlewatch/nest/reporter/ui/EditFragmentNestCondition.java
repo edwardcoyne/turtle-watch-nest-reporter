@@ -67,9 +67,11 @@ public class EditFragmentNestCondition extends EditFragment {
     addWashOverRow(condition.getWashOverCount(), WashEvent.getDefaultInstance(), false);
 
     if (condition.getWashOut().hasTimestampMs()) {
-      setText(R.id.buttonWashOutDate,
-          DateUtil.getFormattedDate(condition.getWashOut().getTimestampMs()));
+      setDate(R.id.buttonWashOutDate, condition.getWashOut().getTimestampMs());
+    } else {
+      clearDate(R.id.buttonWashOutDate);
     }
+
     setText(R.id.fieldWashOutStormName, condition.getWashOut().getStormName());
 
     clearTable(R.id.tablePredatitation);
@@ -82,15 +84,17 @@ public class EditFragmentNestCondition extends EditFragment {
     setChecked(R.id.fieldDamageVandalized, condition.getVandalized());
     setEnabled(R.id.buttonDamageVandalizedDate, condition.getVandalized());
     if (condition.hasVandalizedTimestampMs()) {
-      setText(R.id.buttonDamageVandalizedDate,
-          DateUtil.getFormattedDate(condition.getVandalizedTimestampMs()));
+      setDate(R.id.buttonDamageVandalizedDate, condition.getVandalizedTimestampMs());
+    } else {
+      clearDate(R.id.buttonDamageVandalizedDate);
     }
 
     setChecked(R.id.fieldDamagePoached, condition.getPoached());
     setEnabled(R.id.buttonDamagePoachedDate, condition.getPoached());
     if (condition.hasPoachedTimestampMs()) {
-      setText(R.id.buttonDamagePoachedDate,
-          DateUtil.getFormattedDate(condition.getPoachedTimestampMs()));
+      setDate(R.id.buttonDamagePoachedDate, condition.getPoachedTimestampMs());
+    } else {
+      clearDate(R.id.buttonDamagePoachedDate);
     }
 
     setChecked(R.id.fieldDamageRootsInvaded, condition.getRootsInvadedEggshells());
@@ -105,17 +109,14 @@ public class EditFragmentNestCondition extends EditFragment {
       date_button.setText(R.string.date_button);
     }
 
-    date_button.setOnClickListener(listenerProvider.getOnClickListener(new ClickHandlerSimple() {
-      @Override public void handleClick(View view, final DataUpdateHandler updateHandler) {
-        CurrentDatePicker.showOnView(view, new OnDateSetListener() {
-          @Override
-          public void onDateSet(
-              DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            updateHandler.updateWashOverDate(ordinal, year, monthOfYear, dayOfMonth);
-          }
-        });
-      }
-    }));
+    SimpleDatePickerClickHandler clickHandler = new SimpleDatePickerClickHandler(){
+      @Override
+      public void onDateSet(DatePicker view, int year, int monthOfYear,
+          int dayOfMonth) {
+        updateHandler.updateWashOverDate(ordinal, year, monthOfYear, dayOfMonth);
+      }};
+    clickHandler.setDate(event.getTimestampMs());
+    date_button.setOnClickListener(listenerProvider.getOnClickListener(clickHandler));
 
     FocusMonitoredEditText storm_name = new FocusMonitoredEditText(getActivity());
     storm_name.setHint(R.string.edit_nest_condition_storm_name);
