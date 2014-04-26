@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.google.common.base.Optional;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation;
+import com.islandturtlewatch.nest.data.ReportProto.NestLocation.City;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation.Placement;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
@@ -26,7 +27,10 @@ public class EditFragmentNestLocation extends EditFragment {
           new HandleSetOnEscarpment(),
           new HandleSetSeawallRocks(),
           new HandleSetFurniture(),
-          new HandleSetObstructionsEscarpment());
+          new HandleSetObstructionsEscarpment(),
+          new HandleSetCityAM(),
+          new HandleSetCityHB(),
+          new HandleSetCityBB());
 
   private static final Map<Integer, TextChangeHandler> TEXT_CHANGE_HANDLERS =
       TextChangeHandler.toMap(
@@ -61,6 +65,10 @@ public class EditFragmentNestLocation extends EditFragment {
 
     setText(R.id.fieldAddress, location.hasStreetAddress() ?
         location.getStreetAddress() : "");
+    setChecked(R.id.fieldLocationAM, location.getCity() == City.AM);
+    setChecked(R.id.fieldLocationHB, location.getCity() == City.HB);
+    setChecked(R.id.fieldLocationBB, location.getCity() == City.BB);
+
     setText(R.id.fieldDetails, location.hasDetails() ?
         location.getDetails() : "");
 
@@ -170,6 +178,39 @@ public class EditFragmentNestLocation extends EditFragment {
       }
       //TODO(edcoyne): display error if not parsable
       updateHandler.updateWaterToApexIn(newValue);
+    }
+  }
+
+  private static class HandleSetCityAM extends ClickHandler {
+    protected HandleSetCityAM() {
+      super(R.id.fieldLocationAM);
+    }
+
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+       updateHandler.updateCity(City.AM);
+    }
+  }
+
+  private static class HandleSetCityHB extends ClickHandler {
+    protected HandleSetCityHB() {
+      super(R.id.fieldLocationHB);
+    }
+
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+       updateHandler.updateCity(City.HB);
+    }
+  }
+
+  private static class HandleSetCityBB extends ClickHandler {
+    protected HandleSetCityBB() {
+      super(R.id.fieldLocationBB);
+    }
+
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+       updateHandler.updateCity(City.BB);
     }
   }
 

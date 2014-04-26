@@ -10,6 +10,7 @@ import com.islandturtlewatch.nest.data.ReportProto.NestCondition;
 import com.islandturtlewatch.nest.data.ReportProto.NestCondition.PreditationEvent;
 import com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation.Builder;
+import com.islandturtlewatch.nest.data.ReportProto.NestLocation.City;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation.Placement;
 import com.islandturtlewatch.nest.data.ReportProto.Relocation;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
@@ -117,6 +118,13 @@ public class EditPresenter {
           } else {
             updatedReport.getLocationBuilder().setStreetAddress(address);
           }
+          writeChangesAndUpdate(updatedReport.build());
+          return DataUpdateResult.success();
+        }
+
+		public DataUpdateResult updateCity(City city) {
+          Report.Builder updatedReport = model.getActiveReport().toBuilder();
+          updatedReport.getLocationBuilder().setCity(city);
           writeChangesAndUpdate(updatedReport.build());
           return DataUpdateResult.success();
         }

@@ -7,6 +7,7 @@
     <string name="date_button">Set Date</string>
     <string name="feet_short">ft</string>
     <string name="inches_short">in</string>
+    <string name="city">city</string>
     
     <string name="action_change_reports">Change Report</string>
     <string name="action_new_report">New Report</string>
@@ -27,6 +28,10 @@
     <string name="edit_nest_location_label_gps">GPS Coordinates</string>
     <string name="edit_nest_location_button_gps">Set Location</string>
     <string name="edit_nest_location_original_address">Original Address</string>
+    <string name="edit_nest_location_anna_maria_short">AM</string>
+    <string name="edit_nest_location_bradenton_beach_short">BB</string>
+    <string name="edit_nest_location_holms_beach_short">HB</string>
+    <string name="edit_nest_location_city">City</string>
     <string name="edit_nest_location_section_number">Section Number</string>
     <string name="edit_nest_location_details">Details</string>
     <string name="edit_nest_location_location">Location</string>

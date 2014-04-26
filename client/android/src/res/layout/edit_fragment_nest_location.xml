@@ -33,6 +33,42 @@
             onTextChangeHandler="handleTextChange" />
    </TableRow>
    <TableRow
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" >
+       <TextView
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_nest_location_city"/>
+   </TableRow>
+   <TableRow
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" >
+       <CheckBox
+           android:id="@+id/fieldLocationAM"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_nest_location_anna_maria_short"
+           android:onClick="handleClick" />
+       
+       <CheckBox
+           android:id="@+id/fieldLocationHB"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_nest_location_holms_beach_short"
+           android:onClick="handleClick" />
+       
+       <CheckBox
+           android:id="@+id/fieldLocationBB"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="@string/edit_nest_location_bradenton_beach_short"
+           android:onClick="handleClick" />
+       
+   </TableRow>
+   <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
         <TextView
