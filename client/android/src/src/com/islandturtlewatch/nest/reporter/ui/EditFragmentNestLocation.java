@@ -2,18 +2,23 @@ package com.islandturtlewatch.nest.reporter.ui;
 
 import java.util.Map;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.common.base.Optional;
+import com.google.common.base.Preconditions;
+import com.islandturtlewatch.nest.data.ReportProto.GpsCoordinates;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation.City;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation.Placement;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
+import com.islandturtlewatch.nest.reporter.ui.GpsCoordinateDialog.GpsLocationCallback;
+import com.islandturtlewatch.nest.reporter.util.GpsUtil;
 
 public class EditFragmentNestLocation extends EditFragment {
   //private static final String TAG = EditFragmentNestLocation.class.getSimpleName();
@@ -30,7 +35,10 @@ public class EditFragmentNestLocation extends EditFragment {
           new HandleSetObstructionsEscarpment(),
           new HandleSetCityAM(),
           new HandleSetCityHB(),
-          new HandleSetCityBB());
+          new HandleSetCityBB(),
+          new HandleSetGps(),
+          new HandleSetTriganulationNorth(),
+          new HandleSetTriganulationSouth());
 
   private static final Map<Integer, TextChangeHandler> TEXT_CHANGE_HANDLERS =
       TextChangeHandler.toMap(
@@ -62,6 +70,26 @@ public class EditFragmentNestLocation extends EditFragment {
   @Override
   public void updateSection(Report report) {
     NestLocation location = report.getLocation();
+
+    if (report.getLocation().hasCoordinates()) {
+      setText(R.id.buttonGps, GpsUtil.format(report.getLocation().getCoordinates()));
+    } else {
+      setText(R.id.buttonGps, getString(R.string.edit_nest_location_button_gps));
+    }
+
+    if (report.getLocation().getTriangulation().hasNorth()) {
+      setText(R.id.buttonGpsNorth,
+          GpsUtil.format(report.getLocation().getTriangulation().getNorth()));
+    } else {
+      setText(R.id.buttonGpsNorth, getString(R.string.edit_nest_location_button_gps));
+    }
+
+    if (report.getLocation().getTriangulation().hasSouth()) {
+      setText(R.id.buttonGpsSouth,
+          GpsUtil.format(report.getLocation().getTriangulation().getSouth()));
+    } else {
+      setText(R.id.buttonGpsSouth, getString(R.string.edit_nest_location_button_gps));
+    }
 
     setText(R.id.fieldAddress, location.hasStreetAddress() ?
         location.getStreetAddress() : "");
@@ -311,6 +339,67 @@ public class EditFragmentNestLocation extends EditFragment {
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
       updateHandler.updateObstructionsOther(newText.isEmpty() ? Optional.<String>absent()
           : Optional.of(newText));
+    }
+  }
+
+  private static class HandleSetGps extends ClickHandler {
+    protected HandleSetGps() {
+      super(R.id.buttonGps);
+    }
+
+    @Override
+    public void handleClick(View view, final DataUpdateHandler updateHandler) {
+      GpsCoordinateDialog dialog = new GpsCoordinateDialog();
+      Preconditions.checkArgument(view.getContext() instanceof Activity);
+      dialog.setCallback(new GpsLocationCallback() {
+        @Override
+        public void location(GpsCoordinates coordinates) {
+          updateHandler.updateNestGps(coordinates);
+        }
+      });
+
+      dialog.show(((Activity)view.getContext()).getFragmentManager(), "GPS");
+
+    }
+  }
+
+  private static class HandleSetTriganulationNorth extends ClickHandler {
+    protected HandleSetTriganulationNorth() {
+      super(R.id.buttonGpsNorth);
+    }
+
+    @Override
+    public void handleClick(View view, final DataUpdateHandler updateHandler) {
+      GpsCoordinateDialog dialog = new GpsCoordinateDialog();
+      Preconditions.checkArgument(view.getContext() instanceof Activity);
+      dialog.setCallback(new GpsLocationCallback() {
+        @Override
+        public void location(GpsCoordinates coordinates) {
+          updateHandler.updateTriangulationNorth(coordinates);
+        }
+      });
+
+      dialog.show(((Activity)view.getContext()).getFragmentManager(), "GPS");
+    }
+  }
+
+  private static class HandleSetTriganulationSouth extends ClickHandler {
+    protected HandleSetTriganulationSouth() {
+      super(R.id.buttonGpsSouth);
+    }
+
+    @Override
+    public void handleClick(View view, final DataUpdateHandler updateHandler) {
+      GpsCoordinateDialog dialog = new GpsCoordinateDialog();
+      Preconditions.checkArgument(view.getContext() instanceof Activity);
+      dialog.setCallback(new GpsLocationCallback() {
+        @Override
+        public void location(GpsCoordinates coordinates) {
+          updateHandler.updateTriangulationSouth(coordinates);
+        }
+      });
+
+      dialog.show(((Activity)view.getContext()).getFragmentManager(), "GPS");
     }
   }
 }

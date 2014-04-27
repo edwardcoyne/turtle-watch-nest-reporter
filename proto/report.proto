@@ -103,6 +103,13 @@ message NestLocation {
   optional int32 apex_to_barrier_in = 8;
   optional int32 water_to_apex_ft = 9;
   optional int32 water_to_apex_in = 10;
+  
+  optional GpsCoordinates coordinates = 11;
+  message Triangulation {
+    optional GpsCoordinates north = 1;
+    optional GpsCoordinates south = 2;
+  }
+  optional Triangulation triangulation = 12;
 }
 
 message Intervention {
@@ -172,5 +179,5 @@ message Relocation {
 
 message GpsCoordinates {
   optional double lat = 1;
-  optional double int64 = 2;
+  optional double long = 2;
 }

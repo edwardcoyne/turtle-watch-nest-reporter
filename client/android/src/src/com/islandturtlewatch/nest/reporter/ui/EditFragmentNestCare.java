@@ -2,6 +2,7 @@ package com.islandturtlewatch.nest.reporter.ui;
 
 import java.util.Map;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 
 import com.google.common.base.Optional;
+import com.google.common.base.Preconditions;
+import com.islandturtlewatch.nest.data.ReportProto.GpsCoordinates;
 import com.islandturtlewatch.nest.data.ReportProto.Intervention;
 import com.islandturtlewatch.nest.data.ReportProto.Intervention.ProtectionEvent;
 import com.islandturtlewatch.nest.data.ReportProto.Intervention.ProtectionEvent.Reason;
@@ -18,6 +21,8 @@ import com.islandturtlewatch.nest.data.ReportProto.Relocation;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
+import com.islandturtlewatch.nest.reporter.ui.GpsCoordinateDialog.GpsLocationCallback;
+import com.islandturtlewatch.nest.reporter.util.GpsUtil;
 
 public class EditFragmentNestCare extends EditFragment {
   private static final Map<Integer, ClickHandler> CLICK_HANDLERS =
@@ -35,7 +40,8 @@ public class EditFragmentNestCare extends EditFragment {
           new HandleSetWashingOut(),
           new HandleSetConstruction(),
           new HandleSetProtectedDate(),
-          new HandleSetRelocationDate());
+          new HandleSetRelocationDate(),
+          new HandleSetNewGps());
 
   private static final Map<Integer, TextChangeHandler> TEXT_CHANGE_HANDLERS =
       TextChangeHandler.toMap(
@@ -93,6 +99,13 @@ public class EditFragmentNestCare extends EditFragment {
       setDate(R.id.buttonRelocatedDate, relocation.getTimestampMs());
     } else {
       clearDate(R.id.buttonRelocatedDate);
+    }
+
+    if (report.getIntervention().getRelocation().hasCoordinates()) {
+      setText(R.id.buttonNewGps,
+          GpsUtil.format(report.getIntervention().getRelocation().getCoordinates()));
+    } else {
+      setText(R.id.buttonNewGps, getString(R.string.edit_nest_location_button_gps));
     }
 
     setText(R.id.fieldNewAddress, relocation.getNewAddress());
@@ -285,6 +298,26 @@ public class EditFragmentNestCare extends EditFragment {
       }
       //TODO(edcoyne): display error if not parsable
       updateHandler.updateNumberOfEggsDestroyed(newValue);
+    }
+  }
+
+  private static class HandleSetNewGps extends ClickHandler {
+    protected HandleSetNewGps() {
+      super(R.id.buttonNewGps);
+    }
+
+    @Override
+    public void handleClick(View view, final DataUpdateHandler updateHandler) {
+      GpsCoordinateDialog dialog = new GpsCoordinateDialog();
+      Preconditions.checkArgument(view.getContext() instanceof Activity);
+      dialog.setCallback(new GpsLocationCallback() {
+        @Override
+        public void location(GpsCoordinates coordinates) {
+          updateHandler.updateNewGps(coordinates);
+        }
+      });
+
+      dialog.show(((Activity)view.getContext()).getFragmentManager(), "GPS");
     }
   }
 }

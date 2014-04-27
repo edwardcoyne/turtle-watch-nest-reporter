@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.google.common.base.Optional;
 import com.islandturtlewatch.nest.data.ReportProto.Excavation;
 import com.islandturtlewatch.nest.data.ReportProto.Excavation.ExcavationFailureReason;
+import com.islandturtlewatch.nest.data.ReportProto.GpsCoordinates;
 import com.islandturtlewatch.nest.data.ReportProto.Intervention.ProtectionEvent;
 import com.islandturtlewatch.nest.data.ReportProto.NestCondition;
 import com.islandturtlewatch.nest.data.ReportProto.NestCondition.PreditationEvent;
@@ -458,7 +459,7 @@ public class EditPresenter {
         writeChangesAndUpdate(updatedReport.build());
         return DataUpdateResult.success();
       }
-  	public DataUpdateResult updateEggsDestroyed(Optional<Integer> value) {
+  	  public DataUpdateResult updateEggsDestroyed(Optional<Integer> value) {
         Report.Builder updatedReport = model.getActiveReport().toBuilder();
         Excavation.Builder excavationBuilder =
             updatedReport.getInterventionBuilder().getExcavationBuilder();
@@ -606,6 +607,31 @@ public class EditPresenter {
         Report.Builder updatedReport = model.getActiveReport().toBuilder();
         NestCondition.Builder condition = updatedReport.getConditionBuilder();
         condition.removePreditation(ordinal);
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+
+      public DataUpdateResult updateNestGps(GpsCoordinates coordinates) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        updatedReport.getLocationBuilder().setCoordinates(coordinates);
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+      public DataUpdateResult updateTriangulationNorth(GpsCoordinates coordinates) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        updatedReport.getLocationBuilder().getTriangulationBuilder().setNorth(coordinates);
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+      public DataUpdateResult updateTriangulationSouth(GpsCoordinates coordinates) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        updatedReport.getLocationBuilder().getTriangulationBuilder().setSouth(coordinates);
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+      public DataUpdateResult updateNewGps(GpsCoordinates coordinates) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        updatedReport.getInterventionBuilder().getRelocationBuilder().setCoordinates(coordinates);
         writeChangesAndUpdate(updatedReport.build());
         return DataUpdateResult.success();
       }

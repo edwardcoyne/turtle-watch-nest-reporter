@@ -15,7 +15,8 @@
 
         <Button
             android:id="@+id/buttonGps"
-            android:text="@string/edit_nest_location_button_gps" />
+            android:text="@string/edit_nest_location_button_gps" 
+           android:onClick="handleClick" />
     </TableRow>
    <TableRow
        android:layout_width="wrap_content"
@@ -31,11 +32,13 @@
 
         <Button
             android:id="@+id/buttonGpsNorth"
-            android:text="@string/edit_nest_location_triangulation_north" />
+            android:text="@string/edit_nest_location_triangulation_north"
+             android:onClick="handleClick"  />
 
         <Button
             android:id="@+id/buttonGpsSouth"
-            android:text="@string/edit_nest_location_triangulation_south" />
+            android:text="@string/edit_nest_location_triangulation_south"
+             android:onClick="handleClick"  />
     </TableRow>
     <TableRow
         android:layout_width="wrap_content"
