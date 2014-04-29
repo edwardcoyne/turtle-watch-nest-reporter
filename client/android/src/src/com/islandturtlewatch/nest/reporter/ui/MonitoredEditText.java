@@ -21,6 +21,8 @@ import com.google.common.base.Optional;
 public class MonitoredEditText extends EditText {
   private Optional<String> textListenerMethodName = Optional.absent();
   private boolean isUpdating = false;
+  // Shouldn't be necessary but getText() seems broken for this use.
+  private CharSequence currentText = "";
 
   public MonitoredEditText(Context context, AttributeSet attrs) {
     super(context, attrs);
@@ -36,7 +38,12 @@ public class MonitoredEditText extends EditText {
 
   @Override
   public void setText(CharSequence text, BufferType type) {
+    if (text.equals(currentText)) {
+      return;
+    }
+
     isUpdating = true;
+    currentText = text;
     super.setText(text, type);
     isUpdating = false;
   }
@@ -51,6 +58,7 @@ public class MonitoredEditText extends EditText {
 
     @Override
     public void afterTextChanged(Editable newText) {
+      currentText = newText.toString();
       if (isUpdating) {
         return;
       }
