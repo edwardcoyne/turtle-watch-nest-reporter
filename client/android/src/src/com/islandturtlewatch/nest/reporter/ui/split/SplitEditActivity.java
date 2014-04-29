@@ -174,8 +174,7 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
   }
 
   @Override
-  protected void onActivityResult(int requestCode, int resultCode,
-     Intent data) {
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
    super.onActivityResult(requestCode, resultCode, data);
    switch (requestCode) {
      case REQUEST_ACCOUNT_PICKER:
@@ -189,6 +188,9 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
            editor.commit();
          }
        }
+       break;
+     default:
+       sectionManager.handleIntentResult(requestCode, resultCode, data);
        break;
    }
   }
@@ -223,7 +225,6 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
    * Responsible for managing the current section and updating the display to change sections.
    */
   private class SectionManager {
-
     private ReportSection currentSection;
     private EditFragment currentFragment;
     private Optional<Report> currentReport = Optional.absent();
@@ -243,6 +244,10 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
 
     Map<Integer, TextChangeHandler> getCurrentTextChangeHandlers() {
       return currentFragment.getTextChangeHandlers();
+    }
+
+    void handleIntentResult(int requestCode, int resultCode, Intent data) {
+      currentFragment.handleIntentResult(requestCode, resultCode, data);
     }
 
     private void setSection(ReportSection section) {

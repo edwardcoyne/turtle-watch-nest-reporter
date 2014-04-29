@@ -6,6 +6,7 @@ import java.util.Map;
 
 import android.app.DatePickerDialog;
 import android.app.Fragment;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -54,6 +55,10 @@ public class EditFragment extends Fragment {
 
   }
 
+  public void handleIntentResult(int requestCode, int resultCode, Intent data) {
+    Log.e(TAG, "Unhandled IntentResult, req:" + requestCode + " res:" + resultCode
+        + " data:" + data);
+  }
 
   @Override
   public void onStart() {
