@@ -253,8 +253,6 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
 
       EditFragment fragment = FRAGMENT_MAP.get(section);
 
-      Bundle arguments = new Bundle();
-      fragment.setArguments(arguments);
       setEditFragment(fragment);
       if (currentReport.isPresent()) {
         fragment.updateDisplay(currentReport.get());
