@@ -29,6 +29,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter;
+import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore;
 import com.islandturtlewatch.nest.reporter.data.ReportsModel;
@@ -313,6 +314,10 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
       };
+    }
+
+    public DataUpdateHandler getUpdateHandler() {
+      return presenter.getUpdateHandler();
     }
 
     public void setFocusLossListener(FocusMonitoredEditText editText,

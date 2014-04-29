@@ -35,6 +35,15 @@ message Report {
   optional Intervention intervention = 7;
 
   optional string additional_notes = 8;
+
+  repeated Image image = 9;
+}
+
+message Image {
+  optional string file_name = 1;
+
+  // Usually only set for transport.
+  optional bytes raw_data = 2;
 }
 
 message NestCondition {

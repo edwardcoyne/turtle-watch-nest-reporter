@@ -4,16 +4,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <Gallery
-        android:id="@+id/gallery1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <Button
         android:id="@+id/buttonCaptureImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/edit_pictures_capture_image"
         android:onClick="handleClick" />
+
+    <GridView
+        android:id="@+id/galleryView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="2" >
+    </GridView>
 
 </LinearLayout>

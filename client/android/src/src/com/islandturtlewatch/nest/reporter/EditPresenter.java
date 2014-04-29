@@ -635,6 +635,12 @@ public class EditPresenter {
         writeChangesAndUpdate(updatedReport.build());
         return DataUpdateResult.success();
       }
+      public DataUpdateResult addPhoto(String fileName) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        updatedReport.addImageBuilder().setFileName(fileName);
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
     }
 
 	public static class DataUpdateResult {
