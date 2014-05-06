@@ -1,5 +1,8 @@
 package com.islandturtlewatch.nest.reporter.data;
 
+import java.util.List;
+
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,21 +14,25 @@ import android.widget.ListAdapter;
 import com.google.api.client.repackaged.com.google.common.base.Preconditions;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
+import com.islandturtlewatch.nest.data.ReportProto.Image;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore.CachedReportWrapper;
+import com.islandturtlewatch.nest.reporter.util.ImageUtil;
 
 public class ReportsModel {
   private static final String TAG = ReportsModel.class.getSimpleName();
   private static final String PREFERENCE_KEY_ACTIVE_REPORT_ID = "model.active_report_id";
 
-  LocalDataStore dataStore;
-  SharedPreferences preferences;
-  ActiveReportManager activeReport = new ActiveReportManager();
-  ReportsListAdapter adapter = new ReportsListAdapter();
+  private final LocalDataStore dataStore;
+  private final Context context;
+  private final SharedPreferences preferences;
+  private final ActiveReportManager activeReport = new ActiveReportManager();
+  private ReportsListAdapter adapter = new ReportsListAdapter();
 
-  public ReportsModel(LocalDataStore dataStore, SharedPreferences preferences) {
+  public ReportsModel(LocalDataStore dataStore, SharedPreferences preferences, Context context) {
     this.dataStore = dataStore;
     this.preferences = preferences;
+    this.context = context;
 
     Optional<Long> lastActiveReportId = getLastActiveReportId();
     if (lastActiveReportId.isPresent()) {
@@ -88,29 +95,12 @@ public class ReportsModel {
     adapter.notifyDataSetChanged();
   }
 
+  public void updateImages(Report report) {
+    activeReport.updateImages(report.getImageList());
+  }
+
   public void switchActiveReport(long reportId) {
     loadReport(reportId);
-  }
-
-  /**
-   * Save report we are currently working with to disk.
-   */
-  public void saveActiveReport() {
-    throw new UnsupportedOperationException("Not Implemented");
-  }
-
-  /**
-   * Submit report we are currently working with to cloud.
-   */
-  public void submitActiveReport() {
-    throw new UnsupportedOperationException("Not Implemented");
-  }
-
-  /**
-   * List all reports we have previously submitted.
-   */
-  public Iterable<Report> listReports() {
-    throw new UnsupportedOperationException("Not Implemented");
   }
 
   public ListAdapter getReportsListAdapter(ReportsListItemViewFactory viewFactory) {
@@ -172,7 +162,34 @@ public class ReportsModel {
         return;
       }
       dataStore.saveReport(activeReportId, report);
+      addImages(report.getImageList());
       activeReport = report;
+    }
+
+    void updateImages(List<Image> images) {
+      for (Image image : images) {
+        long newTs = ImageUtil.getModifiedTime(context, image.getFileName());
+        Optional<Long> oldTs = dataStore.getImageTimestamp(activeReportId, image.getFileName());
+        if (!oldTs.isPresent()) {
+          Log.d(TAG, "Adding new image record: " + image.getFileName() + " ts: " + newTs);
+          dataStore.addImage(activeReportId, image.getFileName(), newTs);
+        } else if (!oldTs.get().equals(newTs)) {
+          Log.d(TAG, "Updating image: " + image.getFileName()
+              + " oldts: " + oldTs.get() + " newTs:" + newTs);
+          dataStore.touchImage(activeReportId, image.getFileName(), newTs);
+        }
+      }
+    }
+
+    // Don't need to do the expensive FS checks for the normal case, only check for new images.
+    void addImages(List<Image> images) {
+      for (Image image : images) {
+        if (!dataStore.getImageTimestamp(activeReportId, image.getFileName()).isPresent()) {
+          long newTs = ImageUtil.getModifiedTime(context, image.getFileName());
+          Log.d(TAG, "Adding new image record: " + image.getFileName() + " ts: " + newTs);
+          dataStore.addImage(activeReportId, image.getFileName(), newTs);
+        }
+      }
     }
 
     void delete() {

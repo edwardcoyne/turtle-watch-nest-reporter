@@ -99,6 +99,8 @@ public class EditFragmentMedia extends EditFragment {
         try {
           ImageUtil.copyFromContentUri(
               this.getActivity(), data.getData(), currentlyEditingFileUri.get());
+          listenerProvider.getUpdateHandler()
+              .updatePhoto(ImageUtil.getFileName(currentlyEditingFileUri.get()));
         } catch (IOException e) {
           ErrorUtil.showErrorMessage(this, "Failed to save changes: " + e.getMessage());
           Log.e(TAG, "IOException while copying edited file: ", e);
@@ -160,12 +162,12 @@ public class EditFragmentMedia extends EditFragment {
       }
 
       final Activity activity = (Activity) parent.getContext();
-      final Uri imagePath = ImageUtil.getImagePath(parent, images.get(position).getFileName());
+      final String fileName = images.get(position).getFileName();
+      final Uri imagePath = ImageUtil.getImagePath(parent, fileName);
       imageView.setImageURI(imagePath);
       imageView.setOnClickListener(new OnClickListener() {
         @Override
         public void onClick(View v) {
-          ErrorUtil.showErrorMessage(v.getContext(), "Editing: " + imagePath);
           Intent intent = new Intent();
           intent.setDataAndType(imagePath, "image/jpg");
           intent.setAction(Intent.ACTION_EDIT);

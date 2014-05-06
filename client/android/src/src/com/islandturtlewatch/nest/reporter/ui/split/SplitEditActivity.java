@@ -85,7 +85,9 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
     ensureUsernameSet();
     AuthenticationUtil.checkGooglePlayServicesAvailable(this);
 
-    model = new ReportsModel(new LocalDataStore(this), getPreferences(Context.MODE_PRIVATE));
+    model = new ReportsModel(new LocalDataStore(this),
+        getPreferences(Context.MODE_PRIVATE),
+        this.getApplicationContext());
     presenter = new EditPresenter(model, this);
     sectionManager = new SectionManager();
     sectionManager.setSection(ReportSection.INFO);

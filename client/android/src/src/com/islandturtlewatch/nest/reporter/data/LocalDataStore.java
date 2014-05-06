@@ -1,5 +1,7 @@
 package com.islandturtlewatch.nest.reporter.data;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import lombok.Cleanup;
@@ -24,6 +26,7 @@ import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
 import com.islandturtlewatch.nest.data.ReportProto.ReportWrapper;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore.Column.Type;
+import com.islandturtlewatch.nest.reporter.data.LocalDataStore.StorageDefinition.ImagesTable;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore.StorageDefinition.ReportsTable;
 
 public class LocalDataStore {
@@ -165,6 +168,54 @@ public class LocalDataStore {
         "setServerSideData should update one row not " + numberUpdated);
   }
 
+  public void addImage(long localReportId, String fileName, long timestamp) {
+    SQLiteDatabase db = storageHelper.getWritableDatabase();
+
+    ContentValues values = new ContentValues();
+    values.put(ImagesTable.COLUMN_LOCAL_REPORT_ID.name, localReportId);
+    values.put(ImagesTable.COLUMN_FILE_NAME.name, fileName);
+    values.put(ImagesTable.COLUMN_TS_LOCAL_UPDATE.name, timestamp);
+    values.put(ImagesTable.COLUMN_TS_LOCAL_ADD.name, System.currentTimeMillis());
+
+    long imageId = db.insert(ImagesTable.TABLE_NAME, null, values);
+    Preconditions.checkArgument(imageId != -1, "Failed to insert new image");
+  }
+
+  public void touchImage(long localReportId, String fileName, long timestamp) {
+    SQLiteDatabase db = storageHelper.getWritableDatabase();
+
+    ContentValues values = new ContentValues();
+    values.put(ImagesTable.COLUMN_TS_LOCAL_UPDATE.name, timestamp);
+    values.put(ImagesTable.COLUMN_SYNCED.name, false);
+
+    int numberUpdated = db.update(ImagesTable.TABLE_NAME,
+        values,
+        and(whereEquals(ImagesTable.COLUMN_LOCAL_REPORT_ID, localReportId),
+            whereStringEquals(ImagesTable.COLUMN_FILE_NAME, fileName)),
+        null);
+    Preconditions.checkArgument(numberUpdated == 1,
+        "setServerSideData should update one row not " + numberUpdated);
+  }
+
+  public Optional<Long> getImageTimestamp(long localReportId, String fileName) {
+    SQLiteDatabase db = storageHelper.getReadableDatabase();
+    @Cleanup Cursor cursor = db.query(
+        ImagesTable.TABLE_NAME,
+        new String[]{ImagesTable.COLUMN_TS_LOCAL_UPDATE.name},
+        and(whereEquals(ImagesTable.COLUMN_LOCAL_REPORT_ID, localReportId),
+            whereStringEquals(ImagesTable.COLUMN_FILE_NAME, fileName)),
+        null, // don't need selection args
+        null, // don't group
+        null, // don't filter
+        null // don't sort
+        );
+    if (cursor.getCount() < 1) {
+      return Optional.absent();
+    }
+    cursor.moveToFirst();
+    return Optional.of(getLong(cursor, ImagesTable.COLUMN_TS_LOCAL_UPDATE));
+  }
+
   /**
    * Creates empty report record and returns the local id.
    * @return local_id local identifier of a report, not the same as report_id on server.
@@ -244,6 +295,10 @@ public class LocalDataStore {
     } catch (InvalidProtocolBufferException | IllegalArgumentException e) {
       throw Throwables.propagate(e);
     }
+  }
+
+  static String whereStringEquals(Column column, String value) {
+    return column.name + " = \"" + value.toString() +"\"";
   }
 
   static <T extends Object> String whereEquals(Column column, T value) {
@@ -336,8 +391,51 @@ public class LocalDataStore {
         return LAYOUT;
       }
 
+      @Override public List<List<Column>> getIndices() {
+        return Collections.emptyList();
+      }
+
       static String keyEquals(long value) {
         return whereEquals(ReportsTable.COLUMN_LOCAL_ID, value);
+      }
+    }
+
+    static class ImagesTable implements BaseColumns, Table {
+      static final String TABLE_NAME = "images";
+      static final Column COLUMN_IMAGE_ID = new Column("image_id", Type.INTEGER, Column.PRIMARY);
+      static final Column COLUMN_LOCAL_REPORT_ID = new Column("local_report_id", Type.LONG);
+      static final Column COLUMN_FILE_NAME = new Column("path", Type.TEXT);
+      static final Column COLUMN_TS_LOCAL_ADD = new Column("local_add_timestamp", Type.LONG);
+      static final Column COLUMN_TS_LOCAL_UPDATE =
+          new Column("local_update_timestamp", Type.LONG);
+      static final Column COLUMN_SYNCED = new Column("synced", Type.BOOLEAN, "0");
+
+      static final List<Column> LAYOUT = ImmutableList.of(
+          COLUMN_IMAGE_ID,
+          COLUMN_LOCAL_REPORT_ID,
+          COLUMN_FILE_NAME,
+          COLUMN_TS_LOCAL_ADD,
+          COLUMN_TS_LOCAL_UPDATE,
+          COLUMN_SYNCED);
+
+      // Implement Indices.
+      static final List<List<Column>> INDICES = ImmutableList.of(
+          Arrays.asList(COLUMN_FILE_NAME, ImagesTable.COLUMN_LOCAL_REPORT_ID));
+
+      @Override public String getName() {
+        return TABLE_NAME;
+      }
+
+      @Override public List<Column> getLayout() {
+        return LAYOUT;
+      }
+
+      @Override public List<List<Column>> getIndices() {
+        return INDICES;
+      }
+
+      static String keyEquals(long value) {
+        return whereEquals(ImagesTable.COLUMN_IMAGE_ID, value);
       }
     }
 
@@ -351,6 +449,7 @@ public class LocalDataStore {
       @Override
       public void onCreate(SQLiteDatabase db) {
         db.execSQL(getCreate(new ReportsTable()));
+        db.execSQL(getCreate(new ImagesTable()));
       }
 
       @Override
@@ -424,6 +523,7 @@ public class LocalDataStore {
   interface Table {
     public String getName();
     public List<Column> getLayout();
+    public List<List<Column>> getIndices();
   }
 
 }

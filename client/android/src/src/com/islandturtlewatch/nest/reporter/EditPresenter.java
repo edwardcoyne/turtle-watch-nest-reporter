@@ -641,6 +641,11 @@ public class EditPresenter {
         writeChangesAndUpdate(updatedReport.build());
         return DataUpdateResult.success();
       }
+      public DataUpdateResult updatePhoto(String fileName) {
+        // Will implicitly get the update by checking filesystem timestamps.
+        model.updateImages(model.getActiveReport());
+        return DataUpdateResult.success();
+      }
     }
 
 	public static class DataUpdateResult {
