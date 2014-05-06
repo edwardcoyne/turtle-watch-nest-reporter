@@ -7,6 +7,7 @@ import java.util.Map;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -45,6 +46,14 @@ public class EditFragment extends Fragment {
     }
 
     updateSection(report);
+  }
+
+  // Persist any working state, will be called when tombstoning.
+  public void saveState(Bundle bundle) {
+  }
+
+  // Restore any working state, will be called when returning from tombstone.
+  public void restoreState(Bundle bundle) {
   }
 
   /**

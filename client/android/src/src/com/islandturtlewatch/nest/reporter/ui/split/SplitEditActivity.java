@@ -161,6 +161,7 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
     super.onSaveInstanceState(outState);
     outState.putString(KEY_SECTION, sectionManager.currentSection.name());
     presenter.persistToBundle(outState);
+    sectionManager.saveState(outState);
   }
 
   @Override
@@ -171,6 +172,7 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
       sectionManager = new SectionManager();
       sectionManager.setSection(ReportSection.valueOf(inState.getString(KEY_SECTION)));
       sectionManager.updateSections(presenter.getCurrentReport());
+      sectionManager.restoreState(inState);
     }
   }
 
@@ -232,6 +234,14 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
 
     SectionManager() {
       setSectionListEventHandler(new SectionListEventHandler());
+    }
+
+    void saveState(Bundle bundle) {
+      currentFragment.saveState(bundle);
+    }
+
+    void restoreState(Bundle bundle) {
+      currentFragment.restoreState(bundle);
     }
 
     void updateSections(Report report) {

@@ -1,5 +1,6 @@
 package com.islandturtlewatch.nest.reporter.ui;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -8,16 +9,20 @@ import lombok.Getter;
 import lombok.Setter;
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.google.common.base.Optional;
 import com.islandturtlewatch.nest.data.ReportProto.Image;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
@@ -26,7 +31,10 @@ import com.islandturtlewatch.nest.reporter.util.ErrorUtil;
 import com.islandturtlewatch.nest.reporter.util.ImageUtil;
 
 public class EditFragmentMedia extends EditFragment {
-  private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+  private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 400;
+  private static final int EDIT_IMAGE_ACTIVITY_REQUEST_CODE = 401;
+
+  private static final String KEY_CURRENT_FILE_PATH = "Media.CurrentFilePath";
 
   private static final HandleCaptureImage CAPTURE_IMAGE_HANDLER = new HandleCaptureImage();
   private static final Map<Integer, ClickHandler> CLICK_HANDLERS = ClickHandler.toMap(
@@ -34,6 +42,7 @@ public class EditFragmentMedia extends EditFragment {
   private static final String TAG = EditFragmentMedia.class.getSimpleName();
 
   private final ImageAdapter imageAdapter = new ImageAdapter();
+  private Optional<Uri> currentlyEditingFileUri = Optional.absent();
 
   @Override
   public Map<Integer, ClickHandler> getClickHandlers() {
@@ -57,6 +66,21 @@ public class EditFragmentMedia extends EditFragment {
   }
 
   @Override
+  public void saveState(Bundle bundle) {
+    if (currentlyEditingFileUri.isPresent()) {
+      bundle.putString(KEY_CURRENT_FILE_PATH, currentlyEditingFileUri.get().toString());
+    }
+  }
+
+  @Override
+  public void restoreState(Bundle bundle) {
+    Optional<String> value = Optional.fromNullable(bundle.getString(KEY_CURRENT_FILE_PATH));
+    if (value.isPresent()) {
+      currentlyEditingFileUri = Optional.of(Uri.parse(value.get()));
+    }
+  }
+
+  @Override
   public void handleIntentResult(int requestCode, int resultCode, Intent data) {
     if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
       if (resultCode == Activity.RESULT_OK) {
@@ -68,6 +92,17 @@ public class EditFragmentMedia extends EditFragment {
 
       } else {
         ErrorUtil.showErrorMessage(this, "Image capture failed. code:" + resultCode);
+      }
+    } else if (requestCode == EDIT_IMAGE_ACTIVITY_REQUEST_CODE) {
+      Log.d(TAG, "Edit Response: " + data);
+      if (currentlyEditingFileUri.isPresent() && data != null) {
+        try {
+          ImageUtil.copyFromContentUri(
+              this.getActivity(), data.getData(), currentlyEditingFileUri.get());
+        } catch (IOException e) {
+          ErrorUtil.showErrorMessage(this, "Failed to save changes: " + e.getMessage());
+          Log.e(TAG, "IOException while copying edited file: ", e);
+        }
       }
     } else {
       super.handleIntentResult(requestCode, resultCode, data);
@@ -93,7 +128,7 @@ public class EditFragmentMedia extends EditFragment {
     }
   }
 
-  private static class ImageAdapter extends BaseAdapter {
+  private class ImageAdapter extends BaseAdapter {
     @Setter
     private List<Image> images = Collections.emptyList();
 
@@ -114,18 +149,32 @@ public class EditFragmentMedia extends EditFragment {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-      ImageView imageView;
+      ImageButton imageView;
       if (convertView == null) {  // if it's not recycled, initialize some attributes
-          imageView = new ImageView(parent.getContext());
-          imageView.setLayoutParams(new GridView.LayoutParams(500, 500));
+          imageView = new ImageButton(parent.getContext());
+          imageView.setLayoutParams(new GridView.LayoutParams(600, 600));
           imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
           imageView.setPadding(8, 8, 8, 8);
       } else {
-          imageView = (ImageView) convertView;
+          imageView = (ImageButton) convertView;
       }
 
-      imageView.setImageURI(ImageUtil.getImagePath(parent, images.get(position).getFileName()));
+      final Activity activity = (Activity) parent.getContext();
+      final Uri imagePath = ImageUtil.getImagePath(parent, images.get(position).getFileName());
+      imageView.setImageURI(imagePath);
+      imageView.setOnClickListener(new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          ErrorUtil.showErrorMessage(v.getContext(), "Editing: " + imagePath);
+          Intent intent = new Intent();
+          intent.setDataAndType(imagePath, "image/jpg");
+          intent.setAction(Intent.ACTION_EDIT);
+          currentlyEditingFileUri = Optional.of(imagePath);
+          activity.startActivityForResult(intent, EDIT_IMAGE_ACTIVITY_REQUEST_CODE);
+        }
+      });
       return imageView;
     }
   }
+
 }
