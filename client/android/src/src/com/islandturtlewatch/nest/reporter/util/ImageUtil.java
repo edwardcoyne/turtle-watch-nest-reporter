@@ -18,6 +18,7 @@ import android.view.View;
 
 import com.google.api.client.repackaged.com.google.common.base.Preconditions;
 import com.google.common.io.ByteStreams;
+import com.google.common.io.Files;
 
 public class ImageUtil {
   private static final String TAG = ImageUtil.class.getSimpleName();
@@ -31,6 +32,12 @@ public class ImageUtil {
   public static long getModifiedTime(Context context, String fileName) {
     File image = new File(getImagePath(context, fileName).getPath());
     return image.lastModified();
+  }
+
+  public static byte[] getImageBytes(Context context, String fileName) throws IOException {
+    Uri imagePath = getImagePath(context, fileName);
+    File imageFile = new File(imagePath.getPath());
+    return Files.toByteArray(imageFile);
   }
 
   public static Uri getImagePath(View view, String fileName){

@@ -3,6 +3,7 @@ package com.islandturtlewatch.nest.reporter.data;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import lombok.Cleanup;
 import lombok.Data;
@@ -20,6 +21,7 @@ import com.google.api.client.repackaged.com.google.common.base.Preconditions;
 import com.google.api.client.util.Throwables;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.MessageLite;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
@@ -68,7 +70,6 @@ public class LocalDataStore {
 
   public ImmutableList<CachedReportWrapper> listUnsyncedReports() {
     SQLiteDatabase db = storageHelper.getReadableDatabase();
-
     @Cleanup Cursor cursor = db.query(
         ReportsTable.TABLE_NAME, // table name
         CachedReportWrapper.requiredColumns, // cols to select
@@ -83,6 +84,24 @@ public class LocalDataStore {
       output.add(CachedReportWrapper.from(cursor));
     }
     return output.build();
+  }
+
+  public Set<String> getUnsycnedImagesFileNames() {
+    SQLiteDatabase db = storageHelper.getReadableDatabase();
+
+    @Cleanup Cursor imageCursor = db.query(
+        ImagesTable.TABLE_NAME, // table name
+        new String[]{ImagesTable.COLUMN_LOCAL_REPORT_ID.name,
+            ImagesTable.COLUMN_FILE_NAME.name}, // cols to select
+        isFalse(ImagesTable.COLUMN_SYNCED), // where
+        null, // don't need selection args
+        null, // don't group
+        null, // don't filter
+        null); // don't sort
+
+    ImmutableList<String> unsynchedReports =
+        getAllString(imageCursor, ImagesTable.COLUMN_FILE_NAME);
+    return ImmutableSet.copyOf(unsynchedReports);
   }
 
   public CachedReportWrapper getReport(long localId) {
@@ -119,6 +138,24 @@ public class LocalDataStore {
         null);
     Preconditions.checkArgument(numberUpdated == 1,
         "Save should update one row not " + numberUpdated);
+  }
+
+  /**
+   * Saves local changes to a report.
+   */
+  public void setReportUnsynced(long localId) {
+    SQLiteDatabase db = storageHelper.getWritableDatabase();
+
+    ContentValues values = new ContentValues();
+    values.put(ReportsTable.COLUMN_SYNCED.name, false);
+    values.put(ReportsTable.COLUMN_TS_LOCAL_UPDATE.name, System.currentTimeMillis());
+
+    int numberUpdated = db.update(ReportsTable.TABLE_NAME,
+        values,
+        ReportsTable.keyEquals(localId),
+        null);
+    Preconditions.checkArgument(numberUpdated == 1,
+        "set unscyned should update one row not " + numberUpdated);
   }
 
   /**
@@ -179,6 +216,7 @@ public class LocalDataStore {
 
     long imageId = db.insert(ImagesTable.TABLE_NAME, null, values);
     Preconditions.checkArgument(imageId != -1, "Failed to insert new image");
+    this.setReportUnsynced(localReportId);
   }
 
   public void touchImage(long localReportId, String fileName, long timestamp) {
@@ -195,6 +233,7 @@ public class LocalDataStore {
         null);
     Preconditions.checkArgument(numberUpdated == 1,
         "setServerSideData should update one row not " + numberUpdated);
+    this.setReportUnsynced(localReportId);
   }
 
   public Optional<Long> getImageTimestamp(long localReportId, String fileName) {
@@ -263,6 +302,14 @@ public class LocalDataStore {
     return highestNestNumber;
   }
 
+  private static ImmutableList<String> getAllString(Cursor cursor, Column column) {
+    ImmutableList.Builder<String> output = ImmutableList.builder();
+    while (cursor.moveToNext()) {
+      output.add(getString(cursor, column));
+    }
+    return output.build();
+  }
+
   private static boolean getBool(Cursor cursor, Column column) {
     return cursor.getInt(cursor.getColumnIndexOrThrow(column.name)) == 1;
   }
@@ -280,6 +327,10 @@ public class LocalDataStore {
       return Optional.absent();
     }
     return Optional.of(cursor.getLong(cursor.getColumnIndexOrThrow(column.name)));
+  }
+
+  private static String getString(Cursor cursor, Column column) {
+    return cursor.getString(cursor.getColumnIndexOrThrow(column.name));
   }
 
   @SuppressWarnings("unchecked")
@@ -315,6 +366,16 @@ public class LocalDataStore {
 
   static String and(String cond1, String cond2) {
     return cond1 + " and " + cond2;
+  }
+
+  static <T> String colIn(Column column, List<T> values) {
+    StringBuilder in = new StringBuilder(column.name + " in (");
+    for (T value : values) {
+      in.append(value.toString()).append(',');
+    }
+    // Remove last ','
+    in.setLength(in.length()-1);
+    return in.toString();
   }
 
   @Data

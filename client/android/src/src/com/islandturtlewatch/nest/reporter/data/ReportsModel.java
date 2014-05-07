@@ -181,7 +181,8 @@ public class ReportsModel {
       }
     }
 
-    // Don't need to do the expensive FS checks for the normal case, only check for new images.
+    // Don't need to do the expensive filesystem checks for the normal case,
+    // only check for new images.
     void addImages(List<Image> images) {
       for (Image image : images) {
         if (!dataStore.getImageTimestamp(activeReportId, image.getFileName()).isPresent()) {
@@ -217,7 +218,8 @@ public class ReportsModel {
       return dataStore.activeReportCount();
     }
 
-    //TODO(edcoyne): if performance is ever an issue, optimize this.
+    //TODO(edcoyne): if performance is ever an issue, optimize this, don't get all reports tp find
+    // position.
     @Override
     public Object getItem(int position) {
       return dataStore.listActiveReports().get(position).getReport();

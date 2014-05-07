@@ -3,6 +3,7 @@ package com.islandturtlewatch.nest.reporter.service;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ScheduledFuture;
@@ -34,6 +35,9 @@ import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.common.base.Optional;
 import com.google.common.io.BaseEncoding;
+import com.google.protobuf.ByteString;
+import com.islandturtlewatch.nest.data.ReportProto.Image;
+import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
 import com.islandturtlewatch.nest.data.Result.StorageResult.Code;
 import com.islandturtlewatch.nest.reporter.R;
@@ -44,6 +48,7 @@ import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.Report
 import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.ReportResponse;
 import com.islandturtlewatch.nest.reporter.util.AuthenticationUtil;
 import com.islandturtlewatch.nest.reporter.util.ErrorUtil;
+import com.islandturtlewatch.nest.reporter.util.ImageUtil;
 import com.islandturtlewatch.nest.reporter.util.SettingsUtil;
 
 public class SyncService extends Service {
@@ -204,13 +209,27 @@ public class SyncService extends Service {
       @Override
       public void run() {
         Log.d(TAG, "Checking for unsynced reports.");
+        Set<String> unsycnedPhotosFileNames = dataStore.getUnsycnedImagesFileNames();
         for (CachedReportWrapper report : dataStore.listUnsyncedReports()) {
           Long lastSeenTimestamp = pendingUploadTimestampMap.get(report.getLocalId());
           if (lastSeenTimestamp == null || lastSeenTimestamp != report.getLastUpdatedTimestamp()) {
             Log.d(TAG, "Adding report for upload:" + report.getLocalId()
                 + " ts:" + report.getLastUpdatedTimestamp());
-            pendingUploadTimestampMap.put(report.getLocalId(), report.getLastUpdatedTimestamp());
-            AddUpload(report);
+            try {
+              Report.Builder builder = report.getReport().toBuilder();
+              for (Image.Builder image : builder.getImageBuilderList()) {
+                if (unsycnedPhotosFileNames.contains(image.getFileName())) {
+                  Log.d(TAG, "Adding unsynced photo to report: " + image.getFileName() + ".");
+                  image.setRawData(ByteString.copyFrom(
+                      ImageUtil.getImageBytes(getApplicationContext(), image.getFileName())));
+                }
+              }
+
+              pendingUploadTimestampMap.put(report.getLocalId(), report.getLastUpdatedTimestamp());
+              AddUpload(report);
+            } catch (IOException ex) {
+              Log.e(TAG, "IOException while getting report images.", ex);
+            }
           }
         }
       }
