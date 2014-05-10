@@ -1,6 +1,7 @@
 package com.islandturtlewatch.nest.reporter.backend.storage;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Locale;
 
 import lombok.extern.java.Log;
@@ -44,6 +45,22 @@ public class ImageStore {
         writeImage(ref.getReportId(), image.getFileName(), image.getRawData());
         image.clearRawData();
       }
+    }
+    return builder.build();
+  }
+
+  public static void writeImages(ReportRef ref, List<Image> images) throws IOException {
+    for (Image image : images) {
+      if (image.hasRawData()) {
+        writeImage(ref.getReportId(), image.getFileName(), image.getRawData());
+      }
+    }
+  }
+
+  public static Report stripEmbeddedImages(Report report) {
+    Report.Builder builder = report.toBuilder();
+    for (Image.Builder image : builder.getImageBuilderList()) {
+      image.clearRawData();
     }
     return builder.build();
   }

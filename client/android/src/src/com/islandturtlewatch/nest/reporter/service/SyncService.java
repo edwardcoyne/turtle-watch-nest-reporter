@@ -381,6 +381,7 @@ public class SyncService extends Service {
           image.setRawData(ByteString.copyFrom(
               ImageUtil.getImageBytes(context, image.getFileName())));
           wrapper.getUnsynchedImageFileNames().add(image.getFileName());
+          Log.d(TAG, "Done adding unsynced photo to report: " + image.getFileName() + ".");
         }
       }
       wrapper.setReport(builder.build());

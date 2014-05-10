@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"ADiYQGKhdYR9rpbhIFHih-UBYRs/gqlnivlh8izQnmIBqN2D1HVsviM\"",
+ "etag": "\"ADiYQGKhdYR9rpbhIFHih-UBYRs/WBQ63RPowADBw6WwxVFCA5zIIgs\"",
  "discoveryVersion": "v1",
  "id": "reportEndpoint:v1",
  "name": "reportEndpoint",
@@ -14,8 +14,8 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "protocol": "rpc",
- "rootUrl": "https://mesmerizing-app-536.appspot.com/_ah/api/",
- "rpcUrl": "https://mesmerizing-app-536.appspot.com/_ah/api/rpc",
+ "rootUrl": "https://static-sentinel-567.appspot.com/_ah/api/",
+ "rpcUrl": "https://static-sentinel-567.appspot.com/_ah/api/rpc",
  "rpcPath": "/_ah/api/rpc",
  "parameters": {
   "alt": {

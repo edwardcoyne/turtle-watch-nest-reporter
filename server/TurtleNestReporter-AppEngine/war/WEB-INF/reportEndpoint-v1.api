@@ -1,12 +1,12 @@
 {
   "extends" : "thirdParty.api",
   "abstract" : false,
-  "root" : "https://mesmerizing-app-536.appspot.com/_ah/api",
+  "root" : "https://static-sentinel-567.appspot.com/_ah/api",
   "name" : "reportEndpoint",
   "version" : "v1",
   "defaultVersion" : false,
   "adapter" : {
-    "bns" : "https://mesmerizing-app-536.appspot.com/_ah/spi",
+    "bns" : "https://static-sentinel-567.appspot.com/_ah/spi",
     "deadline" : 65.0,
     "type" : "lily"
   },
@@ -32,8 +32,8 @@
       "httpMethod" : "PUT",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ "583713553896.apps.googleusercontent.com" ],
-      "clientIds" : [ "583713553896-skcjm9fesoo1nu0nqn0lufrud2j38k2f.apps.googleusercontent.com" ],
+      "audiences" : [ "362099484578.apps.googleusercontent.com" ],
+      "clientIds" : [ "362099484578-d2l665v2cmb9sjb9r77cip21rvruu9mo.apps.googleusercontent.com" ],
       "rosyMethod" : "com.islandturtlewatch.nest.reporter.backend.endpoints.ReportEndpoint.updateReport",
       "request" : {
         "body" : "autoTemplate(backendRequest)",
@@ -48,8 +48,8 @@
       "httpMethod" : "POST",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ "583713553896.apps.googleusercontent.com" ],
-      "clientIds" : [ "583713553896-skcjm9fesoo1nu0nqn0lufrud2j38k2f.apps.googleusercontent.com" ],
+      "audiences" : [ "362099484578.apps.googleusercontent.com" ],
+      "clientIds" : [ "362099484578-d2l665v2cmb9sjb9r77cip21rvruu9mo.apps.googleusercontent.com" ],
       "rosyMethod" : "com.islandturtlewatch.nest.reporter.backend.endpoints.ReportEndpoint.latestRefsForUser",
       "request" : {
         "body" : "empty"
@@ -63,8 +63,8 @@
       "httpMethod" : "POST",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ "583713553896.apps.googleusercontent.com" ],
-      "clientIds" : [ "583713553896-skcjm9fesoo1nu0nqn0lufrud2j38k2f.apps.googleusercontent.com" ],
+      "audiences" : [ "362099484578.apps.googleusercontent.com" ],
+      "clientIds" : [ "362099484578-d2l665v2cmb9sjb9r77cip21rvruu9mo.apps.googleusercontent.com" ],
       "rosyMethod" : "com.islandturtlewatch.nest.reporter.backend.endpoints.ReportEndpoint.createReport",
       "request" : {
         "body" : "autoTemplate(backendRequest)",

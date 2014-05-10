@@ -17,6 +17,7 @@ import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.google.common.io.BaseEncoding;
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.islandturtlewatch.nest.data.ReportProto.Image;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
 import com.islandturtlewatch.nest.data.ReportProto.ReportWrapper;
@@ -71,11 +72,12 @@ public class ReportEndpoint {
   /**
    * This method returns refs to all the latest reports for the user.
    * @throws OAuthRequestException
+   * @throws IOException If we can't write image.
    */
   @ApiMethod(name = "createReport")
   public ReportResponse createReport(
       User user,
-      ReportRequest request) throws OAuthRequestException {
+      ReportRequest request) throws OAuthRequestException, IOException {
     log.info("CreateUser: " + user + " :: " + request);
     if (user == null) {
       return ReportResponse.builder().setCode(Code.AUTHENTICATION_FAILURE).build();
@@ -90,8 +92,10 @@ public class ReportEndpoint {
           .setErrorMessage("Report is not valid protobuf")
           .build();
     }
-
+    List<Image> images = report.getImageList();
+    report = ImageStore.stripEmbeddedImages(report);
     ReportWrapper addedReport = store.addReport(UserUtil.getUserId(user), report);
+    ImageStore.writeImages(addedReport.getRef(), images);
     return ReportResponse.builder()
         .setCode(Code.OK)
         .setReportRefEncoded(BaseEncoding.base64().encode(addedReport.getRef().toByteArray()))
