@@ -1,8 +1,11 @@
 package com.islandturtlewatch.nest.reporter.backend.endpoints;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.annotation.Nullable;
+
+import lombok.extern.java.Log;
 
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
@@ -18,6 +21,7 @@ import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
 import com.islandturtlewatch.nest.data.ReportProto.ReportWrapper;
 import com.islandturtlewatch.nest.reporter.backend.ClientIds;
+import com.islandturtlewatch.nest.reporter.backend.storage.ImageStore;
 import com.islandturtlewatch.nest.reporter.backend.storage.ReportStore;
 import com.islandturtlewatch.nest.reporter.backend.util.UserUtil;
 import com.islandturtlewatch.nest.reporter.transport.EncodedReportRef;
@@ -32,6 +36,7 @@ scopes = {"https://www.googleapis.com/auth/userinfo.email"},
 namespace = @ApiNamespace(ownerDomain = "islandturtlewatch.com",
                           ownerName = "islandturtlewatch.com",
                           packagePath = "nest.reporter.transport"))
+@Log
 public class ReportEndpoint {
   private final ReportStore store;
 
@@ -71,6 +76,7 @@ public class ReportEndpoint {
   public ReportResponse createReport(
       User user,
       ReportRequest request) throws OAuthRequestException {
+    log.info("CreateUser: " + user + " :: " + request);
     if (user == null) {
       return ReportResponse.builder().setCode(Code.AUTHENTICATION_FAILURE).build();
     }
@@ -94,11 +100,13 @@ public class ReportEndpoint {
 
   /**
    * This method returns refs to all the latest reports for the user.
+   * @throws IOException if we can't write image.
    */
   @ApiMethod(name = "updateReport")
   public ReportResponse updateReport(
       User user,
-      ReportRequest request) {
+      ReportRequest request) throws IOException {
+    log.info("UpdateReport: " + user + " :: " + request);
     if (user == null) {
       return ReportResponse.builder().setCode(Code.AUTHENTICATION_FAILURE).build();
     }
@@ -124,6 +132,9 @@ public class ReportEndpoint {
     }
     // Add user to ref.
     ref = ref.toBuilder().setOwnerId(UserUtil.getUserId(user)).build();
+
+    // handle embedded images
+    report = ImageStore.stripAndWriteEmbeddedImages(ref, report);
 
     ReportWrapper wrapper = ReportWrapper.newBuilder().setRef(ref).setReport(report).build();
     ReportWrapper updatedWrapper = store.updateReport(wrapper);

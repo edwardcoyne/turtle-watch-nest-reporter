@@ -3,6 +3,8 @@ package com.islandturtlewatch.nest.reporter.backend.storage;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.extern.java.Log;
+
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
@@ -18,6 +20,7 @@ import com.islandturtlewatch.nest.reporter.backend.storage.entities.StoredReport
 import com.islandturtlewatch.nest.reporter.backend.storage.entities.User;
 
 // Needs to be thread safe.
+@Log
 public class ReportStore {
 
   public void init() {
@@ -32,6 +35,7 @@ public class ReportStore {
         .setId(userId)
         .build();
     backend().save().entity(user).now();
+    log.info("Added user: " + userId);
     return true;
   }
 
@@ -40,6 +44,7 @@ public class ReportStore {
   }
 
   public ReportWrapper addReport(final String userId, final Report report) {
+    log.info("Adding user: " + userId + " report:" + report);
     return backend().transact(new Work<ReportWrapper>(){
       @Override
       public ReportWrapper run() {
@@ -48,6 +53,7 @@ public class ReportStore {
   }
 
   public ReportWrapper updateReport(final ReportWrapper wrapper) {
+    log.info("Updating ref: " + wrapper.getRef());
     return backend().transact(new Work<ReportWrapper>(){
       @Override
       public ReportWrapper run() {

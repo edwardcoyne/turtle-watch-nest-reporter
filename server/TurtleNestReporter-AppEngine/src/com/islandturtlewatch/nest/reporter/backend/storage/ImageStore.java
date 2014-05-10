@@ -1,0 +1,50 @@
+package com.islandturtlewatch.nest.reporter.backend.storage;
+
+import java.io.IOException;
+import java.util.Locale;
+
+import lombok.extern.java.Log;
+
+import com.google.appengine.api.appidentity.AppIdentityServiceFactory;
+import com.google.appengine.tools.cloudstorage.GcsFileOptions;
+import com.google.appengine.tools.cloudstorage.GcsFilename;
+import com.google.appengine.tools.cloudstorage.GcsOutputChannel;
+import com.google.appengine.tools.cloudstorage.GcsService;
+import com.google.appengine.tools.cloudstorage.GcsServiceFactory;
+import com.google.appengine.tools.cloudstorage.RetryParams;
+import com.google.protobuf.ByteString;
+import com.islandturtlewatch.nest.data.ReportProto.Image;
+import com.islandturtlewatch.nest.data.ReportProto.Report;
+import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
+
+@Log
+public class ImageStore {
+  private static GcsFilename createGcsFileName(long reportId, String fileName) {
+    return new GcsFilename(
+        AppIdentityServiceFactory.getAppIdentityService().getDefaultGcsBucketName(),
+        String.format(Locale.US, "%d/%s", reportId, fileName));
+  }
+
+  public static void writeImage(
+      long reportId, String fileName, ByteString image) throws IOException {
+    GcsService gcsService =
+        GcsServiceFactory.createGcsService(RetryParams.getDefaultInstance());
+    GcsFilename gcsFileName = createGcsFileName(reportId, fileName);
+    GcsOutputChannel outputChannel =
+        gcsService.createOrReplace(gcsFileName, GcsFileOptions.getDefaultInstance());
+    outputChannel.write(image.asReadOnlyByteBuffer());
+    log.info("Wrote image to datastore: " + gcsFileName + " bytes: " + image.size());
+  }
+
+  public static Report stripAndWriteEmbeddedImages(
+      ReportRef ref, Report report) throws IOException {
+    Report.Builder builder = report.toBuilder();
+    for (Image.Builder image : builder.getImageBuilderList()) {
+      if (image.hasRawData()) {
+        writeImage(ref.getReportId(), image.getFileName(), image.getRawData());
+        image.clearRawData();
+      }
+    }
+    return builder.build();
+  }
+}

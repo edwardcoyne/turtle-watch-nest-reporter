@@ -1,5 +1,6 @@
 package com.islandturtlewatch.nest.reporter.data;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -39,8 +40,7 @@ public class LocalDataStore {
     storageHelper = new StorageDefinition.DbHelper(context);
   }
 
-  private Cursor getActiveReportsCursor() {
-    SQLiteDatabase db = storageHelper.getReadableDatabase();
+  private Cursor getActiveReportsCursor(SQLiteDatabase db) {
 
     return db.query(
         ReportsTable.TABLE_NAME, // table name
@@ -54,12 +54,14 @@ public class LocalDataStore {
   }
 
   public int activeReportCount() {
-    @Cleanup Cursor cursor = getActiveReportsCursor();
+    @Cleanup SQLiteDatabase db = storageHelper.getReadableDatabase();
+    @Cleanup Cursor cursor = getActiveReportsCursor(db);
     return cursor.getCount();
   }
 
   public ImmutableList<CachedReportWrapper> listActiveReports() {
-    @Cleanup Cursor cursor = getActiveReportsCursor();
+    @Cleanup SQLiteDatabase db = storageHelper.getReadableDatabase();
+    @Cleanup Cursor cursor = getActiveReportsCursor(db);
 
     ImmutableList.Builder<CachedReportWrapper> output = ImmutableList.builder();
     while (cursor.moveToNext()) {
@@ -69,7 +71,7 @@ public class LocalDataStore {
   }
 
   public ImmutableList<CachedReportWrapper> listUnsyncedReports() {
-    SQLiteDatabase db = storageHelper.getReadableDatabase();
+    @Cleanup SQLiteDatabase db = storageHelper.getReadableDatabase();
     @Cleanup Cursor cursor = db.query(
         ReportsTable.TABLE_NAME, // table name
         CachedReportWrapper.requiredColumns, // cols to select
@@ -87,7 +89,7 @@ public class LocalDataStore {
   }
 
   public Set<String> getUnsycnedImagesFileNames() {
-    SQLiteDatabase db = storageHelper.getReadableDatabase();
+    @Cleanup SQLiteDatabase db = storageHelper.getReadableDatabase();
 
     @Cleanup Cursor imageCursor = db.query(
         ImagesTable.TABLE_NAME, // table name
@@ -105,7 +107,7 @@ public class LocalDataStore {
   }
 
   public CachedReportWrapper getReport(long localId) {
-    SQLiteDatabase db = storageHelper.getReadableDatabase();
+    @Cleanup SQLiteDatabase db = storageHelper.getReadableDatabase();
 
     @Cleanup Cursor cursor = db.query(
         ReportsTable.TABLE_NAME,
@@ -125,7 +127,7 @@ public class LocalDataStore {
    */
   public void saveReport(long localId, Report report) {
     Log.d(TAG, "saving report " + localId);
-    SQLiteDatabase db = storageHelper.getWritableDatabase();
+    @Cleanup SQLiteDatabase db = storageHelper.getWritableDatabase();
 
     ContentValues values = new ContentValues();
     values.put(ReportsTable.COLUMN_REPORT.name, report.toByteArray());
@@ -144,7 +146,7 @@ public class LocalDataStore {
    * Saves local changes to a report.
    */
   public void setReportUnsynced(long localId) {
-    SQLiteDatabase db = storageHelper.getWritableDatabase();
+    @Cleanup SQLiteDatabase db = storageHelper.getWritableDatabase();
 
     ContentValues values = new ContentValues();
     values.put(ReportsTable.COLUMN_SYNCED.name, false);
@@ -164,7 +166,7 @@ public class LocalDataStore {
    * Requires InitReportId to have been called for existing report, else we will add a new row.
    */
   public void updateFromServer(ReportWrapper reportWrapper) {
-    SQLiteDatabase db = storageHelper.getWritableDatabase();
+    @Cleanup SQLiteDatabase db = storageHelper.getWritableDatabase();
 
     ContentValues values = new ContentValues();
     values.put(ReportsTable.COLUMN_ACTIVE.name, reportWrapper.getActive());
@@ -190,7 +192,7 @@ public class LocalDataStore {
    * information.
    */
   public void setServerSideData(long localId, ReportRef ref) {
-    SQLiteDatabase db = storageHelper.getWritableDatabase();
+    @Cleanup SQLiteDatabase db = storageHelper.getWritableDatabase();
 
     ContentValues values = new ContentValues();
     values.put(ReportsTable.COLUMN_REPORT_ID.name, ref.getReportId());
@@ -205,8 +207,28 @@ public class LocalDataStore {
         "setServerSideData should update one row not " + numberUpdated);
   }
 
+  /**
+   *  Mark all images for this
+   */
+  public void markAllImagesSynced(long localReportId, List<String> filenames) {
+    @Cleanup SQLiteDatabase db = storageHelper.getWritableDatabase();
+
+    for (String fileName : filenames) {
+      ContentValues values = new ContentValues();
+      values.put(ImagesTable.COLUMN_SYNCED.name, true);
+
+      int numberUpdated = db.update(ImagesTable.TABLE_NAME,
+          values,
+          and(whereEquals(ImagesTable.COLUMN_LOCAL_REPORT_ID, localReportId),
+              whereStringEquals(ImagesTable.COLUMN_FILE_NAME, fileName)),
+          null);
+      Preconditions.checkArgument(numberUpdated == 1,
+          "Should update one row not " + numberUpdated);
+    }
+  }
+
   public void addImage(long localReportId, String fileName, long timestamp) {
-    SQLiteDatabase db = storageHelper.getWritableDatabase();
+    @Cleanup SQLiteDatabase db = storageHelper.getWritableDatabase();
 
     ContentValues values = new ContentValues();
     values.put(ImagesTable.COLUMN_LOCAL_REPORT_ID.name, localReportId);
@@ -220,7 +242,7 @@ public class LocalDataStore {
   }
 
   public void touchImage(long localReportId, String fileName, long timestamp) {
-    SQLiteDatabase db = storageHelper.getWritableDatabase();
+    @Cleanup SQLiteDatabase db = storageHelper.getWritableDatabase();
 
     ContentValues values = new ContentValues();
     values.put(ImagesTable.COLUMN_TS_LOCAL_UPDATE.name, timestamp);
@@ -232,12 +254,12 @@ public class LocalDataStore {
             whereStringEquals(ImagesTable.COLUMN_FILE_NAME, fileName)),
         null);
     Preconditions.checkArgument(numberUpdated == 1,
-        "setServerSideData should update one row not " + numberUpdated);
+        "Should update one row not " + numberUpdated);
     this.setReportUnsynced(localReportId);
   }
 
   public Optional<Long> getImageTimestamp(long localReportId, String fileName) {
-    SQLiteDatabase db = storageHelper.getReadableDatabase();
+    @Cleanup SQLiteDatabase db = storageHelper.getReadableDatabase();
     @Cleanup Cursor cursor = db.query(
         ImagesTable.TABLE_NAME,
         new String[]{ImagesTable.COLUMN_TS_LOCAL_UPDATE.name},
@@ -261,7 +283,7 @@ public class LocalDataStore {
    */
   public CachedReportWrapper createReport() {
     int nestNumber = getHighestNestNumber() + 1;
-    SQLiteDatabase db = storageHelper.getWritableDatabase();
+    @Cleanup SQLiteDatabase db = storageHelper.getWritableDatabase();
 
     ContentValues values = new ContentValues();
     values.put(ReportsTable.COLUMN_REPORT.name,
@@ -280,7 +302,7 @@ public class LocalDataStore {
    */
   public void deleteReport(long localId) {
     Log.d(TAG, "deleting report " + localId);
-    SQLiteDatabase db = storageHelper.getWritableDatabase();
+    @Cleanup SQLiteDatabase db = storageHelper.getWritableDatabase();
 
     ContentValues values = new ContentValues();
     values.put(ReportsTable.COLUMN_DELETED.name, true);
@@ -388,6 +410,7 @@ public class LocalDataStore {
     private boolean active;
     private long lastUpdatedTimestamp;
     @NonNull private Report report;
+    private List<String> unsynchedImageFileNames;
 
     static final String [] requiredColumns = {
       ReportsTable.COLUMN_LOCAL_ID.name,
@@ -405,7 +428,8 @@ public class LocalDataStore {
           .setVersion(getOptLong(cursor, ReportsTable.COLUMN_VERSION))
           .setActive(getBool(cursor, ReportsTable.COLUMN_ACTIVE))
           .setSynched(getBool(cursor, ReportsTable.COLUMN_SYNCED))
-          .setLastUpdatedTimestamp(getLong(cursor, ReportsTable.COLUMN_TS_LOCAL_UPDATE));
+          .setLastUpdatedTimestamp(getLong(cursor, ReportsTable.COLUMN_TS_LOCAL_UPDATE))
+          .setUnsynchedImageFileNames(new ArrayList<String>());
       Optional<Report> proto =
           getProto(cursor, ReportsTable.COLUMN_REPORT, Report.getDefaultInstance());
       if (proto.isPresent()) {

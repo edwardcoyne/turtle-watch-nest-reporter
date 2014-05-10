@@ -11,10 +11,8 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
-import lombok.experimental.Accessors;
+import lombok.experimental.Builder;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -26,7 +24,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
@@ -41,6 +38,7 @@ import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
 import com.islandturtlewatch.nest.data.Result.StorageResult.Code;
 import com.islandturtlewatch.nest.reporter.R;
+import com.islandturtlewatch.nest.reporter.RunEnvironment;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore.CachedReportWrapper;
 import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.ReportEndpoint;
@@ -209,33 +207,25 @@ public class SyncService extends Service {
       @Override
       public void run() {
         Log.d(TAG, "Checking for unsynced reports.");
-        Set<String> unsycnedPhotosFileNames = dataStore.getUnsycnedImagesFileNames();
         for (CachedReportWrapper report : dataStore.listUnsyncedReports()) {
           Long lastSeenTimestamp = pendingUploadTimestampMap.get(report.getLocalId());
           if (lastSeenTimestamp == null || lastSeenTimestamp != report.getLastUpdatedTimestamp()) {
             Log.d(TAG, "Adding report for upload:" + report.getLocalId()
                 + " ts:" + report.getLastUpdatedTimestamp());
-            try {
-              Report.Builder builder = report.getReport().toBuilder();
-              for (Image.Builder image : builder.getImageBuilderList()) {
-                if (unsycnedPhotosFileNames.contains(image.getFileName())) {
-                  Log.d(TAG, "Adding unsynced photo to report: " + image.getFileName() + ".");
-                  image.setRawData(ByteString.copyFrom(
-                      ImageUtil.getImageBytes(getApplicationContext(), image.getFileName())));
-                }
-              }
-
-              pendingUploadTimestampMap.put(report.getLocalId(), report.getLastUpdatedTimestamp());
-              AddUpload(report);
-            } catch (IOException ex) {
-              Log.e(TAG, "IOException while getting report images.", ex);
-            }
+            pendingUploadTimestampMap.put(report.getLocalId(), report.getLastUpdatedTimestamp());
+            AddUpload(report);
           }
         }
       }
 
       private void AddUpload(CachedReportWrapper report) {
-        Upload upload = new Upload(report);
+        Upload upload = Upload.builder()
+            .setContext(getApplicationContext())
+            .setDataStore(dataStore)
+            .setLocalReportId(report.getLocalId())
+            .setRetryDelayS(1)
+            .build();
+
         pendingUploads.remove(upload);
         pendingUploads.add(upload);
         updateNotification();
@@ -244,8 +234,6 @@ public class SyncService extends Service {
   }
 
   private class Uploader implements Runnable {
-    //private static final int MAX_RETRY_DELAY_S = 300; // 5 min.
-    private static final int MAX_RETRY_DELAY_S = 45;
     private ReportEndpoint reportService;
     private Thread thread;
     private final AtomicBoolean running = new AtomicBoolean(false);
@@ -270,10 +258,7 @@ public class SyncService extends Service {
           Upload upload = pendingUploads.take();
           if (!handleUpload(upload)) {
             Log.i(TAG, "Upload failed adding back to queue.");
-            // Re-add with capped *2 delay.
-            pendingUploads.add(
-                upload.setRetryDelayS(
-                    Math.min(upload.getRetryDelayS() * 2, MAX_RETRY_DELAY_S)));
+            pendingUploads.add(upload.getRetry());
           } else {
             Log.i(TAG, "Upload finished successfully");
             updateNotification();
@@ -283,13 +268,6 @@ public class SyncService extends Service {
         }
       }
       Log.i(TAG, "Shutting down uploader.");
-    }
-    private void sleep(int seconds) {
-      try {
-        Thread.sleep(seconds * 1000);
-      } catch (InterruptedException e) {
-        Log.e(TAG, "Sleep interupted.", e);
-      }
     }
 
     private void initService() {
@@ -308,26 +286,19 @@ public class SyncService extends Service {
           AuthenticationUtil.getCredential(SyncService.this,
               settings.getString(SettingsUtil.KEY_USERNAME, null)));
       serviceBuilder.setApplicationName("TurtleNestReporter-SyncService");
-      if (Build.PRODUCT.contains("sdk")) {
-        Log.i(TAG, "RUNNING IN EMULATOR, connecting local. ");
-        // Running in emulator
-        serviceBuilder.setRootUrl("http://10.255.0.43:8888/_ah/api");
-      }
+      serviceBuilder.setRootUrl(RunEnvironment.getRootBackendUrl());
+
       reportService = serviceBuilder.build();
     }
 
     private boolean handleUpload(Upload upload) {
-      Log.d(TAG, "Uploading: " + upload.toString());
-      if (upload.getRetryDelayS() > 0) {
-        Log.d(TAG, "Sleeping before retry: " + upload.getRetryDelayS() + "s");
-        sleep(upload.getRetryDelayS());
-      }
-
+      upload.delayIfRetry();
       try {
-        if (!upload.getReport().getReportId().isPresent()) {
-          return handleCreate(upload);
+        CachedReportWrapper wrapper = upload.getReportWrapper();
+        if (!wrapper.getReportId().isPresent()) {
+          return handleCreate(wrapper);
         } else {
-          return handleUpdate(upload);
+          return handleUpdate(wrapper);
         }
       } catch (IOException ex) {
         Log.e(TAG, "Call failed, exception:", ex);
@@ -335,10 +306,9 @@ public class SyncService extends Service {
       }
     }
 
-    private boolean handleCreate(Upload upload) throws IOException {
+    private boolean handleCreate(CachedReportWrapper wrapper) throws IOException {
       ReportRequest request = new ReportRequest();
-      request.setReportEncoded(BaseEncoding.base64().encode(
-          upload.report.getReport().toByteArray()));
+      request.setReportEncoded(BaseEncoding.base64().encode(wrapper.getReport().toByteArray()));
 
       ReportResponse response = reportService.createReport(request).execute();
       if (!response.getCode().equals(Code.OK.name())) {
@@ -350,20 +320,20 @@ public class SyncService extends Service {
           .mergeFrom(BaseEncoding.base64().decode(response.getReportRefEncoded()))
           .build();
       LocalDataStore dataStore = new LocalDataStore(SyncService.this);
-      dataStore.setServerSideData(upload.getReport().getLocalId(), reportRef);
+      dataStore.setServerSideData(wrapper.getLocalId(), reportRef);
+      dataStore.markAllImagesSynced(wrapper.getLocalId(), wrapper.getUnsynchedImageFileNames());
 
       return true;
     }
 
-    private boolean handleUpdate(Upload upload) throws IOException {
+    private boolean handleUpdate(CachedReportWrapper wrapper) throws IOException {
       ReportRequest request = new ReportRequest();
       ReportRef ref = ReportRef.newBuilder()
-          .setReportId(upload.getReport().getReportId().get())
-          .setVersion(upload.getReport().getVersion().get())
+          .setReportId(wrapper.getReportId().get())
+          .setVersion(wrapper.getVersion().get())
           .build();
       request.setReportRefEncoded(BaseEncoding.base64().encode(ref.toByteArray()));
-      request.setReportEncoded(BaseEncoding.base64().encode(
-          upload.report.getReport().toByteArray()));
+      request.setReportEncoded(BaseEncoding.base64().encode(wrapper.getReport().toByteArray()));
 
       ReportResponse response = reportService.updateReport(request).execute();
       if (!response.getCode().equals(Code.OK.name())) {
@@ -376,21 +346,44 @@ public class SyncService extends Service {
           .build();
       Log.d(TAG, "Updateing from server: " + reportRef.toString());
       LocalDataStore dataStore = new LocalDataStore(SyncService.this);
-      dataStore.setServerSideData(upload.getReport().getLocalId(), reportRef);
+      dataStore.setServerSideData(wrapper.getLocalId(), reportRef);
+      // TODO(edcoyne): this is a poor implmentation, there could be changes to the same image while
+      // this upload is taking place that will be missed until next time its changed.
+      dataStore.markAllImagesSynced(wrapper.getLocalId(), wrapper.getUnsynchedImageFileNames());
 
       return true;
     }
   }
 
   @ToString
-  @Accessors(chain = true)
+  @Builder(fluent=false)
   private static class Upload {
-    @Getter
-    private final CachedReportWrapper report;
-    @Getter @Setter
-    private int retryDelayS = 1;
-    private Upload(CachedReportWrapper report) {
-      this.report = report;
+    //private static final int MAX_RETRY_DELAY_S = 300; // 5 min.
+    private static final int MAX_RETRY_DELAY_S = 45;
+
+    private final long localReportId;
+    private final LocalDataStore dataStore;
+    private final int retryDelayS;
+    private final Context context;
+
+    public CachedReportWrapper getReportWrapper() throws IOException {
+      CachedReportWrapper wrapper = dataStore.getReport(localReportId);
+      inlineUnsyncedImages(wrapper);
+      return wrapper;
+    }
+
+    private void inlineUnsyncedImages(CachedReportWrapper wrapper) throws IOException {
+      Set<String> unsycnedPhotosFileNames = dataStore.getUnsycnedImagesFileNames();
+      Report.Builder builder = wrapper.getReport().toBuilder();
+      for (Image.Builder image : builder.getImageBuilderList()) {
+        if (unsycnedPhotosFileNames.contains(image.getFileName())) {
+          Log.d(TAG, "Adding unsynced photo to report: " + image.getFileName() + ".");
+          image.setRawData(ByteString.copyFrom(
+              ImageUtil.getImageBytes(context, image.getFileName())));
+          wrapper.getUnsynchedImageFileNames().add(image.getFileName());
+        }
+      }
+      wrapper.setReport(builder.build());
     }
 
     @Override
@@ -398,7 +391,23 @@ public class SyncService extends Service {
       if (!(o instanceof Upload)) {
         return false;
       }
-      return report.getLocalId() == ((Upload)o).report.getLocalId();
+      return localReportId == ((Upload)o).localReportId;
+    }
+
+    public void delayIfRetry() {
+      if (retryDelayS > 0) {
+        Log.d(TAG, "Sleeping before retry: " + retryDelayS + "s");
+        sleep(retryDelayS);
+      }
+    }
+
+    public Upload getRetry() {
+      return Upload.builder()
+          .setContext(context)
+          .setDataStore(dataStore)
+          .setLocalReportId(localReportId)
+          .setRetryDelayS(Math.min(retryDelayS * 2, MAX_RETRY_DELAY_S))
+          .build();
     }
   }
 
@@ -418,6 +427,14 @@ public class SyncService extends Service {
     public void onReceive(Context context, Intent intent) {
       Log.d(TAG, "On Boot");
       SyncService.start(context);
+    }
+  }
+
+  private static void sleep(int seconds) {
+    try {
+      Thread.sleep(seconds * 1000);
+    } catch (InterruptedException e) {
+      Log.e(TAG, "Sleep interupted.", e);
     }
   }
 }
