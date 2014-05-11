@@ -81,6 +81,7 @@
 	       android:layout_height="wrap_content" >
 	        
 	       <TextView
+	           style="@style/Header"
 	           android:id="@+id/labelActivityDetails"
 	           android:layout_width="0dp"
 	           android:layout_height="wrap_content"
@@ -125,15 +126,8 @@
 	           android:onClick="handleClick"/>
 	   </TableRow>
 	
-	   <TableRow android:layout_width="fill_parent" >
-	       <View
-	           android:layout_width="fill_parent"
-	           android:layout_height="1dip"
-	           android:layout_weight="1"
-	           android:background="#999" />
-	   </TableRow>
-	
 	   <TableRow
+	       android:layout_marginTop="20dp"
 	       android:layout_width="wrap_content"
 	       android:layout_height="wrap_content" >
 	       <CheckBox

@@ -62,8 +62,7 @@
 	       android:layout_width="wrap_content"
 	       android:layout_height="wrap_content" >
 	       <TextView
-	           android:layout_height="wrap_content"
-	           android:layout_weight="1"
+             style="@style/CheckboxHeader"
 	           android:text="@string/edit_nest_location_city"/>
 	   </TableRow>
 	   <TableRow
@@ -166,9 +165,7 @@
 	       android:layout_width="wrap_content"
 	       android:layout_height="wrap_content" >
 	       <TextView
-	           android:layout_width="0dp"
-	           android:layout_height="wrap_content"
-	           android:layout_weight="1"
+             style="@style/Header"
 	           android:text="@string/edit_nest_location_location" />
 	   </TableRow>
 	   <TableRow
@@ -224,12 +221,8 @@
 	       android:layout_width="wrap_content"
 	       android:layout_height="wrap_content" >
 	       <TextView
-	           android:id="@+id/labelObstructions"
-	           android:layout_width="0dp"
-	           android:layout_height="wrap_content"
-	           android:layout_weight="1"
-	           android:text="@string/edit_nest_location_obstructions"
-	           android:onClick="handleClick" />
+             style="@style/Header"
+	           android:text="@string/edit_nest_location_obstructions" />
 	   </TableRow>
 	   <TableRow
 	       android:layout_width="wrap_content"

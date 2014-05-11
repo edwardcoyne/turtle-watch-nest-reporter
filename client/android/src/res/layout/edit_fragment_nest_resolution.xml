@@ -10,9 +10,7 @@
 	       android:layout_width="wrap_content"
 	       android:layout_height="wrap_content" >
 	       <TextView
-	           android:layout_width="0dp"
-	           android:layout_height="wrap_content"
-	           android:layout_weight="1"
+	           style="@style/Header"
 	           android:text="@string/hatch_data_title" />
 	   </TableRow>    
 	   <TableRow
@@ -70,9 +68,7 @@
 	       android:layout_width="wrap_content"
 	       android:layout_height="wrap_content" >
 	       <TextView
-	           android:layout_width="0dp"
-	           android:layout_height="wrap_content"
-	           android:layout_weight="1"
+             style="@style/Header"
 	           android:text="@string/excavation_data_title" />
 	   </TableRow>   
 	   <TableRow
@@ -114,9 +110,7 @@
 	       android:layout_height="wrap_content"
 	       android:id="@+id/rowWhyNotExcavatedLabel" >
 	       <TextView
-	           android:layout_width="0dp"
-	           android:layout_height="wrap_content"
-	           android:layout_weight="1"
+             style="@style/CheckboxHeader"
 	           android:text="@string/excavation_data_reason_no_excavation" />
 	   </TableRow>
 	   <TableRow

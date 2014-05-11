@@ -81,14 +81,14 @@ public class EditFragmentNestLocation extends EditFragment {
       setText(R.id.buttonGpsNorth,
           GpsUtil.format(report.getLocation().getTriangulation().getNorth()));
     } else {
-      setText(R.id.buttonGpsNorth, getString(R.string.edit_nest_location_button_gps));
+      setText(R.id.buttonGpsNorth, getString(R.string.edit_nest_location_triangulation_north));
     }
 
     if (report.getLocation().getTriangulation().hasSouth()) {
       setText(R.id.buttonGpsSouth,
           GpsUtil.format(report.getLocation().getTriangulation().getSouth()));
     } else {
-      setText(R.id.buttonGpsSouth, getString(R.string.edit_nest_location_button_gps));
+      setText(R.id.buttonGpsSouth, getString(R.string.edit_nest_location_triangulation_south));
     }
 
     setText(R.id.fieldAddress, location.hasStreetAddress() ?
