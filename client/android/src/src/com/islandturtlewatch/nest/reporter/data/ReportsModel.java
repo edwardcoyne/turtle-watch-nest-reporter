@@ -87,6 +87,14 @@ public class ReportsModel {
     adapter.notifyDataSetChanged();
   }
 
+  public int getHighestNestNumber() {
+    return dataStore.getHighestNestNumber();
+  }
+
+  public int getHighestFalseCrawlNumber() {
+    return dataStore.getHighestFalseCrawlNumber();
+  }
+
   /**
    * Set report we are currently working on.
    */

@@ -70,6 +70,16 @@ public class EditPresenter {
         writeChangesAndUpdate(updatedReport.build());
         return DataUpdateResult.success();
       }
+      public DataUpdateResult updateFalseCrawlNumber(Optional<Integer> nestNumber) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        if (nestNumber.isPresent()) {
+          updatedReport.setFalseCrawlNumber(nestNumber.get());
+        } else {
+          updatedReport.clearFalseCrawlNumber();
+        }
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
 
 		public DataUpdateResult updateDateFound(int year, int month, int day) {
 			Report updatedReport = model.getActiveReport().toBuilder()
@@ -93,6 +103,17 @@ public class EditPresenter {
 
 		public DataUpdateResult updateNestStatus(NestStatus status) {
           Report.Builder updatedReport = model.getActiveReport().toBuilder();
+
+          if (status == NestStatus.FALSE_CRAWL
+              && updatedReport.getStatus() != NestStatus.FALSE_CRAWL) {
+            updatedReport.clearNestNumber();
+            updatedReport.setFalseCrawlNumber(model.getHighestFalseCrawlNumber() + 1);
+          } else if (status != NestStatus.FALSE_CRAWL
+              && updatedReport.getStatus() == NestStatus.FALSE_CRAWL) {
+            updatedReport.clearFalseCrawlNumber();
+            updatedReport.setNestNumber(model.getHighestNestNumber() + 1);
+          }
+
           updatedReport.setStatus(status);
           writeChangesAndUpdate(updatedReport.build());
           return DataUpdateResult.success();

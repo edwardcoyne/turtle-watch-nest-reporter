@@ -7,7 +7,10 @@ public class ReportUtil {
   private ReportUtil() {} // Static only.
 
   public static String getShortName(Report report) {
-    return ((report.getStatus() == NestStatus.FALSE_CRAWL) ? "False Crawl " : "Nest ")
-        + report.getNestNumber();
+    if (report.getStatus() == NestStatus.FALSE_CRAWL) {
+      return "False Crawl " + report.getFalseCrawlNumber();
+    } else {
+      return "Nest " + report.getNestNumber();
+    }
   }
 }

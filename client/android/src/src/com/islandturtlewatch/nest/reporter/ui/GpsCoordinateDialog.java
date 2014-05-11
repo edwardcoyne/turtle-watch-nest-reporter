@@ -45,7 +45,7 @@ public class GpsCoordinateDialog extends DialogFragment {
     currentDialog = Optional.of(new AlertDialog.Builder(getActivity())
       .setIcon(R.drawable.ic_launcher)
       .setTitle("Getting GPS coordinates, Please wait...")
-      .setMessage("No signal yet...")
+      .setMessage("Acquiring signal.")
       .setPositiveButton(R.string.accept, cancelListener)
       .setNegativeButton(R.string.cancel, cancelListener)
       .create());

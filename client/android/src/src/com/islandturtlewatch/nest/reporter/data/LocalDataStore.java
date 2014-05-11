@@ -315,13 +315,22 @@ public class LocalDataStore {
         "delete should update one row not " + numberUpdated);
   }
 
-  private int getHighestNestNumber() {
+  public int getHighestNestNumber() {
     int highestNestNumber = 0;
     ImmutableList<CachedReportWrapper> activeReports = listActiveReports();
     for (CachedReportWrapper wrapper : activeReports) {
       highestNestNumber = Math.max(highestNestNumber, wrapper.getReport().getNestNumber());
     }
     return highestNestNumber;
+  }
+
+  public int getHighestFalseCrawlNumber() {
+    int highestFCNumber = 0;
+    ImmutableList<CachedReportWrapper> activeReports = listActiveReports();
+    for (CachedReportWrapper wrapper : activeReports) {
+      highestFCNumber = Math.max(highestFCNumber, wrapper.getReport().getFalseCrawlNumber());
+    }
+    return highestFCNumber;
   }
 
   private static ImmutableList<String> getAllString(Cursor cursor, Column column) {

@@ -31,6 +31,7 @@ public class EditFragmentInfo extends EditFragment {
   private static final Map<Integer, TextChangeHandler> TEXT_CHANGE_HANDLERS =
       TextChangeHandler.toMap(
           new HandleUpdateNestNumber(),
+          new HandleUpdateFalseCrawlNumber(),
           new HandleUpdateObservers());
 
   @Override
@@ -52,7 +53,13 @@ public class EditFragmentInfo extends EditFragment {
 
   @Override
   public void updateSection(Report report) {
-    setText(R.id.fieldNestNumber, Integer.toString(report.getNestNumber()));
+    setText(R.id.fieldNestNumber, report.hasNestNumber() ?
+        Integer.toString(report.getNestNumber()) : "");
+    setVisible(R.id.rowNestNumber, report.hasNestNumber());
+
+    setText(R.id.fieldFalseCrawlNumber, report.hasFalseCrawlNumber() ?
+        Integer.toString(report.getFalseCrawlNumber()) : "");
+    setVisible(R.id.rowFalseCrawlNumber, report.hasFalseCrawlNumber());
 
     if (report.hasTimestampFoundMs()) {
       setDate(R.id.buttonDateFound, report.getTimestampFoundMs());
@@ -87,6 +94,22 @@ public class EditFragmentInfo extends EditFragment {
         int newValue = Integer.parseInt(newText);
         //TODO(edcoyne): display error if not parsable
         updateHandler.updateNestNumber(Optional.of(newValue));
+      }
+    }
+  }
+  private static class HandleUpdateFalseCrawlNumber extends TextChangeHandler {
+    protected HandleUpdateFalseCrawlNumber() {
+      super(R.id.fieldFalseCrawlNumber);
+    }
+
+    @Override
+    public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
+      if (newText.isEmpty()) {
+        updateHandler.updateFalseCrawlNumber(Optional.<Integer>absent());
+      } else {
+        int newValue = Integer.parseInt(newText);
+        //TODO(edcoyne): display error if not parsable
+        updateHandler.updateFalseCrawlNumber(Optional.of(newValue));
       }
     }
   }

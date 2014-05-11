@@ -19,6 +19,7 @@ message Report {
   // Timestamp for start of day the crawl was found, in milli seconds.
   optional int64 timestamp_found_ms = 1;
   optional int32 nest_number = 2;
+  optional int32 false_crawl_number = 3;
 
   enum NestStatus {
     UNKNOWN = 1;
@@ -27,16 +28,16 @@ message Report {
     NEST_RELOCATED = 4;
     FALSE_CRAWL = 5;
   }
-  optional NestStatus status = 3;
+  optional NestStatus status = 4;
 
-  optional NestLocation location = 4;
-  optional string observers = 5;
-  optional NestCondition condition = 6;
-  optional Intervention intervention = 7;
+  optional NestLocation location = 5;
+  optional string observers = 6;
+  optional NestCondition condition = 7;
+  optional Intervention intervention = 8;
 
-  optional string additional_notes = 8;
+  optional string additional_notes = 9;
 
-  repeated Image image = 9;
+  repeated Image image = 10;
 }
 
 message Image {
