@@ -259,14 +259,28 @@ public class EditPresenter {
 
 		public DataUpdateResult updateProtectionType(ProtectionEvent.Type value) {
           Report.Builder updatedReport = model.getActiveReport().toBuilder();
-          updatedReport.getInterventionBuilder().getProtectionEventBuilder().setType(value);
+          ProtectionEvent.Builder protectionEventBuilder =
+              updatedReport.getInterventionBuilder().getProtectionEventBuilder();
+          if (protectionEventBuilder.getType() == value) {
+            // Hack means it was clicked twice, unset.
+            protectionEventBuilder.clearType();
+          } else {
+            protectionEventBuilder.setType(value);
+          }
           writeChangesAndUpdate(updatedReport.build());
           return DataUpdateResult.success();
         }
 
 		public DataUpdateResult updateWhenProtected(ProtectionEvent.Reason value) {
           Report.Builder updatedReport = model.getActiveReport().toBuilder();
-          updatedReport.getInterventionBuilder().getProtectionEventBuilder().setReason(value);
+          ProtectionEvent.Builder protectionEventBuilder =
+              updatedReport.getInterventionBuilder().getProtectionEventBuilder();
+          if (protectionEventBuilder.getReason() == value) {
+            // Hack means it was clicked twice, unset.
+            protectionEventBuilder.clearReason();
+          } else {
+            protectionEventBuilder.setReason(value);
+          }
           writeChangesAndUpdate(updatedReport.build());
           return DataUpdateResult.success();
         }
