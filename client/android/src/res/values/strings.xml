@@ -7,7 +7,8 @@
     <string name="date_button">Set Date</string>
     <string name="feet_short">ft</string>
     <string name="inches_short">in</string>
-    <string name="cancel">cancel</string>
+    <string name="cancel">Cancel</string>
+    <string name="accept">Accept</string>
     
     <string name="action_change_reports">Change Report</string>
     <string name="action_new_report">New Report</string>

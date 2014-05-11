@@ -11,7 +11,7 @@ public class GpsUtil {
 
   @SuppressLint("DefaultLocale") // Not using default locale but still a warning...
   public static String format(GpsCoordinates coordinates) {
-    return String.format(Locale.US, "%.4f, %.4f", coordinates.getLat(), coordinates.getLong());
+    return String.format(Locale.US, "%.5f, %.5f", coordinates.getLat(), coordinates.getLong());
   }
 
 }

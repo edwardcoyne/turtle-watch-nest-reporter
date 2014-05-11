@@ -17,13 +17,12 @@ import com.islandturtlewatch.nest.reporter.R;
 
 public class GpsCoordinateDialog extends DialogFragment {
   private static final String TAG = GpsCoordinateDialog.class.getSimpleName();
-  private static final float accuracyThresholdM = 20.0f;
+  private static final float accuracyThresholdM = 4f;
 
   private LocationManager locationManager;
   private final Listener listener = new Listener();
   private Optional<GpsLocationCallback> callback;
-
-  //Optional<GpsCoordinates> coordinates = Optional.absent();
+  private Optional<AlertDialog> currentDialog = Optional.absent();
 
   public void setCallback(GpsLocationCallback callback) {
     this.callback = Optional.of(callback);
@@ -36,19 +35,21 @@ public class GpsCoordinateDialog extends DialogFragment {
 
     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, listener);
 
-    return new AlertDialog.Builder(getActivity())
+    DialogInterface.OnClickListener cancelListener = new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialog, int whichButton) {
+        locationManager.removeUpdates(listener);
+      }
+    } ;
+
+    currentDialog = Optional.of(new AlertDialog.Builder(getActivity())
       .setIcon(R.drawable.ic_launcher)
       .setTitle("Getting GPS coordinates, Please wait...")
-      .setNegativeButton(R.string.cancel,
-          new DialogInterface.OnClickListener() {
-              @Override
-              public void onClick(DialogInterface dialog, int whichButton) {
-                  // TODO(edcoyne): implement cancel.
-                locationManager.removeUpdates(listener);
-              }
-          }
-      )
-      .create();
+      .setMessage("No signal yet...")
+      .setPositiveButton(R.string.accept, cancelListener)
+      .setNegativeButton(R.string.cancel, cancelListener)
+      .create());
+    return currentDialog.get();
   }
 
   public interface GpsLocationCallback {
@@ -56,10 +57,28 @@ public class GpsCoordinateDialog extends DialogFragment {
   }
 
   private class Listener implements LocationListener {
+    Optional<Location> bestLocation = Optional.absent();
     @Override
     public void onLocationChanged(Location newLocation) {
       Log.d(TAG, "Got new GPS Location: " + newLocation);
       if (!newLocation.hasAccuracy() || newLocation.getAccuracy() > accuracyThresholdM) {
+        final Location bestLocation = updateBest(newLocation);
+        currentDialog.get().setMessage("Current best accuracy is "
+            + bestLocation.getAccuracy() + "m. Last was (" + newLocation.getAccuracy() +"m)\n"
+            + "Our threshold is " + accuracyThresholdM + "m.\n"
+            + "Hit Accept to use the best we have so far.");
+        currentDialog.get().setButton(AlertDialog.BUTTON_POSITIVE, "Accept",
+            new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+            callback.get().location(GpsCoordinates.newBuilder()
+              .setLat(bestLocation.getLatitude())
+              .setLong(bestLocation.getLongitude())
+              .build());
+            locationManager.removeUpdates(listener);
+            GpsCoordinateDialog.this.dismiss();
+          }
+        });
         Log.d(TAG, "Not accurate enough");
         return;
       }
@@ -70,6 +89,14 @@ public class GpsCoordinateDialog extends DialogFragment {
         .build());
       locationManager.removeUpdates(listener);
       GpsCoordinateDialog.this.dismiss();
+    }
+
+    private Location updateBest(Location location) {
+      if (!bestLocation.isPresent()
+          || bestLocation.get().getAccuracy() > location.getAccuracy()) {
+        bestLocation = Optional.of(location);
+      }
+      return bestLocation.get();
     }
 
     @Override
