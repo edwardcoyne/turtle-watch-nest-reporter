@@ -53,6 +53,7 @@ import com.islandturtlewatch.nest.reporter.ui.ReportSection;
 import com.islandturtlewatch.nest.reporter.ui.ReportSectionListFragment;
 import com.islandturtlewatch.nest.reporter.ui.ReportSectionListFragment.EventHandler;
 import com.islandturtlewatch.nest.reporter.util.AuthenticationUtil;
+import com.islandturtlewatch.nest.reporter.util.DialogUtil;
 import com.islandturtlewatch.nest.reporter.util.ReportUtil;
 import com.islandturtlewatch.nest.reporter.util.SettingsUtil;
 
@@ -144,8 +145,13 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
           updateDisplay(model.getActiveReport());
           return true;
         case R.id.action_delete_report:
-          model.deleteActiveReport();
-          updateDisplay(model.getActiveReport());
+          DialogUtil.confirm(this, "Are you sure you want to delete this report?",
+              new Runnable() {
+                @Override
+                public void run() {
+                  model.deleteActiveReport();
+                  updateDisplay(model.getActiveReport());
+                }});
           return true;
         default:
             return super.onOptionsItemSelected(item);
