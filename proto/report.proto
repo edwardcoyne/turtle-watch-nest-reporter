@@ -122,9 +122,6 @@ message NestLocation {
 }
 
 message Intervention {
-  optional bool adopted = 1;
-  optional string adopted_by = 2;
-  
   message ProtectionEvent {
     optional int64 timestamp_ms = 1;
     
@@ -144,10 +141,10 @@ message Intervention {
     }
     optional Reason reason = 3;
   }
-  optional ProtectionEvent protection_event = 3;
+  optional ProtectionEvent protection_event = 1;
 
-  optional Relocation relocation = 4;
-  optional Excavation excavation = 5;
+  optional Relocation relocation = 2;
+  optional Excavation excavation = 3;
 }
 
 message Excavation {

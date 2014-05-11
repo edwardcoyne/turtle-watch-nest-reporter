@@ -236,13 +236,6 @@ public class EditPresenter {
           return DataUpdateResult.success();
         }
 
-		public DataUpdateResult updateAdopted(boolean value) {
-          Report.Builder updatedReport = model.getActiveReport().toBuilder();
-          updatedReport.getInterventionBuilder().setAdopted(value);
-          writeChangesAndUpdate(updatedReport.build());
-          return DataUpdateResult.success();
-        }
-
 		public DataUpdateResult updateProtectionType(ProtectionEvent.Type value) {
           Report.Builder updatedReport = model.getActiveReport().toBuilder();
           updatedReport.getInterventionBuilder().getProtectionEventBuilder().setType(value);

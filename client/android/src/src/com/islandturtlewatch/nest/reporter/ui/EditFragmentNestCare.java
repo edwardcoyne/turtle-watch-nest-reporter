@@ -27,7 +27,6 @@ import com.islandturtlewatch.nest.reporter.util.GpsUtil;
 public class EditFragmentNestCare extends EditFragment {
   private static final Map<Integer, ClickHandler> CLICK_HANDLERS =
       ClickHandler.toMap(
-          new HandleSetAdopted(),
           new HandleSetAfterPredation(),
           new HandleSetBeforePredation(),
           new HandleSetLightProblem(),
@@ -69,7 +68,6 @@ public class EditFragmentNestCare extends EditFragment {
   @Override
   public void updateSection(Report report) {
     Intervention intervention = report.getIntervention();
-    setChecked(R.id.fieldNestAdopted, intervention.getAdopted());
 
     if (intervention.getProtectionEvent().hasTimestampMs()) {
       setDate(R.id.buttonProtectedDate, intervention.getProtectionEvent().getTimestampMs());
@@ -148,15 +146,6 @@ public class EditFragmentNestCare extends EditFragment {
       Log.d(EditFragmentNestCare.class.getSimpleName(),
           "Set date to " + year + "/" + month + "/" + day);
       displayResult(updateHandler.updateDateRelocated(year, month, day));
-    }
-  }
-  private static class HandleSetAdopted extends ClickHandler {
-    protected HandleSetAdopted() {
-      super(R.id.fieldNestAdopted);
-    }
-    @Override
-    public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateAdopted(isChecked(view));
     }
   }
   private static class HandleSetSelfRealeasingCage extends ClickHandler {
