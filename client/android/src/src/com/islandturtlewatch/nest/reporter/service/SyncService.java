@@ -256,6 +256,7 @@ public class SyncService extends Service {
       while (running.get()) {
         try {
           Upload upload = pendingUploads.take();
+          Log.d(TAG, "Starting upload");
           if (!handleUpload(upload)) {
             Log.i(TAG, "Upload failed adding back to queue.");
             pendingUploads.add(upload.getRetry());
@@ -294,11 +295,15 @@ public class SyncService extends Service {
     private boolean handleUpload(Upload upload) {
       upload.delayIfRetry();
       try {
-        CachedReportWrapper wrapper = upload.getReportWrapper();
-        if (!wrapper.getReportId().isPresent()) {
-          return handleCreate(wrapper);
+        Optional<CachedReportWrapper> wrapper = upload.getReportWrapperIfNotSynced();
+        if (!wrapper.isPresent()) {
+          return true;
+        }
+
+        if (!wrapper.get().getReportId().isPresent()) {
+          return handleCreate(wrapper.get());
         } else {
-          return handleUpdate(wrapper);
+          return handleUpdate(wrapper.get());
         }
       } catch (IOException ex) {
         Log.e(TAG, "Call failed, exception:", ex);
@@ -366,10 +371,13 @@ public class SyncService extends Service {
     private final int retryDelayS;
     private final Context context;
 
-    public CachedReportWrapper getReportWrapper() throws IOException {
+    public Optional<CachedReportWrapper> getReportWrapperIfNotSynced() throws IOException {
       CachedReportWrapper wrapper = dataStore.getReport(localReportId);
+      if (wrapper.isSynched()) {
+        return Optional.absent();
+      }
       inlineUnsyncedImages(wrapper);
-      return wrapper;
+      return Optional.of(wrapper);
     }
 
     private void inlineUnsyncedImages(CachedReportWrapper wrapper) throws IOException {
