@@ -37,7 +37,6 @@
     <string name="edit_nest_location_bradenton_beach_short">BB</string>
     <string name="edit_nest_location_holms_beach_short">HB</string>
     <string name="edit_nest_location_city">City</string>
-    <string name="edit_nest_location_section_number">Section Number</string>
     <string name="edit_nest_location_details">Details</string>
     <string name="edit_nest_location_location">Location</string>
     <string name="edit_nest_location_open_beach">Open Beach</string>
@@ -80,8 +79,6 @@
     <string name="edit_nest_condition_damage_roots_invaded">Roots invaded eggshells</string>
     <string name="edit_nest_condition_damage_eggs_scattered">Eggs scattered by another</string>
 
-    
-    <string name="edit_nest_care_adopted">Is nest adopted?</string>
     <string name="edit_nest_care_date_protected">Date Protected</string>
     <string name="edit_nest_care_type_of_protection">Type of protection?</string>
     <string name="edit_nest_care_self_releasing_cage">Self releasing cage</string>
