@@ -36,12 +36,12 @@
 	        <Button
 	            android:id="@+id/buttonGpsNorth"
 	            android:text="@string/edit_nest_location_triangulation_north"
-	             android:onClick="handleClick"  />
+	            android:onClick="handleClick"  />
 	
 	        <Button
 	            android:id="@+id/buttonGpsSouth"
 	            android:text="@string/edit_nest_location_triangulation_south"
-	             android:onClick="handleClick"  />
+	            android:onClick="handleClick"  />
 	    </TableRow>
 	    <TableRow
 	        android:layout_width="wrap_content"
@@ -113,15 +113,16 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content" >
 	        <TextView
-	            android:layout_width="0dp"
+	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"
+	            android:layout_marginBottom="10dp"
 	            android:text="@string/edit_nest_location_apex_to_barrier" />
 	
 	        <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
 	            android:id="@+id/fieldApexToBarrier_ft"
 	            android:inputType="number"
-	            android:ems="1"
+	            android:ems="4"
 	            onTextChangeHandler="handleTextChange"/>
 	        <TextView
 	            android:text="@string/feet_short" 
@@ -239,6 +240,7 @@
 	           android:layout_width="0dp"
 	           android:layout_height="wrap_content"
 	           android:layout_weight="1"
+	           android:layout_marginBottom="5dp"
 	           android:text="@string/edit_nest_location_seawall_rocks"
 	           android:onClick="handleClick" />
 	       
