@@ -79,13 +79,8 @@
 	   <TableRow
 	       android:layout_width="wrap_content"
 	       android:layout_height="wrap_content" >
-	        
 	       <TextView
 	           style="@style/Header"
-	           android:id="@+id/labelActivityDetails"
-	           android:layout_width="0dp"
-	           android:layout_height="wrap_content"
-	           android:layout_weight="1"
 	           android:text="@string/edit_info_label_activity_details" />
 	   </TableRow>
 	   <TableRow
@@ -145,5 +140,49 @@
 	           android:text="@string/edit_info_label_abandoned_egg_cavities"
 	           android:onClick="handleClick" />
 	   </TableRow>
+	   <TableRow
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content" >
+         <TextView
+             style="@style/Header"
+             android:text="@string/edit_info_label_species" />
+     </TableRow>
+     <TableRow
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content" >
+         <CheckBox
+             android:id="@+id/fieldSpeciesLoggerHead"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_weight="1"
+             android:text="@string/edit_info_label_species_loggerhead"
+             android:onClick="handleClick" />
+         <CheckBox
+             android:id="@+id/fieldSpeciesGreen"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_weight="1"
+             android:text="@string/edit_info_label_species_green"
+             android:onClick="handleClick" />
+     </TableRow>
+     <TableRow
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content" >
+         <CheckBox
+             android:id="@+id/fieldSpeciesOther"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_weight="1"
+             android:text="@string/edit_info_label_species_other"
+             android:onClick="handleClick" />
+         
+         <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+              android:id="@+id/fieldSpeciesOtherValue"
+              android:inputType="textMultiLine"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="2"
+              onTextChangeHandler="handleTextChange" />
+     </TableRow>
 	</TableLayout>
 </ScrollView>

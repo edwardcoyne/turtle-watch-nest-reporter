@@ -21,6 +21,14 @@ message Report {
   optional int32 nest_number = 2;
   optional int32 false_crawl_number = 3;
 
+  enum Species {
+    LOGGERHEAD = 1;
+    GREEN = 2;
+    OTHER = 3;
+  }
+  optional Species species = 4;
+  optional string species_other = 5;
+
   enum NestStatus {
     UNKNOWN = 1;
     NEST_VERIFIED = 2;
@@ -28,16 +36,16 @@ message Report {
     NEST_RELOCATED = 4;
     FALSE_CRAWL = 5;
   }
-  optional NestStatus status = 4;
+  optional NestStatus status = 6;
 
-  optional NestLocation location = 5;
-  optional string observers = 6;
-  optional NestCondition condition = 7;
-  optional Intervention intervention = 8;
+  optional NestLocation location = 7;
+  optional string observers = 8;
+  optional NestCondition condition = 9;
+  optional Intervention intervention = 10;
 
-  optional string additional_notes = 9;
+  optional string additional_notes = 11;
 
-  repeated Image image = 10;
+  repeated Image image = 12;
 }
 
 message Image {

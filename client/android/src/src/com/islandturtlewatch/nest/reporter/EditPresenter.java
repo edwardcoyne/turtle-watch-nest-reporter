@@ -16,6 +16,7 @@ import com.islandturtlewatch.nest.data.ReportProto.NestLocation.Placement;
 import com.islandturtlewatch.nest.data.ReportProto.Relocation;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.Report.NestStatus;
+import com.islandturtlewatch.nest.data.ReportProto.Report.Species;
 import com.islandturtlewatch.nest.reporter.data.ReportsModel;
 import com.islandturtlewatch.nest.reporter.ui.EditView;
 import com.islandturtlewatch.nest.reporter.util.DateUtil;
@@ -728,6 +729,20 @@ public class EditPresenter {
       public DataUpdateResult updatePhoto(String fileName) {
         // Will implicitly get the update by checking filesystem timestamps.
         model.updateImages(model.getActiveReport());
+        return DataUpdateResult.success();
+      }
+
+      public DataUpdateResult updateSpecies(Species species) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        updatedReport.setSpecies(species);
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+
+      public DataUpdateResult updateSpeciesOther(String value) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        updatedReport.setSpeciesOther(value);
+        writeChangesAndUpdate(updatedReport.build());
         return DataUpdateResult.success();
       }
     }

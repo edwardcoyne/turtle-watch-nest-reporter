@@ -12,9 +12,11 @@ import android.widget.DatePicker;
 import com.google.common.base.Optional;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.Report.NestStatus;
+import com.islandturtlewatch.nest.data.ReportProto.Report.Species;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.util.DateUtil;
+import com.islandturtlewatch.nest.reporter.util.DialogUtil;
 
 public class EditFragmentInfo extends EditFragment {
   private static final Map<Integer, ClickHandler> CLICK_HANDLERS =
@@ -26,13 +28,17 @@ public class EditFragmentInfo extends EditFragment {
           new HandleSetNestRelocated(),
           new HandleSetFalseCrawl(),
           new HandleSetAbandonedBodyPits(),
-          new HandleSetAbandonedEggCavities());
+          new HandleSetAbandonedEggCavities(),
+          new HandleSetSpeciesLoggerHead(),
+          new HandleSetSpeciesGreen(),
+          new HandleSetSpeciesOther());
 
   private static final Map<Integer, TextChangeHandler> TEXT_CHANGE_HANDLERS =
       TextChangeHandler.toMap(
           new HandleUpdateNestNumber(),
           new HandleUpdateFalseCrawlNumber(),
-          new HandleUpdateObservers());
+          new HandleUpdateObservers(),
+          new HandleUpdateSpeciesOther());
 
   @Override
   public Map<Integer, ClickHandler> getClickHandlers() {
@@ -79,6 +85,13 @@ public class EditFragmentInfo extends EditFragment {
 
     setChecked(R.id.fieldAbandonedBodyPits, report.getCondition().getAbandonedBodyPits());
     setChecked(R.id.fieldAbandonedEggCavities, report.getCondition().getAbandonedEggCavities());
+
+    setChecked(R.id.fieldSpeciesLoggerHead, report.getSpecies() == Species.LOGGERHEAD);
+    setChecked(R.id.fieldSpeciesGreen, report.getSpecies() == Species.GREEN);
+    setChecked(R.id.fieldSpeciesOther, report.getSpecies() == Species.OTHER);
+
+    setEnabled(R.id.fieldSpeciesOtherValue, report.getSpecies() == Species.OTHER);
+    setText(R.id.fieldSpeciesOtherValue, report.getSpeciesOther());
   }
 
   private static class HandleUpdateNestNumber extends TextChangeHandler {
@@ -122,6 +135,17 @@ public class EditFragmentInfo extends EditFragment {
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
       updateHandler.updateObservers(newText);
+    }
+  }
+
+  private static class HandleUpdateSpeciesOther extends TextChangeHandler {
+    protected HandleUpdateSpeciesOther() {
+      super(R.id.fieldSpeciesOtherValue);
+    }
+
+    @Override
+    public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
+      updateHandler.updateSpeciesOther(newText);
     }
   }
 
@@ -214,6 +238,40 @@ public class EditFragmentInfo extends EditFragment {
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
        updateHandler.updateAbandonedEggCavities(isChecked(view));
+    }
+  }
+  private static class HandleSetSpeciesLoggerHead extends ClickHandler {
+    protected HandleSetSpeciesLoggerHead() {
+      super(R.id.fieldSpeciesLoggerHead);
+    }
+
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.updateSpecies(Species.LOGGERHEAD);
+    }
+  }
+  private static class HandleSetSpeciesGreen extends ClickHandler {
+    protected HandleSetSpeciesGreen() {
+      super(R.id.fieldSpeciesGreen);
+    }
+
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      DialogUtil.acknowledge(view.getContext(),
+          "Need photos of this species and please contact Suzi.");
+      updateHandler.updateSpecies(Species.GREEN);
+    }
+  }
+  private static class HandleSetSpeciesOther extends ClickHandler {
+    protected HandleSetSpeciesOther() {
+      super(R.id.fieldSpeciesOther);
+    }
+
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      DialogUtil.acknowledge(view.getContext(),
+          "Need photos of this species and please contact Suzi.");
+      updateHandler.updateSpecies(Species.OTHER);
     }
   }
 }
