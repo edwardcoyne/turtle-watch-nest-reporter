@@ -22,11 +22,12 @@ message Report {
   optional int32 false_crawl_number = 3;
 
   enum Species {
+    NOT_REPORTED = 4;
     LOGGERHEAD = 1;
     GREEN = 2;
     OTHER = 3;
   }
-  optional Species species = 4;
+  optional Species species = 4 [default = NOT_REPORTED];
   optional string species_other = 5;
 
   enum NestStatus {

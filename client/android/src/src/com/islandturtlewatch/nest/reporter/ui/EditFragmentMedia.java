@@ -1,14 +1,16 @@
 package com.islandturtlewatch.nest.reporter.ui;
 
 import java.io.IOException;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import lombok.Getter;
-import lombok.Setter;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -34,6 +36,9 @@ public class EditFragmentMedia extends EditFragment {
   private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 400;
   private static final int EDIT_IMAGE_ACTIVITY_REQUEST_CODE = 401;
 
+  private static final int THUMBNAIL_WIDTH = 600;
+  private static final int THUMBNAIL_HEIGHT = 450;
+
   private static final String KEY_CURRENT_FILE_PATH = "Media.CurrentFilePath";
 
   private static final HandleCaptureImage CAPTURE_IMAGE_HANDLER = new HandleCaptureImage();
@@ -41,7 +46,6 @@ public class EditFragmentMedia extends EditFragment {
       CAPTURE_IMAGE_HANDLER);
   private static final String TAG = EditFragmentMedia.class.getSimpleName();
 
-  private final ImageAdapter imageAdapter = new ImageAdapter();
   private Optional<Uri> currentlyEditingFileUri = Optional.absent();
 
   @Override
@@ -60,9 +64,7 @@ public class EditFragmentMedia extends EditFragment {
   @Override
   protected void updateSection(Report report) {
     GridView gridview = (GridView) getActivity().findViewById(R.id.galleryView);
-    gridview.setAdapter(imageAdapter);
-    imageAdapter.setImages(report.getImageList());
-    imageAdapter.notifyDataSetChanged();
+    gridview.setAdapter(new ImageAdapter(report.getImageList()));
   }
 
   @Override
@@ -131,17 +133,28 @@ public class EditFragmentMedia extends EditFragment {
   }
 
   private class ImageAdapter extends BaseAdapter {
-    @Setter
-    private List<Image> images = Collections.emptyList();
+    private final List<Image> images;
+    private final List<Bitmap> thumbnails = new ArrayList<>();
+
+    public ImageAdapter(List<Image> images) {
+      this.images = images;
+      for (Image image : images) {
+        final Uri imagePath = ImageUtil.getImagePath(EditFragmentMedia.this.getActivity(),
+            image.getFileName());
+        Bitmap bitmap = BitmapFactory.decodeFile(imagePath.getPath());
+        thumbnails.add(
+            ThumbnailUtils.extractThumbnail(bitmap, THUMBNAIL_WIDTH, THUMBNAIL_HEIGHT));
+      }
+    }
 
     @Override
     public int getCount() {
-      return images.size();
+      return thumbnails.size();
     }
 
     @Override
     public Object getItem(int position) {
-      return images.get(position);
+      return thumbnails.get(position);
     }
 
     @Override
@@ -154,7 +167,7 @@ public class EditFragmentMedia extends EditFragment {
       ImageButton imageView;
       if (convertView == null) {  // if it's not recycled, initialize some attributes
           imageView = new ImageButton(parent.getContext());
-          imageView.setLayoutParams(new GridView.LayoutParams(600, 600));
+          imageView.setLayoutParams(new GridView.LayoutParams(THUMBNAIL_WIDTH, THUMBNAIL_HEIGHT));
           imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
           imageView.setPadding(8, 8, 8, 8);
       } else {
@@ -164,7 +177,7 @@ public class EditFragmentMedia extends EditFragment {
       final Activity activity = (Activity) parent.getContext();
       final String fileName = images.get(position).getFileName();
       final Uri imagePath = ImageUtil.getImagePath(parent, fileName);
-      imageView.setImageURI(imagePath);
+      imageView.setImageBitmap(thumbnails.get(position));
       imageView.setOnClickListener(new OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -178,5 +191,4 @@ public class EditFragmentMedia extends EditFragment {
       return imageView;
     }
   }
-
 }
