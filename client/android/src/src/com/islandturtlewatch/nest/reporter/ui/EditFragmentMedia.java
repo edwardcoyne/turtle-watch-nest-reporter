@@ -133,33 +133,50 @@ public class EditFragmentMedia extends EditFragment {
   }
 
   private class ImageAdapter extends BaseAdapter {
+    private final Bitmap dummyBitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
     private final List<Image> images;
     private final List<Bitmap> thumbnails = new ArrayList<>();
 
     public ImageAdapter(List<Image> images) {
       this.images = images;
-      for (Image image : images) {
-        final Uri imagePath = ImageUtil.getImagePath(EditFragmentMedia.this.getActivity(),
-            image.getFileName());
-        Bitmap bitmap = BitmapFactory.decodeFile(imagePath.getPath());
-        thumbnails.add(
-            ThumbnailUtils.extractThumbnail(bitmap, THUMBNAIL_WIDTH, THUMBNAIL_HEIGHT));
+      for (int i=0; i < images.size(); i++) {
+        thumbnails.add(dummyBitmap);
       }
+      new Thread(new Thumbnailer()).start();
     }
 
     @Override
     public int getCount() {
-      return thumbnails.size();
+      return images.size();
     }
 
     @Override
     public Object getItem(int position) {
-      return thumbnails.get(position);
+      return images.get(position);
     }
 
     @Override
     public long getItemId(int position) {
       return position;
+    }
+
+    public class Thumbnailer implements Runnable {
+      @Override
+      public void run() {
+        for (int i = 0; i < images.size(); i++) {
+          final Uri imagePath = ImageUtil.getImagePath(EditFragmentMedia.this.getActivity(),
+              images.get(i).getFileName());
+          Bitmap bitmap = BitmapFactory.decodeFile(imagePath.getPath());
+          thumbnails.set(i,
+              ThumbnailUtils.extractThumbnail(bitmap, THUMBNAIL_WIDTH, THUMBNAIL_HEIGHT));
+        }
+        EditFragmentMedia.this.getActivity().runOnUiThread(new Runnable() {
+          @Override
+          public void run() {
+            notifyDataSetChanged();
+          }
+        });
+      }
     }
 
     @Override
