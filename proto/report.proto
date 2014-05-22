@@ -126,7 +126,12 @@ message NestLocation {
   optional GpsCoordinates coordinates = 11;
   message Triangulation {
     optional GpsCoordinates north = 1;
+    optional int32 north_ft = 3;
+    optional int32 north_in = 4;
+
     optional GpsCoordinates south = 2;
+    optional int32 south_ft = 5;
+    optional int32 south_in = 6;
   }
   optional Triangulation triangulation = 12;
 }

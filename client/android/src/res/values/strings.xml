@@ -34,9 +34,9 @@
     
     <string name="edit_nest_location_label_gps">GPS Coordinates</string>
     <string name="edit_nest_location_triangulation">Triangulation</string>
-    <string name="edit_nest_location_triangulation_north">Set North</string>
-    <string name="edit_nest_location_triangulation_south">Set South</string>
-    <string name="edit_nest_location_button_gps">Set Location</string>
+    <string name="edit_nest_location_triangulation_north">North</string>
+    <string name="edit_nest_location_triangulation_south">South</string>
+    <string name="edit_nest_location_button_gps">Get GPS</string>
     <string name="edit_nest_location_original_address">Original Address</string>
     <string name="edit_nest_location_anna_maria_short">AM</string>
     <string name="edit_nest_location_bradenton_beach_short">BB</string>

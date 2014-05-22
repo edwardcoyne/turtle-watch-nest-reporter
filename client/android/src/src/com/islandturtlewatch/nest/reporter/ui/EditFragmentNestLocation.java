@@ -14,6 +14,7 @@ import com.islandturtlewatch.nest.data.ReportProto.GpsCoordinates;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation.City;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation.Placement;
+import com.islandturtlewatch.nest.data.ReportProto.NestLocation.Triangulation;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
@@ -42,6 +43,10 @@ public class EditFragmentNestLocation extends EditFragment {
 
   private static final Map<Integer, TextChangeHandler> TEXT_CHANGE_HANDLERS =
       TextChangeHandler.toMap(
+          new HandleUpdateTriangulationNorthFt(),
+          new HandleUpdateTriangulationNorthIn(),
+          new HandleUpdateTriangulationSouthFt(),
+          new HandleUpdateTriangulationSouthIn(),
           new HandleUpdateAddress(),
           new HandleUpdateDetails(),
           new HandleUpdateApexToBarrierFt(),
@@ -77,19 +82,26 @@ public class EditFragmentNestLocation extends EditFragment {
       setText(R.id.buttonGps, getString(R.string.edit_nest_location_button_gps));
     }
 
-    if (report.getLocation().getTriangulation().hasNorth()) {
-      setText(R.id.buttonGpsNorth,
-          GpsUtil.format(report.getLocation().getTriangulation().getNorth()));
+    Triangulation triangulation = location.getTriangulation();
+    if (triangulation.hasNorth()) {
+      setText(R.id.buttonGpsNorth, GpsUtil.format(triangulation.getNorth()));
     } else {
-      setText(R.id.buttonGpsNorth, getString(R.string.edit_nest_location_triangulation_north));
+      setText(R.id.buttonGpsNorth, getString(R.string.edit_nest_location_button_gps));
     }
+    setText(R.id.fieldTriangulationNorthFt, triangulation.hasNorthFt() ?
+        Integer.toString(triangulation.getNorthFt()) : "");
+    setText(R.id.fieldTriangulationNorthIn, triangulation.hasNorthIn() ?
+        Integer.toString(triangulation.getNorthIn()) : "");
 
-    if (report.getLocation().getTriangulation().hasSouth()) {
-      setText(R.id.buttonGpsSouth,
-          GpsUtil.format(report.getLocation().getTriangulation().getSouth()));
+    if (triangulation.hasSouth()) {
+      setText(R.id.buttonGpsSouth, GpsUtil.format(triangulation.getSouth()));
     } else {
-      setText(R.id.buttonGpsSouth, getString(R.string.edit_nest_location_triangulation_south));
+      setText(R.id.buttonGpsSouth, getString(R.string.edit_nest_location_button_gps));
     }
+    setText(R.id.fieldTriangulationSouthFt, triangulation.hasSouthFt() ?
+        Integer.toString(triangulation.getSouthFt()) : "");
+    setText(R.id.fieldTriangulationSouthIn, triangulation.hasSouthIn() ?
+        Integer.toString(triangulation.getSouthIn()) : "");
 
     setText(R.id.fieldAddress, location.hasStreetAddress() ?
         location.getStreetAddress() : "");
@@ -121,6 +133,70 @@ public class EditFragmentNestLocation extends EditFragment {
     setChecked(R.id.fieldObstructionsEscarpment, location.getObstructions().getEscarpment());
     setText(R.id.fieldObstructionsOther, location.getObstructions().hasOther() ?
         location.getObstructions().getOther() : "");
+  }
+
+  private static class HandleUpdateTriangulationNorthFt extends TextChangeHandler {
+    protected HandleUpdateTriangulationNorthFt() {
+      super(R.id.fieldTriangulationNorthFt);
+    }
+
+    @Override
+    public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
+      Optional<Integer> newValue = Optional.absent();
+      if (!newText.isEmpty()) {
+        newValue = Optional.of(Integer.parseInt(newText));
+      }
+      //TODO(edcoyne): display error if not parsable
+      updateHandler.updateTriangulationNorthFt(newValue);
+    }
+  }
+
+  private static class HandleUpdateTriangulationNorthIn extends TextChangeHandler {
+    protected HandleUpdateTriangulationNorthIn() {
+      super(R.id.fieldTriangulationNorthIn);
+    }
+
+    @Override
+    public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
+      Optional<Integer> newValue = Optional.absent();
+      if (!newText.isEmpty()) {
+        newValue = Optional.of(Integer.parseInt(newText));
+      }
+      //TODO(edcoyne): display error if not parsable
+      updateHandler.updateTriangulationNorthIn(newValue);
+    }
+  }
+
+  private static class HandleUpdateTriangulationSouthFt extends TextChangeHandler {
+    protected HandleUpdateTriangulationSouthFt() {
+      super(R.id.fieldTriangulationSouthFt);
+    }
+
+    @Override
+    public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
+      Optional<Integer> newValue = Optional.absent();
+      if (!newText.isEmpty()) {
+        newValue = Optional.of(Integer.parseInt(newText));
+      }
+      //TODO(edcoyne): display error if not parsable
+      updateHandler.updateTriangulationSouthFt(newValue);
+    }
+  }
+
+  private static class HandleUpdateTriangulationSouthIn extends TextChangeHandler {
+    protected HandleUpdateTriangulationSouthIn() {
+      super(R.id.fieldTriangulationSouthIn);
+    }
+
+    @Override
+    public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
+      Optional<Integer> newValue = Optional.absent();
+      if (!newText.isEmpty()) {
+        newValue = Optional.of(Integer.parseInt(newText));
+      }
+      //TODO(edcoyne): display error if not parsable
+      updateHandler.updateTriangulationSouthIn(newValue);
+    }
   }
 
   private static class HandleUpdateAddress extends TextChangeHandler {

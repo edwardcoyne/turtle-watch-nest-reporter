@@ -13,6 +13,7 @@ import com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation.Builder;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation.City;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation.Placement;
+import com.islandturtlewatch.nest.data.ReportProto.NestLocation.Triangulation;
 import com.islandturtlewatch.nest.data.ReportProto.Relocation;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.Report.NestStatus;
@@ -132,6 +133,70 @@ public class EditPresenter {
       public DataUpdateResult updateAbandonedEggCavities(boolean value) {
         Report.Builder updatedReport = model.getActiveReport().toBuilder();
         updatedReport.getConditionBuilder().setAbandonedEggCavities(value);
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+
+      public DataUpdateResult updateTriangulationNorthFt(
+          Optional<Integer> ft) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        Triangulation.Builder triangulation =
+            updatedReport.getLocationBuilder().getTriangulationBuilder();
+
+        if (ft.isPresent()) {
+          triangulation.setNorthFt(ft.get());
+        } else {
+          triangulation.clearNorthFt();
+        }
+
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+
+      public DataUpdateResult updateTriangulationNorthIn(
+          Optional<Integer> in) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        Triangulation.Builder triangulation =
+            updatedReport.getLocationBuilder().getTriangulationBuilder();
+
+        if (in.isPresent()) {
+          triangulation.setNorthIn(in.get());
+        } else {
+          triangulation.clearNorthIn();
+        }
+
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+
+      public DataUpdateResult updateTriangulationSouthFt(
+          Optional<Integer> ft) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        Triangulation.Builder triangulation =
+            updatedReport.getLocationBuilder().getTriangulationBuilder();
+
+        if (ft.isPresent()) {
+          triangulation.setSouthFt(ft.get());
+        } else {
+          triangulation.clearSouthFt();
+        }
+
+        writeChangesAndUpdate(updatedReport.build());
+        return DataUpdateResult.success();
+      }
+
+      public DataUpdateResult updateTriangulationSouthIn(
+          Optional<Integer> in) {
+        Report.Builder updatedReport = model.getActiveReport().toBuilder();
+        Triangulation.Builder triangulation =
+            updatedReport.getLocationBuilder().getTriangulationBuilder();
+
+        if (in.isPresent()) {
+          triangulation.setSouthIn(in.get());
+        } else {
+          triangulation.clearSouthIn();
+        }
+
         writeChangesAndUpdate(updatedReport.build());
         return DataUpdateResult.success();
       }
