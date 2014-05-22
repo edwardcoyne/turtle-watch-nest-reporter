@@ -115,7 +115,11 @@ public class EditFragmentNestCondition extends EditFragment {
           int dayOfMonth) {
         updateHandler.updateWashOverDate(ordinal, year, monthOfYear, dayOfMonth);
       }};
-    clickHandler.setDate(event.getTimestampMs());
+    if (event.hasTimestampMs()) {
+      clickHandler.setDate(event.getTimestampMs());
+    } else {
+      clickHandler.setDate(System.currentTimeMillis());
+    }
     date_button.setOnClickListener(listenerProvider.getOnClickListener(clickHandler));
 
     FocusMonitoredEditText storm_name = new FocusMonitoredEditText(getActivity());

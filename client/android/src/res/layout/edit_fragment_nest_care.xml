@@ -151,14 +151,14 @@
 	             android:layout_weight="1"
 	             android:text="@string/edit_nest_relocation_new_address" />
 	         
-	        <EditText
+	        <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
 	            android:id="@+id/fieldNewAddress"
 	            android:inputType="textPostalAddress"
 	            android:layout_width="0dp"
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"
-	            android:ems="10" >
-	        </EditText>
+	            android:ems="10" 
+              onTextChangeHandler="handleTextChange"/>
 	     </TableRow>
 	     <TableRow
 	        android:layout_width="wrap_content"
@@ -187,12 +187,13 @@
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"
 	            android:text="@string/edit_nest_relocation_num_eggs_relocated" />
-	        <EditText
+	        <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
 	            android:id="@+id/fieldEggsRelocated"
 	            android:inputType="number"
 	            android:layout_width="0dp"
 	            android:layout_height="wrap_content"
-	            android:layout_weight="1"/>
+	            android:layout_weight="1"
+              onTextChangeHandler="handleTextChange"/>
 	    </TableRow>
 	    <TableRow
 	        android:layout_width="wrap_content"
@@ -204,12 +205,13 @@
 	            android:layout_weight="1"
               android:layout_marginBottom="10dp"
 	            android:text="@string/edit_nest_relocation_num_eggs_destroyed" />
-	        <EditText
+	        <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
 	            android:id="@+id/fieldEggsDestroyed"
 	            android:inputType="number"
 	            android:layout_width="0dp"
 	            android:layout_height="wrap_content"
-	            android:layout_weight="1"/>
+	            android:layout_weight="1"
+              onTextChangeHandler="handleTextChange"/>
 	    </TableRow>
 	    <TableRow
 	       android:layout_width="wrap_content"
