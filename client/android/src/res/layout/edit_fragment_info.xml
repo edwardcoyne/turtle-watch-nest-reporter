@@ -6,6 +6,18 @@
 	<TableLayout
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content" >
+     <TableRow>
+          <TextView
+              android:layout_weight="1"
+              android:text="@string/edit_info_label_section_number" />
+  
+          <EditText
+              android:id="@+id/fieldSectionNumber"
+              android:inputType="number"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:enabled="false"/>
+     </TableRow>
 	   <TableRow android:id="@+id/rowNestNumber" >
 	        <TextView
 	            android:layout_weight="1"
@@ -16,6 +28,7 @@
 	            android:inputType="number"
 	            android:layout_width="0dp"
 	            android:layout_height="wrap_content"
+	            android:enabled="false"
 	            onTextChangeHandler="handleTextChange"/>
 	   </TableRow>
 	   <TableRow android:id="@+id/rowFalseCrawlNumber" >
@@ -28,6 +41,7 @@
               android:inputType="number"
               android:layout_width="0dp"
               android:layout_height="wrap_content"
+              android:enabled="false"
               onTextChangeHandler="handleTextChange"/>
      </TableRow>
 	    <TableRow

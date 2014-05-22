@@ -112,10 +112,11 @@ public class EditFragmentNestCare extends EditFragment {
         Integer.toString(relocation.getEggsRelocated()) : "");
     setText(R.id.fieldEggsDestroyed, relocation.hasEggsDestroyed() ?
         Integer.toString(relocation.getEggsDestroyed()) : "");
-    setChecked(R.id.fieldHighWater, relocation.getReasonHighWater());
-    setChecked(R.id.fieldPredation, relocation.getReasonPredation());
-    setChecked(R.id.fieldWashingOut, relocation.getReasonWashingOut());
-    setChecked(R.id.fieldConstruction, relocation.getReasonConstructionRenourishment());
+    setChecked(R.id.fieldHighWater, relocation.getReason() == Relocation.Reason.HIGH_WATER);
+    setChecked(R.id.fieldPredation, relocation.getReason() == Relocation.Reason.PREDATION);
+    setChecked(R.id.fieldWashingOut, relocation.getReason() == Relocation.Reason.WASHING_OUT);
+    setChecked(R.id.fieldConstruction,
+        relocation.getReason() == Relocation.Reason.CONSTRUCTION_RENOURISHMENT);
   }
 
   private static class HandleSetProtectedDate extends DatePickerClickHandler {
@@ -218,7 +219,7 @@ public class EditFragmentNestCare extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateRelocationReasonHighWater(isChecked(view));
+       updateHandler.updateRelocationReason(Relocation.Reason.HIGH_WATER);
     }
   }
   private static class HandleSetPredation extends ClickHandler {
@@ -227,7 +228,7 @@ public class EditFragmentNestCare extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateRelocationReasonPredation(isChecked(view));
+      updateHandler.updateRelocationReason(Relocation.Reason.PREDATION);
     }
   }
   private static class HandleSetWashingOut extends ClickHandler {
@@ -236,7 +237,7 @@ public class EditFragmentNestCare extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateRelocationReasonWashingOut(isChecked(view));
+      updateHandler.updateRelocationReason(Relocation.Reason.WASHING_OUT);
     }
   }
   private static class HandleSetConstruction extends ClickHandler {
@@ -245,7 +246,7 @@ public class EditFragmentNestCare extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateRelocationReasonConstruction(isChecked(view));
+      updateHandler.updateRelocationReason(Relocation.Reason.CONSTRUCTION_RENOURISHMENT);
     }
   }
 

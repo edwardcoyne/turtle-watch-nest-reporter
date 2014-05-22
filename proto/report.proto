@@ -179,6 +179,7 @@ message Excavation {
   optional int32 eggs_destroyed = 11;
 }
 
+// ids 7-10 temporarily blocked until test data is wiped.
 message Relocation {
   optional bool was_relocated = 1;
   optional int64 timestamp_ms = 2;
@@ -187,10 +188,14 @@ message Relocation {
   optional int32 eggs_relocated = 5;
   optional int32 eggs_destroyed = 6;
 
-  optional bool reason_high_water = 7;
-  optional bool reason_predation = 8;
-  optional bool reason_washing_out = 9;
-  optional bool reason_construction_renourishment = 10;
+  enum Reason{
+    UNSET_REASON = 1;
+    HIGH_WATER = 2;
+    PREDATION = 3;
+    WASHING_OUT = 4;
+    CONSTRUCTION_RENOURISHMENT = 5;
+  }
+  optional Reason reason = 11;
 }
 
 message GpsCoordinates {

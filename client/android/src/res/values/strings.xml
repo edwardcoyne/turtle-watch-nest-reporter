@@ -14,6 +14,7 @@
     <string name="action_new_report">New Report</string>
     <string name="action_delete_report">Delete Report</string>
     
+    <string name="edit_info_label_section_number">Section Number</string>
     <string name="edit_info_label_nest_number">Nest Number</string>
     <string name="edit_info_label_false_crawl_number">False Crawl Number</string>
     <string name="edit_info_label_date_found">Date Crawl Found</string>

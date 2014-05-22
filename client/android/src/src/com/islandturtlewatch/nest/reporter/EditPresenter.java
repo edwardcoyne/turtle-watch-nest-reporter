@@ -337,34 +337,10 @@ public class EditPresenter {
         return DataUpdateResult.success();
       }
 
-      public DataUpdateResult updateRelocationReasonHighWater(boolean value) {
+      public DataUpdateResult updateRelocationReason(Relocation.Reason reason) {
         Report.Builder updatedReport = model.getActiveReport().toBuilder();
         updatedReport.getInterventionBuilder().getRelocationBuilder()
-            .setReasonHighWater(value);
-        writeChangesAndUpdate(updatedReport.build());
-        return DataUpdateResult.success();
-      }
-
-      public DataUpdateResult updateRelocationReasonPredation(boolean value) {
-        Report.Builder updatedReport = model.getActiveReport().toBuilder();
-        updatedReport.getInterventionBuilder().getRelocationBuilder()
-            .setReasonPredation(value);
-        writeChangesAndUpdate(updatedReport.build());
-        return DataUpdateResult.success();
-      }
-
-      public DataUpdateResult updateRelocationReasonWashingOut(boolean value) {
-        Report.Builder updatedReport = model.getActiveReport().toBuilder();
-        updatedReport.getInterventionBuilder().getRelocationBuilder()
-            .setReasonWashingOut(value);
-        writeChangesAndUpdate(updatedReport.build());
-        return DataUpdateResult.success();
-      }
-
-      public DataUpdateResult updateRelocationReasonConstruction(boolean value) {
-        Report.Builder updatedReport = model.getActiveReport().toBuilder();
-        updatedReport.getInterventionBuilder().getRelocationBuilder()
-            .setReasonConstructionRenourishment(value);
+            .setReason(reason);
         writeChangesAndUpdate(updatedReport.build());
         return DataUpdateResult.success();
       }

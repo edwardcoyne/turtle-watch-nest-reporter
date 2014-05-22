@@ -1,7 +1,11 @@
 package com.islandturtlewatch.nest.reporter.ui;
 
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +21,7 @@ import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.util.DateUtil;
 import com.islandturtlewatch.nest.reporter.util.DialogUtil;
+import com.islandturtlewatch.nest.reporter.util.SettingsUtil;
 
 public class EditFragmentInfo extends EditFragment {
   private static final Map<Integer, ClickHandler> CLICK_HANDLERS =
@@ -40,6 +45,11 @@ public class EditFragmentInfo extends EditFragment {
           new HandleUpdateObservers(),
           new HandleUpdateSpeciesOther());
 
+  // Determined from user name.
+  private int sectionNumber;
+  private static final Pattern USERNAME_PATTERN =
+      Pattern.compile("section([0-9]+)@islandturtlewatch.com");
+
   @Override
   public Map<Integer, ClickHandler> getClickHandlers() {
     return CLICK_HANDLERS;
@@ -54,11 +64,24 @@ public class EditFragmentInfo extends EditFragment {
   public View onCreateView(LayoutInflater inflater,
       ViewGroup container,
       Bundle savedInstanceState) {
+    updateSectionNumber();
     return inflater.inflate(R.layout.edit_fragment_info, container, false);
+  }
+
+  private void updateSectionNumber() {
+    SharedPreferences settings =
+        getActivity().getSharedPreferences(SettingsUtil.SETTINGS_ID, Activity.MODE_PRIVATE);
+    String username = settings.getString(SettingsUtil.KEY_USERNAME, "");
+    Matcher matcher = USERNAME_PATTERN.matcher(username);
+    if (matcher.matches()) {
+      sectionNumber = Integer.parseInt(matcher.group(1));
+    }
   }
 
   @Override
   public void updateSection(Report report) {
+    setText(R.id.fieldSectionNumber, Integer.toString(sectionNumber));
+
     setText(R.id.fieldNestNumber, report.hasNestNumber() ?
         Integer.toString(report.getNestNumber()) : "");
     setVisible(R.id.rowNestNumber, report.hasNestNumber());
