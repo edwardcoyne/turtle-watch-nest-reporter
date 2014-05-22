@@ -17,7 +17,7 @@ import com.islandturtlewatch.nest.reporter.R;
 
 public class GpsCoordinateDialog extends DialogFragment {
   private static final String TAG = GpsCoordinateDialog.class.getSimpleName();
-  private static final float accuracyThresholdM = 4f;
+  private static final float accuracyThresholdM = 1f;
 
   private LocationManager locationManager;
   private final Listener listener = new Listener();

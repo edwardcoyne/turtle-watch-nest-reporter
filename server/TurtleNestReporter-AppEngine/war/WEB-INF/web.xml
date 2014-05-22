@@ -12,4 +12,22 @@
   <servlet-name>SystemServiceServlet</servlet-name>
   <url-pattern>/_ah/spi/*</url-pattern>
  </servlet-mapping>
+ 
+ <servlet>
+  <servlet-name>ImageServlet</servlet-name>
+  <servlet-class>com.islandturtlewatch.nest.reporter.web.servlets.ImageServlet</servlet-class>
+ </servlet>
+ <servlet-mapping>
+  <servlet-name>ImageServlet</servlet-name>
+  <url-pattern>/web/image/*</url-pattern>
+ </servlet-mapping>
+ 
+ <servlet>
+  <servlet-name>CsvServlet</servlet-name>
+  <servlet-class>com.islandturtlewatch.nest.reporter.web.servlets.CsvServlet</servlet-class>
+ </servlet>
+ <servlet-mapping>
+  <servlet-name>CsvServlet</servlet-name>
+  <url-pattern>/web/reporting/csv</url-pattern>
+ </servlet-mapping>
 </web-app>

@@ -287,6 +287,7 @@ public class SyncService extends Service {
           AuthenticationUtil.getCredential(SyncService.this,
               settings.getString(SettingsUtil.KEY_USERNAME, null)));
       serviceBuilder.setApplicationName("TurtleNestReporter-SyncService");
+      Log.d(TAG, "connecting to backend: " + RunEnvironment.getRootBackendUrl());
       serviceBuilder.setRootUrl(RunEnvironment.getRootBackendUrl());
 
       reportService = serviceBuilder.build();

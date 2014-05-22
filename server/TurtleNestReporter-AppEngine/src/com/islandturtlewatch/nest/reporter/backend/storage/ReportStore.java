@@ -80,6 +80,10 @@ public class ReportStore {
       }});
   }
 
+  public ImmutableList<ReportWrapper> getActiveReports() {
+    return doGetActiveReports();
+  }
+
   private ReportWrapper doAddReport(String userId, Report report) {
     User user = loadOrCreateUser(userId);
 
@@ -140,6 +144,24 @@ public class ReportStore {
     return ImmutableList.copyOf(versions);
   }
 
+  private ImmutableList<ReportWrapper> doGetActiveReports() {
+    // TODO(edcoyne): only get active reports.
+    List<StoredReport> reports = backend().load().type(StoredReport.class).list();
+    List<ReportWrapper> versions = new ArrayList<>();
+    for (StoredReport report : reports) {
+      Optional<StoredReportVersion> version =
+          tryLoadReportVersion (report, report.getLatestVersion());
+      if (version.isPresent()) {
+        versions.add(version.get().toReportWrapper());
+      } else {
+        log.warning("Unable to load report " + report.getReportId()
+            + " version: " + report.getLatestVersion()
+            + " for user: " + report.getUser().getName());
+      }
+    }
+    return ImmutableList.copyOf(versions);
+  }
+
   private User loadOrCreateUser(String userId) {
     Optional<User> userOpt = tryLoadUser(userId);
     if (!userOpt.isPresent()) {
@@ -162,13 +184,19 @@ public class ReportStore {
     return report;
   }
 
-  private StoredReportVersion loadReportVersion(StoredReport report, long version) {
+  private Optional<StoredReportVersion> tryLoadReportVersion(StoredReport report, long version) {
     StoredReportVersion reportVersion =
         backend().load().type(StoredReportVersion.class).parent(report).id(version).now();
-    Preconditions.checkNotNull(report,
-        "Missing report, report: " + report.getReportId() + " version:" + version);
-    return reportVersion;
+    return Optional.fromNullable(reportVersion);
   }
+
+  private StoredReportVersion loadReportVersion(StoredReport report, long version) {
+    Optional<StoredReportVersion> reportVersion = tryLoadReportVersion(report, version);
+    Preconditions.checkArgument(reportVersion.isPresent(),
+        "Missing report, report: " + report.getReportId() + " version:" + version);
+    return reportVersion.get();
+  }
+
 
   private static Objectify backend() {
     // Docs suggest never caching the result of this.

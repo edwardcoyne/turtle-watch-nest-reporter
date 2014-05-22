@@ -1,18 +1,22 @@
 package com.islandturtlewatch.nest.reporter.backend.storage;
 
 import java.io.IOException;
+import java.nio.channels.Channels;
 import java.util.List;
 import java.util.Locale;
 
+import lombok.Cleanup;
 import lombok.extern.java.Log;
 
 import com.google.appengine.api.appidentity.AppIdentityServiceFactory;
 import com.google.appengine.tools.cloudstorage.GcsFileOptions;
 import com.google.appengine.tools.cloudstorage.GcsFilename;
+import com.google.appengine.tools.cloudstorage.GcsInputChannel;
 import com.google.appengine.tools.cloudstorage.GcsOutputChannel;
 import com.google.appengine.tools.cloudstorage.GcsService;
 import com.google.appengine.tools.cloudstorage.GcsServiceFactory;
 import com.google.appengine.tools.cloudstorage.RetryParams;
+import com.google.common.io.ByteStreams;
 import com.google.protobuf.ByteString;
 import com.islandturtlewatch.nest.data.ReportProto.Image;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
@@ -28,13 +32,22 @@ public class ImageStore {
 
   public static void writeImage(
       long reportId, String fileName, ByteString image) throws IOException {
+    GcsFilename gcsFileName = createGcsFileName(reportId, fileName);
     GcsService gcsService =
         GcsServiceFactory.createGcsService(RetryParams.getDefaultInstance());
-    GcsFilename gcsFileName = createGcsFileName(reportId, fileName);
-    GcsOutputChannel outputChannel =
+
+    @Cleanup GcsOutputChannel outputChannel =
         gcsService.createOrReplace(gcsFileName, GcsFileOptions.getDefaultInstance());
     outputChannel.write(image.asReadOnlyByteBuffer());
     log.info("Wrote image to datastore: " + gcsFileName + " bytes: " + image.size());
+  }
+
+  public static byte[] readImage(long reportId, String fileName) throws IOException {
+    GcsFilename gcsFileName = createGcsFileName(reportId, fileName);
+    GcsService gcsService =
+        GcsServiceFactory.createGcsService(RetryParams.getDefaultInstance());
+    GcsInputChannel readChannel = gcsService.openReadChannel(gcsFileName, 0);
+    return ByteStreams.toByteArray(Channels.newInputStream(readChannel));
   }
 
   public static Report stripAndWriteEmbeddedImages(
