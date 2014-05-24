@@ -31,7 +31,7 @@ import com.islandturtlewatch.nest.reporter.transport.ReportResponse;
 import com.islandturtlewatch.nest.reporter.transport.ReportResponse.Code;
 
 @Api(name = "reportEndpoint",
-clientIds = ClientIds.ANDROID_CLIENT_ID,
+clientIds = {ClientIds.ANDROID_CLIENT_ID_DEV, ClientIds.ANDROID_CLIENT_ID_PROD},
 audiences = ClientIds.CLIENT_ID,
 scopes = {"https://www.googleapis.com/auth/userinfo.email"},
 namespace = @ApiNamespace(ownerDomain = "islandturtlewatch.com",

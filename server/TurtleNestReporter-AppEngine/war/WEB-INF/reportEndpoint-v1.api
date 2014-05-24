@@ -33,7 +33,7 @@
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ "362099484578.apps.googleusercontent.com" ],
-      "clientIds" : [ "362099484578-d2l665v2cmb9sjb9r77cip21rvruu9mo.apps.googleusercontent.com" ],
+      "clientIds" : [ "362099484578-d2l665v2cmb9sjb9r77cip21rvruu9mo.apps.googleusercontent.com", "362099484578-lbl3ef0b8mi6t13fpdthvr3n0qssqq4m.apps.googleusercontent.com" ],
       "rosyMethod" : "com.islandturtlewatch.nest.reporter.backend.endpoints.ReportEndpoint.updateReport",
       "request" : {
         "body" : "autoTemplate(backendRequest)",
@@ -49,7 +49,7 @@
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ "362099484578.apps.googleusercontent.com" ],
-      "clientIds" : [ "362099484578-d2l665v2cmb9sjb9r77cip21rvruu9mo.apps.googleusercontent.com" ],
+      "clientIds" : [ "362099484578-d2l665v2cmb9sjb9r77cip21rvruu9mo.apps.googleusercontent.com", "362099484578-lbl3ef0b8mi6t13fpdthvr3n0qssqq4m.apps.googleusercontent.com" ],
       "rosyMethod" : "com.islandturtlewatch.nest.reporter.backend.endpoints.ReportEndpoint.latestRefsForUser",
       "request" : {
         "body" : "empty"
@@ -64,7 +64,7 @@
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ "362099484578.apps.googleusercontent.com" ],
-      "clientIds" : [ "362099484578-d2l665v2cmb9sjb9r77cip21rvruu9mo.apps.googleusercontent.com" ],
+      "clientIds" : [ "362099484578-d2l665v2cmb9sjb9r77cip21rvruu9mo.apps.googleusercontent.com", "362099484578-lbl3ef0b8mi6t13fpdthvr3n0qssqq4m.apps.googleusercontent.com" ],
       "rosyMethod" : "com.islandturtlewatch.nest.reporter.backend.endpoints.ReportEndpoint.createReport",
       "request" : {
         "body" : "autoTemplate(backendRequest)",
