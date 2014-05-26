@@ -61,6 +61,10 @@ public class StoredReport {
   @Index
   City city;
 
+  @Getter @Setter
+  @Index
+  boolean active;
+
   public StoredReport updateFromReport(Report report) {
     dateFound = report.hasTimestampFoundMs() ? new Date(report.getTimestampFoundMs()) : null;
     dateHatched = report.getCondition().hasHatchTimestampMs()

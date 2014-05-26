@@ -163,6 +163,7 @@ public class EditFragmentMedia extends EditFragment {
     public class Thumbnailer implements Runnable {
       @Override
       public void run() {
+        waitForActivity();
         for (int i = 0; i < images.size(); i++) {
           final Uri imagePath = ImageUtil.getImagePath(EditFragmentMedia.this.getActivity(),
               images.get(i).getFileName());
@@ -176,6 +177,15 @@ public class EditFragmentMedia extends EditFragment {
             notifyDataSetChanged();
           }
         });
+      }
+    }
+
+    private void waitForActivity() {
+      while (EditFragmentMedia.this.getActivity() == null) {
+        Log.e(TAG, "Activity not present for some reason, waiting...");
+        try {
+          Thread.sleep(1000);
+        } catch (InterruptedException e) { /* Ignored */ }
       }
     }
 

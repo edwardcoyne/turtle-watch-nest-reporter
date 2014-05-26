@@ -81,7 +81,21 @@ public class ReportStore {
   }
 
   public ImmutableList<ReportWrapper> getActiveReports() {
-    return doGetActiveReports();
+    List<StoredReport> reports =
+        backend().load().type(StoredReport.class).filter("active =", true).list();
+    List<ReportWrapper> versions = new ArrayList<>();
+    for (StoredReport report : reports) {
+      Optional<StoredReportVersion> version =
+          tryLoadReportVersion (report, report.getLatestVersion());
+      if (version.isPresent()) {
+        versions.add(version.get().toReportWrapper());
+      } else {
+        log.warning("Unable to load report " + report.getReportId()
+            + " version: " + report.getLatestVersion()
+            + " for user: " + report.getUser().getName());
+      }
+    }
+    return ImmutableList.copyOf(versions);
   }
 
   private ReportWrapper doAddReport(String userId, Report report) {
@@ -91,6 +105,7 @@ public class ReportStore {
         .setReportId(user.getHighestReportId() + 1)
         .setUser(user.getKey())
         .setLatestVersion(1) // start at 1 as we are adding it now.
+        .setActive(true)
         .build()
         .updateFromReport(report);
 
@@ -140,24 +155,6 @@ public class ReportStore {
     List<ReportWrapper> versions = new ArrayList<>();
     for (StoredReport report : reports) {
       versions.add(loadReportVersion(report, report.getLatestVersion()).toReportWrapper());
-    }
-    return ImmutableList.copyOf(versions);
-  }
-
-  private ImmutableList<ReportWrapper> doGetActiveReports() {
-    // TODO(edcoyne): only get active reports.
-    List<StoredReport> reports = backend().load().type(StoredReport.class).list();
-    List<ReportWrapper> versions = new ArrayList<>();
-    for (StoredReport report : reports) {
-      Optional<StoredReportVersion> version =
-          tryLoadReportVersion (report, report.getLatestVersion());
-      if (version.isPresent()) {
-        versions.add(version.get().toReportWrapper());
-      } else {
-        log.warning("Unable to load report " + report.getReportId()
-            + " version: " + report.getLatestVersion()
-            + " for user: " + report.getUser().getName());
-      }
     }
     return ImmutableList.copyOf(versions);
   }

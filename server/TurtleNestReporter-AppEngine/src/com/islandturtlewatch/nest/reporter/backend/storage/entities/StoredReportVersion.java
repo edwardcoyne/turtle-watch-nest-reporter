@@ -65,6 +65,7 @@ public class StoredReportVersion {
   public ReportWrapper toReportWrapper() {
     ReportWrapper.Builder builder = ReportWrapper.newBuilder();
     builder.setReport(this.report);
+    builder.setActive(this.storedReport.get().isActive());
     ReportRef.Builder refBuilder = builder.getRefBuilder();
     refBuilder.setReportId(this.storedReport.get().getReportId());
     refBuilder.setOwnerId(this.storedReport.get().getUser().getName());
