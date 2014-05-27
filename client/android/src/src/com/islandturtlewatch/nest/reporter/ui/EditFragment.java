@@ -1,6 +1,7 @@
 package com.islandturtlewatch.nest.reporter.ui;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,12 +21,11 @@ import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.google.protobuf.Message;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
-import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateResult;
 import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.ui.split.SplitEditActivity.ListenerProvider;
 import com.islandturtlewatch.nest.reporter.util.DateUtil;
 
-public class EditFragment extends Fragment {
+public abstract class EditFragment extends Fragment {
   private static final String TAG = EditFragment.class.getSimpleName();
   public static final int UNDEFINED_VIEW_ID = -1;
 
@@ -49,19 +49,28 @@ public class EditFragment extends Fragment {
   }
 
   // Persist any working state, will be called when tombstoning.
-  public void saveState(Bundle bundle) {
-  }
+  public void saveState(Bundle bundle) {}
 
   // Restore any working state, will be called when returning from tombstone.
-  public void restoreState(Bundle bundle) {
-  }
+  public void restoreState(Bundle bundle) {}
 
   /**
    * Override to update fragment's display.
    */
-  // TODO(edcoyne): make abstract once we are no longer using generic EditFragments.
-  protected void updateSection(Report report) {
+  protected abstract void updateSection(Report report);
 
+  /**
+   * Handlers for all click events.
+   */
+  public Map<Integer, ClickHandler> getClickHandlers() {
+    return Collections.emptyMap();
+  }
+
+  /**
+   * Handlers for MonitoredEditText change events.
+   */
+  public  Map<Integer, TextChangeHandler> getTextChangeHandlers() {
+    return Collections.emptyMap();
   }
 
   public void handleIntentResult(int requestCode, int resultCode, Intent data) {
@@ -80,16 +89,6 @@ public class EditFragment extends Fragment {
   public void setListenerProvider(ListenerProvider listenerProvider) {
     this.listenerProvider = listenerProvider;
   }
-
-  // TODO(edcoyne): make abstract once we are no longer using generic EditFragments.
-  public Map<Integer, ClickHandler> getClickHandlers() {
-    return null;
-  }
-
-//TODO(edcoyne): make abstract once we are no longer using generic EditFragments.
- public Map<Integer, TextChangeHandler> getTextChangeHandlers() {
-   return null;
- }
 
   protected TextView getTextView(int id) {
     View view = getActivity().findViewById(id);
@@ -179,19 +178,23 @@ public class EditFragment extends Fragment {
     }
   }
 
+  protected static Optional<Integer> getInteger(String text) {
+    if (text.isEmpty()) {
+      return Optional.<Integer>absent();
+    }
+    try {
+      int newValue = Integer.parseInt(text);
+      return Optional.of(newValue);
+    } catch (NumberFormatException ex) {
+      //ErrorUtil.showErrorMessage(context, "Value is not a number: " + text);
+      return Optional.absent();
+    }
+  }
+
   public static abstract class ClickHandler implements ClickHandlerSimple {
     protected final int resourceId;
     protected ClickHandler(int resourceId) {
       this.resourceId = resourceId;
-    }
-
-    protected void displayResult(DataUpdateResult result) {
-      if (result.isSuccess()) {
-        Log.d(TAG, "Update successful");
-      } else {
-        Log.e(TAG, "Update failed: " + ((result.hasErrorMessage()) ? result.getErrorMessage() : ""));
-        //TODO (edcoyne): add dialog with error message for user.
-      }
     }
 
     static Map<Integer, ClickHandler> toMap(ClickHandler... clickHandlers) {

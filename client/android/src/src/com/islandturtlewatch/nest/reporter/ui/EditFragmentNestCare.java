@@ -4,13 +4,11 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 
-import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.islandturtlewatch.nest.data.ReportProto.GpsCoordinates;
 import com.islandturtlewatch.nest.data.ReportProto.Intervention;
@@ -21,6 +19,16 @@ import com.islandturtlewatch.nest.data.ReportProto.Relocation;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.DateProtectedMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.DateRelocatedMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.EggsDestroyedMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.EggsRelocatedMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.NewAddressMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.NewGpsMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.ProtectionTypeMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.RelocatedMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.RelocatedReasonMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.WhyProtectedMutation;
 import com.islandturtlewatch.nest.reporter.ui.GpsCoordinateDialog.GpsLocationCallback;
 import com.islandturtlewatch.nest.reporter.util.GpsUtil;
 
@@ -129,9 +137,8 @@ public class EditFragmentNestCare extends EditFragment {
         int year,
         int month,
         int day) {
-      Log.d(EditFragmentNestCare.class.getSimpleName(),
-          "Set date to " + year + "/" + month + "/" + day);
-      displayResult(updateHandler.updateDateProtected(year, month, day));
+      updateHandler.applyMutation(
+          DateProtectedMutation.builder().setYear(year).setMonth(month).setDay(day).build());
     }
   }
   private static class HandleSetRelocationDate extends DatePickerClickHandler {
@@ -144,9 +151,8 @@ public class EditFragmentNestCare extends EditFragment {
         int year,
         int month,
         int day) {
-      Log.d(EditFragmentNestCare.class.getSimpleName(),
-          "Set date to " + year + "/" + month + "/" + day);
-      displayResult(updateHandler.updateDateRelocated(year, month, day));
+      updateHandler.applyMutation(
+          DateRelocatedMutation.builder().setYear(year).setMonth(month).setDay(day).build());
     }
   }
   private static class HandleSetSelfRealeasingCage extends ClickHandler {
@@ -155,7 +161,8 @@ public class EditFragmentNestCare extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateProtectionType(ProtectionEvent.Type.SELF_RELEASING_CAGE);
+      updateHandler.applyMutation(ProtectionTypeMutation.builder()
+          .setType(ProtectionEvent.Type.SELF_RELEASING_CAGE).build());
     }
   }
   private static class HandleSetSelfRealeasingFlat extends ClickHandler {
@@ -164,7 +171,8 @@ public class EditFragmentNestCare extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateProtectionType(ProtectionEvent.Type.SELF_RELEASING_FLAT);
+      updateHandler.applyMutation(ProtectionTypeMutation.builder()
+          .setType(ProtectionEvent.Type.SELF_RELEASING_FLAT).build());
     }
   }
   private static class HandleSetRestrainingCage extends ClickHandler {
@@ -173,7 +181,8 @@ public class EditFragmentNestCare extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateProtectionType(ProtectionEvent.Type.RESTRAINING_CAGE);
+      updateHandler.applyMutation(ProtectionTypeMutation.builder()
+          .setType(ProtectionEvent.Type.RESTRAINING_CAGE).build());
     }
   }
   private static class HandleSetBeforePredation extends ClickHandler {
@@ -182,7 +191,8 @@ public class EditFragmentNestCare extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateWhenProtected(ProtectionEvent.Reason.BEFORE_PREDITATION);
+      updateHandler.applyMutation(WhyProtectedMutation.builder()
+          .setReason(ProtectionEvent.Reason.BEFORE_PREDITATION).build());
     }
   }
   private static class HandleSetAfterPredation extends ClickHandler {
@@ -191,7 +201,8 @@ public class EditFragmentNestCare extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateWhenProtected(ProtectionEvent.Reason.AFTER_PREDITATION);
+      updateHandler.applyMutation(WhyProtectedMutation.builder()
+          .setReason(ProtectionEvent.Reason.AFTER_PREDITATION).build());
     }
   }
   private static class HandleSetLightProblem extends ClickHandler {
@@ -200,7 +211,8 @@ public class EditFragmentNestCare extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateWhenProtected(ProtectionEvent.Reason.FOR_LIGHT_PROBLEMS);
+      updateHandler.applyMutation(WhyProtectedMutation.builder()
+          .setReason(ProtectionEvent.Reason.FOR_LIGHT_PROBLEMS).build());
     }
   }
   private static class HandleSetRelocated extends ClickHandler {
@@ -209,7 +221,7 @@ public class EditFragmentNestCare extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateRelocated(isChecked(view));
+      updateHandler.applyMutation(RelocatedMutation.builder().setTrue(isChecked(view)).build());
     }
   }
 
@@ -219,7 +231,8 @@ public class EditFragmentNestCare extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateRelocationReason(Relocation.Reason.HIGH_WATER);
+      updateHandler.applyMutation(RelocatedReasonMutation.builder()
+          .setReason(Relocation.Reason.HIGH_WATER).build());
     }
   }
   private static class HandleSetPredation extends ClickHandler {
@@ -228,7 +241,8 @@ public class EditFragmentNestCare extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.updateRelocationReason(Relocation.Reason.PREDATION);
+      updateHandler.applyMutation(RelocatedReasonMutation.builder()
+          .setReason(Relocation.Reason.PREDATION).build());
     }
   }
   private static class HandleSetWashingOut extends ClickHandler {
@@ -237,7 +251,8 @@ public class EditFragmentNestCare extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.updateRelocationReason(Relocation.Reason.WASHING_OUT);
+      updateHandler.applyMutation(RelocatedReasonMutation.builder()
+          .setReason(Relocation.Reason.WASHING_OUT).build());
     }
   }
   private static class HandleSetConstruction extends ClickHandler {
@@ -246,7 +261,8 @@ public class EditFragmentNestCare extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.updateRelocationReason(Relocation.Reason.CONSTRUCTION_RENOURISHMENT);
+      updateHandler.applyMutation(RelocatedReasonMutation.builder()
+          .setReason(Relocation.Reason.CONSTRUCTION_RENOURISHMENT).build());
     }
   }
 
@@ -257,7 +273,7 @@ public class EditFragmentNestCare extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      updateHandler.updateNewAddress(newText);
+      updateHandler.applyMutation(NewAddressMutation.builder().setAddress(newText).build());
     }
   }
   private static class HandleUpdateEggsRelocated extends TextChangeHandler {
@@ -267,12 +283,8 @@ public class EditFragmentNestCare extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      Optional<Integer> newValue = Optional.absent();
-      if (!newText.isEmpty()) {
-        newValue = Optional.of(Integer.parseInt(newText));
-      }
-      //TODO(edcoyne): display error if not parsable
-      updateHandler.updateNumberOfEggsRelocated(newValue);
+      updateHandler.applyMutation(
+          EggsRelocatedMutation.builder().setEggs(getInteger(newText)).build());
     }
   }
   private static class HandleUpdateEggsDestroyed extends TextChangeHandler {
@@ -282,12 +294,8 @@ public class EditFragmentNestCare extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      Optional<Integer> newValue = Optional.absent();
-      if (!newText.isEmpty()) {
-        newValue = Optional.of(Integer.parseInt(newText));
-      }
-      //TODO(edcoyne): display error if not parsable
-      updateHandler.updateNumberOfEggsDestroyed(newValue);
+      updateHandler.applyMutation(
+          EggsDestroyedMutation.builder().setEggs(getInteger(newText)).build());
     }
   }
 
@@ -303,7 +311,7 @@ public class EditFragmentNestCare extends EditFragment {
       dialog.setCallback(new GpsLocationCallback() {
         @Override
         public void location(GpsCoordinates coordinates) {
-          updateHandler.updateNewGps(coordinates);
+          updateHandler.applyMutation(NewGpsMutation.builder().setCoordinates(coordinates).build());
         }
       });
 

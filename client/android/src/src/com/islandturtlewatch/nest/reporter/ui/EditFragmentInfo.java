@@ -7,18 +7,25 @@ import java.util.regex.Pattern;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 
-import com.google.common.base.Optional;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.Report.NestStatus;
 import com.islandturtlewatch.nest.data.ReportProto.Report.Species;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.AbandonedBodyPitsMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.AbandonedEggCavitiesMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.DateFoundMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.FalseCrawlNumberMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.NestNumberMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.NestStatusMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.ObserversMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.SpeciesMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.SpeciesOtherMutation;
 import com.islandturtlewatch.nest.reporter.util.DateUtil;
 import com.islandturtlewatch.nest.reporter.util.DialogUtil;
 import com.islandturtlewatch.nest.reporter.util.SettingsUtil;
@@ -124,13 +131,8 @@ public class EditFragmentInfo extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      if (newText.isEmpty()) {
-        updateHandler.updateNestNumber(Optional.<Integer>absent());
-      } else {
-        int newValue = Integer.parseInt(newText);
-        //TODO(edcoyne): display error if not parsable
-        updateHandler.updateNestNumber(Optional.of(newValue));
-      }
+      updateHandler.applyMutation(
+          NestNumberMutation.builder().setNumber(getInteger(newText)).build());
     }
   }
   private static class HandleUpdateFalseCrawlNumber extends TextChangeHandler {
@@ -140,13 +142,8 @@ public class EditFragmentInfo extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      if (newText.isEmpty()) {
-        updateHandler.updateFalseCrawlNumber(Optional.<Integer>absent());
-      } else {
-        int newValue = Integer.parseInt(newText);
-        //TODO(edcoyne): display error if not parsable
-        updateHandler.updateFalseCrawlNumber(Optional.of(newValue));
-      }
+      updateHandler.applyMutation(
+          FalseCrawlNumberMutation.builder().setNumber(getInteger(newText)).build());
     }
   }
 
@@ -157,7 +154,7 @@ public class EditFragmentInfo extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      updateHandler.updateObservers(newText);
+      updateHandler.applyMutation(ObserversMutation.builder().setObservers(newText).build());
     }
   }
 
@@ -168,7 +165,7 @@ public class EditFragmentInfo extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      updateHandler.updateSpeciesOther(newText);
+      updateHandler.applyMutation(SpeciesOtherMutation.builder().setOther(newText).build());
     }
   }
 
@@ -181,9 +178,8 @@ public class EditFragmentInfo extends EditFragment {
         int year,
         int month,
         int day) {
-      Log.d(EditFragmentInfo.class.getSimpleName(),
-          "Set date to " + year + "/" + month + "/" + day);
-      displayResult(updateHandler.updateDateFound(year, month, day));
+      updateHandler.applyMutation(
+          DateFoundMutation.builder().setYear(year).setMonth(month).setDay(day).build());
     }
   }
 
@@ -194,7 +190,8 @@ public class EditFragmentInfo extends EditFragment {
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateObservers(getText(view));
+      updateHandler.applyMutation(
+          ObserversMutation.builder().setObservers(getText(view)).build());
     }
   }
 
@@ -205,7 +202,8 @@ public class EditFragmentInfo extends EditFragment {
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateNestStatus(NestStatus.NEST_VERIFIED);
+      updateHandler.applyMutation(
+         NestStatusMutation.builder().setStatus(NestStatus.NEST_VERIFIED).build());
     }
   }
 
@@ -216,7 +214,8 @@ public class EditFragmentInfo extends EditFragment {
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.updateNestStatus(NestStatus.NEST_NOT_VERIFIED);
+      updateHandler.applyMutation(
+          NestStatusMutation.builder().setStatus(NestStatus.NEST_NOT_VERIFIED).build());
     }
   }
 
@@ -227,7 +226,8 @@ public class EditFragmentInfo extends EditFragment {
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.updateNestStatus(NestStatus.NEST_RELOCATED);
+      updateHandler.applyMutation(
+          NestStatusMutation.builder().setStatus(NestStatus.NEST_RELOCATED).build());
     }
   }
 
@@ -238,7 +238,8 @@ public class EditFragmentInfo extends EditFragment {
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.updateNestStatus(NestStatus.FALSE_CRAWL);
+      updateHandler.applyMutation(
+          NestStatusMutation.builder().setStatus(NestStatus.FALSE_CRAWL).build());
     }
   }
 
@@ -249,7 +250,8 @@ public class EditFragmentInfo extends EditFragment {
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateAbandonedBodyPits(isChecked(view));
+      updateHandler.applyMutation(
+          AbandonedBodyPitsMutation.builder().setTrue(isChecked(view)).build());
     }
   }
 
@@ -260,7 +262,8 @@ public class EditFragmentInfo extends EditFragment {
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateAbandonedEggCavities(isChecked(view));
+      updateHandler.applyMutation(
+          AbandonedEggCavitiesMutation.builder().setTrue(isChecked(view)).build());
     }
   }
   private static class HandleSetSpeciesLoggerHead extends ClickHandler {
@@ -270,7 +273,7 @@ public class EditFragmentInfo extends EditFragment {
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.updateSpecies(Species.LOGGERHEAD);
+      updateHandler.applyMutation(SpeciesMutation.builder().setSpecies(Species.LOGGERHEAD).build());
     }
   }
   private static class HandleSetSpeciesGreen extends ClickHandler {
@@ -282,7 +285,7 @@ public class EditFragmentInfo extends EditFragment {
     public void handleClick(View view, DataUpdateHandler updateHandler) {
       DialogUtil.acknowledge(view.getContext(),
           "Need photos of this species and please contact Suzi.");
-      updateHandler.updateSpecies(Species.GREEN);
+      updateHandler.applyMutation(SpeciesMutation.builder().setSpecies(Species.GREEN).build());
     }
   }
   private static class HandleSetSpeciesOther extends ClickHandler {
@@ -294,7 +297,7 @@ public class EditFragmentInfo extends EditFragment {
     public void handleClick(View view, DataUpdateHandler updateHandler) {
       DialogUtil.acknowledge(view.getContext(),
           "Need photos of this species and please contact Suzi.");
-      updateHandler.updateSpecies(Species.OTHER);
+      updateHandler.applyMutation(SpeciesMutation.builder().setSpecies(Species.OTHER).build());
     }
   }
 }

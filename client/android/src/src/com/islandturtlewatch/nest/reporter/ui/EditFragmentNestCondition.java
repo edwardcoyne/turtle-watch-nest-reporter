@@ -14,7 +14,6 @@ import android.widget.DatePicker;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
-import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.islandturtlewatch.nest.data.ReportProto.NestCondition;
 import com.islandturtlewatch.nest.data.ReportProto.NestCondition.PreditationEvent;
@@ -22,6 +21,21 @@ import com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.DeletePredationMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.DeleteWashOverMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.EggsScatteredMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.PoachedDateMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.PredationDateMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.PredationNumEggsMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.PredationPredatorMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.RootsInvadedMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.VandalizedDateMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.WasPoachedMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.WasVandalizedMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.WashoutDateMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.WashoutStormNameMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.WashoverDateMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.WashoverStormNameMutation;
 import com.islandturtlewatch.nest.reporter.util.DateUtil;
 
 public class EditFragmentNestCondition extends EditFragment {
@@ -113,7 +127,8 @@ public class EditFragmentNestCondition extends EditFragment {
       @Override
       public void onDateSet(DatePicker view, int year, int monthOfYear,
           int dayOfMonth) {
-        updateHandler.updateWashOverDate(ordinal, year, monthOfYear, dayOfMonth);
+        updateHandler.applyMutation(WashoverDateMutation.builder().setOrdinal(ordinal)
+            .setYear(year).setMonth(monthOfYear).setDay(dayOfMonth).build());
       }};
     if (event.hasTimestampMs()) {
       clickHandler.setDate(event.getTimestampMs());
@@ -128,7 +143,8 @@ public class EditFragmentNestCondition extends EditFragment {
     listenerProvider.setFocusLossListener(storm_name, new TextChangeHandlerSimple() {
         @Override
         public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-          updateHandler.updateWashOverStorm(ordinal, newText);
+          updateHandler.applyMutation(WashoverStormNameMutation.builder()
+              .setOrdinal(ordinal).setName(newText).build());
         }
       });
 
@@ -136,7 +152,7 @@ public class EditFragmentNestCondition extends EditFragment {
     delete.setText("X");
     delete.setOnClickListener(listenerProvider.getOnClickListener(new ClickHandlerSimple() {
       @Override public void handleClick(View view, DataUpdateHandler updateHandler) {
-        updateHandler.deleteWashOver(ordinal);
+        updateHandler.applyMutation(DeleteWashOverMutation.builder().setOrdinal(ordinal).build());
       }
     }));
 
@@ -166,7 +182,8 @@ public class EditFragmentNestCondition extends EditFragment {
           @Override
           public void onDateSet(
               DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            updateHandler.updatePreditationDate(ordinal, year, monthOfYear, dayOfMonth);
+            updateHandler.applyMutation(PredationDateMutation.builder().setOrdinal(ordinal)
+                .setYear(year).setMonth(monthOfYear).setDay(dayOfMonth).build());
           }
         });
       }
@@ -179,12 +196,8 @@ public class EditFragmentNestCondition extends EditFragment {
     listenerProvider.setFocusLossListener(num_eggs, new TextChangeHandlerSimple() {
         @Override
         public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-          Optional<Integer> newValue = Optional.absent();
-          if (!newText.isEmpty()) {
-            newValue = Optional.of(Integer.parseInt(newText));
-          }
-          //TODO(edcoyne): display error if not parsable
-          updateHandler.updatePreditationNumEggs(ordinal, newValue);
+          updateHandler.applyMutation(PredationNumEggsMutation.builder()
+              .setOrdinal(ordinal).setNumEggs(getInteger(newText)).build());
         }
       });
     FocusMonitoredEditText predator = new FocusMonitoredEditText(getActivity());
@@ -193,7 +206,8 @@ public class EditFragmentNestCondition extends EditFragment {
     listenerProvider.setFocusLossListener(predator, new TextChangeHandlerSimple() {
         @Override
         public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-          updateHandler.updatePreditationPredator(ordinal, newText);
+          updateHandler.applyMutation(PredationPredatorMutation.builder()
+              .setOrdinal(ordinal).setPredator(newText).build());
         }
       });
 
@@ -201,7 +215,7 @@ public class EditFragmentNestCondition extends EditFragment {
     delete.setText("X");
     delete.setOnClickListener(listenerProvider.getOnClickListener(new ClickHandlerSimple() {
       @Override public void handleClick(View view, DataUpdateHandler updateHandler) {
-        updateHandler.deletePreditation(ordinal);
+        updateHandler.applyMutation(DeletePredationMutation.builder().setOrdinal(ordinal).build());
       }
     }));
 
@@ -256,7 +270,8 @@ public class EditFragmentNestCondition extends EditFragment {
         int year,
         int month,
         int day) {
-      displayResult(updateHandler.updateWashoutDate(year, month, day));
+      updateHandler.applyMutation(WashoutDateMutation.builder()
+          .setYear(year).setMonth(month).setDay(day).build());
     }
   }
   private static class HandleSetVandalizedDate extends DatePickerClickHandler {
@@ -269,7 +284,8 @@ public class EditFragmentNestCondition extends EditFragment {
         int year,
         int month,
         int day) {
-      displayResult(updateHandler.updateVandalizedDate(year, month, day));
+      updateHandler.applyMutation(VandalizedDateMutation.builder()
+          .setYear(year).setMonth(month).setDay(day).build());
     }
   }
   private static class HandleSetPoachedDate extends DatePickerClickHandler {
@@ -282,7 +298,8 @@ public class EditFragmentNestCondition extends EditFragment {
         int year,
         int month,
         int day) {
-      displayResult(updateHandler.updatePoachedDate(year, month, day));
+      updateHandler.applyMutation(
+          PoachedDateMutation.builder().setYear(year).setMonth(month).setDay(day).build());
     }
   }
 
@@ -292,7 +309,7 @@ public class EditFragmentNestCondition extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateVandalized(isChecked(view));
+      updateHandler.applyMutation(WasVandalizedMutation.builder().setTrue(isChecked(view)).build());
     }
   }
   private static class HandleSetPoached extends ClickHandler {
@@ -301,7 +318,7 @@ public class EditFragmentNestCondition extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updatePoached(isChecked(view));
+      updateHandler.applyMutation(WasPoachedMutation.builder().setTrue(isChecked(view)).build());
     }
   }
   private static class HandleSetRootsInvaded extends ClickHandler {
@@ -310,7 +327,7 @@ public class EditFragmentNestCondition extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateRootsInvaded(isChecked(view));
+      updateHandler.applyMutation(RootsInvadedMutation.builder().setTrue(isChecked(view)).build());
     }
   }
   private static class HandleSetEggsScattered extends ClickHandler {
@@ -319,7 +336,7 @@ public class EditFragmentNestCondition extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateEggsScattered(isChecked(view));
+      updateHandler.applyMutation(EggsScatteredMutation.builder().setTrue(isChecked(view)).build());
     }
   }
 
@@ -330,7 +347,7 @@ public class EditFragmentNestCondition extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      updateHandler.updateWashoutStorm(newText);
+      updateHandler.applyMutation(WashoutStormNameMutation.builder().setStormName(newText).build());
     }
   }
 }

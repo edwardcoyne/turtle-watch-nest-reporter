@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.NotesMutation;
 
 public class EditFragmentNotes extends EditFragment {
   private static final Map<Integer, TextChangeHandler> TEXT_CHANGE_HANDLERS =
@@ -39,7 +40,7 @@ public class EditFragmentNotes extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      updateHandler.updateNotes(newText);
+      updateHandler.applyMutation(NotesMutation.builder().setNotes(newText).build());
     }
   }
 }

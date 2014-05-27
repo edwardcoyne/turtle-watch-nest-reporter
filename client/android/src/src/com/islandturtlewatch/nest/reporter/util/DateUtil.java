@@ -6,7 +6,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 public class DateUtil {
-	private static final DateTimeFormatter PATTERN = DateTimeFormat.forPattern("yyyy/MM/dd");
+	private static final DateTimeFormatter PATTERN = DateTimeFormat.forPattern("MM/dd/yyyy");
 
 	private DateUtil() {} // static util
 

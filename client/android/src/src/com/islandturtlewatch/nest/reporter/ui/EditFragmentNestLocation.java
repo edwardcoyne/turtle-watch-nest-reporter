@@ -18,6 +18,25 @@ import com.islandturtlewatch.nest.data.ReportProto.NestLocation.Triangulation;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.ApexToBarrierFtMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.ApexToBarrierInMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.CityMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.DetailsMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.GpsMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.ObstructionsEscarpmentMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.ObstructionsFurnitureMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.ObstructionsOtherMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.ObstructionsSeawallRocksMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.PlacementMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.StreetAddressMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.TriangulationNorthFtMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.TriangulationNorthInMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.TriangulationNorthMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.TriangulationSouthFtMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.TriangulationSouthInMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.TriangulationSouthMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.WaterToApexFtMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.WaterToApexInMutation;
 import com.islandturtlewatch.nest.reporter.ui.GpsCoordinateDialog.GpsLocationCallback;
 import com.islandturtlewatch.nest.reporter.util.GpsUtil;
 
@@ -142,12 +161,8 @@ public class EditFragmentNestLocation extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      Optional<Integer> newValue = Optional.absent();
-      if (!newText.isEmpty()) {
-        newValue = Optional.of(Integer.parseInt(newText));
-      }
-      //TODO(edcoyne): display error if not parsable
-      updateHandler.updateTriangulationNorthFt(newValue);
+      updateHandler.applyMutation(TriangulationNorthFtMutation.builder()
+          .setFt(getInteger(newText)).build());
     }
   }
 
@@ -158,12 +173,8 @@ public class EditFragmentNestLocation extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      Optional<Integer> newValue = Optional.absent();
-      if (!newText.isEmpty()) {
-        newValue = Optional.of(Integer.parseInt(newText));
-      }
-      //TODO(edcoyne): display error if not parsable
-      updateHandler.updateTriangulationNorthIn(newValue);
+      updateHandler.applyMutation(TriangulationNorthInMutation.builder()
+          .setIn(getInteger(newText)).build());
     }
   }
 
@@ -174,12 +185,8 @@ public class EditFragmentNestLocation extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      Optional<Integer> newValue = Optional.absent();
-      if (!newText.isEmpty()) {
-        newValue = Optional.of(Integer.parseInt(newText));
-      }
-      //TODO(edcoyne): display error if not parsable
-      updateHandler.updateTriangulationSouthFt(newValue);
+      updateHandler.applyMutation(TriangulationSouthFtMutation.builder()
+          .setFt(getInteger(newText)).build());
     }
   }
 
@@ -190,12 +197,8 @@ public class EditFragmentNestLocation extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      Optional<Integer> newValue = Optional.absent();
-      if (!newText.isEmpty()) {
-        newValue = Optional.of(Integer.parseInt(newText));
-      }
-      //TODO(edcoyne): display error if not parsable
-      updateHandler.updateTriangulationSouthIn(newValue);
+      updateHandler.applyMutation(TriangulationSouthInMutation.builder()
+          .setIn(getInteger(newText)).build());
     }
   }
 
@@ -206,7 +209,7 @@ public class EditFragmentNestLocation extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      updateHandler.updateStreetAddress(newText);
+      updateHandler.applyMutation(StreetAddressMutation.builder().setAddress(newText).build());
     }
   }
 
@@ -217,7 +220,7 @@ public class EditFragmentNestLocation extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      updateHandler.updateDetails(newText);
+      updateHandler.applyMutation(DetailsMutation.builder().setDetails(newText).build());
     }
   }
 
@@ -228,12 +231,8 @@ public class EditFragmentNestLocation extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      Optional<Integer> newValue = Optional.absent();
-      if (!newText.isEmpty()) {
-        newValue = Optional.of(Integer.parseInt(newText));
-      }
-      //TODO(edcoyne): display error if not parsable
-      updateHandler.updateApexToBarrierFt(newValue);
+      updateHandler.applyMutation(ApexToBarrierFtMutation.builder()
+          .setFt(getInteger(newText)).build());
     }
   }
 
@@ -244,12 +243,8 @@ public class EditFragmentNestLocation extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      Optional<Integer> newValue = Optional.absent();
-      if (!newText.isEmpty()) {
-        newValue = Optional.of(Integer.parseInt(newText));
-      }
-      //TODO(edcoyne): display error if not parsable
-      updateHandler.updateApexToBarrierIn(newValue);
+      updateHandler.applyMutation(ApexToBarrierInMutation.builder()
+          .setIn(getInteger(newText)).build());
     }
   }
 
@@ -260,12 +255,8 @@ public class EditFragmentNestLocation extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      Optional<Integer> newValue = Optional.absent();
-      if (!newText.isEmpty()) {
-        newValue = Optional.of(Integer.parseInt(newText));
-      }
-      //TODO(edcoyne): display error if not parsable
-      updateHandler.updateWaterToApexFt(newValue);
+      updateHandler.applyMutation(WaterToApexFtMutation.builder()
+          .setFt(getInteger(newText)).build());
     }
   }
 
@@ -276,12 +267,8 @@ public class EditFragmentNestLocation extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      Optional<Integer> newValue = Optional.absent();
-      if (!newText.isEmpty()) {
-        newValue = Optional.of(Integer.parseInt(newText));
-      }
-      //TODO(edcoyne): display error if not parsable
-      updateHandler.updateWaterToApexIn(newValue);
+      updateHandler.applyMutation(WaterToApexInMutation.builder()
+          .setIn(getInteger(newText)).build());
     }
   }
 
@@ -292,7 +279,7 @@ public class EditFragmentNestLocation extends EditFragment {
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateCity(City.AM);
+      updateHandler.applyMutation(CityMutation.builder().setCity(City.AM).build());
     }
   }
 
@@ -303,7 +290,7 @@ public class EditFragmentNestLocation extends EditFragment {
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateCity(City.HB);
+      updateHandler.applyMutation(CityMutation.builder().setCity(City.HB).build());
     }
   }
 
@@ -314,7 +301,7 @@ public class EditFragmentNestLocation extends EditFragment {
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateCity(City.BB);
+      updateHandler.applyMutation(CityMutation.builder().setCity(City.BB).build());
     }
   }
 
@@ -325,7 +312,8 @@ public class EditFragmentNestLocation extends EditFragment {
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateLocationPlacement(Placement.OPEN_BEACH);
+      updateHandler.applyMutation(PlacementMutation.builder()
+          .setPlacement(Placement.OPEN_BEACH).build());
     }
   }
 
@@ -336,7 +324,8 @@ public class EditFragmentNestLocation extends EditFragment {
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateLocationPlacement(Placement.IN_VEGITATION);
+      updateHandler.applyMutation(PlacementMutation.builder()
+          .setPlacement(Placement.IN_VEGITATION).build());
     }
   }
 
@@ -347,7 +336,8 @@ public class EditFragmentNestLocation extends EditFragment {
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateLocationPlacement(Placement.AT_VEGITATION);
+      updateHandler.applyMutation(PlacementMutation.builder()
+          .setPlacement(Placement.AT_VEGITATION).build());
     }
   }
 
@@ -358,7 +348,8 @@ public class EditFragmentNestLocation extends EditFragment {
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateLocationPlacement(Placement.AT_ESCARPMENT);
+      updateHandler.applyMutation(PlacementMutation.builder()
+          .setPlacement(Placement.AT_ESCARPMENT).build());
     }
   }
 
@@ -369,7 +360,8 @@ public class EditFragmentNestLocation extends EditFragment {
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateLocationPlacement(Placement.ON_ESCARPMENT);
+      updateHandler.applyMutation(PlacementMutation.builder()
+          .setPlacement(Placement.ON_ESCARPMENT).build());
     }
   }
 
@@ -380,7 +372,8 @@ public class EditFragmentNestLocation extends EditFragment {
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateObstructionsSeawallRocks(isChecked(view));
+      updateHandler.applyMutation(ObstructionsSeawallRocksMutation.builder()
+          .setTrue(isChecked(view)).build());
     }
   }
 
@@ -391,7 +384,8 @@ public class EditFragmentNestLocation extends EditFragment {
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateObstructionsFurniture(isChecked(view));
+      updateHandler.applyMutation(ObstructionsFurnitureMutation.builder()
+          .setTrue(isChecked(view)).build());
     }
   }
 
@@ -402,7 +396,8 @@ public class EditFragmentNestLocation extends EditFragment {
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateObstructionsEscarpment(isChecked(view));
+      updateHandler.applyMutation(ObstructionsEscarpmentMutation.builder()
+          .setTrue(isChecked(view)).build());
     }
   }
 
@@ -413,8 +408,9 @@ public class EditFragmentNestLocation extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      updateHandler.updateObstructionsOther(newText.isEmpty() ? Optional.<String>absent()
-          : Optional.of(newText));
+      updateHandler.applyMutation(ObstructionsOtherMutation.builder()
+          .setOther(newText.isEmpty() ? Optional.<String>absent()
+          : Optional.of(newText)).build());
     }
   }
 
@@ -430,7 +426,7 @@ public class EditFragmentNestLocation extends EditFragment {
       dialog.setCallback(new GpsLocationCallback() {
         @Override
         public void location(GpsCoordinates coordinates) {
-          updateHandler.updateNestGps(coordinates);
+          updateHandler.applyMutation(GpsMutation.builder().setCoordinates(coordinates).build());
         }
       });
 
@@ -451,7 +447,8 @@ public class EditFragmentNestLocation extends EditFragment {
       dialog.setCallback(new GpsLocationCallback() {
         @Override
         public void location(GpsCoordinates coordinates) {
-          updateHandler.updateTriangulationNorth(coordinates);
+          updateHandler.applyMutation(TriangulationNorthMutation.builder()
+              .setCoordinates(coordinates).build());
         }
       });
 
@@ -471,7 +468,8 @@ public class EditFragmentNestLocation extends EditFragment {
       dialog.setCallback(new GpsLocationCallback() {
         @Override
         public void location(GpsCoordinates coordinates) {
-          updateHandler.updateTriangulationSouth(coordinates);
+          updateHandler.applyMutation(TriangulationSouthMutation.builder()
+              .setCoordinates(coordinates).build());
         }
       });
 

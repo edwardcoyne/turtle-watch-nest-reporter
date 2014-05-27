@@ -29,6 +29,8 @@ import com.islandturtlewatch.nest.data.ReportProto.Image;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.AddPhotoMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.UpdatePhotoMutation;
 import com.islandturtlewatch.nest.reporter.util.ErrorUtil;
 import com.islandturtlewatch.nest.reporter.util.ImageUtil;
 
@@ -89,8 +91,10 @@ public class EditFragmentMedia extends EditFragment {
         // Image captured and saved to fileUri specified in the Intent
         ErrorUtil.showErrorMessage(this, "Image saved :\n"
             + CAPTURE_IMAGE_HANDLER.getActiveImageFileName());
+
         listenerProvider.getUpdateHandler()
-            .addPhoto(CAPTURE_IMAGE_HANDLER.getActiveImageFileName());
+            .applyMutation(AddPhotoMutation.builder()
+                .setFileName(CAPTURE_IMAGE_HANDLER.getActiveImageFileName()).build());
 
       } else {
         ErrorUtil.showErrorMessage(this, "Image capture failed. code:" + resultCode);
@@ -102,7 +106,8 @@ public class EditFragmentMedia extends EditFragment {
           ImageUtil.copyFromContentUri(
               this.getActivity(), data.getData(), currentlyEditingFileUri.get());
           listenerProvider.getUpdateHandler()
-              .updatePhoto(ImageUtil.getFileName(currentlyEditingFileUri.get()));
+              .applyMutation(UpdatePhotoMutation.builder()
+                    .setFileName(ImageUtil.getFileName(currentlyEditingFileUri.get())).build());
         } catch (IOException e) {
           ErrorUtil.showErrorMessage(this, "Failed to save changes: " + e.getMessage());
           Log.e(TAG, "IOException while copying edited file: ", e);

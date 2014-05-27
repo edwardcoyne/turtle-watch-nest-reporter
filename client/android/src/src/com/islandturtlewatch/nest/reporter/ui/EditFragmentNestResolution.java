@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.islandturtlewatch.nest.data.ReportProto.Excavation;
 import com.islandturtlewatch.nest.data.ReportProto.Excavation.ExcavationFailureReason;
@@ -16,6 +15,20 @@ import com.islandturtlewatch.nest.data.ReportProto.NestCondition;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.AdditionalHatchDateMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.DisorentationMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.ExcavationDateMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.ExcavationDeadInNestMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.ExcavationDeadPippedMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.ExcavationEggsDestroyedMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.ExcavationFailureMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.ExcavationFailureOtherMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.ExcavationHatchedMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.ExcavationLiveInNestMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.ExcavationLivePippedMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.ExcavationWholeUnhatchedMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.HatchDateMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.WasExcavatedMutation;
 
 public class EditFragmentNestResolution extends EditFragment {
   private static final Map<Integer, ClickHandler> CLICK_HANDLERS =
@@ -139,7 +152,8 @@ public class EditFragmentNestResolution extends EditFragment {
         int year,
         int month,
         int day) {
-      displayResult(updateHandler.updateHatchDate(year, month, day));
+      updateHandler.applyMutation(HatchDateMutation.builder()
+          .setYear(year).setMonth(month).setDay(day).build());
     }
   }
   private static class HandleSetAdditionalHatchDate extends DatePickerClickHandler {
@@ -152,7 +166,8 @@ public class EditFragmentNestResolution extends EditFragment {
         int year,
         int month,
         int day) {
-      displayResult(updateHandler.updateAdditionalHatchDate(year, month, day));
+      updateHandler.applyMutation(AdditionalHatchDateMutation.builder()
+          .setYear(year).setMonth(month).setDay(day).build());
     }
   }
   private static class HandleSetExcavationDate extends DatePickerClickHandler {
@@ -165,7 +180,8 @@ public class EditFragmentNestResolution extends EditFragment {
         int year,
         int month,
         int day) {
-      displayResult(updateHandler.updateExcavationDate(year, month, day));
+      updateHandler.applyMutation(ExcavationDateMutation.builder()
+          .setYear(year).setMonth(month).setDay(day).build());
     }
   }
 
@@ -175,7 +191,7 @@ public class EditFragmentNestResolution extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateDisorentation(isChecked(view));
+      updateHandler.applyMutation(DisorentationMutation.builder().setTrue(isChecked(view)).build());
     }
   }
   private static class HandleSetExcavated extends ClickHandler {
@@ -184,7 +200,7 @@ public class EditFragmentNestResolution extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateExcavated(isChecked(view));
+      updateHandler.applyMutation(WasExcavatedMutation.builder().setTrue(isChecked(view)).build());
     }
   }
   private static class HandleSetEggsNotFound extends ClickHandler {
@@ -193,7 +209,8 @@ public class EditFragmentNestResolution extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateExcavationFailure(ExcavationFailureReason.EGGS_NOT_FOUND);
+      updateHandler.applyMutation(ExcavationFailureMutation.builder()
+          .setReason(ExcavationFailureReason.EGGS_NOT_FOUND).build());
     }
   }
   private static class HandleSetEggsTooDecayed extends ClickHandler {
@@ -202,7 +219,8 @@ public class EditFragmentNestResolution extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateExcavationFailure(ExcavationFailureReason.EGGS_HATCHLINGS_TOO_DECAYED);
+      updateHandler.applyMutation(ExcavationFailureMutation.builder()
+          .setReason(ExcavationFailureReason.EGGS_HATCHLINGS_TOO_DECAYED).build());
     }
   }
   private static class HandleSetReasonOther extends ClickHandler {
@@ -211,7 +229,8 @@ public class EditFragmentNestResolution extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-       updateHandler.updateExcavationFailure(ExcavationFailureReason.OTHER);
+      updateHandler.applyMutation(ExcavationFailureMutation.builder()
+          .setReason(ExcavationFailureReason.OTHER).build());
     }
   }
 
@@ -223,12 +242,8 @@ public class EditFragmentNestResolution extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      Optional<Integer> newValue = Optional.absent();
-      if (!newText.isEmpty()) {
-        newValue = Optional.of(Integer.parseInt(newText));
-      }
-      //TODO(edcoyne): display error if not parsable
-      updateHandler.updateDeadInNest(newValue);
+      updateHandler.applyMutation(ExcavationDeadInNestMutation.builder()
+          .setEggs(getInteger(newText)).build());
     }
   }
   private static class HandleUpdateLiveInNest extends TextChangeHandler {
@@ -238,12 +253,8 @@ public class EditFragmentNestResolution extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      Optional<Integer> newValue = Optional.absent();
-      if (!newText.isEmpty()) {
-        newValue = Optional.of(Integer.parseInt(newText));
-      }
-      //TODO(edcoyne): display error if not parsable
-      updateHandler.updateLiveInNest(newValue);
+      updateHandler.applyMutation(ExcavationLiveInNestMutation.builder()
+          .setEggs(getInteger(newText)).build());
     }
   }
   private static class HandleUpdateHatchedShells extends TextChangeHandler {
@@ -253,12 +264,8 @@ public class EditFragmentNestResolution extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      Optional<Integer> newValue = Optional.absent();
-      if (!newText.isEmpty()) {
-        newValue = Optional.of(Integer.parseInt(newText));
-      }
-      //TODO(edcoyne): display error if not parsable
-      updateHandler.updateHatchedShells(newValue);
+      updateHandler.applyMutation(ExcavationHatchedMutation.builder()
+          .setEggs(getInteger(newText)).build());
     }
   }
   private static class HandleUpdateDeadPipped extends TextChangeHandler {
@@ -268,12 +275,8 @@ public class EditFragmentNestResolution extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      Optional<Integer> newValue = Optional.absent();
-      if (!newText.isEmpty()) {
-        newValue = Optional.of(Integer.parseInt(newText));
-      }
-      //TODO(edcoyne): display error if not parsable
-      updateHandler.updateDeadPipped(newValue);
+      updateHandler.applyMutation(ExcavationDeadPippedMutation.builder()
+          .setHatchlings(getInteger(newText)).build());
     }
   }
   private static class HandleUpdateLivePipped extends TextChangeHandler {
@@ -283,12 +286,8 @@ public class EditFragmentNestResolution extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      Optional<Integer> newValue = Optional.absent();
-      if (!newText.isEmpty()) {
-        newValue = Optional.of(Integer.parseInt(newText));
-      }
-      //TODO(edcoyne): display error if not parsable
-      updateHandler.updateLivePipped(newValue);
+      updateHandler.applyMutation(ExcavationLivePippedMutation.builder()
+          .setHatchlings(getInteger(newText)).build());
     }
   }
   private static class HandleUpdateWholeUnhatched extends TextChangeHandler {
@@ -298,12 +297,8 @@ public class EditFragmentNestResolution extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      Optional<Integer> newValue = Optional.absent();
-      if (!newText.isEmpty()) {
-        newValue = Optional.of(Integer.parseInt(newText));
-      }
-      //TODO(edcoyne): display error if not parsable
-      updateHandler.updateWholeUnhatched(newValue);
+      updateHandler.applyMutation(ExcavationWholeUnhatchedMutation.builder()
+          .setEggs(getInteger(newText)).build());
     }
   }
   private static class HandleUpdateEggsDestroyed extends TextChangeHandler {
@@ -313,12 +308,8 @@ public class EditFragmentNestResolution extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      Optional<Integer> newValue = Optional.absent();
-      if (!newText.isEmpty()) {
-        newValue = Optional.of(Integer.parseInt(newText));
-      }
-      //TODO(edcoyne): display error if not parsable
-      updateHandler.updateEggsDestroyed(newValue);
+      updateHandler.applyMutation(ExcavationEggsDestroyedMutation.builder()
+          .setEggs(getInteger(newText)).build());
     }
   }
   private static class HandleUpdateReasonOther extends TextChangeHandler {
@@ -328,7 +319,8 @@ public class EditFragmentNestResolution extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      updateHandler.updateExcavationFailureOther(newText);
+      updateHandler.applyMutation(ExcavationFailureOtherMutation.builder()
+          .setReason(newText).build());
     }
   }
 
