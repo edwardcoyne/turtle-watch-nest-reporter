@@ -37,6 +37,12 @@ import com.islandturtlewatch.nest.reporter.util.Sql;
 import com.islandturtlewatch.nest.reporter.util.Sql.Column;
 import com.islandturtlewatch.nest.reporter.util.Sql.Column.Type;
 
+/**
+ * Responsible for managing local version of data on all reports and images.
+ *
+ * If changes are made to anything in this class run LocalDataStoreTest. It is vital these tests
+ * pass and all data is safely stored.
+ */
 public class LocalDataStore {
   private static final String TAG = LocalDataStore.class.getCanonicalName();
   private final StorageDefinition.DbHelper storageHelper;
