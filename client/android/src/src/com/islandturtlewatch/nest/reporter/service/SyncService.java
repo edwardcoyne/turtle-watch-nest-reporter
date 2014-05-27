@@ -327,7 +327,7 @@ public class SyncService extends Service {
           .build();
       LocalDataStore dataStore = new LocalDataStore(SyncService.this);
       dataStore.setServerSideData(wrapper.getLocalId(), reportRef);
-      dataStore.markAllImagesSynced(wrapper.getLocalId(), wrapper.getUnsynchedImageFileNames());
+      dataStore.markImagesSynced(wrapper.getLocalId(), wrapper.getUnsynchedImageFileNames());
 
       return true;
     }
@@ -355,7 +355,7 @@ public class SyncService extends Service {
       dataStore.setServerSideData(wrapper.getLocalId(), reportRef);
       // TODO(edcoyne): this is a poor implmentation, there could be changes to the same image while
       // this upload is taking place that will be missed until next time its changed.
-      dataStore.markAllImagesSynced(wrapper.getLocalId(), wrapper.getUnsynchedImageFileNames());
+      dataStore.markImagesSynced(wrapper.getLocalId(), wrapper.getUnsynchedImageFileNames());
 
       return true;
     }
@@ -382,7 +382,7 @@ public class SyncService extends Service {
     }
 
     private void inlineUnsyncedImages(CachedReportWrapper wrapper) throws IOException {
-      Set<String> unsycnedPhotosFileNames = dataStore.getUnsycnedImagesFileNames();
+      Set<String> unsycnedPhotosFileNames = dataStore.getUnsycnedImageFileNames();
       Report.Builder builder = wrapper.getReport().toBuilder();
       for (Image.Builder image : builder.getImageBuilderList()) {
         if (unsycnedPhotosFileNames.contains(image.getFileName())) {

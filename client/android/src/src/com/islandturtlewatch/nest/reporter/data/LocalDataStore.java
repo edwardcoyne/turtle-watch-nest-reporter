@@ -86,7 +86,7 @@ public class LocalDataStore {
   /**
    * Get file names of images that have local changes the server hasn't seen.
    */
-  public Set<String> getUnsycnedImagesFileNames() {
+  public Set<String> getUnsycnedImageFileNames() {
     @Cleanup SQLiteDatabase db = storageHelper.getReadableDatabase();
 
     @Cleanup Cursor imageCursor = db.query(
@@ -365,6 +365,7 @@ public class LocalDataStore {
     private Optional<Long> version;
     private boolean synched;
     private boolean active;
+    private boolean deleted;
     private long lastUpdatedTimestamp;
     @NonNull private Report report;
     private List<String> unsynchedImageFileNames;
@@ -373,6 +374,7 @@ public class LocalDataStore {
       ReportsTable.COLUMN_LOCAL_ID.name,
       ReportsTable.COLUMN_ACTIVE.name,
       ReportsTable.COLUMN_SYNCED.name,
+      ReportsTable.COLUMN_DELETED.name,
       ReportsTable.COLUMN_REPORT.name,
       ReportsTable.COLUMN_TS_LOCAL_UPDATE.name,
       ReportsTable.COLUMN_REPORT_ID.name,
@@ -384,6 +386,7 @@ public class LocalDataStore {
           .setReportId(Sql.getOptLong(cursor, ReportsTable.COLUMN_REPORT_ID))
           .setVersion(Sql.getOptLong(cursor, ReportsTable.COLUMN_VERSION))
           .setActive(Sql.getBool(cursor, ReportsTable.COLUMN_ACTIVE))
+          .setDeleted(Sql.getBool(cursor, ReportsTable.COLUMN_DELETED))
           .setSynched(Sql.getBool(cursor, ReportsTable.COLUMN_SYNCED))
           .setLastUpdatedTimestamp(Sql.getLong(cursor, ReportsTable.COLUMN_TS_LOCAL_UPDATE))
           .setUnsynchedImageFileNames(new ArrayList<String>());

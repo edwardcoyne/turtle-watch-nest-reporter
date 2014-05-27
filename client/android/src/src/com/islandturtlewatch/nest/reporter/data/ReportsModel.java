@@ -177,14 +177,14 @@ public class ReportsModel {
     void updateImages(List<Image> images) {
       for (Image image : images) {
         long newTs = ImageUtil.getModifiedTime(context, image.getFileName());
-        Optional<Long> oldTs = dataStore.getImageTimestamp(activeReportId, image.getFileName());
+        Optional<Long> oldTs = dataStore.getImageUpdatedTimestamp(activeReportId, image.getFileName());
         if (!oldTs.isPresent()) {
           Log.d(TAG, "Adding new image record: " + image.getFileName() + " ts: " + newTs);
           dataStore.addImage(activeReportId, image.getFileName(), newTs);
         } else if (!oldTs.get().equals(newTs)) {
           Log.d(TAG, "Updating image: " + image.getFileName()
               + " oldts: " + oldTs.get() + " newTs:" + newTs);
-          dataStore.touchImage(activeReportId, image.getFileName(), newTs);
+          dataStore.setImageUnsynced(activeReportId, image.getFileName(), newTs);
         }
       }
     }
@@ -193,7 +193,7 @@ public class ReportsModel {
     // only check for new images.
     void addImages(List<Image> images) {
       for (Image image : images) {
-        if (!dataStore.getImageTimestamp(activeReportId, image.getFileName()).isPresent()) {
+        if (!dataStore.getImageUpdatedTimestamp(activeReportId, image.getFileName()).isPresent()) {
           long newTs = ImageUtil.getModifiedTime(context, image.getFileName());
           Log.d(TAG, "Adding new image record: " + image.getFileName() + " ts: " + newTs);
           dataStore.addImage(activeReportId, image.getFileName(), newTs);
