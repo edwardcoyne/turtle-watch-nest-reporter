@@ -1,5 +1,11 @@
 package com.islandturtlewatch.nest.reporter.data;
 
+import static com.islandturtlewatch.nest.reporter.util.Sql.and;
+import static com.islandturtlewatch.nest.reporter.util.Sql.isFalse;
+import static com.islandturtlewatch.nest.reporter.util.Sql.isTrue;
+import static com.islandturtlewatch.nest.reporter.util.Sql.whereEquals;
+import static com.islandturtlewatch.nest.reporter.util.Sql.whereStringEquals;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -19,18 +25,17 @@ import android.provider.BaseColumns;
 import android.util.Log;
 
 import com.google.api.client.repackaged.com.google.common.base.Preconditions;
-import com.google.api.client.util.Throwables;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import com.google.protobuf.InvalidProtocolBufferException;
-import com.google.protobuf.MessageLite;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
 import com.islandturtlewatch.nest.data.ReportProto.ReportWrapper;
-import com.islandturtlewatch.nest.reporter.data.LocalDataStore.Column.Type;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore.StorageDefinition.ImagesTable;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore.StorageDefinition.ReportsTable;
+import com.islandturtlewatch.nest.reporter.util.Sql;
+import com.islandturtlewatch.nest.reporter.util.Sql.Column;
+import com.islandturtlewatch.nest.reporter.util.Sql.Column.Type;
 
 public class LocalDataStore {
   private static final String TAG = LocalDataStore.class.getCanonicalName();
@@ -38,19 +43,6 @@ public class LocalDataStore {
 
   public LocalDataStore(Context context) {
     storageHelper = new StorageDefinition.DbHelper(context);
-  }
-
-  private Cursor getActiveReportsCursor(SQLiteDatabase db) {
-
-    return db.query(
-        ReportsTable.TABLE_NAME, // table name
-        CachedReportWrapper.requiredColumns, // cols to select
-        and(isTrue(ReportsTable.COLUMN_ACTIVE), isFalse(ReportsTable.COLUMN_DELETED) ), // where
-        null, // don't need selection args
-        null, // don't group
-        null, // don't filter
-        ReportsTable.COLUMN_TS_LOCAL_ADD.name // sort
-        );
   }
 
   public int activeReportCount() {
@@ -70,6 +62,9 @@ public class LocalDataStore {
     return output.build();
   }
 
+  /**
+   * Return all reports that have local changes that have not been synced to the server.
+   */
   public ImmutableList<CachedReportWrapper> listUnsyncedReports() {
     @Cleanup SQLiteDatabase db = storageHelper.getReadableDatabase();
     @Cleanup Cursor cursor = db.query(
@@ -88,6 +83,9 @@ public class LocalDataStore {
     return output.build();
   }
 
+  /**
+   * Get file names of images that have local changes the server hasn't seen.
+   */
   public Set<String> getUnsycnedImagesFileNames() {
     @Cleanup SQLiteDatabase db = storageHelper.getReadableDatabase();
 
@@ -102,7 +100,7 @@ public class LocalDataStore {
         null); // don't sort
 
     ImmutableList<String> unsynchedReports =
-        getAllString(imageCursor, ImagesTable.COLUMN_FILE_NAME);
+        Sql.getAllString(imageCursor, ImagesTable.COLUMN_FILE_NAME);
     return ImmutableSet.copyOf(unsynchedReports);
   }
 
@@ -143,7 +141,7 @@ public class LocalDataStore {
   }
 
   /**
-   * Saves local changes to a report.
+   * Marks a report as having local changes.
    */
   public void setReportUnsynced(long localId) {
     @Cleanup SQLiteDatabase db = storageHelper.getWritableDatabase();
@@ -163,7 +161,7 @@ public class LocalDataStore {
   /**
    * Saves updates from server.
    *
-   * Requires InitReportId to have been called for existing report, else we will add a new row.
+   * Requires setServerSideData to have been called for existing report, else we will add a new row.
    */
   public void updateFromServer(ReportWrapper reportWrapper) {
     @Cleanup SQLiteDatabase db = storageHelper.getWritableDatabase();
@@ -208,9 +206,9 @@ public class LocalDataStore {
   }
 
   /**
-   *  Mark all images for this
+   *  Mark listed images as synced with server.
    */
-  public void markAllImagesSynced(long localReportId, List<String> filenames) {
+  public void markImagesSynced(long localReportId, List<String> filenames) {
     @Cleanup SQLiteDatabase db = storageHelper.getWritableDatabase();
 
     for (String fileName : filenames) {
@@ -227,21 +225,10 @@ public class LocalDataStore {
     }
   }
 
-  public void addImage(long localReportId, String fileName, long timestamp) {
-    @Cleanup SQLiteDatabase db = storageHelper.getWritableDatabase();
-
-    ContentValues values = new ContentValues();
-    values.put(ImagesTable.COLUMN_LOCAL_REPORT_ID.name, localReportId);
-    values.put(ImagesTable.COLUMN_FILE_NAME.name, fileName);
-    values.put(ImagesTable.COLUMN_TS_LOCAL_UPDATE.name, timestamp);
-    values.put(ImagesTable.COLUMN_TS_LOCAL_ADD.name, System.currentTimeMillis());
-
-    long imageId = db.insert(ImagesTable.TABLE_NAME, null, values);
-    Preconditions.checkArgument(imageId != -1, "Failed to insert new image");
-    this.setReportUnsynced(localReportId);
-  }
-
-  public void touchImage(long localReportId, String fileName, long timestamp) {
+  /**
+   * Set image as unsynced and update timestamp.
+   */
+  public void setImageUnsynced(long localReportId, String fileName, long timestamp) {
     @Cleanup SQLiteDatabase db = storageHelper.getWritableDatabase();
 
     ContentValues values = new ContentValues();
@@ -255,10 +242,15 @@ public class LocalDataStore {
         null);
     Preconditions.checkArgument(numberUpdated == 1,
         "Should update one row not " + numberUpdated);
+
+    // Mark report as not synced as well to trigger sync process.
     this.setReportUnsynced(localReportId);
   }
 
-  public Optional<Long> getImageTimestamp(long localReportId, String fileName) {
+  /**
+   * Returns timestamp image was last updated.
+   */
+  public Optional<Long> getImageUpdatedTimestamp(long localReportId, String fileName) {
     @Cleanup SQLiteDatabase db = storageHelper.getReadableDatabase();
     @Cleanup Cursor cursor = db.query(
         ImagesTable.TABLE_NAME,
@@ -274,7 +266,7 @@ public class LocalDataStore {
       return Optional.absent();
     }
     cursor.moveToFirst();
-    return Optional.of(getLong(cursor, ImagesTable.COLUMN_TS_LOCAL_UPDATE));
+    return Optional.of(Sql.getLong(cursor, ImagesTable.COLUMN_TS_LOCAL_UPDATE));
   }
 
   /**
@@ -297,6 +289,20 @@ public class LocalDataStore {
     return getReport(localId);
   }
 
+  public void addImage(long localReportId, String fileName, long timestamp) {
+    @Cleanup SQLiteDatabase db = storageHelper.getWritableDatabase();
+
+    ContentValues values = new ContentValues();
+    values.put(ImagesTable.COLUMN_LOCAL_REPORT_ID.name, localReportId);
+    values.put(ImagesTable.COLUMN_FILE_NAME.name, fileName);
+    values.put(ImagesTable.COLUMN_TS_LOCAL_UPDATE.name, timestamp);
+    values.put(ImagesTable.COLUMN_TS_LOCAL_ADD.name, System.currentTimeMillis());
+
+    long imageId = db.insert(ImagesTable.TABLE_NAME, null, values);
+    Preconditions.checkArgument(imageId != -1, "Failed to insert new image");
+    this.setReportUnsynced(localReportId);
+  }
+
   /**
    * Delete report.
    */
@@ -315,6 +321,9 @@ public class LocalDataStore {
         "delete should update one row not " + numberUpdated);
   }
 
+  /**
+   * Gets the highest nest number in any active, non-deleted reports.
+   */
   public int getHighestNestNumber() {
     int highestNestNumber = 0;
     ImmutableList<CachedReportWrapper> activeReports = listActiveReports();
@@ -324,6 +333,9 @@ public class LocalDataStore {
     return highestNestNumber;
   }
 
+  /**
+   * Gets the highest false crawl number in any active, non-deleted reports.
+   */
   public int getHighestFalseCrawlNumber() {
     int highestFCNumber = 0;
     ImmutableList<CachedReportWrapper> activeReports = listActiveReports();
@@ -333,80 +345,16 @@ public class LocalDataStore {
     return highestFCNumber;
   }
 
-  private static ImmutableList<String> getAllString(Cursor cursor, Column column) {
-    ImmutableList.Builder<String> output = ImmutableList.builder();
-    while (cursor.moveToNext()) {
-      output.add(getString(cursor, column));
-    }
-    return output.build();
-  }
-
-  private static boolean getBool(Cursor cursor, Column column) {
-    return cursor.getInt(cursor.getColumnIndexOrThrow(column.name)) == 1;
-  }
-
-  private static int getInt(Cursor cursor, Column column) {
-    return cursor.getInt(cursor.getColumnIndexOrThrow(column.name));
-  }
-
-  private static long getLong(Cursor cursor, Column column) {
-    return cursor.getLong(cursor.getColumnIndexOrThrow(column.name));
-  }
-
-  private static Optional<Long> getOptLong(Cursor cursor, Column column) {
-    if (cursor.isNull(cursor.getColumnIndexOrThrow(column.name))) {
-      return Optional.absent();
-    }
-    return Optional.of(cursor.getLong(cursor.getColumnIndexOrThrow(column.name)));
-  }
-
-  private static String getString(Cursor cursor, Column column) {
-    return cursor.getString(cursor.getColumnIndexOrThrow(column.name));
-  }
-
-  @SuppressWarnings("unchecked")
-  private static <T extends MessageLite> Optional<T> getProto(Cursor cursor, Column column, T proto) {
-    int index = cursor.getColumnIndexOrThrow(column.name);
-    if (cursor.isNull(index)) {
-      return Optional.absent();
-    }
-    try {
-      return Optional.of((T)proto.newBuilderForType().mergeFrom(
-          cursor.getBlob(index))
-          .build());
-    } catch (InvalidProtocolBufferException | IllegalArgumentException e) {
-      throw Throwables.propagate(e);
-    }
-  }
-
-  static String whereStringEquals(Column column, String value) {
-    return column.name + " = \"" + value.toString() +"\"";
-  }
-
-  static <T extends Object> String whereEquals(Column column, T value) {
-    return column.name + " = " + value.toString();
-  }
-
-  static String isTrue(Column column) {
-    return column.name + " = 1";
-  }
-
-  static String isFalse(Column column) {
-    return column.name + " != 1";
-  }
-
-  static String and(String cond1, String cond2) {
-    return cond1 + " and " + cond2;
-  }
-
-  static <T> String colIn(Column column, List<T> values) {
-    StringBuilder in = new StringBuilder(column.name + " in (");
-    for (T value : values) {
-      in.append(value.toString()).append(',');
-    }
-    // Remove last ','
-    in.setLength(in.length()-1);
-    return in.toString();
+  private Cursor getActiveReportsCursor(SQLiteDatabase db) {
+    return db.query(
+        ReportsTable.TABLE_NAME, // table name
+        CachedReportWrapper.requiredColumns, // cols to select
+        and(isTrue(ReportsTable.COLUMN_ACTIVE), isFalse(ReportsTable.COLUMN_DELETED) ), // where
+        null, // don't need selection args
+        null, // don't group
+        null, // don't filter
+        ReportsTable.COLUMN_TS_LOCAL_ADD.name // sort
+        );
   }
 
   @Data
@@ -432,15 +380,15 @@ public class LocalDataStore {
 
     static CachedReportWrapper from(Cursor cursor) {
       CachedReportWrapperBuilder builder = CachedReportWrapper.builder()
-          .setLocalId(getInt(cursor, ReportsTable.COLUMN_LOCAL_ID))
-          .setReportId(getOptLong(cursor, ReportsTable.COLUMN_REPORT_ID))
-          .setVersion(getOptLong(cursor, ReportsTable.COLUMN_VERSION))
-          .setActive(getBool(cursor, ReportsTable.COLUMN_ACTIVE))
-          .setSynched(getBool(cursor, ReportsTable.COLUMN_SYNCED))
-          .setLastUpdatedTimestamp(getLong(cursor, ReportsTable.COLUMN_TS_LOCAL_UPDATE))
+          .setLocalId(Sql.getInt(cursor, ReportsTable.COLUMN_LOCAL_ID))
+          .setReportId(Sql.getOptLong(cursor, ReportsTable.COLUMN_REPORT_ID))
+          .setVersion(Sql.getOptLong(cursor, ReportsTable.COLUMN_VERSION))
+          .setActive(Sql.getBool(cursor, ReportsTable.COLUMN_ACTIVE))
+          .setSynched(Sql.getBool(cursor, ReportsTable.COLUMN_SYNCED))
+          .setLastUpdatedTimestamp(Sql.getLong(cursor, ReportsTable.COLUMN_TS_LOCAL_UPDATE))
           .setUnsynchedImageFileNames(new ArrayList<String>());
       Optional<Report> proto =
-          getProto(cursor, ReportsTable.COLUMN_REPORT, Report.getDefaultInstance());
+          Sql.getProto(cursor, ReportsTable.COLUMN_REPORT, Report.getDefaultInstance());
       if (proto.isPresent()) {
         builder.setReport(proto.get());
       }
@@ -453,7 +401,7 @@ public class LocalDataStore {
     static final int SCHEMA_VERSION = 1; // MUST INCREMENT if you change anything in this class.
     private StorageDefinition() {}
 
-    static class ReportsTable implements BaseColumns, Table {
+    static class ReportsTable implements BaseColumns, Sql.Table {
       static final String TABLE_NAME = "reports";
       static final Column COLUMN_LOCAL_ID = new Column("local_id", Type.INTEGER, Column.PRIMARY);
       static final Column COLUMN_REPORT_ID = new Column("report_id", Type.LONG);
@@ -494,7 +442,7 @@ public class LocalDataStore {
       }
     }
 
-    static class ImagesTable implements BaseColumns, Table {
+    static class ImagesTable implements BaseColumns, Sql.Table {
       static final String TABLE_NAME = "images";
       static final Column COLUMN_IMAGE_ID = new Column("image_id", Type.INTEGER, Column.PRIMARY);
       static final Column COLUMN_LOCAL_REPORT_ID = new Column("local_report_id", Type.LONG);
@@ -542,8 +490,8 @@ public class LocalDataStore {
 
       @Override
       public void onCreate(SQLiteDatabase db) {
-        db.execSQL(getCreate(new ReportsTable()));
-        db.execSQL(getCreate(new ImagesTable()));
+        db.execSQL(Sql.create(new ReportsTable()));
+        db.execSQL(Sql.create(new ImagesTable()));
       }
 
       @Override
@@ -553,71 +501,6 @@ public class LocalDataStore {
             + " we only support up to:" + SCHEMA_VERSION);
         // TODO: First time we implement upgrading, need to support some UI telling user to wait.
       }
-
-      private String getCreate(Table table) {
-        StringBuilder sql = new StringBuilder();
-        sql.append("CREATE TABLE ").append(table.getName()).append(" (");
-        for (Column column : table.getLayout()) {
-          sql.append(column.name).append(" ").append(column.type.sqlType);
-          if (column.primaryKey) {
-            sql.append(" PRIMARY KEY ");
-          }
-          if (column.defaultValue.isPresent()) {
-            sql.append(" DEFAULT " + column.defaultValue.get());
-          }
-          sql.append(",");
-        }
-        sql.deleteCharAt(sql.length()-1); // last char is extra ','
-        sql.append(")");
-        return sql.toString();
-      }
-
     }
   }
-
-  static class Column {
-    public static final boolean PRIMARY = true;
-    public enum Type {
-      INTEGER("INTEGER"),
-      LONG("INTEGER"),
-      TEXT("TEXT"),
-      BOOLEAN("INTEGER"),
-      BLOB("BLOB");
-      public String sqlType;
-      private Type(String sqlType) {
-        this.sqlType = sqlType;
-      }
-    }
-    public final String name;
-    public final Type type;
-    public final Optional<String> defaultValue;
-    public final boolean primaryKey;
-
-    public Column(String name, Type type) {
-      this.name = name;
-      this.type = type;
-      this.defaultValue = Optional.absent();
-      this.primaryKey = false;
-    }
-
-    public Column(String name, Type type, String defaultValue) {
-      this.name = name;
-      this.type = type;
-      this.defaultValue = Optional.of(defaultValue);
-      this.primaryKey = false;
-    }
-
-    public Column(String name, Type type, boolean primaryKey) {
-      this.name = name;
-      this.type = type;
-      this.defaultValue = Optional.absent();
-      this.primaryKey = primaryKey;
-    }
-  }
-  interface Table {
-    public String getName();
-    public List<Column> getLayout();
-    public List<List<Column>> getIndices();
-  }
-
 }
