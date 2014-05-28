@@ -7,6 +7,8 @@ import java.util.Map;
 
 import lombok.Getter;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -30,6 +32,7 @@ import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.AddPhotoMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.DeletePhotoMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.UpdatePhotoMutation;
 import com.islandturtlewatch.nest.reporter.util.ErrorUtil;
 import com.islandturtlewatch.nest.reporter.util.ImageUtil;
@@ -213,14 +216,39 @@ public class EditFragmentMedia extends EditFragment {
       imageView.setOnClickListener(new OnClickListener() {
         @Override
         public void onClick(View v) {
-          Intent intent = new Intent();
-          intent.setDataAndType(imagePath, "image/jpg");
-          intent.setAction(Intent.ACTION_EDIT);
-          currentlyEditingFileUri = Optional.of(imagePath);
-          activity.startActivityForResult(intent, EDIT_IMAGE_ACTIVITY_REQUEST_CODE);
+          new AlertDialog.Builder(activity)
+            .setTitle("What would you like to do with the image?")
+            .setPositiveButton("Edit Image", new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick(DialogInterface dialog, int which) {
+                editImage(activity, imagePath);
+              }
+            })
+            .setNeutralButton("Delete Image", new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick(DialogInterface dialog, int which) {
+                listenerProvider.getUpdateHandler().applyMutation(DeletePhotoMutation.builder()
+                    .setFileName(ImageUtil.getFileName(imagePath)).build());
+              }
+            })
+            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+              }
+            })
+            .show();
         }
       });
       return imageView;
+    }
+
+    private void editImage(Activity activity, Uri imagePath) {
+      Intent intent = new Intent();
+      intent.setDataAndType(imagePath, "image/jpg");
+      intent.setAction(Intent.ACTION_EDIT);
+      currentlyEditingFileUri = Optional.of(imagePath);
+      activity.startActivityForResult(intent, EDIT_IMAGE_ACTIVITY_REQUEST_CODE);
     }
   }
 }

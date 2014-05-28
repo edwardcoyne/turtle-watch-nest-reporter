@@ -1102,6 +1102,23 @@ public class ReportMutations {
   }
 
   @Builder(fluent=false)
+  public static class DeletePhotoMutation implements ReportMutation {
+    private final String fileName;
+
+    @Override
+    public Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      for (int i = 0; i < updatedReport.getImageCount(); ++i) {
+        if (updatedReport.getImage(i).getFileName().equals(fileName)) {
+          updatedReport.removeImage(i);
+          break;
+        }
+      }
+      return updatedReport.build();
+    }
+  }
+
+  @Builder(fluent=false)
   public static class UpdatePhotoMutation
       implements ReportMutation, ReportMutation.RequiresReportsModel {
     // Don't need this now but leaving it for future use.
