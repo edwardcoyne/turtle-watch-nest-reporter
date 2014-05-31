@@ -28,7 +28,6 @@
 	            android:inputType="number"
 	            android:layout_width="0dp"
 	            android:layout_height="wrap_content"
-	            android:enabled="false"
 	            onTextChangeHandler="handleTextChange"/>
 	   </TableRow>
 	   <TableRow android:id="@+id/rowFalseCrawlNumber" >
@@ -41,7 +40,6 @@
               android:inputType="number"
               android:layout_width="0dp"
               android:layout_height="wrap_content"
-              android:enabled="false"
               onTextChangeHandler="handleTextChange"/>
      </TableRow>
 	    <TableRow

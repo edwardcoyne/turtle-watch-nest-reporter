@@ -45,6 +45,14 @@ public class MonitoredEditText extends EditText {
     isUpdating = true;
     currentText = text;
     super.setText(text, type);
+
+    // Ensure caret is at end of line when text is added externally.
+    super.post(new Runnable() {
+      @Override
+      public void run() {
+          setSelection(getText().length());
+      }});
+
     isUpdating = false;
   }
 

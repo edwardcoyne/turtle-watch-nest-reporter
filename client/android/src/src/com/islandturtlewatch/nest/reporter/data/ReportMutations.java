@@ -32,11 +32,7 @@ public class ReportMutations {
     @Override
     public Report apply(Report oldReport) {
       Report.Builder updatedReport = oldReport.toBuilder();
-      if (number.isPresent()) {
-        updatedReport.setNestNumber(number.get());
-      } else {
-        updatedReport.clearNestNumber();
-      }
+      updatedReport.setNestNumber(number.or(0));
       return updatedReport.build();
     }
   }
@@ -48,11 +44,7 @@ public class ReportMutations {
     @Override
     public Report apply(Report oldReport) {
       Report.Builder updatedReport = oldReport.toBuilder();
-      if (number.isPresent()) {
-        updatedReport.setFalseCrawlNumber(number.get());
-      } else {
-        updatedReport.clearFalseCrawlNumber();
-      }
+      updatedReport.setFalseCrawlNumber(number.or(0));
       return updatedReport.build();
     }
   }
