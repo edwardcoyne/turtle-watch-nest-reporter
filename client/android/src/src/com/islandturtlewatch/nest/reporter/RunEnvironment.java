@@ -10,7 +10,7 @@ public class RunEnvironment {
     DEVELOPMENT,
     PROD
   };
-  private static final Environment environment = Environment.PROD;
+  private static final Environment environment = Environment.DEVELOPMENT;
   private static final String localAddress = "10.255.0.43:8888";
 
   public static String getRootBackendUrl() {
