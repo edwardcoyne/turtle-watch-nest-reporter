@@ -130,7 +130,8 @@ public class ReportStore {
 
     if (report.getLatestVersion() != ref.getVersion()) {
       // TODO(edcoyne): plug in conflict handling here.
-      throw new UnsupportedOperationException(
+      //throw new UnsupportedOperationException(
+      log.warning(
           "Attempting to update with old version, We don't support conflict resultion yet..."
           + " Server version: " + report.getLatestVersion() + " Client version: "
               + ref.getVersion());
