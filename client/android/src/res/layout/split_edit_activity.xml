@@ -32,13 +32,12 @@
 	
 	</LinearLayout>
     
-    <!-- The drawer -->
-    <ListView android:id="@+id/reports_drawer"
-        android:layout_width="320dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:choiceMode="singleChoice"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0dp"
-        android:background="#111"/>
+  <ListView android:id="@+id/reports_drawer"
+      android:layout_width="320dp"
+      android:layout_height="match_parent"
+      android:layout_gravity="start"
+      android:choiceMode="singleChoice"
+      android:divider="@android:color/transparent"
+      android:dividerHeight="0dp"
+      android:background="#111"/>
 </android.support.v4.widget.DrawerLayout>

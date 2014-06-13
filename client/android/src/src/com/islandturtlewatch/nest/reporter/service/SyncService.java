@@ -21,15 +21,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.json.gson.GsonFactory;
 import com.google.common.base.Optional;
 import com.google.common.io.BaseEncoding;
 import com.google.protobuf.ByteString;
@@ -38,16 +35,14 @@ import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
 import com.islandturtlewatch.nest.data.Result.StorageResult.Code;
 import com.islandturtlewatch.nest.reporter.R;
-import com.islandturtlewatch.nest.reporter.RunEnvironment;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore.CachedReportWrapper;
+import com.islandturtlewatch.nest.reporter.net.EndPointFactory;
 import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.ReportEndpoint;
 import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.ReportRequest;
 import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.ReportResponse;
-import com.islandturtlewatch.nest.reporter.util.AuthenticationUtil;
 import com.islandturtlewatch.nest.reporter.util.ErrorUtil;
 import com.islandturtlewatch.nest.reporter.util.ImageUtil;
-import com.islandturtlewatch.nest.reporter.util.SettingsUtil;
 
 public class SyncService extends Service {
   private static final String TAG = SyncService.class.getSimpleName();
@@ -59,7 +54,6 @@ public class SyncService extends Service {
   private NotificationManager notificationManager;
   private ConnectivityManager connectivityManager;
 
-  private SharedPreferences settings;
   private Notification.Builder notification;
   private final AtomicBoolean networkConnected = new AtomicBoolean(false);
   private final Optional<String> errorMessage = Optional.absent();
@@ -78,8 +72,6 @@ public class SyncService extends Service {
     uiThreadHandler = new Handler();
     notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
     connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
-    settings = getSharedPreferences(SettingsUtil.SETTINGS_ID, MODE_PRIVATE);
 
     // Listen for network changes.
     registerReceiver(new OnNetChange(),
@@ -272,25 +264,17 @@ public class SyncService extends Service {
     }
 
     private void initService() {
-      // We need a username to proceed.
-      while (!settings.contains(SettingsUtil.KEY_USERNAME)) {
+      Optional<ReportEndpoint> reportServiceOpt;
+      while (!(reportServiceOpt =
+          EndPointFactory.createReportEndpoint(SyncService.this)).isPresent()) {
         if (!running.get()) {
           return;
         }
-        Log.i(TAG, "No username in settings, sleeping...");
+        Log.i(TAG, "Unable to create endpoint, sleeping...");
         sleep(30);
       }
-      Log.d(TAG, "Using user : " + settings.getString(SettingsUtil.KEY_USERNAME, null));
 
-      ReportEndpoint.Builder serviceBuilder = new ReportEndpoint.Builder(
-          AndroidHttp.newCompatibleTransport(), new GsonFactory(),
-          AuthenticationUtil.getCredential(SyncService.this,
-              settings.getString(SettingsUtil.KEY_USERNAME, null)));
-      serviceBuilder.setApplicationName("TurtleNestReporter-SyncService");
-      Log.d(TAG, "connecting to backend: " + RunEnvironment.getRootBackendUrl());
-      serviceBuilder.setRootUrl(RunEnvironment.getRootBackendUrl());
-
-      reportService = serviceBuilder.build();
+      reportService = reportServiceOpt.get();
     }
 
     private boolean handleUpload(Upload upload) {
