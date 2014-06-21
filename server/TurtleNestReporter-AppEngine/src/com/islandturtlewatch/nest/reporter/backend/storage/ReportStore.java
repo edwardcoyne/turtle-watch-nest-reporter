@@ -82,7 +82,10 @@ public class ReportStore {
 
   public ImmutableList<ReportWrapper> getActiveReports() {
     List<StoredReport> reports =
-        backend().load().type(StoredReport.class).filter("active =", true).list();
+        backend().load().type(StoredReport.class)
+          // TODO(edcoyne): fix active bits on reports and re-enable
+          //.filter("active =", true)
+          .list();
     List<ReportWrapper> versions = new ArrayList<>();
     for (StoredReport report : reports) {
       Optional<StoredReportVersion> version =

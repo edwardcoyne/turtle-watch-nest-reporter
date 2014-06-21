@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import lombok.EqualsAndHashCode;
+import lombok.extern.java.Log;
 
 import com.google.common.base.Joiner;
 import com.google.common.net.MediaType;
@@ -34,6 +35,7 @@ import com.islandturtlewatch.nest.reporter.backend.storage.ReportStore;
 /**
  * Will generate csv of all active reports.
  */
+@Log
 public class CsvServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
   private static Joiner csvJoiner = Joiner.on(";");
@@ -43,6 +45,7 @@ public class CsvServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
+    log.info("Generating Csv report, no auth.");
     ReportStore store = new ReportStore();
     store.init();
 
@@ -59,6 +62,7 @@ public class CsvServlet extends HttpServlet {
     writer.write('\ufeff');
     writer.flush();
     generator.write(writer);
+    log.info("Done");
   }
 
   private static class ReportCsvGenerator {
@@ -66,9 +70,13 @@ public class CsvServlet extends HttpServlet {
     private final Map<Path, Column> columnMap = new TreeMap<>();
 
     public void addAllRows(Iterable<ReportWrapper> wrappers) {
+      int ct = 0;
       for (ReportWrapper wrapper : wrappers) {
         addRow(wrapper);
+        ct++;
       }
+
+      log.info("Added " + ct + " reports.");
     }
 
     public void addRow(ReportWrapper  wrapper) {
@@ -143,9 +151,12 @@ public class CsvServlet extends HttpServlet {
       writer.append("SEP=;\n");
       writeHeader(writer);
 
-      for (int i = 0; i <= currentRow; i++) {
-        writeRow(writer, i);
+      int ct = 0;
+      for (ct = 0; ct <= currentRow; ct++) {
+        writeRow(writer, ct);
       }
+
+      log.info("Wrote " + ct + " reports.");
     }
 
     private void writeHeader(Writer writer) throws IOException {
