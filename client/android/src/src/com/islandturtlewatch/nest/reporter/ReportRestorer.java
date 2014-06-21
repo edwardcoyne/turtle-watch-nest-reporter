@@ -2,13 +2,13 @@ package com.islandturtlewatch.nest.reporter;
 
 import java.io.IOException;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.util.Log;
 
 import com.google.api.client.repackaged.com.google.common.base.Preconditions;
 import com.google.common.base.Optional;
 import com.google.common.io.BaseEncoding;
-import com.google.protobuf.TextFormat;
 import com.islandturtlewatch.nest.data.ReportProto.Image;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
@@ -20,6 +20,7 @@ import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.ReportEndpoi
 import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.CollectionResponseEncodedReportRef;
 import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.EncodedReport;
 import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.EncodedReportRef;
+import com.islandturtlewatch.nest.reporter.util.DialogUtil;
 import com.islandturtlewatch.nest.reporter.util.ImageUtil;
 
 public class ReportRestorer {
@@ -29,6 +30,7 @@ public class ReportRestorer {
   ReportEndpoint reportService;
   LocalDataStore store;
   Runnable callback;
+  AlertDialog dialog;
 
   public ReportRestorer(Context context) {
     this.context = context;
@@ -41,6 +43,9 @@ public class ReportRestorer {
 
   public void restoreReports(Runnable callback) {
     this.callback = callback;
+    dialog = new AlertDialog.Builder(context)
+        .setTitle("Restoring reports from server, please wait...")
+        .show();
     new Thread(new Worker()).start();
     // TODO(edcoyne): add ui
   }
@@ -55,10 +60,8 @@ public class ReportRestorer {
         for (EncodedReportRef encodedRef : encodedRefs.getItems()) {
           EncodedReport encodedReport = reportService.fetchReport(encodedRef).execute();
           long startTimestamp = System.currentTimeMillis();
-          Report.Builder reportBuilder = Report.newBuilder();
-          TextFormat.merge(encodedReport.getReportEncoded(), reportBuilder);
-          Report report = reportBuilder.build();
-             // Report.parseFrom(encodedReport.getReportEncoded());
+          Report report = Report.parseFrom(
+              BaseEncoding.base64().decode(encodedReport.getReportEncoded()));
           Log.d(TAG, String.format("Decoded proto in %f s.",
               (System.currentTimeMillis() - startTimestamp) / 1000.0));
           ReportRef ref =
@@ -75,14 +78,21 @@ public class ReportRestorer {
 
           long localId = store.getLocalReportId(ref.getReportId());
           for (Image image : report.getImageList()) {
-            store.addImage(localId, image.getFileName(),
-                ImageUtil.getModifiedTime(context, image.getFileName()));
+            if (!store.hasImage(localId, image.getFileName())) {
+              store.addImage(localId, image.getFileName(),
+                  ImageUtil.getModifiedTime(context, image.getFileName()));
+            }
           }
         }
         Log.d(TAG, "Done restoring reports");
         callback.run();
       } catch (IOException e) {
         e.printStackTrace();
+        dialog.dismiss();
+        DialogUtil.acknowledge(context,
+            "There was an error while loading the reports from server.");
+      } finally {
+        dialog.dismiss();
       }
     }
   }

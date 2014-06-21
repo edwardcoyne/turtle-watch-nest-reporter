@@ -14,7 +14,7 @@ import com.islandturtlewatch.nest.reporter.util.SettingsUtil;
 
 public class EndPointFactory {
   private static final String TAG = EndPointFactory.class.getSimpleName();
-  private static final int TIMEOUT_MS = 120000;
+  private static final int TIMEOUT_MS = 120_000;
 
   public static enum ApplicationName {
     SYNC_SERVICE,

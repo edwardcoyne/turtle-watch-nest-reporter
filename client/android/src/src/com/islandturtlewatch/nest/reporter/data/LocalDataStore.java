@@ -110,6 +110,21 @@ public class LocalDataStore {
     return ImmutableSet.copyOf(unsynchedReports);
   }
 
+  public boolean hasImage(long localReportId, String filename) {
+    @Cleanup SQLiteDatabase db = storageHelper.getReadableDatabase();
+
+    @Cleanup Cursor imageCursor = db.query(
+        ImagesTable.TABLE_NAME, // table name
+        null, // cols to select
+        and(whereEquals(ImagesTable.COLUMN_LOCAL_REPORT_ID, localReportId),
+            whereStringEquals(ImagesTable.COLUMN_FILE_NAME, filename)), // where
+        null, // don't need selection args
+        null, // don't group
+        null, // don't filter
+        null); // don't sort
+    return imageCursor.getCount() > 0;
+  }
+
   public CachedReportWrapper getReport(long localId) {
     @Cleanup SQLiteDatabase db = storageHelper.getReadableDatabase();
 
