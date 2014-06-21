@@ -36,11 +36,11 @@ import com.google.protobuf.ByteString;
 import com.islandturtlewatch.nest.data.ReportProto.Image;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
-import com.islandturtlewatch.nest.data.Result.StorageResult.Code;
 import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.RunEnvironment;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore.CachedReportWrapper;
+import com.islandturtlewatch.nest.reporter.net.StatusCodes.Code;
 import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.ReportEndpoint;
 import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.ReportRequest;
 import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.ReportResponse;
@@ -317,7 +317,7 @@ public class SyncService extends Service {
       request.setReportEncoded(BaseEncoding.base64().encode(wrapper.getReport().toByteArray()));
 
       ReportResponse response = reportService.createReport(request).execute();
-      if (!response.getCode().equals(Code.OK.name())) {
+      if (!response.getCode().equals("OK")) {
         Log.e(TAG, "Call failed: " + response.getCode() + " :: " + response.getErrorMessage());
         return false;
       }
@@ -388,7 +388,7 @@ public class SyncService extends Service {
         if (unsycnedPhotosFileNames.contains(image.getFileName())) {
           Log.d(TAG, "Adding unsynced photo to report: " + image.getFileName() + ".");
           image.setRawData(ByteString.copyFrom(
-              ImageUtil.getImageBytes(context, image.getFileName())));
+              ImageUtil.readImageBytes(context, image.getFileName())));
           wrapper.getUnsynchedImageFileNames().add(image.getFileName());
           Log.d(TAG, "Done adding unsynced photo to report: " + image.getFileName() + ".");
         }

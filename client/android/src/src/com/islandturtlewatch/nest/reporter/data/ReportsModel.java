@@ -2,7 +2,7 @@ package com.islandturtlewatch.nest.reporter.data;
 
 import java.util.List;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,11 +11,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 
-import com.google.api.client.repackaged.com.google.common.base.Preconditions;
 import com.google.common.base.Optional;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.islandturtlewatch.nest.data.ReportProto.Image;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
+import com.islandturtlewatch.nest.reporter.ReportRestorer;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore.CachedReportWrapper;
 import com.islandturtlewatch.nest.reporter.util.ImageUtil;
 
@@ -24,15 +25,15 @@ public class ReportsModel {
   private static final String PREFERENCE_KEY_ACTIVE_REPORT_ID = "model.active_report_id";
 
   private final LocalDataStore dataStore;
-  private final Context context;
+  private final Activity activity;
   private final SharedPreferences preferences;
   private final ActiveReportManager activeReport = new ActiveReportManager();
   private ReportsListAdapter adapter = new ReportsListAdapter();
 
-  public ReportsModel(LocalDataStore dataStore, SharedPreferences preferences, Context context) {
+  public ReportsModel(LocalDataStore dataStore, SharedPreferences preferences, Activity activity) {
     this.dataStore = dataStore;
     this.preferences = preferences;
-    this.context = context;
+    this.activity = activity;
 
     Optional<Long> lastActiveReportId = getLastActiveReportId();
     if (lastActiveReportId.isPresent()) {
@@ -51,6 +52,19 @@ public class ReportsModel {
     Optional<Long> idOpt = getLastActiveReportId();
     Preconditions.checkArgument(idOpt.isPresent(), "Missing saved id on restore.");
     Preconditions.checkArgument(loadReport(idOpt.get()), "Failed to load id on restore");
+  }
+
+  public void restoreDataFromServer() {
+    new ReportRestorer(activity)
+        .restoreReports(new Runnable(){
+          @Override
+          public void run() {
+            activity.runOnUiThread(new Runnable(){
+              @Override
+              public void run() {
+                adapter.notifyDataSetChanged();
+              }});
+          }});
   }
 
   /**
@@ -176,7 +190,7 @@ public class ReportsModel {
 
     void updateImages(List<Image> images) {
       for (Image image : images) {
-        long newTs = ImageUtil.getModifiedTime(context, image.getFileName());
+        long newTs = ImageUtil.getModifiedTime(activity, image.getFileName());
         Optional<Long> oldTs = dataStore.getImageUpdatedTimestamp(activeReportId, image.getFileName());
         if (!oldTs.isPresent()) {
           Log.d(TAG, "Adding new image record: " + image.getFileName() + " ts: " + newTs);
@@ -194,7 +208,7 @@ public class ReportsModel {
     void addImages(List<Image> images) {
       for (Image image : images) {
         if (!dataStore.getImageUpdatedTimestamp(activeReportId, image.getFileName()).isPresent()) {
-          long newTs = ImageUtil.getModifiedTime(context, image.getFileName());
+          long newTs = ImageUtil.getModifiedTime(activity, image.getFileName());
           Log.d(TAG, "Adding new image record: " + image.getFileName() + " ts: " + newTs);
           dataStore.addImage(activeReportId, image.getFileName(), newTs);
         }

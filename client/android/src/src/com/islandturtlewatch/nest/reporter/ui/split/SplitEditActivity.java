@@ -88,7 +88,7 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
 
     model = new ReportsModel(new LocalDataStore(this),
         getPreferences(Context.MODE_PRIVATE),
-        this.getApplicationContext());
+        this);
     presenter = new EditPresenter(model, this);
     sectionManager = new SectionManager();
     sectionManager.setSection(ReportSection.INFO);
@@ -151,6 +151,15 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
                 public void run() {
                   model.deleteActiveReport();
                   updateDisplay(model.getActiveReport());
+                }});
+          return true;
+        case R.id.action_restore_from_server:
+          DialogUtil.confirm(this,
+              "Ensure you have no pending uploads, they will be overwritten.\nContinue?",
+              new Runnable() {
+                @Override
+                public void run() {
+                  model.restoreDataFromServer();
                 }});
           return true;
         default:
