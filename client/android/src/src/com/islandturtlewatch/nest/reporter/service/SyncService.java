@@ -36,7 +36,6 @@ import com.google.protobuf.ByteString;
 import com.islandturtlewatch.nest.data.ReportProto.Image;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
-import com.islandturtlewatch.nest.data.Result.StorageResult.Code;
 import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.RunEnvironment;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore;
@@ -50,6 +49,10 @@ import com.islandturtlewatch.nest.reporter.util.ImageUtil;
 import com.islandturtlewatch.nest.reporter.util.SettingsUtil;
 
 public class SyncService extends Service {
+  private enum Code {
+    OK
+  };
+
   private static final String TAG = SyncService.class.getSimpleName();
   private static final int NOTIFICATION_ID = SyncService.class.hashCode();
   private static final int DB_POLL_PERIOD_S = 30;
