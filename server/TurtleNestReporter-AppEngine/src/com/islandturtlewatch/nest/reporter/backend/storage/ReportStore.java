@@ -82,7 +82,10 @@ public class ReportStore {
 
   public ImmutableList<ReportWrapper> getActiveReports() {
     List<StoredReport> reports =
-        backend().load().type(StoredReport.class).filter("active =", true).list();
+        backend().load().type(StoredReport.class)
+          // TODO(edcoyne): fix active bits on reports and re-enable
+          //.filter("active =", true)
+          .list();
     List<ReportWrapper> versions = new ArrayList<>();
     for (StoredReport report : reports) {
       Optional<StoredReportVersion> version =
@@ -130,7 +133,8 @@ public class ReportStore {
 
     if (report.getLatestVersion() != ref.getVersion()) {
       // TODO(edcoyne): plug in conflict handling here.
-      throw new UnsupportedOperationException(
+      //throw new UnsupportedOperationException(
+      log.warning(
           "Attempting to update with old version, We don't support conflict resultion yet..."
           + " Server version: " + report.getLatestVersion() + " Client version: "
               + ref.getVersion());
