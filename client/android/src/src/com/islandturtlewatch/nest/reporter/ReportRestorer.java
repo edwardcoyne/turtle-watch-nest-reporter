@@ -74,8 +74,10 @@ public class ReportRestorer {
           publishProgress(finishedCt, encodedRefs.getItems().size());
           EncodedReport encodedReport = reportService.fetchReport(encodedRef).execute();
           long startTimestamp = System.currentTimeMillis();
+
           Report report = Report.parseFrom(
               BaseEncoding.base64().decode(encodedReport.getReportEncoded()));
+
           Log.d(TAG, String.format("Decoded proto in %f s.",
               (System.currentTimeMillis() - startTimestamp) / 1000.0));
           ReportRef ref =
