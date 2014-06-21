@@ -2,8 +2,9 @@ package com.islandturtlewatch.nest.reporter;
 
 import java.io.IOException;
 
-import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.google.api.client.repackaged.com.google.common.base.Preconditions;
@@ -20,7 +21,6 @@ import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.ReportEndpoi
 import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.CollectionResponseEncodedReportRef;
 import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.EncodedReport;
 import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.EncodedReportRef;
-import com.islandturtlewatch.nest.reporter.util.DialogUtil;
 import com.islandturtlewatch.nest.reporter.util.ImageUtil;
 
 public class ReportRestorer {
@@ -30,7 +30,7 @@ public class ReportRestorer {
   ReportEndpoint reportService;
   LocalDataStore store;
   Runnable callback;
-  AlertDialog dialog;
+  ProgressDialog dialog;
 
   public ReportRestorer(Context context) {
     this.context = context;
@@ -41,23 +41,37 @@ public class ReportRestorer {
     store = new LocalDataStore(context);
   }
 
-  public void restoreReports(Runnable callback) {
-    this.callback = callback;
-    dialog = new AlertDialog.Builder(context)
-        .setTitle("Restoring reports from server, please wait...")
-        .show();
-    new Thread(new Worker()).start();
-    // TODO(edcoyne): add ui
+  private void updateProgress(final int reportsDone, final int reportsTotal) {
+    final int progressDialogTotal = 10000;
+    dialog.setProgress((reportsDone/reportsTotal) * progressDialogTotal);
+    dialog.setMessage("Finsihed with Report " + reportsDone + "/" + reportsTotal);
   }
 
-  private class Worker implements Runnable {
+  public void restoreReports(Runnable callback) {
+    this.callback = callback;
+    dialog = ProgressDialog.show(context,
+        "Restoring reports from server.",
+        "Please wait.",
+        false,
+        false);
+    dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+    new Worker().execute(reportService);
+  }
+
+  private class Worker extends AsyncTask<ReportEndpoint, Integer, Boolean> {
     @Override
-    public void run() {
+    protected Boolean doInBackground(ReportEndpoint... params) {
       try {
         CollectionResponseEncodedReportRef encodedRefs =
             reportService.getLatestRefsForUser().execute();
+        if (encodedRefs.getItems() == null) {
+          // no reports to dl.
+          return true;
+        }
 
+        int finishedCt = 0;
         for (EncodedReportRef encodedRef : encodedRefs.getItems()) {
+          publishProgress(finishedCt, encodedRefs.getItems().size());
           EncodedReport encodedReport = reportService.fetchReport(encodedRef).execute();
           long startTimestamp = System.currentTimeMillis();
           Report report = Report.parseFrom(
@@ -89,12 +103,17 @@ public class ReportRestorer {
       } catch (IOException e) {
         e.printStackTrace();
         dialog.dismiss();
-        DialogUtil.acknowledge(context,
-            "There was an error while loading the reports from server.");
+        //DialogUtil.acknowledge(context,
+        //    "There was an error while loading the reports from server.");
       } finally {
         dialog.dismiss();
       }
+      return true;
+    }
+
+    @Override
+    protected void onProgressUpdate(Integer... values) {
+      updateProgress(values[0], values[1]);
     }
   }
-
 }
