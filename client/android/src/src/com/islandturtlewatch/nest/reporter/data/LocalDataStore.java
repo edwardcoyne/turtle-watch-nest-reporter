@@ -126,6 +126,23 @@ public class LocalDataStore {
     return CachedReportWrapper.from(cursor);
   }
 
+  public Long getLocalReportId(long reportId) {
+    @Cleanup SQLiteDatabase db = storageHelper.getReadableDatabase();
+
+    @Cleanup Cursor cursor = db.query(
+        ReportsTable.TABLE_NAME, // table name
+        new String[]{ReportsTable.COLUMN_LOCAL_ID.name}, // cols to select
+        whereEquals(ReportsTable.COLUMN_REPORT_ID, reportId), // where
+        null, // don't need selection args
+        null, // don't group
+        null, // don't filter
+        null); // don't sort
+
+    Preconditions.checkArgument(cursor.moveToFirst(), "Failed to find local id for report id:"
+        + reportId);
+    return Sql.getLong(cursor, ReportsTable.COLUMN_LOCAL_ID);
+  }
+
   /**
    * Saves local changes to a report.
    */
@@ -420,7 +437,7 @@ public class LocalDataStore {
       static final Column COLUMN_VERSION = new Column("version", Type.LONG);
       static final Column COLUMN_ACTIVE = new Column("active", Type.BOOLEAN, "1");
       static final Column COLUMN_DELETED = new Column("deleted", Type.BOOLEAN, "0");
-      static final Column COLUMN_SYNCED = new Column("synced", Type.BOOLEAN, "0");
+      static final Column COLUMN_SYNCED = new Column("synced", Type.BOOLEAN, "1");
       static final Column COLUMN_REPORT = new Column("report", Type.BLOB);
 
       static final List<Column> LAYOUT = ImmutableList.of(

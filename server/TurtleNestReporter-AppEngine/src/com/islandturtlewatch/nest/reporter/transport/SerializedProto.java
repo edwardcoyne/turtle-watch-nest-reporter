@@ -9,22 +9,20 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Builder;
 
+import com.google.protobuf.Message;
 import com.google.protobuf.TextFormat;
-import com.islandturtlewatch.nest.data.ReportProto.Report;
 
 @Entity
 @Builder(fluent=false)
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class EncodedReport {
+public class SerializedProto {
   @Getter @Setter
-  private String reportEncoded;
+  private String serializedProto;
 
-  public static EncodedReport fromProto(Report proto) {
-    EncodedReport encoded = new EncodedReport();
-    //encoded.setReportEncoded(BaseEncoding.base64().encode(proto.toByteArray()));
-
-    encoded.setReportEncoded(TextFormat.printToString(proto));
-    return encoded;
+  public static SerializedProto fromProto(Message proto) {
+    return SerializedProto.builder()
+        .setSerializedProto(TextFormat.printToString(proto))
+        .build();
   }
 }

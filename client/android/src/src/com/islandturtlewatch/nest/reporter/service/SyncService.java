@@ -28,16 +28,24 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableList;
 import com.google.common.io.BaseEncoding;
 import com.google.protobuf.ByteString;
+import com.google.protobuf.TextFormat;
+import com.islandturtlewatch.nest.data.ImageProto.ImageRef;
+import com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef;
 import com.islandturtlewatch.nest.data.ReportProto.Image;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
-import com.islandturtlewatch.nest.data.Result.StorageResult.Code;
 import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore.CachedReportWrapper;
 import com.islandturtlewatch.nest.reporter.net.EndPointFactory;
+import com.islandturtlewatch.nest.reporter.net.EndPointFactory.ApplicationName;
+import com.islandturtlewatch.nest.reporter.net.StatusCodes.Code;
+import com.islandturtlewatch.nest.reporter.transport.imageEndpoint.ImageEndpoint;
+import com.islandturtlewatch.nest.reporter.transport.imageEndpoint.model.EncodedImageRef;
+import com.islandturtlewatch.nest.reporter.transport.imageEndpoint.model.SerializedProto;
 import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.ReportEndpoint;
 import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.ReportRequest;
 import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.ReportResponse;
@@ -227,6 +235,7 @@ public class SyncService extends Service {
 
   private class Uploader implements Runnable {
     private ReportEndpoint reportService;
+    private ImageEndpoint imageService;
     private Thread thread;
     private final AtomicBoolean running = new AtomicBoolean(false);
 
@@ -266,15 +275,27 @@ public class SyncService extends Service {
     private void initService() {
       Optional<ReportEndpoint> reportServiceOpt;
       while (!(reportServiceOpt =
-          EndPointFactory.createReportEndpoint(SyncService.this)).isPresent()) {
+          EndPointFactory.createReportEndpoint(SyncService.this, ApplicationName.SYNC_SERVICE))
+            .isPresent()) {
         if (!running.get()) {
           return;
         }
-        Log.i(TAG, "Unable to create endpoint, sleeping...");
+        Log.i(TAG, "Unable to create report endpoint, sleeping...");
         sleep(30);
       }
-
       reportService = reportServiceOpt.get();
+
+      Optional<ImageEndpoint> imageServiceOpt;
+      while (!(imageServiceOpt =
+          EndPointFactory.createImageEndpoint(SyncService.this, ApplicationName.SYNC_SERVICE))
+            .isPresent()) {
+        if (!running.get()) {
+          return;
+        }
+        Log.i(TAG, "Unable to create image endpoint, sleeping...");
+        sleep(30);
+      }
+      imageService = imageServiceOpt.get();
     }
 
     private boolean handleUpload(Upload upload) {
@@ -311,7 +332,8 @@ public class SyncService extends Service {
           .build();
       LocalDataStore dataStore = new LocalDataStore(SyncService.this);
       dataStore.setServerSideData(wrapper.getLocalId(), reportRef);
-      dataStore.markImagesSynced(wrapper.getLocalId(), wrapper.getUnsynchedImageFileNames());
+      //dataStore.markImagesSynced(wrapper.getLocalId(), wrapper.getUnsynchedImageFileNames());
+      uploadImages(wrapper, reportRef);
 
       return true;
     }
@@ -337,11 +359,30 @@ public class SyncService extends Service {
       Log.d(TAG, "Updateing from server: " + reportRef.toString());
       LocalDataStore dataStore = new LocalDataStore(SyncService.this);
       dataStore.setServerSideData(wrapper.getLocalId(), reportRef);
+
       // TODO(edcoyne): this is a poor implmentation, there could be changes to the same image while
       // this upload is taking place that will be missed until next time its changed.
-      dataStore.markImagesSynced(wrapper.getLocalId(), wrapper.getUnsynchedImageFileNames());
+      //dataStore.markImagesSynced(wrapper.getLocalId(), wrapper.getUnsynchedImageFileNames());
+
+      uploadImages(wrapper, reportRef);
 
       return true;
+    }
+
+    private void uploadImages(CachedReportWrapper wrapper, ReportRef reportRef) throws IOException {
+      ImageRef.Builder imageRef = ImageRef.newBuilder()
+          .setOwnerId(reportRef.getOwnerId())
+          .setReportId(reportRef.getReportId());
+      for (String imageFileName : wrapper.getUnsynchedImageFileNames()) {
+        imageRef.setImageName(imageFileName);
+        EncodedImageRef encodedRef = new EncodedImageRef();
+        encodedRef.setRefEncoded(BaseEncoding.base64().encode(imageRef.build().toByteArray()));
+
+        SerializedProto serializedProto = imageService.imageUpload(encodedRef).execute();
+        ImageUploadRef.Builder uploadRef = ImageUploadRef.newBuilder();
+        TextFormat.merge(serializedProto.getSerializedProto(), uploadRef);
+        Log.d(TAG, "upload ref: " + uploadRef.toString());
+      }
     }
   }
 
@@ -361,22 +402,32 @@ public class SyncService extends Service {
       if (wrapper.isSynched()) {
         return Optional.absent();
       }
-      inlineUnsyncedImages(wrapper);
+      //inlineUnsyncedImages(wrapper);
+      populateUnsynchedImages(wrapper);
       return Optional.of(wrapper);
     }
 
+    private void populateUnsynchedImages(CachedReportWrapper wrapper) {
+      Set<String> unsycnedPhotosFileNames = dataStore.getUnsycnedImageFileNames();
+      wrapper.setUnsynchedImageFileNames(ImmutableList.copyOf(unsycnedPhotosFileNames));
+    }
+
     private void inlineUnsyncedImages(CachedReportWrapper wrapper) throws IOException {
+      long startTimestamp = System.currentTimeMillis();
       Set<String> unsycnedPhotosFileNames = dataStore.getUnsycnedImageFileNames();
       Report.Builder builder = wrapper.getReport().toBuilder();
       for (Image.Builder image : builder.getImageBuilderList()) {
         if (unsycnedPhotosFileNames.contains(image.getFileName())) {
           Log.d(TAG, "Adding unsynced photo to report: " + image.getFileName() + ".");
           image.setRawData(ByteString.copyFrom(
-              ImageUtil.getImageBytes(context, image.getFileName())));
+              ImageUtil.readImageBytes(context, image.getFileName())));
           wrapper.getUnsynchedImageFileNames().add(image.getFileName());
           Log.d(TAG, "Done adding unsynced photo to report: " + image.getFileName() + ".");
         }
       }
+      Log.d(TAG, String.format("Inlined %d images in %f s.",
+          builder.getImageCount(),
+          (System.currentTimeMillis() - startTimestamp) / 1000.0));
       wrapper.setReport(builder.build());
     }
 

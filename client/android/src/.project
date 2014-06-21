@@ -32,14 +32,19 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>endpoint-sources-manual</name>
+			<name>image-endpoint</name>
 			<type>2</type>
-			<location>/Users/edcoyne/code/repo/client/appengine-endpoints/reportEndpoint/sources</location>
+			<location>/Users/edcoyne/code/repo/client/appengine-endpoints/imageEndpoint/sources</location>
 		</link>
 		<link>
 			<name>proto_gen</name>
 			<type>2</type>
 			<location>/Users/edcoyne/code/proto_gen</location>
+		</link>
+		<link>
+			<name>report-endpoint</name>
+			<type>2</type>
+			<location>/Users/edcoyne/code/repo/client/appengine-endpoints/reportEndpoint/sources</location>
 		</link>
 	</linkedResources>
 </projectDescription>

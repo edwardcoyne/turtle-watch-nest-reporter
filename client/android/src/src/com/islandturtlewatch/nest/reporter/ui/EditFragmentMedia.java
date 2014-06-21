@@ -173,6 +173,7 @@ public class EditFragmentMedia extends EditFragment {
       public void run() {
         waitForActivity();
         for (int i = 0; i < images.size(); i++) {
+          //TODO(edcoyne): NPE able, fix
           final Uri imagePath = ImageUtil.getImagePath(EditFragmentMedia.this.getActivity(),
               images.get(i).getFileName());
           Bitmap bitmap = BitmapFactory.decodeFile(imagePath.getPath());

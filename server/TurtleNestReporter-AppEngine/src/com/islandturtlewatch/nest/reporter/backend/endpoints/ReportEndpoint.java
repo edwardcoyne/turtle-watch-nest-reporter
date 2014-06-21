@@ -56,8 +56,6 @@ public class ReportEndpoint {
       throw new OAuthRequestException("Not authorized");
     }
 
-    ReportStore store = new ReportStore();
-    store.init();
     List<ReportWrapper> latestReportsForUser =
         store.getLatestReportsForUser(UserUtil.getUserId(user));
     return CollectionResponse.<EncodedReportRef>builder().setItems(
@@ -72,21 +70,26 @@ public class ReportEndpoint {
   /**
    * Get the requested report.
    * @throws OAuthRequestException
-   * @throws InvalidProtocolBufferException
+   * @throws IOException
    */
   @ApiMethod(name = "fetchReport")
   public EncodedReport fetchReport(User user, EncodedReportRef encodedRef)
-      throws OAuthRequestException, InvalidProtocolBufferException {
+      throws OAuthRequestException, IOException {
     if (user == null) {
       throw new OAuthRequestException("Not authorized");
     }
-    ReportStore store = new ReportStore();
-    store.init();
-
     ReportRef ref = encodedRef.toProto();
-    ReportWrapper report =
+    ReportWrapper wrapper =
         store.getReportLatestVersion(UserUtil.getUserId(user), ref.getReportId());
-    return EncodedReport.fromProto(report.getReport());
+    Report reportWImages = ImageStore.embeddedImages(wrapper);
+
+    long startTimestamp = System.currentTimeMillis();
+    try {
+      return EncodedReport.fromProto(reportWImages);
+    } finally {
+      log.info(String.format("Encoded report in %f s.",
+          (System.currentTimeMillis() - startTimestamp) / 1000.0));
+    }
   }
 
   /**

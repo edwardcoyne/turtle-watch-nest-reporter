@@ -5,7 +5,7 @@
   <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
   <init-param>
    <param-name>services</param-name>
-   <param-value>com.islandturtlewatch.nest.reporter.backend.endpoints.ReportEndpoint</param-value>
+   <param-value>com.islandturtlewatch.nest.reporter.backend.endpoints.ImageEndpoint,com.islandturtlewatch.nest.reporter.backend.endpoints.ReportEndpoint</param-value>
   </init-param>
  </servlet>
  <servlet-mapping>
@@ -29,5 +29,14 @@
  <servlet-mapping>
   <servlet-name>CsvServlet</servlet-name>
   <url-pattern>/web/reporting/csv</url-pattern>
+ </servlet-mapping>
+ 
+ <servlet>
+  <servlet-name>ImagePostUpload</servlet-name>
+  <servlet-class>com.islandturtlewatch.nest.reporter.backend.servlets.ImagePostUpload</servlet-class>
+ </servlet>
+ <servlet-mapping>
+  <servlet-name>ImagePostUpload</servlet-name>
+  <url-pattern>/backend/web-post-upload</url-pattern>
  </servlet-mapping>
 </web-app>

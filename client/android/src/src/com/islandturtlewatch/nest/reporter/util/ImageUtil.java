@@ -19,6 +19,9 @@ import android.view.View;
 import com.google.api.client.repackaged.com.google.common.base.Preconditions;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.Files;
+import com.islandturtlewatch.nest.data.ReportProto.Image;
+import com.islandturtlewatch.nest.data.ReportProto.Report;
+import com.islandturtlewatch.nest.data.ReportProto.Report.Builder;
 
 public class ImageUtil {
   private static final String TAG = ImageUtil.class.getSimpleName();
@@ -34,10 +37,17 @@ public class ImageUtil {
     return image.lastModified();
   }
 
-  public static byte[] getImageBytes(Context context, String fileName) throws IOException {
+  public static byte[] readImageBytes(Context context, String fileName) throws IOException {
     Uri imagePath = getImagePath(context, fileName);
     File imageFile = new File(imagePath.getPath());
     return Files.toByteArray(imageFile);
+  }
+
+  public static void writeImageBytes(Context context, String fileName, byte[] bytes)
+      throws IOException {
+    Uri imagePath = getImagePath(context, fileName);
+    File imageFile = new File(imagePath.getPath());
+    Files.write(bytes, imageFile);
   }
 
   public static Uri getImagePath(View view, String fileName){
@@ -71,5 +81,19 @@ public class ImageUtil {
     OutputStream out = new BufferedOutputStream(new FileOutputStream(destinationFileUri.getPath()));
     long bytesCopied = ByteStreams.copy(in, out);
     Log.d(TAG, "Copied " + bytesCopied + " from " + contentUri + " to " + destinationFileUri);
+  }
+
+  public static Report stripAndWriteEmbeddedImage(Context context, Report report)
+      throws IOException {
+    long startTimestamp = System.currentTimeMillis();
+    Builder reportBuilder = report.toBuilder();
+    for (Image.Builder image : reportBuilder.getImageBuilderList()) {
+      writeImageBytes(context, image.getFileName(), image.getRawData().toByteArray());
+      image.clearRawData();
+    }
+    Log.d(TAG, String.format("Extracted %d images in %f s.",
+        reportBuilder.getImageCount(),
+        (System.currentTimeMillis() - startTimestamp) / 1000.0));
+    return reportBuilder.build();
   }
 }
