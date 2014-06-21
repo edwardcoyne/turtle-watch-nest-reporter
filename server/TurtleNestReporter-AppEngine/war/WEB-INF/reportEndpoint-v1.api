@@ -45,7 +45,7 @@
     },
     "reportEndpoint.getLatestRefsForUser" : {
       "path" : "latestRefsForUser",
-      "httpMethod" : "GET",
+      "httpMethod" : "POST",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ "362099484578.apps.googleusercontent.com" ],
@@ -66,22 +66,6 @@
       "audiences" : [ "362099484578.apps.googleusercontent.com" ],
       "clientIds" : [ "362099484578-d2l665v2cmb9sjb9r77cip21rvruu9mo.apps.googleusercontent.com", "362099484578-lbl3ef0b8mi6t13fpdthvr3n0qssqq4m.apps.googleusercontent.com" ],
       "rosyMethod" : "com.islandturtlewatch.nest.reporter.backend.endpoints.ReportEndpoint.createReport",
-      "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
-    "reportEndpoint.fetchReport" : {
-      "path" : "fetchReport",
-      "httpMethod" : "POST",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ "362099484578.apps.googleusercontent.com" ],
-      "clientIds" : [ "362099484578-d2l665v2cmb9sjb9r77cip21rvruu9mo.apps.googleusercontent.com", "362099484578-lbl3ef0b8mi6t13fpdthvr3n0qssqq4m.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.islandturtlewatch.nest.reporter.backend.endpoints.ReportEndpoint.fetchReport",
       "request" : {
         "body" : "autoTemplate(backendRequest)",
         "bodyName" : "resource"
@@ -148,15 +132,6 @@
             "type" : "string"
           }
         }
-      },
-      "EncodedReport" : {
-        "id" : "EncodedReport",
-        "type" : "object",
-        "properties" : {
-          "reportEncoded" : {
-            "type" : "string"
-          }
-        }
       }
     },
     "methods" : {
@@ -179,14 +154,6 @@
         },
         "response" : {
           "$ref" : "ReportResponse"
-        }
-      },
-      "com.islandturtlewatch.nest.reporter.backend.endpoints.ReportEndpoint.fetchReport" : {
-        "request" : {
-          "$ref" : "EncodedReportRef"
-        },
-        "response" : {
-          "$ref" : "EncodedReport"
         }
       }
     }

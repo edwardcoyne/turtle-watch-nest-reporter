@@ -7,6 +7,4 @@
           android:title="@string/action_new_report"/>
     <item android:id="@+id/action_delete_report"
           android:title="@string/action_delete_report"/>
-    <item android:id="@+id/action_restore_from_server"
-          android:title="@string/action_restore_from_server"/>
 </menu>

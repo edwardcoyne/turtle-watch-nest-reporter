@@ -28,21 +28,23 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.json.gson.GsonFactory;
 import com.google.common.base.Optional;
 import com.google.common.io.BaseEncoding;
 import com.google.protobuf.ByteString;
 import com.islandturtlewatch.nest.data.ReportProto.Image;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
+import com.islandturtlewatch.nest.data.Result.StorageResult.Code;
 import com.islandturtlewatch.nest.reporter.R;
+import com.islandturtlewatch.nest.reporter.RunEnvironment;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore.CachedReportWrapper;
-import com.islandturtlewatch.nest.reporter.net.EndPointFactory;
-import com.islandturtlewatch.nest.reporter.net.EndPointFactory.ApplicationName;
-import com.islandturtlewatch.nest.reporter.net.StatusCodes.Code;
 import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.ReportEndpoint;
 import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.ReportRequest;
 import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.ReportResponse;
+import com.islandturtlewatch.nest.reporter.util.AuthenticationUtil;
 import com.islandturtlewatch.nest.reporter.util.ErrorUtil;
 import com.islandturtlewatch.nest.reporter.util.ImageUtil;
 import com.islandturtlewatch.nest.reporter.util.SettingsUtil;
@@ -270,18 +272,25 @@ public class SyncService extends Service {
     }
 
     private void initService() {
-      Optional<ReportEndpoint> reportServiceOpt;
-      while (!(reportServiceOpt =
-          EndPointFactory.createReportEndpoint(SyncService.this, ApplicationName.SYNC_SERVICE))
-            .isPresent()) {
+      // We need a username to proceed.
+      while (!settings.contains(SettingsUtil.KEY_USERNAME)) {
         if (!running.get()) {
           return;
         }
-        Log.i(TAG, "Unable to create report endpoint, sleeping...");
+        Log.i(TAG, "No username in settings, sleeping...");
         sleep(30);
       }
+      Log.d(TAG, "Using user : " + settings.getString(SettingsUtil.KEY_USERNAME, null));
 
-      reportService = reportServiceOpt.get();
+      ReportEndpoint.Builder serviceBuilder = new ReportEndpoint.Builder(
+          AndroidHttp.newCompatibleTransport(), new GsonFactory(),
+          AuthenticationUtil.getCredential(SyncService.this,
+              settings.getString(SettingsUtil.KEY_USERNAME, null)));
+      serviceBuilder.setApplicationName("TurtleNestReporter-SyncService");
+      Log.d(TAG, "connecting to backend: " + RunEnvironment.getRootBackendUrl());
+      serviceBuilder.setRootUrl(RunEnvironment.getRootBackendUrl());
+
+      reportService = serviceBuilder.build();
     }
 
     private boolean handleUpload(Upload upload) {
@@ -308,7 +317,7 @@ public class SyncService extends Service {
       request.setReportEncoded(BaseEncoding.base64().encode(wrapper.getReport().toByteArray()));
 
       ReportResponse response = reportService.createReport(request).execute();
-      if (!response.getCode().equals("OK")) {
+      if (!response.getCode().equals(Code.OK.name())) {
         Log.e(TAG, "Call failed: " + response.getCode() + " :: " + response.getErrorMessage());
         return false;
       }
@@ -379,7 +388,7 @@ public class SyncService extends Service {
         if (unsycnedPhotosFileNames.contains(image.getFileName())) {
           Log.d(TAG, "Adding unsynced photo to report: " + image.getFileName() + ".");
           image.setRawData(ByteString.copyFrom(
-              ImageUtil.readImageBytes(context, image.getFileName())));
+              ImageUtil.getImageBytes(context, image.getFileName())));
           wrapper.getUnsynchedImageFileNames().add(image.getFileName());
           Log.d(TAG, "Done adding unsynced photo to report: " + image.getFileName() + ".");
         }

@@ -62,7 +62,6 @@ public class CsvServlet extends HttpServlet {
     writer.write('\ufeff');
     writer.flush();
     generator.write(writer);
-    log.info("Done");
   }
 
   private static class ReportCsvGenerator {

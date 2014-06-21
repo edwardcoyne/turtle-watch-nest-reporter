@@ -179,7 +179,6 @@ public class EditFragmentMedia extends EditFragment {
           thumbnails.set(i,
               ThumbnailUtils.extractThumbnail(bitmap, THUMBNAIL_WIDTH, THUMBNAIL_HEIGHT));
         }
-        // TODO(edcoyne): activity can be null here.
         EditFragmentMedia.this.getActivity().runOnUiThread(new Runnable() {
           @Override
           public void run() {

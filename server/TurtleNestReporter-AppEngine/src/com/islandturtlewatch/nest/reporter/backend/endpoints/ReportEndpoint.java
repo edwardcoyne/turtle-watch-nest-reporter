@@ -3,6 +3,8 @@ package com.islandturtlewatch.nest.reporter.backend.endpoints;
 import java.io.IOException;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import lombok.extern.java.Log;
 
 import com.google.api.server.spi.config.Api;
@@ -23,7 +25,6 @@ import com.islandturtlewatch.nest.reporter.backend.ClientIds;
 import com.islandturtlewatch.nest.reporter.backend.storage.ImageStore;
 import com.islandturtlewatch.nest.reporter.backend.storage.ReportStore;
 import com.islandturtlewatch.nest.reporter.backend.util.UserUtil;
-import com.islandturtlewatch.nest.reporter.transport.EncodedReport;
 import com.islandturtlewatch.nest.reporter.transport.EncodedReportRef;
 import com.islandturtlewatch.nest.reporter.transport.ReportRequest;
 import com.islandturtlewatch.nest.reporter.transport.ReportResponse;
@@ -49,47 +50,23 @@ public class ReportEndpoint {
    * This method returns refs to all the latest reports for the user.
    * @throws OAuthRequestException
    */
-  @ApiMethod(name = "getLatestRefsForUser", httpMethod = ApiMethod.HttpMethod.GET)
+  @ApiMethod(name = "getLatestRefsForUser")
   public CollectionResponse<EncodedReportRef> latestRefsForUser(User user) throws OAuthRequestException {
-    log.info("get latest for user: " + user );
     if (user == null) {
       throw new OAuthRequestException("Not authorized");
     }
 
-    List<ReportWrapper> latestReportsForUser =
-        store.getLatestReportsForUser(UserUtil.getUserId(user));
+    ReportStore store = new ReportStore();
+    store.init();
+    List<ReportWrapper> latestReportsForUser = store.getLatestReportsForUser(user.getUserId());
     return CollectionResponse.<EncodedReportRef>builder().setItems(
         Lists.transform(latestReportsForUser, new Function<ReportWrapper, EncodedReportRef>(){
           @Override
-          public EncodedReportRef apply(ReportWrapper wrapper) {
+          @Nullable
+          public EncodedReportRef apply(@Nullable ReportWrapper wrapper) {
             return EncodedReportRef.fromProto(wrapper.getRef());
           }}))
         .build();
-  }
-
-  /**
-   * Get the requested report.
-   * @throws OAuthRequestException
-   * @throws IOException
-   */
-  @ApiMethod(name = "fetchReport")
-  public EncodedReport fetchReport(User user, EncodedReportRef encodedRef)
-      throws OAuthRequestException, IOException {
-    if (user == null) {
-      throw new OAuthRequestException("Not authorized");
-    }
-    ReportRef ref = encodedRef.toProto();
-    ReportWrapper wrapper =
-        store.getReportLatestVersion(UserUtil.getUserId(user), ref.getReportId());
-    Report reportWImages = ImageStore.embedImages(wrapper);
-
-    long startTimestamp = System.currentTimeMillis();
-    try {
-      return EncodedReport.fromProto(reportWImages);
-    } finally {
-      log.info(String.format("Encoded report in %f s.",
-          (System.currentTimeMillis() - startTimestamp) / 1000.0));
-    }
   }
 
   /**

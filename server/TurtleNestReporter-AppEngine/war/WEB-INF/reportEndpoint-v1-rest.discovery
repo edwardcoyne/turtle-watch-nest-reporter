@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"p_qcyFV0KQVqSB1Aq3pqmPu-2MY/0cn_Kuxl7LRzgSDngniQoSVJ4xs\"",
+ "etag": "\"p_qcyFV0KQVqSB1Aq3pqmPu-2MY/WBQ63RPowADBw6WwxVFCA5zIIgs\"",
  "discoveryVersion": "v1",
  "id": "reportEndpoint:v1",
  "name": "reportEndpoint",
@@ -105,15 +105,6 @@
     }
    }
   },
-  "EncodedReport": {
-   "id": "EncodedReport",
-   "type": "object",
-   "properties": {
-    "reportEncoded": {
-     "type": "string"
-    }
-   }
-  },
   "EncodedReportRef": {
    "id": "EncodedReportRef",
    "type": "object",
@@ -167,25 +158,10 @@
     "https://www.googleapis.com/auth/userinfo.email"
    ]
   },
-  "fetchReport": {
-   "id": "reportEndpoint.fetchReport",
-   "path": "fetchReport",
-   "httpMethod": "POST",
-   "request": {
-    "$ref": "EncodedReportRef",
-    "parameterName": "resource"
-   },
-   "response": {
-    "$ref": "EncodedReport"
-   },
-   "scopes": [
-    "https://www.googleapis.com/auth/userinfo.email"
-   ]
-  },
   "getLatestRefsForUser": {
    "id": "reportEndpoint.getLatestRefsForUser",
    "path": "latestRefsForUser",
-   "httpMethod": "GET",
+   "httpMethod": "POST",
    "response": {
     "$ref": "CollectionResponse_EncodedReportRef"
    },
