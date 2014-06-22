@@ -36,12 +36,10 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.common.io.BaseEncoding;
-import com.google.protobuf.ByteString;
 import com.google.protobuf.TextFormat;
 import com.islandturtlewatch.nest.data.ImageProto.ImageRef;
 import com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef;
 import com.islandturtlewatch.nest.data.ReportProto.Image;
-import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
 import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.RunEnvironment;
@@ -341,7 +339,6 @@ public class SyncService extends Service {
           .mergeFrom(BaseEncoding.base64().decode(response.getReportRefEncoded()))
           .build();
       dataStore.setServerSideData(wrapper.getLocalId(), reportRef);
-      //dataStore.markImagesSynced(wrapper.getLocalId(), wrapper.getUnsynchedImageFileNames());
       uploadImages(wrapper, reportRef);
 
       return true;
@@ -368,10 +365,6 @@ public class SyncService extends Service {
       Log.d(TAG, "Updateing from server: " + reportRef.toString());
       dataStore.setServerSideData(wrapper.getLocalId(), reportRef);
 
-      // TODO(edcoyne): this is a poor implmentation, there could be changes to the same image while
-      // this upload is taking place that will be missed until next time its changed.
-      //dataStore.markImagesSynced(wrapper.getLocalId(), wrapper.getUnsynchedImageFileNames());
-
       uploadImages(wrapper, reportRef);
 
       return true;
@@ -391,12 +384,12 @@ public class SyncService extends Service {
         TextFormat.merge(serializedProto.getSerializedProto(), uploadRef);
         Log.d(TAG, "upload ref: " + uploadRef.getUrl().toString());
 
-        uploadImage2(uploadRef.build());
+        uploadImage(uploadRef.build());
         dataStore.markImagesSynced(wrapper.getLocalId(), ImmutableList.of(imageFileName));
       }
     }
 
-    private void uploadImage2(ImageUploadRef ref) throws IOException {
+    private void uploadImage(ImageUploadRef ref) throws IOException {
       MultiPartEntityUploader.upload(
           RunEnvironment.rewriteUrlIfLocalHost(ref.getUrl()),
           ref.getImage().getImageName(),
@@ -421,7 +414,6 @@ public class SyncService extends Service {
       if (wrapper.isSynched()) {
         return Optional.absent();
       }
-      //inlineUnsyncedImages(wrapper);
       populateUnsynchedImages(wrapper);
       return Optional.of(wrapper);
     }
@@ -435,25 +427,6 @@ public class SyncService extends Service {
                 return image.getFileName();
               }})));
       wrapper.setUnsynchedImageFileNames(ImmutableList.copyOf(unsyncedPhotosInThisReport));
-    }
-
-    private void inlineUnsyncedImages(CachedReportWrapper wrapper) throws IOException {
-      long startTimestamp = System.currentTimeMillis();
-      Set<String> unsycnedPhotosFileNames = dataStore.getUnsycnedImageFileNames();
-      Report.Builder builder = wrapper.getReport().toBuilder();
-      for (Image.Builder image : builder.getImageBuilderList()) {
-        if (unsycnedPhotosFileNames.contains(image.getFileName())) {
-          Log.d(TAG, "Adding unsynced photo to report: " + image.getFileName() + ".");
-          image.setRawData(ByteString.copyFrom(
-              ImageUtil.readImageBytes(context, image.getFileName())));
-          wrapper.getUnsynchedImageFileNames().add(image.getFileName());
-          Log.d(TAG, "Done adding unsynced photo to report: " + image.getFileName() + ".");
-        }
-      }
-      Log.d(TAG, String.format("Inlined %d images in %f s.",
-          builder.getImageCount(),
-          (System.currentTimeMillis() - startTimestamp) / 1000.0));
-      wrapper.setReport(builder.build());
     }
 
     @Override

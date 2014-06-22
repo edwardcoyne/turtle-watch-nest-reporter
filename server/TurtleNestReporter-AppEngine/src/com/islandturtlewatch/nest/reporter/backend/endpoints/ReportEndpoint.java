@@ -15,12 +15,10 @@ import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.google.common.io.BaseEncoding;
 import com.google.protobuf.InvalidProtocolBufferException;
-import com.islandturtlewatch.nest.data.ReportProto.Image;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
 import com.islandturtlewatch.nest.data.ReportProto.ReportWrapper;
 import com.islandturtlewatch.nest.reporter.backend.ClientIds;
-import com.islandturtlewatch.nest.reporter.backend.storage.ImageStore;
 import com.islandturtlewatch.nest.reporter.backend.storage.ReportStore;
 import com.islandturtlewatch.nest.reporter.backend.util.UserUtil;
 import com.islandturtlewatch.nest.reporter.transport.EncodedReport;
@@ -81,11 +79,10 @@ public class ReportEndpoint {
     ReportRef ref = encodedRef.toProto();
     ReportWrapper wrapper =
         store.getReportLatestVersion(UserUtil.getUserId(user), ref.getReportId());
-    Report reportWImages = ImageStore.embeddedImages(wrapper);
 
     long startTimestamp = System.currentTimeMillis();
     try {
-      return EncodedReport.fromProto(reportWImages);
+      return EncodedReport.fromProto(wrapper.getReport());
     } finally {
       log.info(String.format("Encoded report in %f s.",
           (System.currentTimeMillis() - startTimestamp) / 1000.0));
@@ -115,10 +112,7 @@ public class ReportEndpoint {
           .setErrorMessage("Report is not valid protobuf")
           .build();
     }
-    List<Image> images = report.getImageList();
-    report = ImageStore.stripEmbeddedImages(report);
     ReportWrapper addedReport = store.addReport(UserUtil.getUserId(user), report);
-    ImageStore.writeImages(addedReport.getRef(), images);
     return ReportResponse.builder()
         .setCode(Code.OK)
         .setReportRefEncoded(BaseEncoding.base64().encode(addedReport.getRef().toByteArray()))
@@ -159,9 +153,6 @@ public class ReportEndpoint {
     }
     // Add user to ref.
     ref = ref.toBuilder().setOwnerId(UserUtil.getUserId(user)).build();
-
-    // handle embedded images
-    report = ImageStore.stripAndWriteEmbeddedImages(ref, report);
 
     ReportWrapper wrapper = ReportWrapper.newBuilder().setRef(ref).setReport(report).build();
     ReportWrapper updatedWrapper = store.updateReport(wrapper);
