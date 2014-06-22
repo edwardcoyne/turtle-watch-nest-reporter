@@ -11,6 +11,8 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import javax.annotation.Nullable;
+
 import lombok.ToString;
 import lombok.experimental.Builder;
 import android.app.Notification;
@@ -27,8 +29,12 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.google.common.io.BaseEncoding;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.TextFormat;
@@ -238,12 +244,14 @@ public class SyncService extends Service {
   private class Uploader implements Runnable {
     private ReportEndpoint reportService;
     private ImageEndpoint imageService;
+    private LocalDataStore dataStore;
     private Thread thread;
     private final AtomicBoolean running = new AtomicBoolean(false);
 
     public void start() {
       running.set(true);
       thread = new Thread(this);
+      dataStore = new LocalDataStore(SyncService.this);
       thread.start();
     }
 
@@ -332,7 +340,6 @@ public class SyncService extends Service {
       ReportRef reportRef = ReportRef.newBuilder()
           .mergeFrom(BaseEncoding.base64().decode(response.getReportRefEncoded()))
           .build();
-      LocalDataStore dataStore = new LocalDataStore(SyncService.this);
       dataStore.setServerSideData(wrapper.getLocalId(), reportRef);
       //dataStore.markImagesSynced(wrapper.getLocalId(), wrapper.getUnsynchedImageFileNames());
       uploadImages(wrapper, reportRef);
@@ -359,7 +366,6 @@ public class SyncService extends Service {
           .mergeFrom(BaseEncoding.base64().decode(response.getReportRefEncoded()))
           .build();
       Log.d(TAG, "Updateing from server: " + reportRef.toString());
-      LocalDataStore dataStore = new LocalDataStore(SyncService.this);
       dataStore.setServerSideData(wrapper.getLocalId(), reportRef);
 
       // TODO(edcoyne): this is a poor implmentation, there could be changes to the same image while
@@ -386,6 +392,7 @@ public class SyncService extends Service {
         Log.d(TAG, "upload ref: " + uploadRef.getUrl().toString());
 
         uploadImage2(uploadRef.build());
+        dataStore.markImagesSynced(wrapper.getLocalId(), ImmutableList.of(imageFileName));
       }
     }
 
@@ -420,8 +427,14 @@ public class SyncService extends Service {
     }
 
     private void populateUnsynchedImages(CachedReportWrapper wrapper) {
-      Set<String> unsycnedPhotosFileNames = dataStore.getUnsycnedImageFileNames();
-      wrapper.setUnsynchedImageFileNames(ImmutableList.copyOf(unsycnedPhotosFileNames));
+      Set<String> allUnsycnedPhotosFileNames = dataStore.getUnsycnedImageFileNames();
+      Set<String> unsyncedPhotosInThisReport = Sets.intersection(allUnsycnedPhotosFileNames,
+          ImmutableSet.copyOf(
+            Lists.transform(wrapper.getReport().getImageList(), new Function<Image, String>(){
+              @Override public String apply(@Nullable Image image) {
+                return image.getFileName();
+              }})));
+      wrapper.setUnsynchedImageFileNames(ImmutableList.copyOf(unsyncedPhotosInThisReport));
     }
 
     private void inlineUnsyncedImages(CachedReportWrapper wrapper) throws IOException {
