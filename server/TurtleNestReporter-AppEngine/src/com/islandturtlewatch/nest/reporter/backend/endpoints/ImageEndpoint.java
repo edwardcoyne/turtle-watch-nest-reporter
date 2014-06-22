@@ -36,6 +36,7 @@ public class ImageEndpoint {
         .mergeFrom(BaseEncoding.base64().decode(ref.getRefEncoded()))
         .build();
     return SerializedProto.fromProto(ImageUploadRef.newBuilder()
+        .setImage(imageRef)
         .setUrl(ImageStore.getUploadUrl(imageRef))
         .build());
   }

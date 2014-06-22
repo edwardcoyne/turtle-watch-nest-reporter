@@ -38,10 +38,12 @@ import com.islandturtlewatch.nest.data.ReportProto.Image;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
 import com.islandturtlewatch.nest.reporter.R;
+import com.islandturtlewatch.nest.reporter.RunEnvironment;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore.CachedReportWrapper;
 import com.islandturtlewatch.nest.reporter.net.EndPointFactory;
 import com.islandturtlewatch.nest.reporter.net.EndPointFactory.ApplicationName;
+import com.islandturtlewatch.nest.reporter.net.MultiPartEntityUploader;
 import com.islandturtlewatch.nest.reporter.net.StatusCodes.Code;
 import com.islandturtlewatch.nest.reporter.transport.imageEndpoint.ImageEndpoint;
 import com.islandturtlewatch.nest.reporter.transport.imageEndpoint.model.EncodedImageRef;
@@ -381,8 +383,18 @@ public class SyncService extends Service {
         SerializedProto serializedProto = imageService.imageUpload(encodedRef).execute();
         ImageUploadRef.Builder uploadRef = ImageUploadRef.newBuilder();
         TextFormat.merge(serializedProto.getSerializedProto(), uploadRef);
-        Log.d(TAG, "upload ref: " + uploadRef.toString());
+        Log.d(TAG, "upload ref: " + uploadRef.getUrl().toString());
+
+        uploadImage2(uploadRef.build());
       }
+    }
+
+    private void uploadImage2(ImageUploadRef ref) throws IOException {
+      MultiPartEntityUploader.upload(
+          RunEnvironment.rewriteUrlIfLocalHost(ref.getUrl()),
+          ref.getImage().getImageName(),
+          "image/jpeg",
+          ImageUtil.readImageBytes(SyncService.this, ref.getImage().getImageName()));
     }
   }
 

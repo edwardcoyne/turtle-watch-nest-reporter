@@ -37,6 +37,6 @@
  </servlet>
  <servlet-mapping>
   <servlet-name>ImagePostUpload</servlet-name>
-  <url-pattern>/backend/web-post-upload</url-pattern>
+  <url-pattern>/backend/image-post-upload</url-pattern>
  </servlet-mapping>
 </web-app>
