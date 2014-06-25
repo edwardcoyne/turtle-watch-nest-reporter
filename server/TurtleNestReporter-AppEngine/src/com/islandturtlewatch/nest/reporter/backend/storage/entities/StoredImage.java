@@ -37,6 +37,9 @@ public class StoredImage {
   @Getter @Setter
   String cloudStorageObjectName;
 
+  @Getter @Setter
+  String blobKey;
+
   public static String toKey(long reportId, String filename) {
     return reportId + "/" + filename;
   }

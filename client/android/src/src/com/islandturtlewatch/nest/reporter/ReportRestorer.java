@@ -2,13 +2,17 @@ package com.islandturtlewatch.nest.reporter;
 
 import java.io.IOException;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.google.api.client.repackaged.com.google.common.base.Preconditions;
 import com.google.common.base.Optional;
 import com.google.common.io.BaseEncoding;
 import com.google.protobuf.TextFormat;
+import com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef;
+import com.islandturtlewatch.nest.data.ImageProto.ImageRef;
 import com.islandturtlewatch.nest.data.ReportProto.Image;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
@@ -16,6 +20,9 @@ import com.islandturtlewatch.nest.data.ReportProto.ReportWrapper;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore;
 import com.islandturtlewatch.nest.reporter.net.EndPointFactory;
 import com.islandturtlewatch.nest.reporter.net.EndPointFactory.ApplicationName;
+import com.islandturtlewatch.nest.reporter.transport.imageEndpoint.ImageEndpoint;
+import com.islandturtlewatch.nest.reporter.transport.imageEndpoint.model.EncodedImageRef;
+import com.islandturtlewatch.nest.reporter.transport.imageEndpoint.model.SerializedProto;
 import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.ReportEndpoint;
 import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.CollectionResponseEncodedReportRef;
 import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.EncodedReport;
@@ -27,8 +34,10 @@ public class ReportRestorer {
 
   Context context;
   ReportEndpoint reportService;
+  ImageEndpoint imageService;
   LocalDataStore store;
   Runnable callback;
+  ProgressDialog dialog;
 
   public ReportRestorer(Context context) {
     this.context = context;
@@ -36,29 +45,51 @@ public class ReportRestorer {
         EndPointFactory.createReportEndpoint(context, ApplicationName.REPORT_RESTORE);
     Preconditions.checkArgument(reportServiceOpt.isPresent());
     reportService = reportServiceOpt.get();
+
+    Optional<ImageEndpoint> imageServiceOpt =
+        EndPointFactory.createImageEndpoint(context, ApplicationName.REPORT_RESTORE);
+    Preconditions.checkArgument(imageServiceOpt.isPresent());
+    imageService = imageServiceOpt.get();
     store = new LocalDataStore(context);
+  }
+
+  private void updateProgress(final int reportsDone, final int reportsTotal) {
+    final int progressDialogTotal = 10000;
+    dialog.setProgress((reportsDone/reportsTotal) * progressDialogTotal);
+    dialog.setMessage("Finsihed with Report " + reportsDone + "/" + reportsTotal);
   }
 
   public void restoreReports(Runnable callback) {
     this.callback = callback;
-    new Thread(new Worker()).start();
-    // TODO(edcoyne): add ui
+    dialog = ProgressDialog.show(context,
+        "Restoring reports from server.",
+        "Please wait.",
+        false,
+        false);
+    dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+    new Worker().execute(reportService);
   }
 
-  private class Worker implements Runnable {
+  private class Worker extends AsyncTask<ReportEndpoint, Integer, Boolean> {
     @Override
-    public void run() {
+    protected Boolean doInBackground(ReportEndpoint... params) {
       try {
         CollectionResponseEncodedReportRef encodedRefs =
             reportService.getLatestRefsForUser().execute();
+        if (encodedRefs.getItems() == null) {
+          // no reports to dl.
+          return true;
+        }
 
+        int finishedCt = 0;
         for (EncodedReportRef encodedRef : encodedRefs.getItems()) {
+          publishProgress(finishedCt, encodedRefs.getItems().size());
           EncodedReport encodedReport = reportService.fetchReport(encodedRef).execute();
           long startTimestamp = System.currentTimeMillis();
-          Report.Builder reportBuilder = Report.newBuilder();
-          TextFormat.merge(encodedReport.getReportEncoded(), reportBuilder);
-          Report report = reportBuilder.build();
-             // Report.parseFrom(encodedReport.getReportEncoded());
+
+          Report report = Report.parseFrom(
+              BaseEncoding.base64().decode(encodedReport.getReportEncoded()));
+
           Log.d(TAG, String.format("Decoded proto in %f s.",
               (System.currentTimeMillis() - startTimestamp) / 1000.0));
           ReportRef ref =
@@ -75,16 +106,44 @@ public class ReportRestorer {
 
           long localId = store.getLocalReportId(ref.getReportId());
           for (Image image : report.getImageList()) {
-            store.addImage(localId, image.getFileName(),
-                ImageUtil.getModifiedTime(context, image.getFileName()));
+            if (!store.hasImage(localId, image.getFileName())) {
+              ImageRef imageRef = ImageRef.newBuilder()
+                  .setOwnerId(ref.getOwnerId())
+                  .setReportId(ref.getReportId())
+                  .setImageName(image.getFileName())
+                  .build();
+              EncodedImageRef encodedImageRef = new EncodedImageRef().setRefEncoded(
+                  BaseEncoding.base64().encode(imageRef.toByteArray()));
+
+              SerializedProto resultProto = imageService.imageDownload(encodedImageRef).execute();
+
+              ImageDownloadRef.Builder downloadRef = ImageDownloadRef.newBuilder();
+              TextFormat.merge(resultProto.getSerializedProto(), downloadRef);
+
+              ImageUtil.downloadImage(context, downloadRef.build());
+
+              store.addImage(localId, image.getFileName(),
+                  ImageUtil.getModifiedTime(context, image.getFileName()));
+            }
           }
         }
         Log.d(TAG, "Done restoring reports");
         callback.run();
       } catch (IOException e) {
         e.printStackTrace();
+        dialog.dismiss();
+        //DialogUtil.acknowledge(context,
+        //    "There was an error while loading the reports from server.");
+      } finally {
+        dialog.dismiss();
       }
+      return true;
+    }
+
+    @Override
+    protected void onProgressUpdate(Integer... values) {
+      super.onProgressUpdate(values);
+      updateProgress(values[0], values[1]);
     }
   }
-
 }

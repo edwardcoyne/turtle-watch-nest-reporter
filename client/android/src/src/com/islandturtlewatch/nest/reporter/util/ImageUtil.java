@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.UUID;
 
 import lombok.Cleanup;
@@ -19,9 +21,11 @@ import android.view.View;
 import com.google.api.client.repackaged.com.google.common.base.Preconditions;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.Files;
+import com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef;
 import com.islandturtlewatch.nest.data.ReportProto.Image;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.Report.Builder;
+import com.islandturtlewatch.nest.reporter.RunEnvironment;
 
 public class ImageUtil {
   private static final String TAG = ImageUtil.class.getSimpleName();
@@ -70,6 +74,27 @@ public class ImageUtil {
   public static String getFileName(Uri imageUri) {
     File file = new File(imageUri.getPath());
     return file.getName();
+  }
+
+  public static void downloadImage(Context context, ImageDownloadRef ref) throws IOException {
+    String downloadUrl = RunEnvironment.rewriteUrlIfLocalHost(ref.getUrl());
+    Log.d(TAG, "downloading image from: " + downloadUrl);
+
+    URL url = new URL(downloadUrl);
+    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+    connection.connect();
+
+    Preconditions.checkArgument(connection.getResponseCode() == HttpURLConnection.HTTP_OK,
+        "Error from server while downloading image: " + connection.getResponseCode());
+
+    @Cleanup
+    InputStream in = connection.getInputStream();
+    Uri localPath = getImagePath(context, ref.getImage().getImageName());
+
+    @Cleanup
+    OutputStream out = new BufferedOutputStream(new FileOutputStream(localPath.getPath()));
+    long bytesCopied = ByteStreams.copy(in, out);
+    Log.d(TAG, "Copied " + bytesCopied + " from " + downloadUrl + " to " + localPath);
   }
 
   public static void copyFromContentUri(

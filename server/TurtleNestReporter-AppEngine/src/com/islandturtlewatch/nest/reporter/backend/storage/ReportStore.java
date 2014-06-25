@@ -173,12 +173,20 @@ public class ReportStore {
     return userOpt.get();
   }
 
-  public Optional<User> tryLoadUser(String userId) {
+  public Optional<StoredReport> tryLoadReport(String userId, long reportId) {
+    Optional<User> user = tryLoadUser(userId);
+    if (!user.isPresent()) {
+      return Optional.absent();
+    }
+    return Optional.fromNullable(loadReport(user.get(), reportId));
+  }
+
+  private Optional<User> tryLoadUser(String userId) {
     return Optional.fromNullable(
         backend().load().type(User.class).id(userId).now());
   }
 
-  public StoredReport loadReport(User user, long reportId) {
+  private StoredReport loadReport(User user, long reportId) {
     StoredReport report = backend().load().type(StoredReport.class).parent(user).id(reportId).now();
     Preconditions.checkNotNull(report,
         "Missing report, user:" + user.getId() + "report: " + reportId);

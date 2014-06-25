@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Builder;
 
-import com.google.protobuf.TextFormat;
+import com.google.common.io.BaseEncoding;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 
 @Entity
@@ -22,9 +22,7 @@ public class EncodedReport {
 
   public static EncodedReport fromProto(Report proto) {
     EncodedReport encoded = new EncodedReport();
-    //encoded.setReportEncoded(BaseEncoding.base64().encode(proto.toByteArray()));
-
-    encoded.setReportEncoded(TextFormat.printToString(proto));
+    encoded.setReportEncoded(BaseEncoding.base64().encode(proto.toByteArray()));
     return encoded;
   }
 }

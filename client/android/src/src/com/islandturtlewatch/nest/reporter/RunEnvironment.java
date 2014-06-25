@@ -41,7 +41,7 @@ public class RunEnvironment {
     Preconditions.checkArgument(matcher.matches(), "Url:" + url
         + " does not match pattern: " +  pattern.toString());
     String domain = matcher.group(1);
-    if (domain.equals("localhost") || domain.equals("127.0.0.1")) {
+    if (domain.equals("localhost") || domain.equals("127.0.0.1") || domain.equals("0.0.0.0")) {
       return url.replaceFirst(domain, localAddress);
     }
     return url;

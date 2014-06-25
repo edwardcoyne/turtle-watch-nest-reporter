@@ -7,6 +7,7 @@ import com.google.appengine.api.oauth.OAuthRequestException;
 import com.google.appengine.api.users.User;
 import com.google.common.io.BaseEncoding;
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef;
 import com.islandturtlewatch.nest.data.ImageProto.ImageRef;
 import com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef;
 import com.islandturtlewatch.nest.reporter.backend.ClientIds;
@@ -43,10 +44,19 @@ public class ImageEndpoint {
 
   /**
    * Creates a reference for downloading a image.
+   * @throws InvalidProtocolBufferException
    * @returns ImageDownloadRef
    */
   @ApiMethod(name = "imageDownload")
-  public SerializedProto imageDownload(User user, EncodedImageRef ref) {
-    return null;
+  public SerializedProto imageDownload(User user, EncodedImageRef ref)
+      throws InvalidProtocolBufferException {
+    ImageRef imageRef = ImageRef.newBuilder()
+        .mergeFrom(BaseEncoding.base64().decode(ref.getRefEncoded()))
+        .build();
+    ImageDownloadRef downloadRef = ImageDownloadRef.newBuilder()
+      .setImage(imageRef)
+      .setUrl(ImageStore.getDownloadUrl(imageRef))
+      .build();
+    return SerializedProto.fromProto(downloadRef);
   }
 }
