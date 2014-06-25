@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.google.api.client.repackaged.com.google.common.base.Preconditions;
+import com.google.appengine.repackaged.com.google.common.collect.ImmutableList;
 import com.google.common.base.Optional;
 import com.google.common.io.BaseEncoding;
 import com.google.protobuf.TextFormat;
@@ -124,6 +125,7 @@ public class ReportRestorer {
 
               store.addImage(localId, image.getFileName(),
                   ImageUtil.getModifiedTime(context, image.getFileName()));
+              store.markImagesSynced(localId, ImmutableList.of(image.getFileName()));
             }
           }
         }
