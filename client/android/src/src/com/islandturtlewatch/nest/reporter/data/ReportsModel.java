@@ -194,7 +194,7 @@ public class ReportsModel {
         Optional<Long> oldTs = dataStore.getImageUpdatedTimestamp(activeReportId, image.getFileName());
         if (!oldTs.isPresent()) {
           Log.d(TAG, "Adding new image record: " + image.getFileName() + " ts: " + newTs);
-          dataStore.addImage(activeReportId, image.getFileName(), newTs);
+          dataStore.addImageAndInvalidateReport(activeReportId, image.getFileName(), newTs);
         } else if (!oldTs.get().equals(newTs)) {
           Log.d(TAG, "Updating image: " + image.getFileName()
               + " oldts: " + oldTs.get() + " newTs:" + newTs);
@@ -210,7 +210,7 @@ public class ReportsModel {
         if (!dataStore.getImageUpdatedTimestamp(activeReportId, image.getFileName()).isPresent()) {
           long newTs = ImageUtil.getModifiedTime(activity, image.getFileName());
           Log.d(TAG, "Adding new image record: " + image.getFileName() + " ts: " + newTs);
-          dataStore.addImage(activeReportId, image.getFileName(), newTs);
+          dataStore.addImageAndInvalidateReport(activeReportId, image.getFileName(), newTs);
         }
       }
     }

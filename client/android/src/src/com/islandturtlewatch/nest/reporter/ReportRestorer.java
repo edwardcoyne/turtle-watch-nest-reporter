@@ -7,9 +7,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.google.api.client.repackaged.com.google.common.base.Preconditions;
-import com.google.appengine.repackaged.com.google.common.collect.ImmutableList;
 import com.google.common.base.Optional;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import com.google.common.io.BaseEncoding;
 import com.google.protobuf.TextFormat;
 import com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef;
@@ -54,20 +54,28 @@ public class ReportRestorer {
     store = new LocalDataStore(context);
   }
 
-  private void updateProgress(final int reportsDone, final int reportsTotal) {
+  private void updateProgress(final int reportsDone, final int reportsTotal,
+      Optional<Integer> photosDone, Optional<Integer> photosTotal) {
     final int progressDialogTotal = 10000;
     dialog.setProgress((reportsDone/reportsTotal) * progressDialogTotal);
-    dialog.setMessage("Finsihed with Report " + reportsDone + "/" + reportsTotal);
+    String line1 = "Finished with Report " + reportsDone + "/" + reportsTotal;
+    String line2 = (photosDone.isPresent() && photosTotal.isPresent()) ?
+        "\n\tPhotos " + photosDone.get() + "/" + photosTotal.get() : "";
+    dialog.setMessage(line1 + line2);
+    if (photosDone.isPresent() && photosTotal.isPresent()) {
+      dialog.setProgress(photosDone.get());
+      dialog.setMax(photosTotal.get());
+    }
   }
 
   public void restoreReports(Runnable callback) {
     this.callback = callback;
-    dialog = ProgressDialog.show(context,
-        "Restoring reports from server.",
-        "Please wait.",
-        false,
-        false);
+    dialog = new ProgressDialog(context);
+    dialog.setTitle("Restoring reports from server.");
+    dialog.setMessage("Please wait.");
+    dialog.setIndeterminate(false);
     dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+    dialog.show();
     new Worker().execute(reportService);
   }
 
@@ -106,7 +114,10 @@ public class ReportRestorer {
           store.updateFromServer(wrapper);
 
           long localId = store.getLocalReportId(ref.getReportId());
+          int finishedImagesCt = 0;
           for (Image image : report.getImageList()) {
+            publishProgress(finishedCt, encodedRefs.getItems().size(),
+                finishedImagesCt, report.getImageList().size());
             if (!store.hasImage(localId, image.getFileName())) {
               ImageRef imageRef = ImageRef.newBuilder()
                   .setOwnerId(ref.getOwnerId())
@@ -126,6 +137,7 @@ public class ReportRestorer {
               store.addImage(localId, image.getFileName(),
                   ImageUtil.getModifiedTime(context, image.getFileName()));
               store.markImagesSynced(localId, ImmutableList.of(image.getFileName()));
+              finishedImagesCt++;
             }
           }
         }
@@ -145,7 +157,11 @@ public class ReportRestorer {
     @Override
     protected void onProgressUpdate(Integer... values) {
       super.onProgressUpdate(values);
-      updateProgress(values[0], values[1]);
+      Optional<Integer> photosDone = (values.length > 2)
+          ? Optional.of(values[2]) : Optional.<Integer>absent();
+      Optional<Integer> photosTotal = (values.length > 3)
+          ? Optional.of(values[3]) : Optional.<Integer>absent();
+      updateProgress(values[0], values[1], photosDone, photosTotal);
     }
   }
 }

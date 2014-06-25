@@ -98,7 +98,7 @@ public class ReportEndpoint {
   public ReportResponse createReport(
       User user,
       ReportRequest request) throws OAuthRequestException, IOException {
-    log.info("CreateUser: " + user + " :: " + request);
+    log.info("Create: " + user + " :: " + request);
     if (user == null) {
       return ReportResponse.builder().setCode(Code.AUTHENTICATION_FAILURE).build();
     }

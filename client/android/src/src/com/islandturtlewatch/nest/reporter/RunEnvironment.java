@@ -14,9 +14,11 @@ public class RunEnvironment {
     DEVELOPMENT,
     PROD
   };
-  private static final Environment environment = Environment.LOCAL;
+  private static final Environment environment = Environment.PROD;
   private static final String localAddress = "10.255.0.43";
   private static final String localAddressWPort = localAddress + ":8888";
+  private static final int backendVersion = 2;
+
 
   public static String getRootBackendUrl() {
     switch(environment) {
@@ -24,7 +26,7 @@ public class RunEnvironment {
         return "http://" + localAddressWPort + "/_ah/api";
       case DEVELOPMENT:
       case PROD:
-        return ReportEndpoint.DEFAULT_ROOT_URL;
+        return getVersionedRootUril(ReportEndpoint.DEFAULT_ROOT_URL);
       default:
         throw new UnsupportedOperationException("Don't support environment: " + environment);
     }
@@ -45,6 +47,15 @@ public class RunEnvironment {
       return url.replaceFirst(domain, localAddress);
     }
     return url;
+  }
+
+  private static String getVersionedRootUril(String rootUrl) {
+    final Pattern pattern = Pattern.compile("([^/]*//)(.*)");
+    Matcher matcher = pattern.matcher(rootUrl);
+    Preconditions.checkArgument(matcher.matches(), "Url:" + rootUrl
+        + " does not match pattern: " +  pattern.toString());
+
+    return matcher.group(1) + backendVersion + "-dot-" + matcher.group(2);
   }
 
   public static boolean isEmulator() {

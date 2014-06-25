@@ -348,6 +348,10 @@ public class LocalDataStore {
 
     long imageId = db.insert(ImagesTable.TABLE_NAME, null, values);
     Preconditions.checkArgument(imageId != -1, "Failed to insert new image");
+  }
+
+  public void addImageAndInvalidateReport(long localReportId, String fileName, long timestamp) {
+    addImage(localReportId, fileName, timestamp);
     this.setReportUnsynced(localReportId);
   }
 
@@ -401,7 +405,7 @@ public class LocalDataStore {
         null, // don't need selection args
         null, // don't group
         null, // don't filter
-        ReportsTable.COLUMN_TS_LOCAL_ADD.name // sort
+        null // sort
         );
   }
 

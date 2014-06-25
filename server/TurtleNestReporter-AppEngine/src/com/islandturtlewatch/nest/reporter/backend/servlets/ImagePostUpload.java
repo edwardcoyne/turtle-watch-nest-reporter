@@ -47,14 +47,6 @@ public class ImagePostUpload extends HttpServlet {
       Preconditions.checkArgument(keys.size() == 1);
 
       store.addOrUpdateImage(ref, fileInfos.get(0).getGsObjectName(), keys.get(0));
-/*
-      for (FileInfo fileInfo : fileInfoEntry.getValue()) {
-        log.info("Uploaded " + fileInfo.getFilename() + " :: " + fileInfo.getGsObjectName()
-            + " :: " + fileInfo.getContentType());
-
-        store.addOrUpdateImage(ref, fileInfo.getGsObjectName());
-      }
-      */
     }
   }
 }
