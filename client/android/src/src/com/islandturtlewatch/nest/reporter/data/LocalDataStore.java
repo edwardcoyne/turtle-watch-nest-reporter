@@ -9,6 +9,7 @@ import static com.islandturtlewatch.nest.reporter.util.Sql.whereStringEquals;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -61,11 +62,20 @@ public class LocalDataStore {
     @Cleanup SQLiteDatabase db = storageHelper.getReadableDatabase();
     @Cleanup Cursor cursor = getActiveReportsCursor(db);
 
-    ImmutableList.Builder<CachedReportWrapper> output = ImmutableList.builder();
+    ArrayList<CachedReportWrapper> output = new ArrayList<>();
     while (cursor.moveToNext()) {
       output.add(CachedReportWrapper.from(cursor));
     }
-    return output.build();
+
+    Collections.sort(output, new Comparator<CachedReportWrapper>() {
+      @Override public int compare(CachedReportWrapper lhs, CachedReportWrapper rhs) {
+        int diff = lhs.getReport().getNestNumber() - rhs.getReport().getNestNumber();
+        if (diff != 0) {
+          return diff;
+        }
+        return lhs.getReport().getFalseCrawlNumber() - rhs.getReport().getFalseCrawlNumber();
+      }});
+    return ImmutableList.copyOf(output);
   }
 
   /**

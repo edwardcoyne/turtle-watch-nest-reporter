@@ -1,6 +1,7 @@
 package com.islandturtlewatch.nest.reporter.backend.storage;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.logging.Level;
 
 import javax.servlet.http.HttpServletResponse;
@@ -101,6 +102,27 @@ public class ImageStore {
     return AppIdentityServiceFactory.getAppIdentityService().getDefaultGcsBucketName();
   }
 
+  private static GcsFilename createOldGcsFileName(long reportId, String fileName) {
+      return new GcsFilename(
+          AppIdentityServiceFactory.getAppIdentityService().getDefaultGcsBucketName(),
+          String.format(Locale.US, "%d/%s", reportId, fileName));
+  }
+
+  private static BlobKey getBlobkKey(ImageRef ref) {
+    ImageStore store = new ImageStore();
+    store.init();
+
+    Optional<StoredImage> image = store.tryLoadImage(ref);
+    if (image.isPresent()) {
+      return new BlobKey(image.get().getBlobKey());
+    } else {
+      GcsFilename oldGcsFileName = createOldGcsFileName(ref.getReportId(), ref.getImageName());
+      BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+      return blobstoreService.createGsBlobKey("/gs/" + oldGcsFileName.getBucketName()
+          + "/" + oldGcsFileName.getObjectName());
+    }
+  }
+
   public static String getUploadUrl(ImageRef ref) {
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
     return blobstoreService.createUploadUrl(
@@ -109,18 +131,14 @@ public class ImageStore {
   }
 
   public static String getDownloadUrl(ImageRef ref) {
-    ImageStore store = new ImageStore();
-    store.init();
-
-    Optional<StoredImage> image = store.tryLoadImage(ref);
-    Preconditions.checkArgument(image.isPresent(), "Failed to load image for: " + ref.toString());
-    Preconditions.checkArgument(!image.get().getBlobKey().isEmpty(),
-        "Image missing blobkey: " + ref.toString());
-
     ImagesService imagesService = ImagesServiceFactory.getImagesService();
-
     return imagesService.getServingUrl(
-        ServingUrlOptions.Builder.withBlobKey(new BlobKey(image.get().getBlobKey())));
+        ServingUrlOptions.Builder.withBlobKey(getBlobkKey(ref)));
+  }
+
+  public static void serveImage(ImageRef ref, HttpServletResponse response) throws IOException {
+    BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+    blobstoreService.serve(getBlobkKey(ref), response);
   }
 
   public static boolean deleteImage(String objectName) {
@@ -135,35 +153,4 @@ public class ImageStore {
       return false;
     }
   }
-
-  public static void serveImage(ImageRef ref, HttpServletResponse response) throws IOException {
-    ImageStore store = new ImageStore();
-    store.init();
-
-    Optional<StoredImage> image = store.tryLoadImage(ref);
-    Preconditions.checkArgument(image.isPresent(), "Failed to load image for: " + ref.toString());
-
-    BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
-    BlobKey blobKey = blobstoreService.createGsBlobKey(
-        "/gs/" + getBucket() + "/" + image.get().getCloudStorageObjectName());
-    blobstoreService.serve(blobKey, response);
-  }
-/*
-  public static byte[] readImage(long reportId, String filename) throws IOException {
-    ImageStore store = new ImageStore();
-    store.init();
-
-    Optional<StoredImage> image = store.tryQueryImage(reportId, filename);
-    Preconditions.checkArgument(image.isPresent(),
-        "Image not found:" + reportId + " :: " + filename);
-
-    GcsFilename gcsFileName = new GcsFilename(
-          AppIdentityServiceFactory.getAppIdentityService().getDefaultGcsBucketName(),
-          image.get().getCloudStorageObjectName());
-    GcsService gcsService =
-        GcsServiceFactory.createGcsService(RetryParams.getDefaultInstance());
-    GcsInputChannel readChannel = gcsService.openReadChannel(gcsFileName, 0);
-    return ByteStreams.toByteArray(Channels.newInputStream(readChannel));
-  }
-  */
 }
