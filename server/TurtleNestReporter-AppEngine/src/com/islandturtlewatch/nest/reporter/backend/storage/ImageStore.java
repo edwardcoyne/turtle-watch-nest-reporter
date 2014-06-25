@@ -118,6 +118,7 @@ public class ImageStore {
     } else {
       GcsFilename oldGcsFileName = createOldGcsFileName(ref.getReportId(), ref.getImageName());
       BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+      // Does not work on dev server.
       return blobstoreService.createGsBlobKey("/gs/" + oldGcsFileName.getBucketName()
           + "/" + oldGcsFileName.getObjectName());
     }
