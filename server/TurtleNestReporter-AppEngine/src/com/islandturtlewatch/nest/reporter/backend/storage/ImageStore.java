@@ -144,8 +144,9 @@ public class ImageStore {
 
   public static String getDownloadUrl(ImageRef ref) {
     ImagesService imagesService = ImagesServiceFactory.getImagesService();
-    return imagesService.getServingUrl(
-        ServingUrlOptions.Builder.withBlobKey(getBlobkKey(ref)));
+    return imagesService.getServingUrl(ServingUrlOptions.Builder
+        .withBlobKey(getBlobkKey(ref))
+        .imageSize(ImagesService.SERVING_SIZES_LIMIT));
   }
 
   public static void serveImage(ImageRef ref, HttpServletResponse response) throws IOException {

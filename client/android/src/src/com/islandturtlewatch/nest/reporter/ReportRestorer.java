@@ -106,8 +106,6 @@ public class ReportRestorer {
           ReportRef ref =
               ReportRef.parseFrom(BaseEncoding.base64().decode(encodedRef.getRefEncoded()));
 
-          report = ImageUtil.stripAndWriteEmbeddedImage(context, report);
-
           ReportWrapper wrapper = ReportWrapper.newBuilder()
               .setActive(true)
               .setRef(ref)
