@@ -26,7 +26,7 @@ public class RunEnvironment {
         return "http://" + localAddressWPort + "/_ah/api";
       case DEVELOPMENT:
       case PROD:
-        return getVersionedRootUril(ReportEndpoint.DEFAULT_ROOT_URL);
+        return getVersionedRootUrl(ReportEndpoint.DEFAULT_ROOT_URL);
       default:
         throw new UnsupportedOperationException("Don't support environment: " + environment);
     }
@@ -49,7 +49,7 @@ public class RunEnvironment {
     return url;
   }
 
-  private static String getVersionedRootUril(String rootUrl) {
+  private static String getVersionedRootUrl(String rootUrl) {
     final Pattern pattern = Pattern.compile("([^/]*//)(.*)");
     Matcher matcher = pattern.matcher(rootUrl);
     Preconditions.checkArgument(matcher.matches(), "Url:" + rootUrl
