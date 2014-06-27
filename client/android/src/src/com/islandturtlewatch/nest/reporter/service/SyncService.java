@@ -15,6 +15,18 @@ import javax.annotation.Nullable;
 
 import lombok.ToString;
 import lombok.experimental.Builder;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpVersion;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.CoreProtocolPNames;
+import org.apache.http.params.HttpParams;
+import org.apache.http.util.EntityUtils;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -42,12 +54,10 @@ import com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef;
 import com.islandturtlewatch.nest.data.ReportProto.Image;
 import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
 import com.islandturtlewatch.nest.reporter.R;
-import com.islandturtlewatch.nest.reporter.RunEnvironment;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore.CachedReportWrapper;
 import com.islandturtlewatch.nest.reporter.net.EndPointFactory;
 import com.islandturtlewatch.nest.reporter.net.EndPointFactory.ApplicationName;
-import com.islandturtlewatch.nest.reporter.net.MultiPartEntityUploader;
 import com.islandturtlewatch.nest.reporter.net.StatusCodes.Code;
 import com.islandturtlewatch.nest.reporter.transport.imageEndpoint.ImageEndpoint;
 import com.islandturtlewatch.nest.reporter.transport.imageEndpoint.model.EncodedImageRef;
@@ -245,12 +255,17 @@ public class SyncService extends Service {
     private LocalDataStore dataStore;
     private Thread thread;
     private final AtomicBoolean running = new AtomicBoolean(false);
+    private DefaultHttpClient httpClient;
 
     public void start() {
       running.set(true);
       thread = new Thread(this);
       dataStore = new LocalDataStore(SyncService.this);
       thread.start();
+
+      HttpParams params = new BasicHttpParams();
+      params.setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
+      httpClient = new DefaultHttpClient(params);
     }
 
     public void stop() {
@@ -338,9 +353,9 @@ public class SyncService extends Service {
       ReportRef reportRef = ReportRef.newBuilder()
           .mergeFrom(BaseEncoding.base64().decode(response.getReportRefEncoded()))
           .build();
-      dataStore.setServerSideData(wrapper.getLocalId(), reportRef);
       uploadImages(wrapper, reportRef);
 
+      dataStore.setServerSideData(wrapper.getLocalId(), reportRef);
       return true;
     }
 
@@ -363,9 +378,8 @@ public class SyncService extends Service {
           .mergeFrom(BaseEncoding.base64().decode(response.getReportRefEncoded()))
           .build();
       Log.d(TAG, "Updateing from server: " + reportRef.toString());
-      dataStore.setServerSideData(wrapper.getLocalId(), reportRef);
-
       uploadImages(wrapper, reportRef);
+      dataStore.setServerSideData(wrapper.getLocalId(), reportRef);
 
       return true;
     }
@@ -390,11 +404,17 @@ public class SyncService extends Service {
     }
 
     private void uploadImage(ImageUploadRef ref) throws IOException {
-      MultiPartEntityUploader.upload(
-          RunEnvironment.rewriteUrlIfLocalHost(ref.getUrl()),
-          ref.getImage().getImageName(),
-          "image/jpeg",
-          ImageUtil.readImageBytes(SyncService.this, ref.getImage().getImageName()));
+      HttpPost httppost = new HttpPost(ref.getUrl());
+      httppost.setEntity(MultipartEntityBuilder.create()
+          .addBinaryBody("Image",
+              ImageUtil.readImageBytes(SyncService.this, ref.getImage().getImageName()),
+              ContentType.create("image/jpeg"),
+              ref.getImage().getImageName())
+          .build());
+
+      HttpResponse response = httpClient.execute(httppost);
+      Log.d(TAG, "Response:" + response.getStatusLine() + " :: " +
+          EntityUtils.toString(response.getEntity()));
     }
   }
 

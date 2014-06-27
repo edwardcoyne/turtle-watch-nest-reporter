@@ -26,6 +26,7 @@ import com.google.common.io.BaseEncoding;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Ref;
+import com.googlecode.objectify.Work;
 import com.islandturtlewatch.nest.data.ImageProto.ImageRef;
 import com.islandturtlewatch.nest.reporter.backend.storage.entities.StoredImage;
 import com.islandturtlewatch.nest.reporter.backend.storage.entities.StoredReport;
@@ -43,7 +44,17 @@ public class ImageStore {
     ObjectifyService.register(StoredImage.class);
   }
 
-  public void addOrUpdateImage(ImageRef ref, String imageCsObjectName, BlobKey blobKey) {
+  public void addOrUpdateImage(
+      final ImageRef ref, final String imageCsObjectName, final BlobKey blobKey) {
+    backend().transact(new Work<Void>(){
+      @Override
+      public Void run() {
+        doAddOrUpdateImage(ref, imageCsObjectName, blobKey);
+        return null;
+      }});
+  }
+
+  public void doAddOrUpdateImage(ImageRef ref, String imageCsObjectName, BlobKey blobKey) {
     try {
       Optional<StoredImage> oldImage = tryLoadImage(ref);
       if (oldImage.isPresent()) {

@@ -11,13 +11,14 @@ import java.net.URL;
 
 import android.util.Log;
 
+import com.google.common.base.Preconditions;
+
 // Handles uploading a file as part of a multipart form. Have to do this the hardway because the
 // built in http client does not support this and adding another client is like 4mb for this.
 public class MultiPartEntityUploader {
   private static final String TAG = MultiPartEntityUploader.class.getSimpleName();
 
   private static String attachmentName = "data";
-  //String attachmentFileName = "bitmap.bmp";
   private static String crlf = "\r\n";
   private static String twoHyphens = "--";
   private static String boundary =  "*****";
@@ -53,7 +54,9 @@ public class MultiPartEntityUploader {
     request.close();
 
     // wait for response
-    InputStream responseStream = new BufferedInputStream(httpUrlConnection.getInputStream());
+    InputStream responseStream = new BufferedInputStream(
+        (httpUrlConnection.getResponseCode() >= 400) ? httpUrlConnection.getErrorStream() :
+        httpUrlConnection.getInputStream());
 
     BufferedReader responseStreamReader = new BufferedReader(new InputStreamReader(responseStream));
     String line = "";
@@ -65,7 +68,10 @@ public class MultiPartEntityUploader {
     responseStreamReader.close();
 
     String response = stringBuilder.toString();
-    Log.d(TAG, "response:" + response);
+    Log.d(TAG, "response: " + response);
+
+    Preconditions.checkArgument(httpUrlConnection.getResponseCode() == 200,
+        "Http response error: " + httpUrlConnection.getResponseCode());
 
     httpUrlConnection.disconnect();
   }
