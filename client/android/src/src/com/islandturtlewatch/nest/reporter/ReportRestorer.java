@@ -28,6 +28,7 @@ import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.ReportEndpoi
 import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.CollectionResponseEncodedReportRef;
 import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.EncodedReport;
 import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.EncodedReportRef;
+import com.islandturtlewatch.nest.reporter.util.DialogUtil;
 import com.islandturtlewatch.nest.reporter.util.ImageUtil;
 
 public class ReportRestorer {
@@ -58,9 +59,9 @@ public class ReportRestorer {
       Optional<Integer> photosDone, Optional<Integer> photosTotal) {
     final int progressDialogTotal = 10000;
     dialog.setProgress((reportsDone/reportsTotal) * progressDialogTotal);
-    String line1 = "Finished with Report " + reportsDone + "/" + reportsTotal;
+    String line1 = "Downloading Report " + reportsDone + "/" + reportsTotal;
     String line2 = (photosDone.isPresent() && photosTotal.isPresent()) ?
-        "\n\tPhotos " + photosDone.get() + "/" + photosTotal.get() : "";
+        "\n\tPhoto " + photosDone.get() + "/" + photosTotal.get() : "";
     dialog.setMessage(line1 + line2);
     if (photosDone.isPresent() && photosTotal.isPresent()) {
       dialog.setProgress(photosDone.get());
@@ -90,9 +91,10 @@ public class ReportRestorer {
           return true;
         }
 
-        int finishedCt = 0;
+        int reportNum = 0;
+        int reportsTotal = encodedRefs.getItems().size();
         for (EncodedReportRef encodedRef : encodedRefs.getItems()) {
-          publishProgress(finishedCt, encodedRefs.getItems().size());
+          publishProgress(++reportNum, reportsTotal);
           EncodedReport encodedReport = reportService.fetchReport(encodedRef).execute();
           long startTimestamp = System.currentTimeMillis();
 
@@ -114,10 +116,10 @@ public class ReportRestorer {
           store.updateFromServer(wrapper);
 
           long localId = store.getLocalReportId(ref.getReportId());
-          int finishedImagesCt = 0;
+          int imageNum = 0;
           for (Image image : report.getImageList()) {
-            publishProgress(finishedCt, encodedRefs.getItems().size(),
-                finishedImagesCt, report.getImageList().size());
+            publishProgress(reportNum, reportsTotal,
+                ++imageNum, report.getImageList().size());
             if (!store.hasImage(localId, image.getFileName())) {
               ImageRef imageRef = ImageRef.newBuilder()
                   .setOwnerId(ref.getOwnerId())
@@ -137,7 +139,6 @@ public class ReportRestorer {
               store.addImage(localId, image.getFileName(),
                   ImageUtil.getModifiedTime(context, image.getFileName()));
               store.markImagesSynced(localId, ImmutableList.of(image.getFileName()));
-              finishedImagesCt++;
             }
           }
         }
@@ -145,9 +146,7 @@ public class ReportRestorer {
         callback.run();
       } catch (IOException e) {
         e.printStackTrace();
-        dialog.dismiss();
-        //DialogUtil.acknowledge(context,
-        //    "There was an error while loading the reports from server.");
+        return false;
       } finally {
         dialog.dismiss();
       }
@@ -162,6 +161,14 @@ public class ReportRestorer {
       Optional<Integer> photosTotal = (values.length > 3)
           ? Optional.of(values[3]) : Optional.<Integer>absent();
       updateProgress(values[0], values[1], photosDone, photosTotal);
+    }
+
+    @Override
+    protected void onPostExecute(Boolean result) {
+      if (!result) {
+        DialogUtil.acknowledge(context,
+            "There was an error while loading the reports from server.");
+      }
     }
   }
 }
