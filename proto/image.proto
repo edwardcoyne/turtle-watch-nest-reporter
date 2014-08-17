@@ -1,0 +1,19 @@
+package com.islandturtlewatch.nest.data;
+option java_outer_classname = "ImageProto";
+
+// Uniquely identify an image.
+message ImageRef {
+  optional string owner_id = 1;
+  optional uint64 report_id = 2;
+  optional string image_name = 3;
+}
+
+message ImageUploadRef {
+  optional ImageRef image = 1;
+  optional string url = 2;
+}
+
+message ImageDownloadRef {
+  optional ImageRef image = 1;
+  optional string url = 2;
+}
