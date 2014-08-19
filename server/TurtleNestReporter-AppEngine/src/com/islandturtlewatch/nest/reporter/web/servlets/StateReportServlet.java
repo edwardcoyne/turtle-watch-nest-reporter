@@ -4,10 +4,14 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -29,12 +33,17 @@ import com.islandturtlewatch.nest.reporter.web.servlets.ReportCsvGenerator.Path;
 public class StateReportServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
+  // Keep this column separate so we can test against it.
+  private static ReportColumn sectionColumn = new MappedSectionColumn("Beach Zone", "ref.owner_id");
+
   // This is the list of columns in the report, they will appear in this order.
   private static List<ReportColumn> reportColumns = ImmutableList.of(
-      new MappedColumn("Date Nest Recorded", "report.timestamp_found_ms"),
+      new MappedTimestampColumn("Date Nest Recorded", "report.timestamp_found_ms"),
       new StaticValueColumn("Escarpment >= 18 Encountered", "0"),
       new MappedColumn("ID/Label", "report.nest_number"),
-      new MappedColumn("Beach Zone", "report.location.section"),
+      sectionColumn,
+      new MappedDistanceColumn("Distance From Dune",
+          "report.location.apex_to_barrier_ft", "report.location.apex_to_barrier_in"),
       new MappedDistanceColumn("Distance From MHW",
           "report.location.water_to_apex_ft", "report.location.water_to_apex_in"),
       new MappedColumn("Nest Relocated", "report.intervention.relocation.was_relocated"),
@@ -43,10 +52,12 @@ public class StateReportServlet extends HttpServlet {
           "report.condition.wash_out.timestamp_ms"),
       new MappedIsPresentColumn("Nest Completely Depredated",
           "report.condition.preditation.0.timestamp_ms"),
-      new MappedColumn("First Hatchling Emergence Date", "report.condition.hatch_timestamp_ms"),
+      new MappedTimestampColumn("First Hatchling Emergence Date",
+          "report.condition.hatch_timestamp_ms"),
       new MappedColumn("Hatchlings Disoriented", "report.condition.disorientation"),
       new MappedColumn("Nest Inventoried", "report.intervention.excavation.excavated"),
-      new MappedColumn("Date Nest Inventoried", "report.intervention.excavation.timestamp_ms"),
+      new MappedTimestampColumn("Date Nest Inventoried",
+          "report.intervention.excavation.timestamp_ms"),
       new MappedColumn("# of Dead Hatchlings", "report.intervention.excavation.dead_in_nest"),
       new MappedColumn("# of Live Hatchlings", "report.intervention.excavation.live_in_nest"),
       new MappedColumn("# of Empty Shells", "report.intervention.excavation.hatched_shells"),
@@ -113,7 +124,27 @@ public class StateReportServlet extends HttpServlet {
     }
   }
 
-  // Value will be 1 if there is a value at the path.
+
+  // Converts timestamp at path to date.
+  private static class MappedTimestampColumn extends ReportColumn {
+    private static DateFormat DATE_FORMAT = new SimpleDateFormat("MM/dd/yyyy");
+    private MappedTimestampColumn(String name, final String stringPath) {
+      super(name, new ValueFetcher() {
+        private final Path path = new Path(stringPath);
+        @Override public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column column = columnMap.get(path);
+          Preconditions.checkNotNull(column, "Missing path: " + stringPath);
+          if (!column.hasValue(rowId) || column.getValue(rowId).equals("0")) {
+            return "";
+          }
+          Long timestamp = Long.parseLong(column.getValue(rowId));
+          return DATE_FORMAT.format(new Date(timestamp));
+        }
+      });
+    }
+  }
+
+  // Value will be YES if there is a value at the path.
   private static class MappedIsPresentColumn extends ReportColumn {
     private MappedIsPresentColumn(String name, final String stringPath) {
       super(name, new ValueFetcher() {
@@ -121,12 +152,35 @@ public class StateReportServlet extends HttpServlet {
         @Override public String fetch(Map<Path, Column> columnMap, int rowId) {
           Column column = columnMap.get(path);
           Preconditions.checkNotNull(column, "Missing path: " + stringPath);
-          return Boolean.toString(column.hasValue(rowId));
+          return column.hasValue(rowId) ? "YES" : "NO";
         }
       });
     }
   }
 
+  // Column will read section number out of submitting user.
+  private static class MappedSectionColumn extends ReportColumn {
+    private static Pattern USER_PATTERN = Pattern.compile("section([0-9]+)@islandturtlewatch.com");
+    private MappedSectionColumn(String name, final String stringPath) {
+      super(name, new ValueFetcher() {
+        private final Path path = new Path(stringPath);
+
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column column = columnMap.get(path);
+          Preconditions.checkNotNull(column, "Missing path: " + stringPath);
+          String user = column.getValue(rowId);
+          Matcher matcher = USER_PATTERN.matcher(user);
+          if (!matcher.matches()) {
+            return "";
+          }
+          return matcher.group(1);
+        }
+      });
+    }
+  }
+
+  // Converts values at stringPathFt and stirngPathIn to Ft.In like 2.01.
   private static class MappedDistanceColumn extends ReportColumn {
     private MappedDistanceColumn(
         String name, final String stringPathFt, final String stringPathIn) {
@@ -139,7 +193,7 @@ public class StateReportServlet extends HttpServlet {
           Column columnIn = Preconditions.checkNotNull(columnMap.get(pathIn),
               "Missing path: " + stringPathIn);
           return String.format("%s.%02d", columnFt.getValue(rowId),
-              Integer.parseInt(columnIn.getValue(rowId)));
+              columnIn.hasValue(rowId) ? Integer.parseInt(columnIn.getValue(rowId)) : 0);
         }
       });
     }
@@ -163,6 +217,11 @@ public class StateReportServlet extends HttpServlet {
     @Override
     public void writeRow(Writer writer, Map<Path, Column> columnMap, int rowId)
         throws IOException {
+      if (sectionColumn.getFetcher().fetch(columnMap, rowId).equals("")) {
+        // If there is no section number it is a junk report.
+        return;
+      }
+
       List<String> cells = new ArrayList<>();
       for (ReportColumn column : reportColumns) {
         cells.add(column.getFetcher().fetch(columnMap, rowId));

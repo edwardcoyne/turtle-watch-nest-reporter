@@ -102,6 +102,8 @@ class ReportCsvGenerator {
     if (field.getType() == FieldDescriptor.Type.ENUM) {
       EnumValueDescriptor enumValue = (EnumValueDescriptor)message.getField(field);
       value = enumValue.getName();
+    } else if (field.getType() == FieldDescriptor.Type.BOOL) {
+      value = ((Boolean)message.getField(field)) ? "YES" : "NO";
     } else {
       value = sanatize(message.getField(field));
     }
