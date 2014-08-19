@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import lombok.extern.java.Log;
 
-import com.google.common.base.Joiner;
 import com.google.common.net.MediaType;
 import com.islandturtlewatch.nest.reporter.backend.storage.ReportStore;
 
@@ -23,7 +22,6 @@ import com.islandturtlewatch.nest.reporter.backend.storage.ReportStore;
 @Log
 public class CsvServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
-  static Joiner pathJoiner = Joiner.on(".");
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -37,7 +35,7 @@ public class CsvServlet extends HttpServlet {
     generator.addAllRows(store.getActiveReports());
 
     response.setHeader("content-disposition",
-        "inline; filename=\"nest_reporter_reports_" + new Date().toString() + ".csv\"");
+        "inline; filename=\"nest_reporter_all_data_" + new Date().toString() + ".csv\"");
     response.setCharacterEncoding("UTF-8");
     ServletOutputStream outputStream = response.getOutputStream();
     OutputStreamWriter writer = new OutputStreamWriter(outputStream, Charset.forName("UTF-8"));

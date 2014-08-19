@@ -30,6 +30,15 @@
   <servlet-name>CsvServlet</servlet-name>
   <url-pattern>/web/reporting/csv</url-pattern>
  </servlet-mapping>
+  
+ <servlet>
+  <servlet-name>StateReportServlet</servlet-name>
+  <servlet-class>com.islandturtlewatch.nest.reporter.web.servlets.StateReportServlet</servlet-class>
+ </servlet>
+ <servlet-mapping>
+  <servlet-name>StateReportServlet</servlet-name>
+  <url-pattern>/web/reporting/state</url-pattern>
+ </servlet-mapping>
  
  <servlet>
   <servlet-name>ImagePostUpload</servlet-name>

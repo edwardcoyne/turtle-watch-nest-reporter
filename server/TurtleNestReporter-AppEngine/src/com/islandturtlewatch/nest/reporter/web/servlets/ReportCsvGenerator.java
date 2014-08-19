@@ -13,6 +13,7 @@ import lombok.EqualsAndHashCode;
 import lombok.extern.java.Log;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Splitter;
 import com.google.protobuf.Descriptors.Descriptor;
 import com.google.protobuf.Descriptors.EnumValueDescriptor;
 import com.google.protobuf.Descriptors.FieldDescriptor;
@@ -23,7 +24,9 @@ import com.islandturtlewatch.nest.data.ReportProto.ReportWrapper.Builder;
 
 @Log
 class ReportCsvGenerator {
-  private static Joiner csvJoiner = Joiner.on(";");
+  public static Joiner csvJoiner = Joiner.on(";");
+  private static Joiner pathJoiner = Joiner.on(".");
+  private static Splitter pathSplitter = Splitter.on(".");
 
   private int currentRow = 0;
   private final Map<Path, Column> columnMap = new TreeMap<>();
@@ -117,17 +120,17 @@ class ReportCsvGenerator {
 
   public void write(Writer writer) throws IOException {
     writer.append("SEP=;\n");
-    reportWriter.writeHeader(writer);
+    reportWriter.writeHeader(writer, columnMap.keySet());
 
     int ct = 0;
     for (ct = 0; ct <= currentRow; ct++) {
-      reportWriter.writeRow(writer, ct);
+      reportWriter.writeRow(writer, columnMap, ct);
     }
 
     log.info("Wrote " + ct + " reports.");
   }
 
-  private class Column {
+  public static class Column {
     private final Map<Integer, String> rowValues = new HashMap<>();
 
     private Column() {}
@@ -136,19 +139,29 @@ class ReportCsvGenerator {
       rowValues.put(rowId, value);
     }
 
-    private String getValue(int rowId) {
+    public String getValue(int rowId) {
       if (rowValues.containsKey(rowId)) {
         return rowValues.get(rowId);
       }
       return "";
     }
+
+    public boolean hasValue(int rowId) {
+      return rowValues.containsKey(rowId);
+    }
   }
 
   @EqualsAndHashCode
-  private class Path implements Comparable<Path>{
+  public static class Path implements Comparable<Path>{
     private final List<String> path = new ArrayList<>();
 
     public Path() { }
+
+    public Path(String stringPath) {
+      for (String element : pathSplitter.split(stringPath)) {
+        this.path.add(element);
+      }
+    }
 
     private Path(Path path, String entry) {
       this.path.addAll(path.path);
@@ -169,7 +182,7 @@ class ReportCsvGenerator {
 
     @Override
     public String toString() {
-      return CsvServlet.pathJoiner.join(path);
+      return pathJoiner.join(path);
     }
 
     @Override
@@ -188,22 +201,23 @@ class ReportCsvGenerator {
   }
 
   public interface ReportWriter {
-    public void writeHeader(Writer writer) throws IOException;
-    public void writeRow(Writer writer, int rowId) throws IOException;
+    public void writeHeader(Writer writer, Iterable<Path> columns) throws IOException;
+    // TODO(edcoyne): columnmap is ugly here, should just pass data we need.
+    public void writeRow(Writer writer, Map<Path, Column> columnMap, int rowId) throws IOException;
   }
 
   public class ReportWriterAll implements ReportWriter {
     @Override
-    public void writeHeader(Writer writer) throws IOException {
+    public void writeHeader(Writer writer, Iterable<Path> columns) throws IOException {
       List<String> cells = new ArrayList<>();
-      for (Entry<Path, Column> entry : columnMap.entrySet()) {
-        cells.add(entry.getKey().toString());
+      for (Path entry : columns) {
+        cells.add(entry.toString());
       }
       writer.append(csvJoiner.join(cells)).append('\n');
     }
 
     @Override
-    public void writeRow(Writer writer, int rowId) throws IOException {
+    public void writeRow(Writer writer, Map<Path, Column> columnMap, int rowId) throws IOException {
       List<String> cells = new ArrayList<>();
       for (Entry<Path, Column> entry : columnMap.entrySet()) {
         cells.add(entry.getValue().getValue(rowId));
