@@ -221,6 +221,7 @@ public class StateReportServlet extends HttpServlet {
         // If there is no section number it is a junk report.
         return;
       }
+      //TODO(edcoyne): split nests and false crawls.
 
       List<String> cells = new ArrayList<>();
       for (ReportColumn column : reportColumns) {
