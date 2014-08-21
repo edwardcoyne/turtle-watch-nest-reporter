@@ -125,9 +125,12 @@ public class ImageStore {
 
     Optional<StoredImage> image = store.tryLoadImage(ref);
     if (image.isPresent()) {
+      log.info("Using blobkey: " + image.get().getBlobKey());
       return new BlobKey(image.get().getBlobKey());
     } else {
       GcsFilename oldGcsFileName = createOldGcsFileName(ref.getReportId(), ref.getImageName());
+      log.info("Using old GCS fileName: " + oldGcsFileName.toString());
+
       BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
       // Does not work on dev server.
       return blobstoreService.createGsBlobKey("/gs/" + oldGcsFileName.getBucketName()

@@ -85,7 +85,8 @@ public class ImageUtil {
     connection.connect();
 
     Preconditions.checkArgument(connection.getResponseCode() == HttpURLConnection.HTTP_OK,
-        "Error from server while downloading image: " + connection.getResponseCode());
+        "Error from server while downloading image:" + ref.toString() + "\t response: "
+         + connection.getResponseCode());
 
     @Cleanup
     InputStream in = connection.getInputStream();

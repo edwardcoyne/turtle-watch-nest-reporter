@@ -1,5 +1,7 @@
 package com.islandturtlewatch.nest.reporter.backend.endpoints;
 
+import org.mortbay.log.Log;
+
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
@@ -53,10 +55,17 @@ public class ImageEndpoint {
     ImageRef imageRef = ImageRef.newBuilder()
         .mergeFrom(BaseEncoding.base64().decode(ref.getRefEncoded()))
         .build();
-    ImageDownloadRef downloadRef = ImageDownloadRef.newBuilder()
-      .setImage(imageRef)
-      .setUrl(ImageStore.getDownloadUrl(imageRef))
-      .build();
-    return SerializedProto.fromProto(downloadRef);
+    Log.info("Getting downloadUrl for: " + imageRef.toString());
+
+    try {
+      ImageDownloadRef downloadRef = ImageDownloadRef.newBuilder()
+        .setImage(imageRef)
+        .setUrl(ImageStore.getDownloadUrl(imageRef))
+        .build();
+      return SerializedProto.fromProto(downloadRef);
+    } catch (Exception ex) {
+      Log.warn("Unhandled exception:", ex);
+      throw ex;
+    }
   }
 }
