@@ -38,10 +38,9 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
 
   @Override
   public void writeRow(Writer writer, Map<Path, Column> columnMap, int rowId) throws IOException {
-    if (rowFilter.shouldWriteRow(columnMap, rowId)) {
+    if (!rowFilter.shouldWriteRow(columnMap, rowId)) {
       return;
     }
-    //TODO(edcoyne): split nests and false crawls.
 
     List<String> cells = new ArrayList<>();
     for (ReportColumn column : reportColumns) {

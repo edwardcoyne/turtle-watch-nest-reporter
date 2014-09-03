@@ -96,7 +96,11 @@ public class StateNestReportServlet extends HttpServlet {
     @Override
     public boolean shouldWriteRow(Map<Path, Column> columnMap, int rowId) {
       // If there is no section number it is a junk report.
-      return sectionColumn.getFetcher().fetch(columnMap, rowId).equals("");
+      boolean hasSection = !sectionColumn.getFetcher().fetch(columnMap, rowId).equals("");
+
+      String nest = columnMap.get(new Path("report.nest_number")).getValue(rowId);
+      boolean isNest = !nest.equals("0") && !nest.equals("");
+      return hasSection && isNest;
     }
   }
 }

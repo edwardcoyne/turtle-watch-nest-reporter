@@ -46,7 +46,7 @@ public class StateFalseCrawlReportServlet extends HttpServlet {
           "report.location.apex_to_barrier_ft", "report.location.apex_to_barrier_in"),
       new MappedDistanceColumn("Distance From MHW",
           "report.location.water_to_apex_ft", "report.location.water_to_apex_in"),
-      new MappedColumn("ID/Label", "report.nest_number"),
+      new MappedColumn("ID/Label", "report.false_crawl_number"),
       sectionColumn,
       new MappedColumn("Latitude", "report.location.coordinates.lat"),
       new MappedColumn("Longitude", "report.location.coordinates.long"));
@@ -78,7 +78,11 @@ public class StateFalseCrawlReportServlet extends HttpServlet {
     @Override
     public boolean shouldWriteRow(Map<Path, Column> columnMap, int rowId) {
       // If there is no section number it is a junk report.
-      return sectionColumn.getFetcher().fetch(columnMap, rowId).equals("");
+      boolean hasSection = !sectionColumn.getFetcher().fetch(columnMap, rowId).equals("");
+
+      String falseCrawl = columnMap.get(new Path("report.false_crawl_number")).getValue(rowId);
+      boolean isFalseCrawl = !falseCrawl.equals("") && !falseCrawl.equals("0");
+      return hasSection && isFalseCrawl;
     }
   }
 }
