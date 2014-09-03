@@ -32,12 +32,21 @@
  </servlet-mapping>
   
  <servlet>
-  <servlet-name>StateReportServlet</servlet-name>
-  <servlet-class>com.islandturtlewatch.nest.reporter.web.servlets.StateReportServlet</servlet-class>
+  <servlet-name>StateNestReportServlet</servlet-name>
+  <servlet-class>com.islandturtlewatch.nest.reporter.web.servlets.StateNestReportServlet</servlet-class>
  </servlet>
  <servlet-mapping>
-  <servlet-name>StateReportServlet</servlet-name>
-  <url-pattern>/web/reporting/state</url-pattern>
+  <servlet-name>StateNestReportServlet</servlet-name>
+  <url-pattern>/web/reporting/state/nest</url-pattern>
+ </servlet-mapping>
+ 
+ <servlet>
+  <servlet-name>StateFalseCrawlReportServlet</servlet-name>
+  <servlet-class>com.islandturtlewatch.nest.reporter.web.servlets.StateFalseCrawlReportServlet</servlet-class>
+ </servlet>
+ <servlet-mapping>
+  <servlet-name>StateFalseCrawlReportServlet</servlet-name>
+  <url-pattern>/web/reporting/state/false_crawl</url-pattern>
  </servlet-mapping>
  
  <servlet>

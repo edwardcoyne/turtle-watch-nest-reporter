@@ -15,6 +15,7 @@ import lombok.extern.java.Log;
 
 import com.google.common.net.MediaType;
 import com.islandturtlewatch.nest.reporter.backend.storage.ReportStore;
+import com.islandturtlewatch.nest.reporter.frontend.reports.ReportCsvGenerator;
 
 /**
  * Will generate csv of all active reports.

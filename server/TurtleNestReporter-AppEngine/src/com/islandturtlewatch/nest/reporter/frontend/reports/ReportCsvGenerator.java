@@ -1,4 +1,4 @@
-package com.islandturtlewatch.nest.reporter.web.servlets;
+package com.islandturtlewatch.nest.reporter.frontend.reports;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -23,7 +23,7 @@ import com.islandturtlewatch.nest.data.ReportProto.ReportWrapper;
 import com.islandturtlewatch.nest.data.ReportProto.ReportWrapper.Builder;
 
 @Log
-class ReportCsvGenerator {
+public class ReportCsvGenerator {
   public static Joiner csvJoiner = Joiner.on(";");
   private static Joiner pathJoiner = Joiner.on(".");
   private static Splitter pathSplitter = Splitter.on(".");
