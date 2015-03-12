@@ -39,11 +39,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="build.gradle" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="build.gradle" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="64" max-vertical-offset="990">
-              <caret line="29" column="60" selection-start-line="29" selection-start-column="60" selection-end-line="29" selection-end-column="60" />
+            <state vertical-scroll-proportion="0.48892674" vertical-offset="313" max-vertical-offset="900">
+              <caret line="40" column="53" selection-start-line="40" selection-start-column="53" selection-end-line="40" selection-end-column="53" />
               <folding />
             </state>
           </provider>
@@ -59,11 +59,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EditFragmentNestCondition.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="EditFragmentNestCondition.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/ui/EditFragmentNestCondition.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7107843" vertical-offset="2955" max-vertical-offset="4875">
-              <caret line="252" column="41" selection-start-line="252" selection-start-column="41" selection-end-line="252" selection-end-column="41" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="2955" max-vertical-offset="4875">
+              <caret line="248" column="39" selection-start-line="248" selection-start-column="39" selection-end-line="248" selection-end-column="39" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#5835#5855#0" expanded="true" />
@@ -648,7 +648,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="4278413688000" />
+        <entry key="$PROJECT_DIR$" value="4278414940000" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -1101,10 +1101,10 @@
         <option value="$PROJECT_DIR$/imageEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/ImageEndpoint.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/islandturtlewatch/nest/reporter/data/LocalDataStore.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/islandturtlewatch/nest/reporter/net/EndPointFactory.java" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/edit_fragment_nest_condition.xml" />
         <option value="$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/data/ReportMutations.java" />
         <option value="$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/ui/EditFragmentNestCondition.java" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
       </list>
     </option>
   </component>
@@ -1736,14 +1736,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="64" max-vertical-offset="990">
-          <caret line="29" column="60" selection-start-line="29" selection-start-column="60" selection-end-line="29" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/edit_fragment_nest_condition.xml">
       <provider editor-type-id="android-designer">
         <state />
@@ -1775,8 +1767,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/ui/EditFragmentNestCondition.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7107843" vertical-offset="2955" max-vertical-offset="4875">
-          <caret line="252" column="41" selection-start-line="252" selection-start-column="41" selection-end-line="252" selection-end-column="41" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2955" max-vertical-offset="4875">
+          <caret line="248" column="39" selection-start-line="248" selection-start-column="39" selection-end-line="248" selection-end-column="39" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#5835#5855#0" expanded="true" />
@@ -1785,6 +1777,14 @@
             <element signature="e#8628#8665#0" expanded="true" />
             <element signature="e#9231#9268#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.48892674" vertical-offset="313" max-vertical-offset="900">
+          <caret line="40" column="53" selection-start-line="40" selection-start-column="53" selection-end-line="40" selection-end-column="53" />
+          <folding />
         </state>
       </provider>
     </entry>
