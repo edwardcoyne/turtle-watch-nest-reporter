@@ -131,8 +131,7 @@ public class EditFragmentInfo extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(
-          NestNumberMutation.builder().setNumber(getInteger(newText)).build());
+      updateHandler.applyMutation(new NestNumberMutation(getInteger(newText)));
     }
   }
   private static class HandleUpdateFalseCrawlNumber extends TextChangeHandler {
@@ -142,8 +141,7 @@ public class EditFragmentInfo extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(
-          FalseCrawlNumberMutation.builder().setNumber(getInteger(newText)).build());
+      updateHandler.applyMutation(new FalseCrawlNumberMutation(getInteger(newText)));
     }
   }
 
@@ -154,7 +152,7 @@ public class EditFragmentInfo extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(ObserversMutation.builder().setObservers(newText).build());
+      updateHandler.applyMutation(new ObserversMutation(newText));
     }
   }
 
@@ -165,7 +163,7 @@ public class EditFragmentInfo extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(SpeciesOtherMutation.builder().setOther(newText).build());
+      updateHandler.applyMutation(new SpeciesOtherMutation(newText));
     }
   }
 
@@ -178,8 +176,7 @@ public class EditFragmentInfo extends EditFragment {
         int year,
         int month,
         int day) {
-      updateHandler.applyMutation(
-          DateFoundMutation.builder().setYear(year).setMonth(month).setDay(day).build());
+      updateHandler.applyMutation(new DateFoundMutation(year, month, day));
     }
   }
 
@@ -190,8 +187,7 @@ public class EditFragmentInfo extends EditFragment {
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(
-          ObserversMutation.builder().setObservers(getText(view)).build());
+      updateHandler.applyMutation(new ObserversMutation(getText(view)));
     }
   }
 
@@ -202,8 +198,7 @@ public class EditFragmentInfo extends EditFragment {
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(
-         NestStatusMutation.builder().setStatus(NestStatus.NEST_VERIFIED).build());
+      updateHandler.applyMutation(new NestStatusMutation(NestStatus.NEST_VERIFIED));
     }
   }
 
@@ -214,8 +209,7 @@ public class EditFragmentInfo extends EditFragment {
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(
-          NestStatusMutation.builder().setStatus(NestStatus.NEST_NOT_VERIFIED).build());
+      updateHandler.applyMutation(new NestStatusMutation(NestStatus.NEST_NOT_VERIFIED));
     }
   }
 
@@ -226,8 +220,7 @@ public class EditFragmentInfo extends EditFragment {
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(
-          NestStatusMutation.builder().setStatus(NestStatus.NEST_RELOCATED).build());
+      updateHandler.applyMutation(new NestStatusMutation(NestStatus.NEST_RELOCATED));
     }
   }
 
@@ -238,8 +231,7 @@ public class EditFragmentInfo extends EditFragment {
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(
-          NestStatusMutation.builder().setStatus(NestStatus.FALSE_CRAWL).build());
+      updateHandler.applyMutation(new NestStatusMutation(NestStatus.FALSE_CRAWL));
     }
   }
 
@@ -250,8 +242,7 @@ public class EditFragmentInfo extends EditFragment {
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(
-          AbandonedBodyPitsMutation.builder().setTrue(isChecked(view)).build());
+      updateHandler.applyMutation(new AbandonedBodyPitsMutation(isChecked(view)));
     }
   }
 
@@ -262,8 +253,7 @@ public class EditFragmentInfo extends EditFragment {
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(
-          AbandonedEggCavitiesMutation.builder().setTrue(isChecked(view)).build());
+      updateHandler.applyMutation(new AbandonedEggCavitiesMutation(isChecked(view)));
     }
   }
   private static class HandleSetSpeciesLoggerHead extends ClickHandler {
@@ -273,7 +263,7 @@ public class EditFragmentInfo extends EditFragment {
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(SpeciesMutation.builder().setSpecies(Species.LOGGERHEAD).build());
+      updateHandler.applyMutation(new SpeciesMutation(Species.LOGGERHEAD));
     }
   }
   private static class HandleSetSpeciesGreen extends ClickHandler {
@@ -285,7 +275,7 @@ public class EditFragmentInfo extends EditFragment {
     public void handleClick(View view, DataUpdateHandler updateHandler) {
       DialogUtil.acknowledge(view.getContext(),
           "Need photos of this species and please contact Suzi.");
-      updateHandler.applyMutation(SpeciesMutation.builder().setSpecies(Species.GREEN).build());
+      updateHandler.applyMutation(new SpeciesMutation(Species.GREEN));
     }
   }
   private static class HandleSetSpeciesOther extends ClickHandler {
@@ -297,7 +287,7 @@ public class EditFragmentInfo extends EditFragment {
     public void handleClick(View view, DataUpdateHandler updateHandler) {
       DialogUtil.acknowledge(view.getContext(),
           "Need photos of this species and please contact Suzi.");
-      updateHandler.applyMutation(SpeciesMutation.builder().setSpecies(Species.OTHER).build());
+      updateHandler.applyMutation(new SpeciesMutation(Species.OTHER));
     }
   }
 }

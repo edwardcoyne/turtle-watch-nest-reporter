@@ -1,0 +1,11 @@
+1387253948033	Delete element
+1387488201392	Rename type 'EditFragmentPictures'
+1387488219650	Rename resource 'edit_fragment_pictures.xml'
+1387490189171	Rename method 'handle'
+1387559023977	Rename method 'getTimestampInSecounds'
+1387559279033	Delete element
+1387572986988	Rename method 'getChecked'
+1387577109487	Rename method 'addDataHandler'
+1387577454545	Rename method 'setDataHandler'
+1387577969318	Rename type 'ClickHandler'
+1387578018546	Rename type 'ChangeHandler'

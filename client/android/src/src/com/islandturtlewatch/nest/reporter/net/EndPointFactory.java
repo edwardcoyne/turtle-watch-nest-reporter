@@ -36,13 +36,10 @@ public class EndPointFactory {
     ReportEndpoint.Builder serviceBuilder = new ReportEndpoint.Builder(
         AndroidHttp.newCompatibleTransport(),
         new GsonFactory(),
-        TimeoutWrappingRequestInitializer.builder()
-          .setWrapped(
+        new TimeoutWrappingRequestInitializer(
               AuthenticationUtil.getCredential(context,
-                  settings.getString(SettingsUtil.KEY_USERNAME, null)))
-          .setConnectTimeoutMs(TIMEOUT_MS)
-          .setReadTimeoutMs(TIMEOUT_MS)
-          .build());
+                  settings.getString(SettingsUtil.KEY_USERNAME, null)),
+            TIMEOUT_MS, TIMEOUT_MS));
     serviceBuilder.setApplicationName("TurtleNestReporter-" + appName.name());
     Log.d(TAG, "connecting to backend: " + RunEnvironment.getRootBackendUrl());
     serviceBuilder.setRootUrl(RunEnvironment.getRootBackendUrl());
@@ -63,13 +60,10 @@ public class EndPointFactory {
     ImageEndpoint.Builder serviceBuilder = new ImageEndpoint.Builder(
         AndroidHttp.newCompatibleTransport(),
         new GsonFactory(),
-        TimeoutWrappingRequestInitializer.builder()
-          .setWrapped(
-              AuthenticationUtil.getCredential(context,
-                  settings.getString(SettingsUtil.KEY_USERNAME, null)))
-          .setConnectTimeoutMs(TIMEOUT_MS)
-          .setReadTimeoutMs(TIMEOUT_MS)
-          .build());
+        new TimeoutWrappingRequestInitializer(
+            AuthenticationUtil.getCredential(context,
+                settings.getString(SettingsUtil.KEY_USERNAME, null)),
+            TIMEOUT_MS, TIMEOUT_MS));
     serviceBuilder.setApplicationName("TurtleNestReporter-" + appName.name());
     Log.d(TAG, "connecting to backend: " + RunEnvironment.getRootBackendUrl());
     serviceBuilder.setRootUrl(RunEnvironment.getRootBackendUrl());

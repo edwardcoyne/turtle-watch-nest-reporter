@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#FEFFE3"
+    android:fillViewport="true" >
+    
+  <LinearLayout
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:gravity="top"
+      android:orientation="vertical" >
+
+	<com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+	    android:id="@+id/fieldNotes"
+	    android:layout_width="fill_parent"
+	    android:layout_height="0dp"
+	    android:gravity="top"
+	    android:layout_weight="1.0"
+	    android:inputType="textMultiLine"
+      onTextChangeHandler="handleTextChange"/>
+	</LinearLayout>
+</ScrollView>

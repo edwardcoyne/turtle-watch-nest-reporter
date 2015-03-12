@@ -152,8 +152,7 @@ public class EditFragmentNestResolution extends EditFragment {
         int year,
         int month,
         int day) {
-      updateHandler.applyMutation(HatchDateMutation.builder()
-          .setYear(year).setMonth(month).setDay(day).build());
+      updateHandler.applyMutation(new HatchDateMutation(year, month, day));
     }
   }
   private static class HandleSetAdditionalHatchDate extends DatePickerClickHandler {
@@ -166,8 +165,7 @@ public class EditFragmentNestResolution extends EditFragment {
         int year,
         int month,
         int day) {
-      updateHandler.applyMutation(AdditionalHatchDateMutation.builder()
-          .setYear(year).setMonth(month).setDay(day).build());
+      updateHandler.applyMutation(new AdditionalHatchDateMutation(year, month, day));
     }
   }
   private static class HandleSetExcavationDate extends DatePickerClickHandler {
@@ -180,8 +178,7 @@ public class EditFragmentNestResolution extends EditFragment {
         int year,
         int month,
         int day) {
-      updateHandler.applyMutation(ExcavationDateMutation.builder()
-          .setYear(year).setMonth(month).setDay(day).build());
+      updateHandler.applyMutation(new ExcavationDateMutation(year, month, day));
     }
   }
 
@@ -191,7 +188,7 @@ public class EditFragmentNestResolution extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(DisorentationMutation.builder().setTrue(isChecked(view)).build());
+      updateHandler.applyMutation(new DisorentationMutation(isChecked(view)));
     }
   }
   private static class HandleSetExcavated extends ClickHandler {
@@ -200,7 +197,7 @@ public class EditFragmentNestResolution extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(WasExcavatedMutation.builder().setTrue(isChecked(view)).build());
+      updateHandler.applyMutation(new WasExcavatedMutation(isChecked(view)));
     }
   }
   private static class HandleSetEggsNotFound extends ClickHandler {
@@ -209,8 +206,8 @@ public class EditFragmentNestResolution extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(ExcavationFailureMutation.builder()
-          .setReason(ExcavationFailureReason.EGGS_NOT_FOUND).build());
+      updateHandler.applyMutation(
+          new ExcavationFailureMutation(ExcavationFailureReason.EGGS_NOT_FOUND));
     }
   }
   private static class HandleSetEggsTooDecayed extends ClickHandler {
@@ -219,8 +216,8 @@ public class EditFragmentNestResolution extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(ExcavationFailureMutation.builder()
-          .setReason(ExcavationFailureReason.EGGS_HATCHLINGS_TOO_DECAYED).build());
+      updateHandler.applyMutation(
+          new ExcavationFailureMutation(ExcavationFailureReason.EGGS_HATCHLINGS_TOO_DECAYED));
     }
   }
   private static class HandleSetReasonOther extends ClickHandler {
@@ -229,8 +226,7 @@ public class EditFragmentNestResolution extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(ExcavationFailureMutation.builder()
-          .setReason(ExcavationFailureReason.OTHER).build());
+      updateHandler.applyMutation(new ExcavationFailureMutation(ExcavationFailureReason.OTHER));
     }
   }
 
@@ -242,8 +238,7 @@ public class EditFragmentNestResolution extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(ExcavationDeadInNestMutation.builder()
-          .setEggs(getInteger(newText)).build());
+      updateHandler.applyMutation(new ExcavationDeadInNestMutation(getInteger(newText)));
     }
   }
   private static class HandleUpdateLiveInNest extends TextChangeHandler {
@@ -253,8 +248,7 @@ public class EditFragmentNestResolution extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(ExcavationLiveInNestMutation.builder()
-          .setEggs(getInteger(newText)).build());
+      updateHandler.applyMutation(new ExcavationLiveInNestMutation(getInteger(newText)));
     }
   }
   private static class HandleUpdateHatchedShells extends TextChangeHandler {
@@ -264,8 +258,7 @@ public class EditFragmentNestResolution extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(ExcavationHatchedMutation.builder()
-          .setEggs(getInteger(newText)).build());
+      updateHandler.applyMutation(new ExcavationHatchedMutation(getInteger(newText)));
     }
   }
   private static class HandleUpdateDeadPipped extends TextChangeHandler {
@@ -275,8 +268,7 @@ public class EditFragmentNestResolution extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(ExcavationDeadPippedMutation.builder()
-          .setHatchlings(getInteger(newText)).build());
+      updateHandler.applyMutation(new ExcavationDeadPippedMutation(getInteger(newText)));
     }
   }
   private static class HandleUpdateLivePipped extends TextChangeHandler {
@@ -286,8 +278,7 @@ public class EditFragmentNestResolution extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(ExcavationLivePippedMutation.builder()
-          .setHatchlings(getInteger(newText)).build());
+      updateHandler.applyMutation(new ExcavationLivePippedMutation(getInteger(newText)));
     }
   }
   private static class HandleUpdateWholeUnhatched extends TextChangeHandler {
@@ -297,8 +288,7 @@ public class EditFragmentNestResolution extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(ExcavationWholeUnhatchedMutation.builder()
-          .setEggs(getInteger(newText)).build());
+      updateHandler.applyMutation(new ExcavationWholeUnhatchedMutation(getInteger(newText)));
     }
   }
   private static class HandleUpdateEggsDestroyed extends TextChangeHandler {
@@ -308,8 +298,7 @@ public class EditFragmentNestResolution extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(ExcavationEggsDestroyedMutation.builder()
-          .setEggs(getInteger(newText)).build());
+      updateHandler.applyMutation(new ExcavationEggsDestroyedMutation(getInteger(newText)));
     }
   }
   private static class HandleUpdateReasonOther extends TextChangeHandler {
@@ -319,8 +308,7 @@ public class EditFragmentNestResolution extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(ExcavationFailureOtherMutation.builder()
-          .setReason(newText).build());
+      updateHandler.applyMutation(new ExcavationFailureOtherMutation(newText));
     }
   }
 

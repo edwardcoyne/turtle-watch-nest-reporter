@@ -13,9 +13,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nullable;
 
-import lombok.ToString;
-import lombok.experimental.Builder;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
 import org.apache.http.client.methods.HttpPost;
@@ -235,12 +232,8 @@ public class SyncService extends Service {
       }
 
       private void AddUpload(CachedReportWrapper report) {
-        Upload upload = Upload.builder()
-            .setContext(getApplicationContext())
-            .setDataStore(dataStore)
-            .setLocalReportId(report.getLocalId())
-            .setRetryDelayS(1)
-            .build();
+        Upload upload = new Upload(getApplicationContext(),
+            dataStore, report.getLocalId(), 1);
 
         pendingUploads.remove(upload);
         pendingUploads.add(upload);
@@ -418,8 +411,6 @@ public class SyncService extends Service {
     }
   }
 
-  @ToString
-  @Builder(fluent=false)
   private static class Upload {
     //private static final int MAX_RETRY_DELAY_S = 300; // 5 min.
     private static final int MAX_RETRY_DELAY_S = 45;
@@ -428,6 +419,13 @@ public class SyncService extends Service {
     private final LocalDataStore dataStore;
     private final int retryDelayS;
     private final Context context;
+
+    private Upload( Context context, LocalDataStore dataStore, long localReportId, int retryDelayS) {
+      this.localReportId = localReportId;
+      this.dataStore = dataStore;
+      this.retryDelayS = retryDelayS;
+      this.context = context;
+    }
 
     public Optional<CachedReportWrapper> getReportWrapperIfNotSynced() throws IOException {
       CachedReportWrapper wrapper = dataStore.getReport(localReportId);
@@ -465,12 +463,8 @@ public class SyncService extends Service {
     }
 
     public Upload getRetry() {
-      return Upload.builder()
-          .setContext(context)
-          .setDataStore(dataStore)
-          .setLocalReportId(localReportId)
-          .setRetryDelayS(Math.min(retryDelayS * 2, MAX_RETRY_DELAY_S))
-          .build();
+      return new Upload(context, dataStore, localReportId,
+          Math.min(retryDelayS * 2, MAX_RETRY_DELAY_S));
     }
   }
 
@@ -497,7 +491,7 @@ public class SyncService extends Service {
     try {
       Thread.sleep(seconds * 1000);
     } catch (InterruptedException e) {
-      Log.e(TAG, "Sleep interupted.", e);
+      Log.e(TAG, "Sleep interrupted.", e);
     }
   }
 }

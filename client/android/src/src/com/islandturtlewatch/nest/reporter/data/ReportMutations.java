@@ -1,8 +1,5 @@
 package com.islandturtlewatch.nest.reporter.data;
 
-import lombok.Setter;
-import lombok.experimental.Builder;
-
 import com.google.api.client.util.Preconditions;
 import com.google.common.base.Optional;
 import com.islandturtlewatch.nest.data.ReportProto.Excavation;
@@ -25,11 +22,15 @@ import com.islandturtlewatch.nest.reporter.util.DateUtil;
 public class ReportMutations {
   private ReportMutations() {} // namespace really.
 
-  @Builder(fluent=false)
+  
   public static class NestNumberMutation implements ReportMutation {
     private final Optional<Integer> number;
 
-    @Override
+    public NestNumberMutation(Optional<Integer> number) {
+      this.number = number;
+    }
+
+      @Override
     public Report apply(Report oldReport) {
       Report.Builder updatedReport = oldReport.toBuilder();
       updatedReport.setNestNumber(number.or(0));
@@ -37,11 +38,15 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class FalseCrawlNumberMutation implements ReportMutation {
     private final Optional<Integer> number;
 
-    @Override
+    public FalseCrawlNumberMutation(Optional<Integer> number) {
+      this.number = number;
+    }
+
+      @Override
     public Report apply(Report oldReport) {
       Report.Builder updatedReport = oldReport.toBuilder();
       updatedReport.setFalseCrawlNumber(number.or(0));
@@ -49,13 +54,19 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class DateFoundMutation implements ReportMutation {
     private final int year;
     private final int month;
     private final int day;
 
-    @Override
+    public DateFoundMutation(int year, int month, int day) {
+      this.year = year;
+      this.month = month;
+      this.day = day;
+    }
+
+      @Override
     public Report apply(Report oldReport) {
       return oldReport.toBuilder()
           .setTimestampFoundMs(DateUtil.getTimestampInMs(year, month, day))
@@ -63,11 +74,15 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class ObserversMutation implements ReportMutation {
     private final String observers;
 
-    @Override
+    public ObserversMutation(String observers) {
+      this.observers = observers;
+    }
+
+      @Override
     public Report apply(Report oldReport) {
       Report.Builder updatedReport = oldReport.toBuilder();
       if (observers.isEmpty()) {
@@ -79,13 +94,21 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class NestStatusMutation
       implements ReportMutation, ReportMutation.RequiresReportsModel {
     private final NestStatus status;
 
-    @Setter
+    public NestStatusMutation(NestStatus status) {
+      this.status = status;
+    }
+
     private ReportsModel model;
+
+    @Override
+    public void setModel(ReportsModel model) {
+      this.model = model;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -106,11 +129,15 @@ public class ReportMutations {
       return updatedReport.build();
     }
   }
-  @Builder(fluent=false)
+  
   public static class AbandonedBodyPitsMutation implements ReportMutation {
     private final boolean isTrue;
 
-    @Override
+    public AbandonedBodyPitsMutation(boolean isTrue) {
+      this.isTrue = isTrue;
+    }
+
+      @Override
     public Report apply(Report oldReport) {
       Report.Builder updatedReport = oldReport.toBuilder();
       updatedReport.getConditionBuilder().setAbandonedBodyPits(isTrue);
@@ -118,11 +145,15 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class AbandonedEggCavitiesMutation implements ReportMutation {
     private final boolean isTrue;
 
-    @Override
+    public AbandonedEggCavitiesMutation(boolean isTrue) {
+      this.isTrue = isTrue;
+    }
+
+      @Override
     public Report apply(Report oldReport) {
       Report.Builder updatedReport = oldReport.toBuilder();
       updatedReport.getConditionBuilder().setAbandonedEggCavities(isTrue);
@@ -130,9 +161,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class TriangulationNorthFtMutation implements ReportMutation {
     private final Optional<Integer> ft;
+
+    public TriangulationNorthFtMutation(Optional<Integer> ft) {
+      this.ft = ft;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -150,9 +185,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class TriangulationNorthInMutation implements ReportMutation {
     private final Optional<Integer> in;
+
+    public TriangulationNorthInMutation(Optional<Integer> in) {
+      this.in = in;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -170,9 +209,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class TriangulationSouthFtMutation implements ReportMutation {
     private final Optional<Integer> ft;
+
+    public TriangulationSouthFtMutation(Optional<Integer> ft) {
+      this.ft = ft;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -190,9 +233,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class TriangulationSouthInMutation implements ReportMutation {
     private final Optional<Integer> in;
+
+    public TriangulationSouthInMutation(Optional<Integer> in) {
+      this.in = in;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -210,9 +257,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class StreetAddressMutation implements ReportMutation {
     private final String address;
+
+    public StreetAddressMutation(String address) {
+      this.address = address;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -226,9 +277,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class CityMutation implements ReportMutation {
     private final City city;
+
+    public CityMutation(City city) {
+      this.city = city;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -238,9 +293,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class DetailsMutation implements ReportMutation {
     private final String details;
+
+    public DetailsMutation(String details) {
+      this.details = details;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -254,9 +313,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class ApexToBarrierFtMutation implements ReportMutation {
     private final Optional<Integer> ft;
+
+    public ApexToBarrierFtMutation(Optional<Integer> ft) {
+      this.ft = ft;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -273,9 +336,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class ApexToBarrierInMutation implements ReportMutation {
     private final Optional<Integer> in;
+
+    public ApexToBarrierInMutation(Optional<Integer> in) {
+      this.in = in;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -292,9 +359,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class WaterToApexFtMutation implements ReportMutation {
     private final Optional<Integer> ft;
+
+    public WaterToApexFtMutation(Optional<Integer> ft) {
+      this.ft = ft;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -311,9 +382,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class WaterToApexInMutation implements ReportMutation {
     private final Optional<Integer> in;
+
+    public WaterToApexInMutation(Optional<Integer> in) {
+      this.in = in;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -330,9 +405,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class PlacementMutation implements ReportMutation {
     private final Placement placement;
+
+    public PlacementMutation(Placement placement) {
+      this.placement = placement;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -342,9 +421,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class ObstructionsSeawallRocksMutation implements ReportMutation {
     private final boolean isTrue;
+
+    public ObstructionsSeawallRocksMutation(boolean isTrue) {
+      this.isTrue = isTrue;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -355,9 +438,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class ObstructionsFurnitureMutation implements ReportMutation {
     private final boolean isTrue;
+
+    public ObstructionsFurnitureMutation(boolean isTrue) {
+      this.isTrue = isTrue;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -368,9 +455,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class ObstructionsEscarpmentMutation implements ReportMutation {
     private final boolean isTrue;
+
+    public ObstructionsEscarpmentMutation(boolean isTrue) {
+      this.isTrue = isTrue;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -381,9 +472,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class ObstructionsOtherMutation implements ReportMutation {
     private final Optional<String> other;
+
+    public ObstructionsOtherMutation(Optional<String> other) {
+      this.other = other;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -399,9 +494,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class ProtectionTypeMutation implements ReportMutation {
     private final ProtectionEvent.Type type;
+
+    public ProtectionTypeMutation(ProtectionEvent.Type type) {
+      this.type = type;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -418,9 +517,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class WhyProtectedMutation implements ReportMutation {
     private final ProtectionEvent.Reason reason;
+
+    public WhyProtectedMutation(ProtectionEvent.Reason reason) {
+      this.reason = reason;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -437,9 +540,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class RelocatedMutation implements ReportMutation {
     private final boolean isTrue;
+
+    public RelocatedMutation(boolean isTrue) {
+      this.isTrue = isTrue;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -450,9 +557,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class RelocatedReasonMutation implements ReportMutation {
     private final Relocation.Reason reason;
+
+    public RelocatedReasonMutation(Relocation.Reason reason) {
+      this.reason = reason;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -462,9 +573,13 @@ public class ReportMutations {
       return updatedReport.build();
     }
   }
-  @Builder(fluent=false)
+  
   public static class NewAddressMutation implements ReportMutation {
     private final String address;
+
+    public NewAddressMutation(String address) {
+      this.address = address;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -475,9 +590,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class EggsRelocatedMutation implements ReportMutation {
     private final Optional<Integer> eggs;
+
+    public EggsRelocatedMutation(Optional<Integer> eggs) {
+      this.eggs = eggs;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -493,9 +612,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class EggsDestroyedMutation implements ReportMutation {
     private final Optional<Integer> eggs;
+
+    public EggsDestroyedMutation(Optional<Integer> eggs) {
+      this.eggs = eggs;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -511,11 +634,17 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class DateRelocatedMutation implements ReportMutation {
     private final int year;
     private final int month;
     private final int day;
+
+    public DateRelocatedMutation(int year, int month, int day) {
+      this.year = year;
+      this.month = month;
+      this.day = day;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -526,11 +655,17 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class DateProtectedMutation implements ReportMutation {
     private final int year;
     private final int month;
     private final int day;
+
+    public DateProtectedMutation(int year, int month, int day) {
+      this.year = year;
+      this.month = month;
+      this.day = day;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -541,11 +676,17 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class HatchDateMutation implements ReportMutation {
     private final int year;
     private final int month;
     private final int day;
+
+    public HatchDateMutation(int year, int month, int day) {
+      this.year = year;
+      this.month = month;
+      this.day = day;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -556,11 +697,17 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class AdditionalHatchDateMutation implements ReportMutation {
     private final int year;
     private final int month;
     private final int day;
+
+    public AdditionalHatchDateMutation(int year, int month, int day) {
+      this.year = year;
+      this.month = month;
+      this.day = day;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -571,9 +718,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class DisorentationMutation implements ReportMutation {
     private final boolean isTrue;
+
+    public DisorentationMutation(boolean isTrue) {
+      this.isTrue = isTrue;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -583,9 +734,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class WasExcavatedMutation implements ReportMutation {
     private final boolean isTrue;
+
+    public WasExcavatedMutation(boolean isTrue) {
+      this.isTrue = isTrue;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -595,9 +750,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class ExcavationFailureMutation implements ReportMutation {
     private final ExcavationFailureReason reason;
+
+    public ExcavationFailureMutation(ExcavationFailureReason reason) {
+      this.reason = reason;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -607,9 +766,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class ExcavationFailureOtherMutation implements ReportMutation {
     private final String reason;
+
+    public ExcavationFailureOtherMutation(String reason) {
+      this.reason = reason;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -619,11 +782,17 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class ExcavationDateMutation implements ReportMutation {
     private final int year;
     private final int month;
     private final int day;
+
+    public ExcavationDateMutation(int year, int month, int day) {
+      this.year = year;
+      this.month = month;
+      this.day = day;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -634,9 +803,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class ExcavationDeadInNestMutation implements ReportMutation {
     private final Optional<Integer> eggs;
+
+    public ExcavationDeadInNestMutation(Optional<Integer> eggs) {
+      this.eggs = eggs;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -654,9 +827,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class ExcavationLiveInNestMutation implements ReportMutation {
     private final Optional<Integer> eggs;
+
+    public ExcavationLiveInNestMutation(Optional<Integer> eggs) {
+      this.eggs = eggs;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -674,9 +851,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class ExcavationHatchedMutation implements ReportMutation {
     private final Optional<Integer> eggs;
+
+    public ExcavationHatchedMutation(Optional<Integer> eggs) {
+      this.eggs = eggs;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -694,9 +875,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class ExcavationDeadPippedMutation implements ReportMutation {
     private final Optional<Integer> hatchlings;
+
+    public ExcavationDeadPippedMutation(Optional<Integer> hatchlings) {
+      this.hatchlings = hatchlings;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -714,9 +899,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class ExcavationLivePippedMutation implements ReportMutation {
     private final Optional<Integer> hatchlings;
+
+    public ExcavationLivePippedMutation(Optional<Integer> hatchlings) {
+      this.hatchlings = hatchlings;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -734,9 +923,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class ExcavationWholeUnhatchedMutation implements ReportMutation {
     private final Optional<Integer> eggs;
+
+    public ExcavationWholeUnhatchedMutation(Optional<Integer> eggs) {
+      this.eggs = eggs;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -754,9 +947,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class ExcavationEggsDestroyedMutation implements ReportMutation {
     private final Optional<Integer> eggs;
+
+    public ExcavationEggsDestroyedMutation(Optional<Integer> eggs) {
+      this.eggs = eggs;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -774,11 +971,17 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class VandalizedDateMutation implements ReportMutation {
     private final int year;
     private final int month;
     private final int day;
+
+    public VandalizedDateMutation(int year, int month, int day) {
+      this.year = year;
+      this.month = month;
+      this.day = day;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -789,9 +992,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class WasVandalizedMutation implements ReportMutation {
     private final boolean isTrue;
+
+    public WasVandalizedMutation(boolean isTrue) {
+      this.isTrue = isTrue;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -801,11 +1008,17 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class PoachedDateMutation implements ReportMutation {
     private final int year;
     private final int month;
     private final int day;
+
+    public PoachedDateMutation(int year, int month, int day) {
+      this.year = year;
+      this.month = month;
+      this.day = day;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -816,9 +1029,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class WasPoachedMutation implements ReportMutation {
     private final boolean isTrue;
+
+    public WasPoachedMutation(boolean isTrue) {
+      this.isTrue = isTrue;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -828,9 +1045,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class RootsInvadedMutation implements ReportMutation {
     private final boolean isTrue;
+
+    public RootsInvadedMutation(boolean isTrue) {
+      this.isTrue = isTrue;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -840,9 +1061,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class EggsScatteredMutation implements ReportMutation {
     private final boolean isTrue;
+
+    public EggsScatteredMutation(boolean isTrue) {
+      this.isTrue = isTrue;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -852,9 +1077,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class NotesMutation implements ReportMutation {
     private final String notes;
+
+    public NotesMutation(String notes) {
+      this.notes = notes;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -870,11 +1099,17 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class WashoutDateMutation implements ReportMutation {
     private final int year;
     private final int month;
     private final int day;
+
+    public WashoutDateMutation(int year, int month, int day) {
+      this.year = year;
+      this.month = month;
+      this.day = day;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -885,9 +1120,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class WashoutStormNameMutation implements ReportMutation {
     private final String stormName;
+
+    public WashoutStormNameMutation(String stormName) {
+      this.stormName = stormName;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -898,12 +1137,19 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class WashoverDateMutation implements ReportMutation {
     private final Integer ordinal;
     private final int year;
     private final int month;
     private final int day;
+
+    public WashoverDateMutation(Integer ordinal, int year, int month, int day) {
+      this.ordinal = ordinal;
+      this.year = year;
+      this.month = month;
+      this.day = day;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -919,10 +1165,15 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class WashoverStormNameMutation implements ReportMutation {
     private final Integer ordinal;
     private final String name;
+
+    public WashoverStormNameMutation(Integer ordinal, String name) {
+      this.ordinal = ordinal;
+      this.name = name;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -938,9 +1189,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class DeleteWashOverMutation implements ReportMutation {
     private final Integer ordinal;
+
+    public DeleteWashOverMutation(Integer ordinal) {
+      this.ordinal = ordinal;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -954,12 +1209,19 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class PredationDateMutation implements ReportMutation {
     private final Integer ordinal;
     private final int year;
     private final int month;
     private final int day;
+
+    public PredationDateMutation(Integer ordinal, int year, int month, int day) {
+      this.ordinal = ordinal;
+      this.year = year;
+      this.month = month;
+      this.day = day;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -975,10 +1237,15 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class PredationNumEggsMutation implements ReportMutation {
     private final Integer ordinal;
     private final Optional<Integer> numEggs;
+
+    public PredationNumEggsMutation(Integer ordinal, Optional<Integer> numEggs) {
+      this.ordinal = ordinal;
+      this.numEggs = numEggs;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -998,10 +1265,15 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class PredationPredatorMutation implements ReportMutation {
     private final Integer ordinal;
     private final String predator;
+
+    public PredationPredatorMutation(Integer ordinal, String predator) {
+      this.ordinal = ordinal;
+      this.predator = predator;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -1017,9 +1289,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class DeletePredationMutation implements ReportMutation {
     private final Integer ordinal;
+
+    public DeletePredationMutation(Integer ordinal) {
+      this.ordinal = ordinal;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -1033,9 +1309,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class GpsMutation implements ReportMutation {
     private final GpsCoordinates coordinates;
+
+    public GpsMutation(GpsCoordinates coordinates) {
+      this.coordinates = coordinates;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -1045,9 +1325,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class TriangulationNorthMutation implements ReportMutation {
     private final GpsCoordinates coordinates;
+
+    public TriangulationNorthMutation(GpsCoordinates coordinates) {
+      this.coordinates = coordinates;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -1057,9 +1341,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class TriangulationSouthMutation implements ReportMutation {
     private final GpsCoordinates coordinates;
+
+    public TriangulationSouthMutation(GpsCoordinates coordinates) {
+      this.coordinates = coordinates;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -1069,9 +1357,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class NewGpsMutation implements ReportMutation {
     private final GpsCoordinates coordinates;
+
+    public NewGpsMutation(GpsCoordinates coordinates) {
+      this.coordinates = coordinates;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -1081,9 +1373,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class AddPhotoMutation implements ReportMutation {
     private final String fileName;
+
+    public AddPhotoMutation(String fileName) {
+      this.fileName = fileName;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -1093,9 +1389,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class DeletePhotoMutation implements ReportMutation {
     private final String fileName;
+
+    public DeletePhotoMutation(String fileName) {
+      this.fileName = fileName;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -1110,15 +1410,23 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class UpdatePhotoMutation
       implements ReportMutation, ReportMutation.RequiresReportsModel {
     // Don't need this now but leaving it for future use.
     @SuppressWarnings("unused")
     private final String fileName;
 
-    @Setter
+    public UpdatePhotoMutation(String fileName) {
+      this.fileName = fileName;
+    }
+
     private ReportsModel model;
+
+    @Override
+    public void setModel(ReportsModel model) {
+      this.model = model;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -1128,9 +1436,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class SpeciesMutation implements ReportMutation {
     private final Species species;
+
+    public SpeciesMutation(Species species) {
+      this.species = species;
+    }
 
     @Override
     public Report apply(Report oldReport) {
@@ -1140,9 +1452,13 @@ public class ReportMutations {
     }
   }
 
-  @Builder(fluent=false)
+  
   public static class SpeciesOtherMutation implements ReportMutation {
     private final String other;
+
+    public SpeciesOtherMutation(String other) {
+      this.other = other;
+    }
 
     @Override
     public Report apply(Report oldReport) {

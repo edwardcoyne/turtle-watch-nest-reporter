@@ -1,0 +1,179 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Manifest Merging:
+-----------------
+Your project uses libraries that provide manifests, and your Eclipse
+project did not explicitly turn on manifest merging. In Android Gradle
+projects, manifests are always merged (meaning that contents from your
+libraries' manifests will be merged into the app manifest. If you had
+manually copied contents from library manifests into your app manifest
+you may need to remove these for the app to build correctly.
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+* .DS_Store
+* .gitignore
+* .google_apis/
+* .google_apis/storage-v1r2lv1.16.0-rc/
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/LICENSE.txt
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/classpath-include
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/descriptor.json
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/google-api-services-storage-v1-rev2-1.16.0-rc-javadoc.jar
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/google-api-services-storage-v1-rev2-1.16.0-rc-sources.jar
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/google-api-services-storage-v1-rev2-1.16.0-rc.jar
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/google-api-services-storage-v1-rev2-1.16.0-rc.jar.properties
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/icons/
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/icons/cloud_storage-16.png
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/icons/cloud_storage-32.png
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs-sources/
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs-sources/google-api-client-1.16.0-rc-sources.jar
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs-sources/google-api-client-android-1.16.0-rc-sources.jar
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs-sources/google-http-client-1.16.0-rc-sources.jar
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs-sources/google-http-client-android-1.16.0-rc-sources.jar
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs-sources/google-http-client-gson-1.16.0-rc-sources.jar
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs-sources/google-http-client-jackson-1.16.0-rc-sources.jar
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs-sources/google-http-client-jackson2-1.16.0-rc-sources.jar
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs-sources/google-oauth-client-1.16.0-rc-sources.jar
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs-sources/gson-2.1-sources.jar
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs-sources/jackson-core-2.1.3-sources.jar
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs-sources/jackson-core-asl-1.9.11-sources.jar
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs/
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs/google-api-client-1.16.0-rc.jar
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs/google-api-client-1.16.0-rc.jar.properties
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs/google-api-client-android-1.16.0-rc.jar
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs/google-api-client-android-1.16.0-rc.jar.properties
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs/google-http-client-1.16.0-rc.jar
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs/google-http-client-1.16.0-rc.jar.properties
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs/google-http-client-android-1.16.0-rc.jar
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs/google-http-client-android-1.16.0-rc.jar.properties
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs/google-http-client-gson-1.16.0-rc.jar
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs/google-http-client-gson-1.16.0-rc.jar.properties
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs/google-http-client-jackson-1.16.0-rc.jar
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs/google-http-client-jackson-1.16.0-rc.jar.properties
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs/google-http-client-jackson2-1.16.0-rc.jar
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs/google-http-client-jackson2-1.16.0-rc.jar.properties
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs/google-oauth-client-1.16.0-rc.jar
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs/google-oauth-client-1.16.0-rc.jar.properties
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs/gson-2.1.jar
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs/gson-2.1.jar.properties
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs/jackson-core-2.1.3.jar
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs/jackson-core-2.1.3.jar.properties
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs/jackson-core-asl-1.9.11.jar
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs/jackson-core-asl-1.9.11.jar.properties
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/libs/jsr305-1.3.9.jar
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/proguard-google-api-client.txt
+* .google_apis/storage-v1r2lv1.16.0-rc/storage/readme.html
+* endpoint-libs/
+* endpoint-libs/libreportEndpoint-v1/
+* endpoint-libs/libreportEndpoint-v1/reportEndpoint/
+* endpoint-libs/libreportEndpoint-v1/reportEndpoint/islandturtlewatch.com-reportEndpoint-v1-20140625043820-java-1.16.0-rc-sources.jar
+* endpoint-libs/libreportEndpoint-v1/reportEndpoint/islandturtlewatch.com-reportEndpoint-v1-20140625043820-java-1.16.0-rc.jar.properties
+* endpoint-libs/libreportEndpoint-v1/reportEndpoint/reportendpoint-v1-generated-source/
+* endpoint-libs/libreportEndpoint-v1/reportEndpoint/reportendpoint-v1-generated-source/com/
+* endpoint-libs/libreportEndpoint-v1/reportEndpoint/reportendpoint-v1-generated-source/com/islandturtlewatch/
+* endpoint-libs/libreportEndpoint-v1/reportEndpoint/reportendpoint-v1-generated-source/com/islandturtlewatch/nest/
+* endpoint-libs/libreportEndpoint-v1/reportEndpoint/reportendpoint-v1-generated-source/com/islandturtlewatch/nest/reporter/
+* endpoint-libs/libreportEndpoint-v1/reportEndpoint/reportendpoint-v1-generated-source/com/islandturtlewatch/nest/reporter/transport/
+* endpoint-libs/libreportEndpoint-v1/reportEndpoint/reportendpoint-v1-generated-source/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/
+* endpoint-libs/libreportEndpoint-v1/reportEndpoint/reportendpoint-v1-generated-source/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/
+* endpoint-libs/libreportEndpoint-v1/reportEndpoint/reportendpoint-v1-generated-source/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/CollectionResponseEncodedReportRef.java
+* endpoint-libs/libreportEndpoint-v1/reportEndpoint/reportendpoint-v1-generated-source/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/EncodedReportRef.java
+* endpoint-libs/libreportEndpoint-v1/reportEndpoint/reportendpoint-v1-generated-source/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/ReportRequest.java
+* endpoint-libs/libreportEndpoint-v1/reportEndpoint/reportendpoint-v1-generated-source/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/ReportResponse.java
+* ic_launcher-web.png
+* proguard-google-api-client.txt
+* proguard-project.txt
+
+Replaced Jars with Dependencies:
+--------------------------------
+The importer recognized the following .jar files as third party
+libraries and replaced them with Gradle dependencies instead. This has
+the advantage that more explicit version information is known, and the
+libraries can be updated automatically. However, it is possible that
+the .jar file in your project was of an older version than the
+dependency we picked, which could render the project not compileable.
+You can disable the jar replacement in the import wizard and try again:
+
+android-support-v4.jar => com.android.support:support-v4:19.1.0
+gcm.jar => com.google.android.gms:play-services:+
+google-http-client-gson-1.18.0-rc.jar => com.google.http-client:google-http-client-gson:1.19.0
+gson-2.1.jar => com.google.code.gson:gson:2.1
+guava-15.0.jar => com.google.guava:guava:15.0
+joda-time-2.3.jar => joda-time:joda-time:2.3
+protobuf-java-2.5.0.jar => com.google.protobuf:protobuf-java:2.5.0
+
+Potentially Missing Dependency:
+-------------------------------
+When we replaced the following .jar files with a Gradle dependency, we
+inferred the dependency version number from the filename. This
+specific version may not actually be available from the repository.
+If you get a build error stating that the dependency is missing, edit
+the version number to for example "+" to pick up the latest version
+instead. (This may require you to update your code if the library APIs
+have changed.)
+
+gson-2.1.jar => version 2.1 in com.google.code.gson:gson:2.1
+guava-15.0.jar => version 15.0 in com.google.guava:guava:15.0
+joda-time-2.3.jar => version 2.3 in joda-time:joda-time:2.3
+protobuf-java-2.5.0.jar => version 2.5.0 in com.google.protobuf:protobuf-java:2.5.0
+
+Replaced Libraries with Dependencies:
+-------------------------------------
+The importer recognized the following library projects as third party
+libraries and replaced them with Gradle dependencies instead. This has
+the advantage that more explicit version information is known, and the
+libraries can be updated automatically. However, it is possible that
+the source files in your project were of an older version than the
+dependency we picked, which could render the project not compileable.
+You can disable the library replacement in the import wizard and try
+again:
+
+google-play-services_lib => [com.google.android.gms:play-services:+]
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+* /Users/edcoyne/code/proto_gen/ => app/src/main/java/
+* AndroidManifest.xml => app/src/main/AndroidManifest.xml
+* assets/ => app/src/main/assets/
+* libs/apache-mime4j-core-0.7.2.jar => app/libs/apache-mime4j-core-0.7.2.jar
+* libs/google-api-client-1.18.0-rc.jar => app/libs/google-api-client-1.18.0-rc.jar
+* libs/google-api-client-android-1.18.0-rc.jar => app/libs/google-api-client-android-1.18.0-rc.jar
+* libs/google-http-client-1.18.0-rc.jar => app/libs/google-http-client-1.18.0-rc.jar
+* libs/google-http-client-android-1.18.0-rc.jar => app/libs/google-http-client-android-1.18.0-rc.jar
+* libs/google-http-client-jackson2-1.18.0-rc.jar => app/libs/google-http-client-jackson2-1.18.0-rc.jar
+* libs/google-oauth-client-1.18.0-rc.jar => app/libs/google-oauth-client-1.18.0-rc.jar
+* libs/httpclient-4.3.4.jar => app/libs/httpclient-4.3.4.jar
+* libs/httpcore-4.3.2.jar => app/libs/httpcore-4.3.2.jar
+* libs/httpmime-4.3.4.jar => app/libs/httpmime-4.3.4.jar
+* libs/jackson-core-2.1.3.jar => app/libs/jackson-core-2.1.3.jar
+* libs/jsr305-1.3.9.jar => app/libs/jsr305-1.3.9.jar
+* libs/lombok-api.jar => app/libs/lombok-api.jar
+* lint.xml => app/lint.xml
+* res/ => app/src/main/res/
+* src/ => app/src/main/java/
+* /Users/edcoyne/code/repo/client/appengine-endpoints/imageEndpoint/ => app/src/main/java/
+* /Users/edcoyne/code/repo/client/appengine-endpoints/reportEndpoint/ => app/src/main/java/
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)

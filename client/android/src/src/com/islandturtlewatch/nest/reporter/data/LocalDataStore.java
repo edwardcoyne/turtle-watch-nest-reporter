@@ -14,9 +14,6 @@ import java.util.List;
 import java.util.Set;
 
 import lombok.Cleanup;
-import lombok.Data;
-import lombok.NonNull;
-import lombok.experimental.Builder;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -29,6 +26,7 @@ import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import com.islandturtlewatch.nest.data.ReportProto;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
 import com.islandturtlewatch.nest.data.ReportProto.ReportWrapper;
@@ -409,8 +407,6 @@ public class LocalDataStore {
         );
   }
 
-  @Data
-  @Builder(fluent=false)
   public static class CachedReportWrapper {
     private int localId;
     private Optional<Long> reportId;
@@ -419,7 +415,7 @@ public class LocalDataStore {
     private boolean active;
     private boolean deleted;
     private long lastUpdatedTimestamp;
-    @NonNull private Report report;
+    private Report report;
     private List<String> unsynchedImageFileNames;
 
     static final String [] requiredColumns = {
@@ -433,21 +429,94 @@ public class LocalDataStore {
       ReportsTable.COLUMN_VERSION.name};
 
     static CachedReportWrapper from(Cursor cursor) {
-      CachedReportWrapperBuilder builder = CachedReportWrapper.builder()
-          .setLocalId(Sql.getInt(cursor, ReportsTable.COLUMN_LOCAL_ID))
-          .setReportId(Sql.getOptLong(cursor, ReportsTable.COLUMN_REPORT_ID))
-          .setVersion(Sql.getOptLong(cursor, ReportsTable.COLUMN_VERSION))
-          .setActive(Sql.getBool(cursor, ReportsTable.COLUMN_ACTIVE))
-          .setDeleted(Sql.getBool(cursor, ReportsTable.COLUMN_DELETED))
-          .setSynched(Sql.getBool(cursor, ReportsTable.COLUMN_SYNCED))
-          .setLastUpdatedTimestamp(Sql.getLong(cursor, ReportsTable.COLUMN_TS_LOCAL_UPDATE))
-          .setUnsynchedImageFileNames(new ArrayList<String>());
+      CachedReportWrapper report = new CachedReportWrapper();
+      report.localId = Sql.getInt(cursor, ReportsTable.COLUMN_LOCAL_ID);
+      report.reportId = Sql.getOptLong(cursor, ReportsTable.COLUMN_REPORT_ID);
+      report.version = Sql.getOptLong(cursor, ReportsTable.COLUMN_VERSION);
+      report.active = Sql.getBool(cursor, ReportsTable.COLUMN_ACTIVE);
+      report.deleted = Sql.getBool(cursor, ReportsTable.COLUMN_DELETED);
+      report.synched = Sql.getBool(cursor, ReportsTable.COLUMN_SYNCED);
+      report.lastUpdatedTimestamp = Sql.getLong(cursor, ReportsTable.COLUMN_TS_LOCAL_UPDATE);
+      report.unsynchedImageFileNames = new ArrayList<String>();
+
       Optional<Report> proto =
-          Sql.getProto(cursor, ReportsTable.COLUMN_REPORT, Report.getDefaultInstance());
+            Sql.getProto(cursor, ReportsTable.COLUMN_REPORT, Report.getDefaultInstance());
       if (proto.isPresent()) {
-        builder.setReport(proto.get());
+        report.report = proto.get();
       }
-      return builder.build();
+      return report;
+    }
+
+    public int getLocalId() {
+      return localId;
+    }
+
+    public void setLocalId(int localId) {
+      this.localId = localId;
+    }
+
+    public Optional<Long> getReportId() {
+      return reportId;
+    }
+
+    public void setReportId(Optional<Long> reportId) {
+      this.reportId = reportId;
+    }
+
+    public Optional<Long> getVersion() {
+      return version;
+    }
+
+    public void setVersion(Optional<Long> version) {
+      this.version = version;
+    }
+
+    public boolean isSynched() {
+      return synched;
+    }
+
+    public void setSynched(boolean synched) {
+      this.synched = synched;
+    }
+
+    public boolean isActive() {
+      return active;
+    }
+
+    public void setActive(boolean active) {
+      this.active = active;
+    }
+
+    public boolean isDeleted() {
+      return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+      this.deleted = deleted;
+    }
+
+    public long getLastUpdatedTimestamp() {
+      return lastUpdatedTimestamp;
+    }
+
+    public void setLastUpdatedTimestamp(long lastUpdatedTimestamp) {
+      this.lastUpdatedTimestamp = lastUpdatedTimestamp;
+    }
+
+    public Report getReport() {
+      return report;
+    }
+
+    public void setReport(Report report) {
+      this.report = report;
+    }
+
+    public List<String> getUnsynchedImageFileNames() {
+      return unsynchedImageFileNames;
+    }
+
+    public void setUnsynchedImageFileNames(List<String> unsynchedImageFileNames) {
+      this.unsynchedImageFileNames = unsynchedImageFileNames;
     }
   }
 

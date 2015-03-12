@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+
+	<TableLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" >
+	   
+	   <TableRow
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content" >
+	       <TextView
+	           android:layout_width="0dp"
+	           android:layout_height="wrap_content"
+	           android:layout_weight="1"
+	           android:text="@string/edit_nest_care_date_protected" />
+	       
+	       <Button
+	           android:id="@+id/buttonProtectedDate"
+	           android:layout_width="0dp"
+	           android:layout_height="wrap_content"
+	           android:layout_weight="1"
+	           android:text="@string/date_button"
+	           android:onClick="handleClick" />
+	   </TableRow>
+	   
+	   <TableRow
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" >
+	
+	        <TextView
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:text="@string/edit_nest_care_type_of_protection" />
+	   </TableRow>
+	   <TableRow
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content" >
+	
+	       <CheckBox
+	           android:id="@+id/fieldSelfReleasingCage"
+	           android:layout_width="0dp"
+	           android:layout_height="wrap_content"
+	           android:layout_weight="1"
+	           android:text="@string/edit_nest_care_self_releasing_cage"
+	           android:onClick="handleClick"  />
+	       
+	       <CheckBox
+	           android:id="@+id/fieldSelfReleasingFlat"
+	           android:layout_width="0dp"
+	           android:layout_height="wrap_content"
+	           android:layout_weight="1"
+	           android:text="@string/edit_nest_care_self_releasing_flat"
+	           android:onClick="handleClick"  />
+	       
+	       <CheckBox
+	           android:id="@+id/fieldRestrainingCage"
+	           android:layout_width="0dp"
+	           android:layout_height="wrap_content"
+	           android:layout_weight="1"
+	           android:text="@string/edit_nest_care_restraining_cage"
+	           android:onClick="handleClick"  />
+	   </TableRow>
+	
+	   <TableRow
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" >
+	
+	        <TextView
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:text="@string/edit_nest_care_when_protected" />
+	   </TableRow>
+	   <TableRow
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content" >
+	
+	       <CheckBox
+	           android:id="@+id/fieldBeforePredation"
+	           android:layout_width="0dp"
+	           android:layout_height="wrap_content"
+	           android:layout_weight="1"
+             android:layout_marginBottom="5dp"
+	           android:text="@string/edit_nest_care_before_predation"
+	           android:onClick="handleClick"  />
+	       
+	       <CheckBox
+	           android:id="@+id/fieldAfterPredation"
+	           android:layout_width="0dp"
+	           android:layout_height="wrap_content"
+	           android:layout_weight="1"
+	           android:text="@string/edit_nest_care_after_predation"
+	           android:onClick="handleClick"  />
+	       
+	       <CheckBox
+	           android:id="@+id/fieldForLightProblem"
+	           android:layout_width="0dp"
+	           android:layout_height="wrap_content"
+	           android:layout_weight="1"
+             android:layout_marginBottom="5dp"
+	           android:text="@string/edit_nest_care_for_light_problem"
+	           android:onClick="handleClick"  />
+	   </TableRow>
+	   <TableRow
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content" >
+	       <TextView
+	           android:layout_width="0dp"
+	           android:layout_height="wrap_content"
+	           android:layout_weight="1"
+	           android:text="@string/edit_nest_relocation_was_relocated" />
+	       
+	       <ToggleButton
+	           android:textOn="Yes"
+	           android:textOff="No"
+	           android:id="@+id/fieldNestRelocated"
+	           android:layout_width="wrap_content"
+	           android:layout_height="wrap_content"
+	           android:onClick="handleClick"  />
+	   </TableRow>
+	   <TableLayout
+	     android:id="@+id/tableRelocated"
+	     android:layout_width="match_parent"
+	     android:layout_height="wrap_content" >
+	     <TableRow
+	         android:layout_width="wrap_content"
+	         android:layout_height="wrap_content" >
+	         <TextView
+	             android:layout_width="0dp"
+	             android:layout_height="wrap_content"
+	             android:layout_weight="1"
+	             android:text="@string/edit_nest_relocation_date_relocated" />
+	         
+	        <Button
+	            android:id="@+id/buttonRelocatedDate"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:text="@string/date_button"
+	            android:onClick="handleClick" />
+	     </TableRow>
+	     <TableRow
+	         android:layout_width="wrap_content"
+	         android:layout_height="wrap_content" >
+	         <TextView
+	             android:layout_width="0dp"
+	             android:layout_height="wrap_content"
+	             android:layout_weight="1"
+	             android:text="@string/edit_nest_relocation_new_address" />
+	         
+	        <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+	            android:id="@+id/fieldNewAddress"
+	            android:inputType="textPostalAddress"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:ems="10" 
+              onTextChangeHandler="handleTextChange"/>
+	     </TableRow>
+	     <TableRow
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" >
+	
+	        <TextView
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:text="@string/edit_nest_relocation_new_gps_coordinates" />
+	
+	        <Button
+	            android:id="@+id/buttonNewGps"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:text="@string/edit_nest_location_button_gps" 
+	            android:onClick="handleClick"  />
+	    </TableRow>
+	    <TableRow
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" >
+	
+	        <TextView
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:text="@string/edit_nest_relocation_num_eggs_relocated" />
+	        <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+	            android:id="@+id/fieldEggsRelocated"
+	            android:inputType="number"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+              onTextChangeHandler="handleTextChange"/>
+	    </TableRow>
+	    <TableRow
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" >
+	
+	        <TextView
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+              android:layout_marginBottom="10dp"
+	            android:text="@string/edit_nest_relocation_num_eggs_destroyed" />
+	        <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+	            android:id="@+id/fieldEggsDestroyed"
+	            android:inputType="number"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+              onTextChangeHandler="handleTextChange"/>
+	    </TableRow>
+	    <TableRow
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content" >
+	       <TextView
+             style="@style/Header"
+	           android:text="@string/edit_nest_relocation_reason" />
+	    </TableRow>
+	    <TableRow
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content" >
+	       <CheckBox
+	           android:id="@+id/fieldHighWater"
+	           android:layout_width="0dp"
+	           android:layout_height="wrap_content"
+	           android:layout_weight="1"
+	           android:text="@string/edit_nest_relocation_high_water"
+	           android:onClick="handleClick"  />
+	       <CheckBox
+	           android:id="@+id/fieldPredation"
+	           android:layout_width="0dp"
+	           android:layout_height="wrap_content"
+	           android:layout_weight="1"
+	           android:text="@string/edit_nest_relocation_predation"
+	           android:onClick="handleClick"  />     
+	   </TableRow>
+	   <TableRow
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content" >  
+	       <CheckBox
+	           android:id="@+id/fieldWashingOut"
+	           android:layout_width="0dp"
+	           android:layout_height="wrap_content"
+	           android:layout_weight="1"
+	           android:text="@string/edit_nest_relocation_washing_out" 
+	           android:onClick="handleClick" />  
+	       <CheckBox
+	           android:id="@+id/fieldConstruction"
+	           android:layout_width="0dp"
+	           android:layout_height="wrap_content"
+	           android:layout_weight="1"
+             android:layout_marginBottom="5dp"
+	           android:text="@string/edit_nest_relocation_construction"
+	           android:onClick="handleClick"  />  
+	   </TableRow>
+	  </TableLayout>
+	</TableLayout>
+</ScrollView><!-- From: file:/Users/edcoyne/code/turtlewatch/client/android/studio_project/app/src/main/res/layout/edit_fragment_nest_care.xml -->

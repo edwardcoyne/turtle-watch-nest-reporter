@@ -40,7 +40,7 @@ public class EditFragmentNotes extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(NotesMutation.builder().setNotes(newText).build());
+      updateHandler.applyMutation(new NotesMutation(newText));
     }
   }
 }

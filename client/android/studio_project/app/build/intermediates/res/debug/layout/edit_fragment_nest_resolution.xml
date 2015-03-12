@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+	<TableLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" >
+	    
+	   <TableRow
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content" >
+	       <TextView
+	           style="@style/Header"
+	           android:text="@string/hatch_data_title" />
+	   </TableRow>    
+	   <TableRow
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content" >
+	       <TextView
+	           android:layout_width="0dp"
+	           android:layout_height="wrap_content"
+	           android:layout_weight="1"
+	           android:text="@string/hatch_data_hatch_date" />
+	       
+	       <Button
+	            android:id="@+id/buttonHatchDate"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:text="@string/date_button"
+	            android:onClick="handleClick" />
+	   </TableRow> 
+	   <TableRow
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content" >
+	       <TextView
+	           android:layout_width="0dp"
+	           android:layout_height="wrap_content"
+	           android:layout_weight="1"
+	           android:text="@string/hatch_data_hatch_add_date" />
+	       
+	       <Button
+	            android:id="@+id/buttonAdditionalHatchDate"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:text="@string/date_button"
+	            android:onClick="handleClick"/>
+	   </TableRow> 
+	   <TableRow
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content" >
+	       <TextView
+	           android:layout_width="0dp"
+	           android:layout_height="wrap_content"
+	           android:layout_weight="1"
+	           android:text="@string/hatch_data_disorientation" />
+	       
+	       <ToggleButton
+	           android:textOn="Yes"
+	           android:textOff="No"
+	           android:id="@+id/fieldDisorientation"
+	           android:layout_width="wrap_content"
+	           android:layout_height="wrap_content" 
+	            android:onClick="handleClick"/>
+	   </TableRow>
+	   <TableRow
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content" >
+	       <TextView
+             style="@style/Header"
+	           android:text="@string/excavation_data_title" />
+	   </TableRow>   
+	   <TableRow
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content" >
+	       <TextView
+	           android:layout_width="0dp"
+	           android:layout_height="wrap_content"
+	           android:layout_weight="1"
+	           android:text="@string/excavation_data_excavation_date" />
+	       
+	       <Button
+	            android:id="@+id/buttonExcavationDate"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:text="@string/date_button"
+	            android:onClick="handleClick"/>
+	   </TableRow>  
+	   <TableRow
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content" >
+	       <TextView
+	           android:layout_width="0dp"
+	           android:layout_height="wrap_content"
+	           android:layout_weight="1"
+	           android:text="@string/excavation_data_excavated" />
+	       
+	       <ToggleButton
+	           android:textOn="Yes"
+	           android:textOff="No"
+	           android:id="@+id/fieldExcavated"
+	           android:layout_width="wrap_content"
+	           android:layout_height="wrap_content" 
+	           android:onClick="handleClick"/>
+	   </TableRow>
+	   <TableRow
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content"
+	       android:id="@+id/rowWhyNotExcavatedLabel" >
+	       <TextView
+             style="@style/CheckboxHeader"
+	           android:text="@string/excavation_data_reason_no_excavation" />
+	   </TableRow>
+	   <TableRow
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content"
+	       android:id="@+id/rowWhyNotExcavatedFields1" >
+	       <CheckBox
+	           android:id="@+id/fieldEggsNotFound"
+	           android:layout_width="0dp"
+	           android:layout_height="wrap_content"
+	           android:layout_weight="1"
+	           android:text="@string/excavation_data_eggs_not_found"
+	           android:onClick="handleClick" />
+	       
+	       <CheckBox
+	           android:id="@+id/fieldEggsTooDecayed"
+	           android:layout_width="0dp"
+	           android:layout_height="wrap_content"
+	           android:layout_weight="1"
+             android:layout_marginBottom="5dp"
+	           android:text="@string/excavation_data_eggs_too_decayed"
+	           android:onClick="handleClick" />
+	   </TableRow>
+	   <TableRow
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content"
+	       android:id="@+id/rowWhyNotExcavatedFields2" >
+	
+	       <CheckBox
+	           android:id="@+id/fieldNoExcavationOther"
+	           android:layout_width="0dp"
+	           android:layout_height="wrap_content"
+	           android:layout_weight="1"
+	           android:text="@string/other"
+	           android:onClick="handleClick" />
+	       
+	       <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+	            android:id="@+id/fieldNoExcavationOtherValue"
+	            android:inputType="textMultiLine"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="2"
+	            onTextChangeHandler="handleTextChange" />
+	   </TableRow>
+	   <TableLayout 
+	            android:id="@+id/tableExcavationCounts">
+		   
+		   <TableRow
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content" >
+		
+		        <TextView
+		            android:layout_width="0dp"
+		            android:layout_height="wrap_content"
+		            android:layout_weight="1"
+		            android:text="@string/excavation_data_hatched_shells" />
+		
+		        <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+		            android:id="@+id/fieldHatchedShells"
+		            android:inputType="number"
+		            android:layout_width="0dp"
+		            android:layout_height="wrap_content"
+		            android:layout_weight="1"
+	              onTextChangeHandler="handleTextChange"/>
+		   </TableRow>
+		   <TableRow
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content" >
+		
+		        <TextView
+		            android:layout_width="0dp"
+		            android:layout_height="wrap_content"
+		            android:layout_weight="1"
+		            android:text="@string/excavation_data_dead_pipped" />
+		
+		        <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+		            android:id="@+id/fieldDeadPipped"
+		            android:inputType="number"
+		            android:layout_width="0dp"
+		            android:layout_height="wrap_content"
+		            android:layout_weight="1"
+	              onTextChangeHandler="handleTextChange"/>
+		   </TableRow>
+		   <TableRow
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content" >
+		
+		        <TextView
+		            android:layout_width="0dp"
+		            android:layout_height="wrap_content"
+		            android:layout_weight="1"
+		            android:text="@string/excavation_data_live_pipped" />
+		
+		        <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+		            android:id="@+id/fieldLivePipped"
+		            android:inputType="number"
+		            android:layout_width="0dp"
+		            android:layout_height="wrap_content"
+		            android:layout_weight="1"
+	              onTextChangeHandler="handleTextChange"/>
+		   </TableRow>
+		   <TableRow
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content" >
+		
+		        <TextView
+		            android:layout_width="0dp"
+		            android:layout_height="wrap_content"
+		            android:layout_weight="1"
+		            android:text="@string/excavation_data_whole_unhatched" />
+		
+		        <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+		            android:id="@+id/fieldWholeUnhatched"
+		            android:inputType="number"
+		            android:layout_width="0dp"
+		            android:layout_height="wrap_content"
+		            android:layout_weight="1"
+	              onTextChangeHandler="handleTextChange"/>
+		   </TableRow>
+		   <TableRow
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content" >
+		
+		        <TextView
+		            android:layout_width="0dp"
+		            android:layout_height="wrap_content"
+		            android:layout_weight="1"
+		            android:text="@string/excavation_data_eggs_destroyed" />
+		
+		        <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+		            android:id="@+id/fieldEggsDestroyed"
+		            android:inputType="number"
+		            android:layout_width="0dp"
+		            android:layout_height="wrap_content"
+		            android:layout_weight="1"
+	              onTextChangeHandler="handleTextChange"/>
+		   </TableRow>
+		   <TableRow
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content" >
+		
+		        <TextView
+		            android:layout_width="0dp"
+		            android:layout_height="wrap_content"
+		            android:layout_weight="1"
+		            android:text="@string/excavation_data_total_eggs" />
+		        <TextView
+		            android:id="@+id/displayTotalEggs"
+		            android:layout_width="0dp"
+		            android:layout_height="wrap_content"
+		            android:layout_weight="1"/>
+		   </TableRow>
+		   <TableRow
+	          android:layout_width="wrap_content"
+	          android:layout_height="wrap_content" >
+	  
+	          <TextView
+	              android:layout_width="0dp"
+	              android:layout_height="wrap_content"
+	              android:layout_weight="1"
+	              android:text="@string/excavation_data_dead_in_nest" />
+	  
+	          <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+	              android:id="@+id/fieldDeadInNest"
+	              android:inputType="number"
+	              android:layout_width="0dp"
+	              android:layout_height="wrap_content"
+	              android:layout_weight="1"
+	              onTextChangeHandler="handleTextChange"/>
+	     </TableRow> 
+	     <TableRow
+	          android:layout_width="wrap_content"
+	          android:layout_height="wrap_content" >
+	  
+	          <TextView
+	              android:layout_width="0dp"
+	              android:layout_height="wrap_content"
+	              android:layout_weight="1"
+	              android:text="@string/excavation_data_live_in_nest" />
+	  
+	          <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+	              android:id="@+id/fieldLiveInNest"
+	              android:inputType="number"
+	              android:layout_width="0dp"
+	              android:layout_height="wrap_content"
+	              android:layout_weight="1"
+	              onTextChangeHandler="handleTextChange"/>
+	     </TableRow> 
+	   </TableLayout>
+	</TableLayout>
+</ScrollView>
+<!-- From: file:/Users/edcoyne/code/turtlewatch/client/android/studio_project/app/src/main/res/layout/edit_fragment_nest_resolution.xml -->

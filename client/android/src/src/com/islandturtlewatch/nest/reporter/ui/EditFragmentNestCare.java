@@ -137,8 +137,7 @@ public class EditFragmentNestCare extends EditFragment {
         int year,
         int month,
         int day) {
-      updateHandler.applyMutation(
-          DateProtectedMutation.builder().setYear(year).setMonth(month).setDay(day).build());
+      updateHandler.applyMutation(new DateProtectedMutation(year, month,day));
     }
   }
   private static class HandleSetRelocationDate extends DatePickerClickHandler {
@@ -151,8 +150,7 @@ public class EditFragmentNestCare extends EditFragment {
         int year,
         int month,
         int day) {
-      updateHandler.applyMutation(
-          DateRelocatedMutation.builder().setYear(year).setMonth(month).setDay(day).build());
+      updateHandler.applyMutation(new DateRelocatedMutation(year, month, day));
     }
   }
   private static class HandleSetSelfRealeasingCage extends ClickHandler {
@@ -161,8 +159,8 @@ public class EditFragmentNestCare extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(ProtectionTypeMutation.builder()
-          .setType(ProtectionEvent.Type.SELF_RELEASING_CAGE).build());
+      updateHandler.applyMutation(
+          new ProtectionTypeMutation(ProtectionEvent.Type.SELF_RELEASING_CAGE));
     }
   }
   private static class HandleSetSelfRealeasingFlat extends ClickHandler {
@@ -171,8 +169,8 @@ public class EditFragmentNestCare extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(ProtectionTypeMutation.builder()
-          .setType(ProtectionEvent.Type.SELF_RELEASING_FLAT).build());
+      updateHandler.applyMutation(
+          new ProtectionTypeMutation(ProtectionEvent.Type.SELF_RELEASING_FLAT));
     }
   }
   private static class HandleSetRestrainingCage extends ClickHandler {
@@ -181,8 +179,8 @@ public class EditFragmentNestCare extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(ProtectionTypeMutation.builder()
-          .setType(ProtectionEvent.Type.RESTRAINING_CAGE).build());
+      updateHandler.applyMutation(
+          new ProtectionTypeMutation(ProtectionEvent.Type.RESTRAINING_CAGE));
     }
   }
   private static class HandleSetBeforePredation extends ClickHandler {
@@ -191,8 +189,8 @@ public class EditFragmentNestCare extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(WhyProtectedMutation.builder()
-          .setReason(ProtectionEvent.Reason.BEFORE_PREDITATION).build());
+      updateHandler.applyMutation(
+          new WhyProtectedMutation(ProtectionEvent.Reason.BEFORE_PREDITATION));
     }
   }
   private static class HandleSetAfterPredation extends ClickHandler {
@@ -201,8 +199,8 @@ public class EditFragmentNestCare extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(WhyProtectedMutation.builder()
-          .setReason(ProtectionEvent.Reason.AFTER_PREDITATION).build());
+      updateHandler.applyMutation(
+          new WhyProtectedMutation(ProtectionEvent.Reason.AFTER_PREDITATION));
     }
   }
   private static class HandleSetLightProblem extends ClickHandler {
@@ -211,8 +209,8 @@ public class EditFragmentNestCare extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(WhyProtectedMutation.builder()
-          .setReason(ProtectionEvent.Reason.FOR_LIGHT_PROBLEMS).build());
+      updateHandler.applyMutation(
+          new WhyProtectedMutation(ProtectionEvent.Reason.FOR_LIGHT_PROBLEMS));
     }
   }
   private static class HandleSetRelocated extends ClickHandler {
@@ -221,7 +219,7 @@ public class EditFragmentNestCare extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(RelocatedMutation.builder().setTrue(isChecked(view)).build());
+      updateHandler.applyMutation(new RelocatedMutation(isChecked(view)));
     }
   }
 
@@ -231,8 +229,8 @@ public class EditFragmentNestCare extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(RelocatedReasonMutation.builder()
-          .setReason(Relocation.Reason.HIGH_WATER).build());
+      updateHandler.applyMutation(
+          new RelocatedReasonMutation(Relocation.Reason.HIGH_WATER));
     }
   }
   private static class HandleSetPredation extends ClickHandler {
@@ -241,8 +239,8 @@ public class EditFragmentNestCare extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(RelocatedReasonMutation.builder()
-          .setReason(Relocation.Reason.PREDATION).build());
+      updateHandler.applyMutation(
+          new RelocatedReasonMutation(Relocation.Reason.PREDATION));
     }
   }
   private static class HandleSetWashingOut extends ClickHandler {
@@ -251,8 +249,8 @@ public class EditFragmentNestCare extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(RelocatedReasonMutation.builder()
-          .setReason(Relocation.Reason.WASHING_OUT).build());
+      updateHandler.applyMutation(
+          new RelocatedReasonMutation(Relocation.Reason.WASHING_OUT));
     }
   }
   private static class HandleSetConstruction extends ClickHandler {
@@ -261,8 +259,8 @@ public class EditFragmentNestCare extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(RelocatedReasonMutation.builder()
-          .setReason(Relocation.Reason.CONSTRUCTION_RENOURISHMENT).build());
+      updateHandler.applyMutation(
+          new RelocatedReasonMutation(Relocation.Reason.CONSTRUCTION_RENOURISHMENT));
     }
   }
 
@@ -273,7 +271,7 @@ public class EditFragmentNestCare extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(NewAddressMutation.builder().setAddress(newText).build());
+      updateHandler.applyMutation(new NewAddressMutation(newText));
     }
   }
   private static class HandleUpdateEggsRelocated extends TextChangeHandler {
@@ -283,8 +281,7 @@ public class EditFragmentNestCare extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(
-          EggsRelocatedMutation.builder().setEggs(getInteger(newText)).build());
+      updateHandler.applyMutation(new EggsRelocatedMutation(getInteger(newText)));
     }
   }
   private static class HandleUpdateEggsDestroyed extends TextChangeHandler {
@@ -294,8 +291,7 @@ public class EditFragmentNestCare extends EditFragment {
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(
-          EggsDestroyedMutation.builder().setEggs(getInteger(newText)).build());
+      updateHandler.applyMutation(new EggsDestroyedMutation(getInteger(newText)));
     }
   }
 
@@ -311,7 +307,7 @@ public class EditFragmentNestCare extends EditFragment {
       dialog.setCallback(new GpsLocationCallback() {
         @Override
         public void location(GpsCoordinates coordinates) {
-          updateHandler.applyMutation(NewGpsMutation.builder().setCoordinates(coordinates).build());
+          updateHandler.applyMutation(new NewGpsMutation(coordinates));
         }
       });
 

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import lombok.Getter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -96,8 +95,8 @@ public class EditFragmentMedia extends EditFragment {
             + CAPTURE_IMAGE_HANDLER.getActiveImageFileName());
 
         listenerProvider.getUpdateHandler()
-            .applyMutation(AddPhotoMutation.builder()
-                .setFileName(CAPTURE_IMAGE_HANDLER.getActiveImageFileName()).build());
+            .applyMutation(new AddPhotoMutation(
+                CAPTURE_IMAGE_HANDLER.getActiveImageFileName()));
 
       } else {
         ErrorUtil.showErrorMessage(this, "Image capture failed. code:" + resultCode);
@@ -109,8 +108,8 @@ public class EditFragmentMedia extends EditFragment {
           ImageUtil.copyFromContentUri(
               this.getActivity(), data.getData(), currentlyEditingFileUri.get());
           listenerProvider.getUpdateHandler()
-              .applyMutation(UpdatePhotoMutation.builder()
-                    .setFileName(ImageUtil.getFileName(currentlyEditingFileUri.get())).build());
+              .applyMutation(new UpdatePhotoMutation(
+                  ImageUtil.getFileName(currentlyEditingFileUri.get())));
         } catch (IOException e) {
           ErrorUtil.showErrorMessage(this, "Failed to save changes: " + e.getMessage());
           Log.e(TAG, "IOException while copying edited file: ", e);
@@ -122,11 +121,14 @@ public class EditFragmentMedia extends EditFragment {
   }
 
   private static class HandleCaptureImage extends ClickHandler {
-    @Getter
     private String activeImageFileName;
 
     HandleCaptureImage() {
       super(R.id.buttonCaptureImage);
+    }
+
+    public String getActiveImageFileName() {
+      return activeImageFileName;
     }
 
     @Override
@@ -228,8 +230,8 @@ public class EditFragmentMedia extends EditFragment {
             .setNeutralButton("Delete Image", new DialogInterface.OnClickListener() {
               @Override
               public void onClick(DialogInterface dialog, int which) {
-                listenerProvider.getUpdateHandler().applyMutation(DeletePhotoMutation.builder()
-                    .setFileName(ImageUtil.getFileName(imagePath)).build());
+                listenerProvider.getUpdateHandler().applyMutation(
+                    new DeletePhotoMutation(ImageUtil.getFileName(imagePath)));
               }
             })
             .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
