@@ -1061,6 +1061,26 @@ public class ReportMutations {
     }
   }
 
+  public static class EggsScatteredDateMutation implements ReportMutation {
+    private final int year;
+    private final int month;
+    private final int day;
+
+    public EggsScatteredDateMutation(int year, int month, int day) {
+      this.year = year;
+      this.month = month;
+      this.day = day;
+    }
+
+    @Override
+    public Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      updatedReport.getConditionBuilder().setEggsScatteredByAnotherTimestampMs(
+          DateUtil.getTimestampInMs(year, month, day));
+      return updatedReport.build();
+    }
+  }
+
   
   public static class EggsScatteredMutation implements ReportMutation {
     private final boolean isTrue;

@@ -63,6 +63,7 @@ message NestCondition {
   optional int64 poached_timestamp_ms = 4;
   optional bool roots_invaded_eggshells = 5;
   optional bool eggs_scattered_by_another = 6;
+  optional int64 eggs_scattered_by_another_timestamp_ms = 15;
 
   message WashEvent {
     optional int64 timestamp_ms = 1;
@@ -85,6 +86,8 @@ message NestCondition {
   
   optional bool abandoned_body_pits = 13;
   optional bool abandoned_egg_cavities = 14;
+
+  // Next ID=16
 }
 
 message NestLocation {

@@ -36,12 +36,14 @@ import com.islandturtlewatch.nest.reporter.data.ReportMutations.WashoutDateMutat
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.WashoutStormNameMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.WashoverDateMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.WashoverStormNameMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.EggsScatteredDateMutation;
 import com.islandturtlewatch.nest.reporter.util.DateUtil;
 
 public class EditFragmentNestCondition extends EditFragment {
   private static final Map<Integer, ClickHandler> CLICK_HANDLERS =
       ClickHandler.toMap(
           new HandleSetEggsScattered(),
+          new HandleSetEggsScatteredDate(),
           new HandleSetPoached(),
           new HandleSetPoachedDate(),
           new HandleSetRootsInvaded(),
@@ -111,8 +113,15 @@ public class EditFragmentNestCondition extends EditFragment {
       clearDate(R.id.buttonDamagePoachedDate);
     }
 
-    setChecked(R.id.fieldDamageRootsInvaded, condition.getRootsInvadedEggshells());
     setChecked(R.id.fieldDamageEggsScattered, condition.getEggsScatteredByAnother());
+    setEnabled(R.id.buttonDamageEggsScatteredDate, condition.getEggsScatteredByAnother());
+    if (condition.hasEggsScatteredByAnotherTimestampMs()) {
+      setDate(R.id.buttonDamageEggsScatteredDate, condition.getEggsScatteredByAnotherTimestampMs());
+    } else {
+      clearDate(R.id.buttonDamageEggsScatteredDate);
+    }
+
+    setChecked(R.id.fieldDamageRootsInvaded, condition.getRootsInvadedEggshells());
   }
 
   private void addWashOverRow(final int ordinal, WashEvent event, boolean showDelete) {
@@ -294,6 +303,17 @@ public class EditFragmentNestCondition extends EditFragment {
         int month,
         int day) {
       updateHandler.applyMutation(new PoachedDateMutation(year, month, day));
+    }
+  }
+  private static class HandleSetEggsScatteredDate extends DatePickerClickHandler {
+    protected HandleSetEggsScatteredDate() { super(R.id.buttonDamageEggsScatteredDate); }
+
+    @Override
+    public void onDateSet(DatePicker view,
+                          int year,
+                          int month,
+                          int day) {
+      updateHandler.applyMutation(new EggsScatteredDateMutation(year, month, day));
     }
   }
 
