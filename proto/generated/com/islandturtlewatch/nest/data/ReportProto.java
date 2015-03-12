@@ -11855,6 +11855,31 @@ public final class ReportProto {
      * <code>optional .com.islandturtlewatch.nest.data.Excavation excavation = 3;</code>
      */
     com.islandturtlewatch.nest.data.ReportProto.ExcavationOrBuilder getExcavationOrBuilder();
+
+    // optional bool adopted = 4;
+    /**
+     * <code>optional bool adopted = 4;</code>
+     */
+    boolean hasAdopted();
+    /**
+     * <code>optional bool adopted = 4;</code>
+     */
+    boolean getAdopted();
+
+    // optional string adopted_by = 5;
+    /**
+     * <code>optional string adopted_by = 5;</code>
+     */
+    boolean hasAdoptedBy();
+    /**
+     * <code>optional string adopted_by = 5;</code>
+     */
+    java.lang.String getAdoptedBy();
+    /**
+     * <code>optional string adopted_by = 5;</code>
+     */
+    com.google.protobuf.ByteString
+        getAdoptedByBytes();
   }
   /**
    * Protobuf type {@code com.islandturtlewatch.nest.data.Intervention}
@@ -11944,6 +11969,16 @@ public final class ReportProto {
                 excavation_ = subBuilder.buildPartial();
               }
               bitField0_ |= 0x00000004;
+              break;
+            }
+            case 32: {
+              bitField0_ |= 0x00000008;
+              adopted_ = input.readBool();
+              break;
+            }
+            case 42: {
+              bitField0_ |= 0x00000010;
+              adoptedBy_ = input.readBytes();
               break;
             }
           }
@@ -12828,10 +12863,71 @@ public final class ReportProto {
       return excavation_;
     }
 
+    // optional bool adopted = 4;
+    public static final int ADOPTED_FIELD_NUMBER = 4;
+    private boolean adopted_;
+    /**
+     * <code>optional bool adopted = 4;</code>
+     */
+    public boolean hasAdopted() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    /**
+     * <code>optional bool adopted = 4;</code>
+     */
+    public boolean getAdopted() {
+      return adopted_;
+    }
+
+    // optional string adopted_by = 5;
+    public static final int ADOPTED_BY_FIELD_NUMBER = 5;
+    private java.lang.Object adoptedBy_;
+    /**
+     * <code>optional string adopted_by = 5;</code>
+     */
+    public boolean hasAdoptedBy() {
+      return ((bitField0_ & 0x00000010) == 0x00000010);
+    }
+    /**
+     * <code>optional string adopted_by = 5;</code>
+     */
+    public java.lang.String getAdoptedBy() {
+      java.lang.Object ref = adoptedBy_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          adoptedBy_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string adopted_by = 5;</code>
+     */
+    public com.google.protobuf.ByteString
+        getAdoptedByBytes() {
+      java.lang.Object ref = adoptedBy_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        adoptedBy_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private void initFields() {
       protectionEvent_ = com.islandturtlewatch.nest.data.ReportProto.Intervention.ProtectionEvent.getDefaultInstance();
       relocation_ = com.islandturtlewatch.nest.data.ReportProto.Relocation.getDefaultInstance();
       excavation_ = com.islandturtlewatch.nest.data.ReportProto.Excavation.getDefaultInstance();
+      adopted_ = false;
+      adoptedBy_ = "";
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -12854,6 +12950,12 @@ public final class ReportProto {
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         output.writeMessage(3, excavation_);
       }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeBool(4, adopted_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        output.writeBytes(5, getAdoptedByBytes());
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -12874,6 +12976,14 @@ public final class ReportProto {
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(3, excavation_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(4, adopted_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(5, getAdoptedByBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -13012,6 +13122,10 @@ public final class ReportProto {
           excavationBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000004);
+        adopted_ = false;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        adoptedBy_ = "";
+        bitField0_ = (bitField0_ & ~0x00000010);
         return this;
       }
 
@@ -13064,6 +13178,14 @@ public final class ReportProto {
         } else {
           result.excavation_ = excavationBuilder_.build();
         }
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.adopted_ = adopted_;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000010;
+        }
+        result.adoptedBy_ = adoptedBy_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -13088,6 +13210,14 @@ public final class ReportProto {
         }
         if (other.hasExcavation()) {
           mergeExcavation(other.getExcavation());
+        }
+        if (other.hasAdopted()) {
+          setAdopted(other.getAdopted());
+        }
+        if (other.hasAdoptedBy()) {
+          bitField0_ |= 0x00000010;
+          adoptedBy_ = other.adoptedBy_;
+          onChanged();
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -13465,6 +13595,113 @@ public final class ReportProto {
           excavation_ = null;
         }
         return excavationBuilder_;
+      }
+
+      // optional bool adopted = 4;
+      private boolean adopted_ ;
+      /**
+       * <code>optional bool adopted = 4;</code>
+       */
+      public boolean hasAdopted() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>optional bool adopted = 4;</code>
+       */
+      public boolean getAdopted() {
+        return adopted_;
+      }
+      /**
+       * <code>optional bool adopted = 4;</code>
+       */
+      public Builder setAdopted(boolean value) {
+        bitField0_ |= 0x00000008;
+        adopted_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional bool adopted = 4;</code>
+       */
+      public Builder clearAdopted() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        adopted_ = false;
+        onChanged();
+        return this;
+      }
+
+      // optional string adopted_by = 5;
+      private java.lang.Object adoptedBy_ = "";
+      /**
+       * <code>optional string adopted_by = 5;</code>
+       */
+      public boolean hasAdoptedBy() {
+        return ((bitField0_ & 0x00000010) == 0x00000010);
+      }
+      /**
+       * <code>optional string adopted_by = 5;</code>
+       */
+      public java.lang.String getAdoptedBy() {
+        java.lang.Object ref = adoptedBy_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          adoptedBy_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string adopted_by = 5;</code>
+       */
+      public com.google.protobuf.ByteString
+          getAdoptedByBytes() {
+        java.lang.Object ref = adoptedBy_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          adoptedBy_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string adopted_by = 5;</code>
+       */
+      public Builder setAdoptedBy(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
+        adoptedBy_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string adopted_by = 5;</code>
+       */
+      public Builder clearAdoptedBy() {
+        bitField0_ = (bitField0_ & ~0x00000010);
+        adoptedBy_ = getDefaultInstance().getAdoptedBy();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string adopted_by = 5;</code>
+       */
+      public Builder setAdoptedByBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
+        adoptedBy_ = value;
+        onChanged();
+        return this;
       }
 
       // @@protoc_insertion_point(builder_scope:com.islandturtlewatch.nest.data.Intervention)
@@ -16699,45 +16936,46 @@ public final class ReportProto {
       "\022\006\n\002BB\020\003\022\006\n\002HB\020\004\"|\n\tPlacement\022\023\n\017UNSET_P" +
       "LACEMENT\020\001\022\016\n\nOPEN_BEACH\020\002\022\021\n\rIN_VEGITAT" +
       "ION\020\003\022\021\n\rAT_VEGITATION\020\004\022\021\n\rAT_ESCARPMEN" +
-      "T\020\005\022\021\n\rON_ESCARPMENT\020\006\"\376\004\n\014Intervention\022" +
+      "T\020\005\022\021\n\rON_ESCARPMENT\020\006\"\243\005\n\014Intervention\022" +
       "W\n\020protection_event\030\001 \001(\0132=.com.islandtu" +
       "rtlewatch.nest.data.Intervention.Protect" +
       "ionEvent\022?\n\nrelocation\030\002 \001(\0132+.com.islan",
       "dturtlewatch.nest.data.Relocation\022?\n\nexc" +
       "avation\030\003 \001(\0132+.com.islandturtlewatch.ne" +
-      "st.data.Excavation\032\222\003\n\017ProtectionEvent\022\024" +
-      "\n\014timestamp_ms\030\001 \001(\003\022P\n\004type\030\002 \001(\0162B.com" +
-      ".islandturtlewatch.nest.data.Interventio" +
-      "n.ProtectionEvent.Type\022T\n\006reason\030\003 \001(\0162D" +
-      ".com.islandturtlewatch.nest.data.Interve" +
-      "ntion.ProtectionEvent.Reason\"^\n\004Type\022\016\n\n" +
-      "UNSET_TYPE\020\001\022\027\n\023SELF_RELEASING_CAGE\020\002\022\027\n" +
-      "\023SELF_RELEASING_FLAT\020\003\022\024\n\020RESTRAINING_CA",
-      "GE\020\004\"a\n\006Reason\022\020\n\014UNSET_REASON\020\001\022\026\n\022BEFO" +
-      "RE_PREDITATION\020\002\022\025\n\021AFTER_PREDITATION\020\003\022" +
-      "\026\n\022FOR_LIGHT_PROBLEMS\020\004\"\265\003\n\nExcavation\022\024" +
-      "\n\014timestamp_ms\030\001 \001(\003\022\021\n\texcavated\030\002 \001(\010\022" +
-      "[\n\016failure_reason\030\003 \001(\0162C.com.islandturt" +
-      "lewatch.nest.data.Excavation.ExcavationF" +
-      "ailureReason\022\025\n\rfailure_other\030\004 \001(\t\022\024\n\014d" +
-      "ead_in_nest\030\005 \001(\005\022\024\n\014live_in_nest\030\006 \001(\005\022" +
-      "\026\n\016hatched_shells\030\007 \001(\005\022\023\n\013dead_pipped\030\010" +
-      " \001(\005\022\023\n\013live_pipped\030\t \001(\005\022\027\n\017whole_unhat",
-      "ched\030\n \001(\005\022\026\n\016eggs_destroyed\030\013 \001(\005\"k\n\027Ex" +
-      "cavationFailureReason\022\020\n\014UNSET_REASON\020\001\022" +
-      "\022\n\016EGGS_NOT_FOUND\020\002\022\037\n\033EGGS_HATCHLINGS_T" +
-      "OO_DECAYED\020\003\022\t\n\005OTHER\020\004\"\364\002\n\nRelocation\022\025" +
-      "\n\rwas_relocated\030\001 \001(\010\022\024\n\014timestamp_ms\030\002 " +
-      "\001(\003\022\023\n\013new_address\030\003 \001(\t\022D\n\013coordinates\030" +
-      "\004 \001(\0132/.com.islandturtlewatch.nest.data." +
-      "GpsCoordinates\022\026\n\016eggs_relocated\030\005 \001(\005\022\026" +
-      "\n\016eggs_destroyed\030\006 \001(\005\022B\n\006reason\030\013 \001(\01622" +
-      ".com.islandturtlewatch.nest.data.Relocat",
-      "ion.Reason\"j\n\006Reason\022\020\n\014UNSET_REASON\020\001\022\016" +
-      "\n\nHIGH_WATER\020\002\022\r\n\tPREDATION\020\003\022\017\n\013WASHING" +
-      "_OUT\020\004\022\036\n\032CONSTRUCTION_RENOURISHMENT\020\005\"+" +
-      "\n\016GpsCoordinates\022\013\n\003lat\030\001 \001(\001\022\014\n\004long\030\002 " +
-      "\001(\001B\rB\013ReportProto"
+      "st.data.Excavation\022\017\n\007adopted\030\004 \001(\010\022\022\n\na" +
+      "dopted_by\030\005 \001(\t\032\222\003\n\017ProtectionEvent\022\024\n\014t" +
+      "imestamp_ms\030\001 \001(\003\022P\n\004type\030\002 \001(\0162B.com.is" +
+      "landturtlewatch.nest.data.Intervention.P" +
+      "rotectionEvent.Type\022T\n\006reason\030\003 \001(\0162D.co" +
+      "m.islandturtlewatch.nest.data.Interventi" +
+      "on.ProtectionEvent.Reason\"^\n\004Type\022\016\n\nUNS" +
+      "ET_TYPE\020\001\022\027\n\023SELF_RELEASING_CAGE\020\002\022\027\n\023SE",
+      "LF_RELEASING_FLAT\020\003\022\024\n\020RESTRAINING_CAGE\020" +
+      "\004\"a\n\006Reason\022\020\n\014UNSET_REASON\020\001\022\026\n\022BEFORE_" +
+      "PREDITATION\020\002\022\025\n\021AFTER_PREDITATION\020\003\022\026\n\022" +
+      "FOR_LIGHT_PROBLEMS\020\004\"\265\003\n\nExcavation\022\024\n\014t" +
+      "imestamp_ms\030\001 \001(\003\022\021\n\texcavated\030\002 \001(\010\022[\n\016" +
+      "failure_reason\030\003 \001(\0162C.com.islandturtlew" +
+      "atch.nest.data.Excavation.ExcavationFail" +
+      "ureReason\022\025\n\rfailure_other\030\004 \001(\t\022\024\n\014dead" +
+      "_in_nest\030\005 \001(\005\022\024\n\014live_in_nest\030\006 \001(\005\022\026\n\016" +
+      "hatched_shells\030\007 \001(\005\022\023\n\013dead_pipped\030\010 \001(",
+      "\005\022\023\n\013live_pipped\030\t \001(\005\022\027\n\017whole_unhatche" +
+      "d\030\n \001(\005\022\026\n\016eggs_destroyed\030\013 \001(\005\"k\n\027Excav" +
+      "ationFailureReason\022\020\n\014UNSET_REASON\020\001\022\022\n\016" +
+      "EGGS_NOT_FOUND\020\002\022\037\n\033EGGS_HATCHLINGS_TOO_" +
+      "DECAYED\020\003\022\t\n\005OTHER\020\004\"\364\002\n\nRelocation\022\025\n\rw" +
+      "as_relocated\030\001 \001(\010\022\024\n\014timestamp_ms\030\002 \001(\003" +
+      "\022\023\n\013new_address\030\003 \001(\t\022D\n\013coordinates\030\004 \001" +
+      "(\0132/.com.islandturtlewatch.nest.data.Gps" +
+      "Coordinates\022\026\n\016eggs_relocated\030\005 \001(\005\022\026\n\016e" +
+      "ggs_destroyed\030\006 \001(\005\022B\n\006reason\030\013 \001(\01622.co",
+      "m.islandturtlewatch.nest.data.Relocation" +
+      ".Reason\"j\n\006Reason\022\020\n\014UNSET_REASON\020\001\022\016\n\nH" +
+      "IGH_WATER\020\002\022\r\n\tPREDATION\020\003\022\017\n\013WASHING_OU" +
+      "T\020\004\022\036\n\032CONSTRUCTION_RENOURISHMENT\020\005\"+\n\016G" +
+      "psCoordinates\022\013\n\003lat\030\001 \001(\001\022\014\n\004long\030\002 \001(\001" +
+      "B\rB\013ReportProto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -16809,7 +17047,7 @@ public final class ReportProto {
           internal_static_com_islandturtlewatch_nest_data_Intervention_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_islandturtlewatch_nest_data_Intervention_descriptor,
-              new java.lang.String[] { "ProtectionEvent", "Relocation", "Excavation", });
+              new java.lang.String[] { "ProtectionEvent", "Relocation", "Excavation", "Adopted", "AdoptedBy", });
           internal_static_com_islandturtlewatch_nest_data_Intervention_ProtectionEvent_descriptor =
             internal_static_com_islandturtlewatch_nest_data_Intervention_descriptor.getNestedTypes().get(0);
           internal_static_com_islandturtlewatch_nest_data_Intervention_ProtectionEvent_fieldAccessorTable = new

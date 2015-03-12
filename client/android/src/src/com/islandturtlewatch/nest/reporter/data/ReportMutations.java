@@ -655,6 +655,21 @@ public class ReportMutations {
     }
   }
 
+
+  public static class WasAdoptedMutation implements ReportMutation {
+    private final boolean isTrue;
+
+    public WasAdoptedMutation(boolean isTrue) {
+      this.isTrue = isTrue;
+    }
+
+    @Override
+    public Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      updatedReport.getInterventionBuilder().setAdopted(isTrue);
+      return updatedReport.build();
+    }
+  }
   
   public static class DateProtectedMutation implements ReportMutation {
     private final int year;

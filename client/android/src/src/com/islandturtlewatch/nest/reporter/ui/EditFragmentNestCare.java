@@ -29,12 +29,14 @@ import com.islandturtlewatch.nest.reporter.data.ReportMutations.ProtectionTypeMu
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.RelocatedMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.RelocatedReasonMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.WhyProtectedMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.WasAdoptedMutation;
 import com.islandturtlewatch.nest.reporter.ui.GpsCoordinateDialog.GpsLocationCallback;
 import com.islandturtlewatch.nest.reporter.util.GpsUtil;
 
 public class EditFragmentNestCare extends EditFragment {
   private static final Map<Integer, ClickHandler> CLICK_HANDLERS =
       ClickHandler.toMap(
+          new HandleSetAdopted(),
           new HandleSetAfterPredation(),
           new HandleSetBeforePredation(),
           new HandleSetLightProblem(),
@@ -76,6 +78,7 @@ public class EditFragmentNestCare extends EditFragment {
   @Override
   public void updateSection(Report report) {
     Intervention intervention = report.getIntervention();
+    setChecked(R.id.fieldNestAdopted, intervention.getAdopted());
 
     if (intervention.getProtectionEvent().hasTimestampMs()) {
       setDate(R.id.buttonProtectedDate, intervention.getProtectionEvent().getTimestampMs());
@@ -220,6 +223,15 @@ public class EditFragmentNestCare extends EditFragment {
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
       updateHandler.applyMutation(new RelocatedMutation(isChecked(view)));
+    }
+  }
+  private static class HandleSetAdopted extends ClickHandler {
+    protected HandleSetAdopted() {
+      super(R.id.fieldNestAdopted);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new WasAdoptedMutation(isChecked(view)));
     }
   }
 
