@@ -59,11 +59,22 @@ message Image {
 message NestCondition {
   optional bool vandalized = 1;
   optional int64 vandalized_timestamp_ms = 2;
+
+  enum VandalismType {
+    UNKOWN = 1;
+    STAKES_REMOVED = 2;
+    NEST_DUG_INTO = 3;
+    EGGS_AFFECTED = 4;
+  }
+  optional VandalismType vandalism_type = 15;
+
+
   optional bool poached = 3;
   optional int64 poached_timestamp_ms = 4;
+  optional bool poached_eggs_removed = 17;
   optional bool roots_invaded_eggshells = 5;
   optional bool eggs_scattered_by_another = 6;
-  optional int64 eggs_scattered_by_another_timestamp_ms = 15;
+  optional int64 eggs_scattered_by_another_timestamp_ms = 16;
 
   message WashEvent {
     optional int64 timestamp_ms = 1;
@@ -87,7 +98,7 @@ message NestCondition {
   optional bool abandoned_body_pits = 13;
   optional bool abandoned_egg_cavities = 14;
 
-  // Next ID=16
+  // Next ID=18
 }
 
 message NestLocation {

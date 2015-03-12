@@ -81,7 +81,11 @@
         Please contact Suzi for any human damages
     </string>
     <string name="edit_nest_condition_damage_vandalized">Vandalized</string>
+    <string name="edit_nest_condition_damage_vandalism_stakes_removed">Stakes Removed</string>
+    <string name="edit_nest_condition_damage_vandalism_dug_into">Nest Dug Into</string>
+    <string name="edit_nest_condition_damage_vandalism_eggs_affected">Eggs Affected</string>
     <string name="edit_nest_condition_damage_poached">Poached</string>
+    <string name="edit_nest_condition_damage_poached_eggs_removed">Eggs Removed</string>
     <string name="edit_nest_condition_damage_roots_invaded">Roots invaded eggshells</string>
     <string name="edit_nest_condition_damage_eggs_scattered">Eggs scattered by another</string>
 

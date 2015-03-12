@@ -1008,6 +1008,28 @@ public class ReportMutations {
     }
   }
 
+  public static class VandalismTypeMutation implements ReportMutation {
+    private final Optional<NestCondition.VandalismType> vandalismType;
+
+    public VandalismTypeMutation(Optional<NestCondition.VandalismType> vandalismType) {
+      this.vandalismType = vandalismType;
+    }
+
+    @Override
+    public Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      NestCondition.Builder builder = updatedReport
+          .getConditionBuilder();
+
+      if (vandalismType.isPresent()) {
+        builder.setVandalismType(vandalismType.get());
+      } else {
+        builder.clearVandalismType();
+      }
+
+      return updatedReport.build();
+    }
+  }
   
   public static class PoachedDateMutation implements ReportMutation {
     private final int year;
@@ -1029,7 +1051,6 @@ public class ReportMutations {
     }
   }
 
-  
   public static class WasPoachedMutation implements ReportMutation {
     private final boolean isTrue;
 
@@ -1044,7 +1065,20 @@ public class ReportMutations {
       return updatedReport.build();
     }
   }
+  public static class PoachedEggsRemovedMutation implements ReportMutation {
+    private final boolean isTrue;
 
+    public PoachedEggsRemovedMutation(boolean isTrue) {
+      this.isTrue = isTrue;
+    }
+
+    @Override
+    public Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      updatedReport.getConditionBuilder().setPoachedEggsRemoved(isTrue);
+      return updatedReport.build();
+    }
+  }
   
   public static class RootsInvadedMutation implements ReportMutation {
     private final boolean isTrue;

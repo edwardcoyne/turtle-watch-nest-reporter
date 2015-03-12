@@ -39,10 +39,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="build.gradle" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="build.gradle" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.48892674" vertical-offset="313" max-vertical-offset="900">
+            <state vertical-scroll-proportion="-11.48" vertical-offset="313" max-vertical-offset="900">
               <caret line="40" column="53" selection-start-line="40" selection-start-column="53" selection-end-line="40" selection-end-column="53" />
               <folding />
             </state>
@@ -59,18 +59,29 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EditFragmentNestCondition.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="EditFragmentNestCondition.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/ui/EditFragmentNestCondition.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2955" max-vertical-offset="4875">
-              <caret line="248" column="39" selection-start-line="248" selection-start-column="39" selection-end-line="248" selection-end-column="39" />
+            <state vertical-scroll-proportion="0.50490195" vertical-offset="1656" max-vertical-offset="5760">
+              <caret line="135" column="12" selection-start-line="135" selection-start-column="12" selection-end-line="135" selection-end-column="12" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#5835#5855#0" expanded="true" />
-                <element signature="e#6546#6585#0" expanded="true" />
-                <element signature="e#7941#7961#0" expanded="true" />
-                <element signature="e#8628#8665#0" expanded="true" />
-                <element signature="e#9231#9268#0" expanded="true" />
+                <element signature="e#6849#6869#0" expanded="true" />
+                <element signature="e#7560#7599#0" expanded="true" />
+                <element signature="e#8955#8975#0" expanded="true" />
+                <element signature="e#9642#9679#0" expanded="true" />
+                <element signature="e#10245#10282#0" expanded="true" />
+                <element signature="e#13856#13857#0" expanded="true" />
+                <element signature="e#13903#13904#0" expanded="true" />
+                <element signature="e#14178#14179#0" expanded="true" />
+                <element signature="e#14222#14223#0" expanded="true" />
+                <element signature="e#14516#14517#0" expanded="true" />
+                <element signature="e#14571#14572#0" expanded="true" />
+                <element signature="e#14861#14862#0" expanded="true" />
+                <element signature="e#14910#14911#0" expanded="true" />
+                <element signature="e#15793#15822#0" expanded="true" />
+                <element signature="e#16261#16290#0" expanded="true" />
+                <element signature="e#16743#16772#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -79,10 +90,11 @@
       <file leaf-file-name="ReportMutations.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/data/ReportMutations.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="14331" max-vertical-offset="20535">
-              <caret line="1063" column="47" selection-start-line="1063" selection-start-column="22" selection-end-line="1063" selection-end-column="47" />
+            <state vertical-scroll-proportion="-14.461538" vertical-offset="14564" max-vertical-offset="21270">
+              <caret line="1080" column="3" selection-start-line="1080" selection-start-column="3" selection-end-line="1080" selection-end-column="3" />
               <folding>
-                <element signature="e#41308#41335#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#42432#42459#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -94,8 +106,47 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.0" vertical-offset="1683" max-vertical-offset="2355">
-              <caret line="132" column="62" selection-start-line="132" selection-start-column="62" selection-end-line="132" selection-end-column="62" />
+            <state vertical-scroll-proportion="-16.185184" vertical-offset="1903" max-vertical-offset="2970">
+              <caret line="156" column="41" selection-start-line="156" selection-start-column="41" selection-end-line="156" selection-end-column="41" />
+              <folding>
+                <element signature="e#577#616#0" expanded="true" />
+                <element signature="e#1045#1082#0" expanded="true" />
+                <element signature="e#1308#1329#0" expanded="true" />
+                <element signature="e#1701#1741#0" expanded="true" />
+                <element signature="e#2099#2139#0" expanded="true" />
+                <element signature="e#2478#2514#0" expanded="true" />
+                <element signature="e#2815#2864#0" expanded="true" />
+                <element signature="e#3212#3259#0" expanded="true" />
+                <element signature="e#3414#3435#0" expanded="true" />
+                <element signature="e#3982#4043#0" expanded="true" />
+                <element signature="e#4330#4385#0" expanded="true" />
+                <element signature="e#4677#4737#0" expanded="true" />
+                <element signature="e#5131#5175#0" expanded="true" />
+                <element signature="e#5327#5348#0" expanded="true" />
+                <element signature="e#5906#5963#0" expanded="true" />
+                <element signature="e#6448#6499#0" expanded="true" />
+                <element signature="e#6663#6684#0" expanded="true" />
+                <element signature="e#7124#7174#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="styles.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="3" max-vertical-offset="690">
+              <caret line="36" column="58" selection-start-line="36" selection-start-column="58" selection-end-line="36" selection-end-column="58" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="strings.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-9.6" vertical-offset="1065" max-vertical-offset="1935">
+              <caret line="87" column="79" selection-start-line="87" selection-start-column="79" selection-end-line="87" selection-end-column="79" />
               <folding />
             </state>
           </provider>
@@ -106,16 +157,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="315">
               <caret line="6" column="56" selection-start-line="6" selection-start-column="56" selection-end-line="6" selection-end-column="56" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="gradle-wrapper.properties" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="180">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -648,7 +689,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="4278414940000" />
+        <entry key="$PROJECT_DIR$" value="4278414978000" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -1101,10 +1142,12 @@
         <option value="$PROJECT_DIR$/imageEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/ImageEndpoint.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/islandturtlewatch/nest/reporter/data/LocalDataStore.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/islandturtlewatch/nest/reporter/net/EndPointFactory.java" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/edit_fragment_nest_condition.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/data/ReportMutations.java" />
         <option value="$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/ui/EditFragmentNestCondition.java" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
       </list>
     </option>
   </component>
@@ -1176,6 +1219,38 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="values" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -1338,7 +1413,7 @@
       <option name="DEPLOY" value="true" />
       <option name="ARTIFACT_NAME" value="" />
       <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
-      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="true" />
       <option name="PREFERRED_AVD" value="" />
       <option name="USE_COMMAND_LINE" value="true" />
       <option name="COMMAND_LINE" value="" />
@@ -1431,15 +1506,15 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32991672" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32929516" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32929516" sideWeight="0.49967968" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32929516" sideWeight="0.5003203" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29515418" sideWeight="0.18641897" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29515418" sideWeight="0.21652786" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32929516" sideWeight="0.33568224" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29515418" sideWeight="0.81358105" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29515418" sideWeight="0.7834721" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32929516" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24969475" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1500,11 +1575,22 @@
           <caret line="115" column="21" selection-start-line="115" selection-start-column="21" selection-end-line="115" selection-end-column="21" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#5835#5855#0" expanded="true" />
-            <element signature="e#6546#6585#0" expanded="true" />
-            <element signature="e#7941#7961#0" expanded="true" />
-            <element signature="e#8628#8665#0" expanded="true" />
-            <element signature="e#9231#9268#0" expanded="true" />
+            <element signature="e#6849#6869#0" expanded="true" />
+            <element signature="e#7560#7599#0" expanded="true" />
+            <element signature="e#8955#8975#0" expanded="true" />
+            <element signature="e#9642#9679#0" expanded="true" />
+            <element signature="e#10245#10282#0" expanded="true" />
+            <element signature="e#13856#13857#0" expanded="true" />
+            <element signature="e#13903#13904#0" expanded="true" />
+            <element signature="e#14178#14179#0" expanded="true" />
+            <element signature="e#14222#14223#0" expanded="true" />
+            <element signature="e#14516#14517#0" expanded="true" />
+            <element signature="e#14571#14572#0" expanded="true" />
+            <element signature="e#14861#14862#0" expanded="true" />
+            <element signature="e#14910#14911#0" expanded="true" />
+            <element signature="e#15793#15822#0" expanded="true" />
+            <element signature="e#16261#16290#0" expanded="true" />
+            <element signature="e#16743#16772#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1516,7 +1602,26 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1683" max-vertical-offset="2355">
           <caret line="132" column="58" selection-start-line="132" selection-start-column="58" selection-end-line="132" selection-end-column="58" />
-          <folding />
+          <folding>
+            <element signature="e#577#616#0" expanded="true" />
+            <element signature="e#1045#1082#0" expanded="true" />
+            <element signature="e#1308#1329#0" expanded="true" />
+            <element signature="e#1701#1741#0" expanded="true" />
+            <element signature="e#2099#2139#0" expanded="true" />
+            <element signature="e#2478#2514#0" expanded="true" />
+            <element signature="e#2815#2864#0" expanded="true" />
+            <element signature="e#3212#3259#0" expanded="true" />
+            <element signature="e#3414#3435#0" expanded="true" />
+            <element signature="e#3982#4043#0" expanded="true" />
+            <element signature="e#4330#4385#0" expanded="true" />
+            <element signature="e#4677#4737#0" expanded="true" />
+            <element signature="e#5131#5175#0" expanded="true" />
+            <element signature="e#5327#5348#0" expanded="true" />
+            <element signature="e#5906#5963#0" expanded="true" />
+            <element signature="e#6448#6499#0" expanded="true" />
+            <element signature="e#6663#6684#0" expanded="true" />
+            <element signature="e#7124#7174#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1736,17 +1841,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/edit_fragment_nest_condition.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.0" vertical-offset="1683" max-vertical-offset="2355">
-          <caret line="132" column="62" selection-start-line="132" selection-start-column="62" selection-end-line="132" selection-end-column="62" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/ui/EditFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="2.3284314" vertical-offset="0" max-vertical-offset="3945">
@@ -1755,36 +1849,94 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.48" vertical-offset="313" max-vertical-offset="900">
+          <caret line="40" column="53" selection-start-line="40" selection-start-column="53" selection-end-line="40" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3" max-vertical-offset="690">
+          <caret line="36" column="58" selection-start-line="36" selection-start-column="58" selection-end-line="36" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.6" vertical-offset="1065" max-vertical-offset="1935">
+          <caret line="87" column="79" selection-start-line="87" selection-start-column="79" selection-end-line="87" selection-end-column="79" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/edit_fragment_nest_condition.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-16.185184" vertical-offset="1903" max-vertical-offset="2970">
+          <caret line="156" column="41" selection-start-line="156" selection-start-column="41" selection-end-line="156" selection-end-column="41" />
+          <folding>
+            <element signature="e#577#616#0" expanded="true" />
+            <element signature="e#1045#1082#0" expanded="true" />
+            <element signature="e#1308#1329#0" expanded="true" />
+            <element signature="e#1701#1741#0" expanded="true" />
+            <element signature="e#2099#2139#0" expanded="true" />
+            <element signature="e#2478#2514#0" expanded="true" />
+            <element signature="e#2815#2864#0" expanded="true" />
+            <element signature="e#3212#3259#0" expanded="true" />
+            <element signature="e#3414#3435#0" expanded="true" />
+            <element signature="e#3982#4043#0" expanded="true" />
+            <element signature="e#4330#4385#0" expanded="true" />
+            <element signature="e#4677#4737#0" expanded="true" />
+            <element signature="e#5131#5175#0" expanded="true" />
+            <element signature="e#5327#5348#0" expanded="true" />
+            <element signature="e#5906#5963#0" expanded="true" />
+            <element signature="e#6448#6499#0" expanded="true" />
+            <element signature="e#6663#6684#0" expanded="true" />
+            <element signature="e#7124#7174#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/data/ReportMutations.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="14331" max-vertical-offset="20535">
-          <caret line="1063" column="47" selection-start-line="1063" selection-start-column="22" selection-end-line="1063" selection-end-column="47" />
+        <state vertical-scroll-proportion="-14.461538" vertical-offset="14564" max-vertical-offset="21270">
+          <caret line="1080" column="3" selection-start-line="1080" selection-start-column="3" selection-end-line="1080" selection-end-column="3" />
           <folding>
-            <element signature="e#41308#41335#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#42432#42459#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/ui/EditFragmentNestCondition.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2955" max-vertical-offset="4875">
-          <caret line="248" column="39" selection-start-line="248" selection-start-column="39" selection-end-line="248" selection-end-column="39" />
+        <state vertical-scroll-proportion="0.50490195" vertical-offset="1656" max-vertical-offset="5760">
+          <caret line="135" column="12" selection-start-line="135" selection-start-column="12" selection-end-line="135" selection-end-column="12" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#5835#5855#0" expanded="true" />
-            <element signature="e#6546#6585#0" expanded="true" />
-            <element signature="e#7941#7961#0" expanded="true" />
-            <element signature="e#8628#8665#0" expanded="true" />
-            <element signature="e#9231#9268#0" expanded="true" />
+            <element signature="e#6849#6869#0" expanded="true" />
+            <element signature="e#7560#7599#0" expanded="true" />
+            <element signature="e#8955#8975#0" expanded="true" />
+            <element signature="e#9642#9679#0" expanded="true" />
+            <element signature="e#10245#10282#0" expanded="true" />
+            <element signature="e#13856#13857#0" expanded="true" />
+            <element signature="e#13903#13904#0" expanded="true" />
+            <element signature="e#14178#14179#0" expanded="true" />
+            <element signature="e#14222#14223#0" expanded="true" />
+            <element signature="e#14516#14517#0" expanded="true" />
+            <element signature="e#14571#14572#0" expanded="true" />
+            <element signature="e#14861#14862#0" expanded="true" />
+            <element signature="e#14910#14911#0" expanded="true" />
+            <element signature="e#15793#15822#0" expanded="true" />
+            <element signature="e#16261#16290#0" expanded="true" />
+            <element signature="e#16743#16772#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48892674" vertical-offset="313" max-vertical-offset="900">
-          <caret line="40" column="53" selection-start-line="40" selection-start-column="53" selection-end-line="40" selection-end-column="53" />
-          <folding />
         </state>
       </provider>
     </entry>

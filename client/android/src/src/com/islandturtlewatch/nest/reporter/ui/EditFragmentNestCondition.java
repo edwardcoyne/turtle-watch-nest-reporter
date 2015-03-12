@@ -14,6 +14,7 @@ import android.widget.DatePicker;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
+import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.islandturtlewatch.nest.data.ReportProto.NestCondition;
 import com.islandturtlewatch.nest.data.ReportProto.NestCondition.PreditationEvent;
@@ -37,6 +38,8 @@ import com.islandturtlewatch.nest.reporter.data.ReportMutations.WashoutStormName
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.WashoverDateMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.WashoverStormNameMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.EggsScatteredDateMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.VandalismTypeMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.PoachedEggsRemovedMutation;
 import com.islandturtlewatch.nest.reporter.util.DateUtil;
 
 public class EditFragmentNestCondition extends EditFragment {
@@ -46,9 +49,13 @@ public class EditFragmentNestCondition extends EditFragment {
           new HandleSetEggsScatteredDate(),
           new HandleSetPoached(),
           new HandleSetPoachedDate(),
+          new HandleSetPoachedEggsRemoved(),
           new HandleSetRootsInvaded(),
           new HandleSetVandalized(),
           new HandleSetVandalizedDate(),
+          new HandleSetVandalismStakesRemoved(),
+          new HandleSetVandalismDugInto(),
+          new HandleSetVandalismEggsAffected(),
           new HandleSetWashoutDate());
 
   private static final Map<Integer, TextChangeHandler> TEXT_CHANGE_HANDLERS =
@@ -104,6 +111,13 @@ public class EditFragmentNestCondition extends EditFragment {
     } else {
       clearDate(R.id.buttonDamageVandalizedDate);
     }
+    setVisible(R.id.rowVandalismType, condition.getVandalized());
+    setChecked(R.id.fieldVandalismStakesRemoved,
+        condition.getVandalismType() == NestCondition.VandalismType.STAKES_REMOVED);
+    setChecked(R.id.fieldVandalismDugInto,
+        condition.getVandalismType() == NestCondition.VandalismType.NEST_DUG_INTO);
+    setChecked(R.id.fieldVandalismEggsAffected,
+        condition.getVandalismType() == NestCondition.VandalismType.EGGS_AFFECTED);
 
     setChecked(R.id.fieldDamagePoached, condition.getPoached());
     setEnabled(R.id.buttonDamagePoachedDate, condition.getPoached());
@@ -112,6 +126,8 @@ public class EditFragmentNestCondition extends EditFragment {
     } else {
       clearDate(R.id.buttonDamagePoachedDate);
     }
+    setVisible(R.id.rowPoachedDetails, condition.getPoached());
+    setChecked(R.id.fieldDamagePoachedEggsRemoved, condition.getPoachedEggsRemoved());
 
     setChecked(R.id.fieldDamageEggsScattered, condition.getEggsScatteredByAnother());
     setEnabled(R.id.buttonDamageEggsScatteredDate, condition.getEggsScatteredByAnother());
@@ -335,6 +351,15 @@ public class EditFragmentNestCondition extends EditFragment {
       updateHandler.applyMutation(new WasPoachedMutation(isChecked(view)));
     }
   }
+  private static class HandleSetPoachedEggsRemoved extends ClickHandler {
+    protected HandleSetPoachedEggsRemoved() {
+      super(R.id.fieldDamagePoachedEggsRemoved);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new PoachedEggsRemovedMutation(isChecked(view)));
+    }
+  }
   private static class HandleSetRootsInvaded extends ClickHandler {
     protected HandleSetRootsInvaded() {
       super(R.id.fieldDamageRootsInvaded);
@@ -351,6 +376,40 @@ public class EditFragmentNestCondition extends EditFragment {
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
       updateHandler.applyMutation(new EggsScatteredMutation(isChecked(view)));
+    }
+  }
+
+  private static class HandleSetVandalismStakesRemoved extends ClickHandler {
+    protected HandleSetVandalismStakesRemoved() {
+      super(R.id.fieldVandalismStakesRemoved);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new VandalismTypeMutation(!isChecked(view) ?
+          Optional.<NestCondition.VandalismType>absent() :
+          Optional.of(NestCondition.VandalismType.STAKES_REMOVED)));
+    }
+  }
+  private static class HandleSetVandalismDugInto extends ClickHandler {
+    protected HandleSetVandalismDugInto() {
+      super(R.id.fieldVandalismDugInto);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new VandalismTypeMutation(!isChecked(view) ?
+          Optional.<NestCondition.VandalismType>absent() :
+          Optional.of(NestCondition.VandalismType.NEST_DUG_INTO)));
+    }
+  }
+  private static class HandleSetVandalismEggsAffected extends ClickHandler {
+    protected HandleSetVandalismEggsAffected() {
+      super(R.id.fieldVandalismEggsAffected);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new VandalismTypeMutation(!isChecked(view) ?
+          Optional.<NestCondition.VandalismType>absent() :
+          Optional.of(NestCondition.VandalismType.EGGS_AFFECTED)));
     }
   }
 

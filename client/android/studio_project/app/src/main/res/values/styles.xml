@@ -33,4 +33,8 @@
         <item name="android:paddingTop">5dp</item>
     </style>
 
+    <style name="SecondaryRow" parent="@android:style/TextAppearance">
+        <item name="android:layout_marginLeft">15dp</item>
+    </style>
+
 </resources>
