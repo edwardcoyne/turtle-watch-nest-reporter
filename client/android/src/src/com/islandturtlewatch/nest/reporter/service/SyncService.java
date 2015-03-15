@@ -334,6 +334,12 @@ public class SyncService extends Service {
     }
 
     private boolean handleCreate(CachedReportWrapper wrapper) throws IOException {
+      if (wrapper.isDeleted()) {
+        // If report is deleted before being created on the server, keep the deletion local.
+        dataStore.markSynced(wrapper.getLocalId());
+        return true;
+      }
+
       ReportRequest request = new ReportRequest();
       request.setReportEncoded(BaseEncoding.base64().encode(wrapper.getReport().toByteArray()));
 
@@ -360,6 +366,7 @@ public class SyncService extends Service {
           .build();
       request.setReportRefEncoded(BaseEncoding.base64().encode(ref.toByteArray()));
       request.setReportEncoded(BaseEncoding.base64().encode(wrapper.getReport().toByteArray()));
+      //request.setDelete(wrapper.isDeleted());
 
       ReportResponse response = reportService.updateReport(request).execute();
       if (!response.getCode().equals(Code.OK.name())) {

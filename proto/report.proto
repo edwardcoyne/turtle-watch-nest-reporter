@@ -10,9 +10,16 @@ message ReportWrapper {
 
 // Uniquely identifies this version of the report.
 message ReportRef {
+  enum State {
+    ACTIVE = 1;
+    OLD = 2;
+    DELETED = 3;
+  }
+
   optional string owner_id = 2;
   optional uint64 report_id = 3;
   optional uint64 version = 4;
+  optional State state = 5 [default = ACTIVE];
 }
 
 message Report {

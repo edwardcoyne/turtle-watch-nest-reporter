@@ -84,7 +84,7 @@ public class LocalDataStore {
     @Cleanup Cursor cursor = db.query(
         ReportsTable.TABLE_NAME, // table name
         CachedReportWrapper.requiredColumns, // cols to select
-        and(isFalse(ReportsTable.COLUMN_SYNCED), isFalse(ReportsTable.COLUMN_DELETED)), // where
+        isFalse(ReportsTable.COLUMN_SYNCED), // where
         null, // don't need selection args
         null, // don't group
         null, // don't filter
@@ -251,6 +251,20 @@ public class LocalDataStore {
         "setServerSideData should update one row not " + numberUpdated);
   }
 
+  public void markSynced(long localId) {
+    @Cleanup SQLiteDatabase db = storageHelper.getWritableDatabase();
+
+    ContentValues values = new ContentValues();
+    values.put(ReportsTable.COLUMN_SYNCED.name, true);
+
+    int numberUpdated = db.update(ReportsTable.TABLE_NAME,
+        values,
+        ReportsTable.keyEquals(localId),
+        null);
+    Preconditions.checkArgument(numberUpdated == 1,
+        "markSynced should update one row not " + numberUpdated);
+  }
+
   /**
    *  Mark listed images as synced with server.
    */
@@ -362,6 +376,8 @@ public class LocalDataStore {
 
     ContentValues values = new ContentValues();
     values.put(ReportsTable.COLUMN_DELETED.name, true);
+    values.put(ReportsTable.COLUMN_SYNCED.name, false);
+    values.put(ReportsTable.COLUMN_TS_LOCAL_UPDATE.name, System.currentTimeMillis());
 
     int numberUpdated = db.update(ReportsTable.TABLE_NAME,
         values,
