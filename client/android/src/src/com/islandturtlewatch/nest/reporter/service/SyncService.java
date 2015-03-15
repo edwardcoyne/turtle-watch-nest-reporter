@@ -322,7 +322,9 @@ public class SyncService extends Service {
           return true;
         }
 
-        if (!wrapper.get().getReportId().isPresent()) {
+        if (wrapper.get().isDeleted()) {
+          return handleDelete(wrapper.get());
+        } else if (!wrapper.get().getReportId().isPresent()) {
           return handleCreate(wrapper.get());
         } else {
           return handleUpdate(wrapper.get());
@@ -334,12 +336,6 @@ public class SyncService extends Service {
     }
 
     private boolean handleCreate(CachedReportWrapper wrapper) throws IOException {
-      if (wrapper.isDeleted()) {
-        // If report is deleted before being created on the server, keep the deletion local.
-        dataStore.markSynced(wrapper.getLocalId());
-        return true;
-      }
-
       ReportRequest request = new ReportRequest();
       request.setReportEncoded(BaseEncoding.base64().encode(wrapper.getReport().toByteArray()));
 
@@ -366,7 +362,6 @@ public class SyncService extends Service {
           .build();
       request.setReportRefEncoded(BaseEncoding.base64().encode(ref.toByteArray()));
       request.setReportEncoded(BaseEncoding.base64().encode(wrapper.getReport().toByteArray()));
-      //request.setDelete(wrapper.isDeleted());
 
       ReportResponse response = reportService.updateReport(request).execute();
       if (!response.getCode().equals(Code.OK.name())) {
@@ -381,6 +376,28 @@ public class SyncService extends Service {
       uploadImages(wrapper, reportRef);
       dataStore.setServerSideData(wrapper.getLocalId(), reportRef);
 
+      return true;
+    }
+
+    private boolean handleDelete(CachedReportWrapper wrapper) throws IOException {
+      // Only send delete to server if we ever sent the report there in the first place.
+      if (wrapper.getReportId().isPresent()) {
+        ReportRef ref = ReportRef.newBuilder()
+            .setReportId(wrapper.getReportId().get())
+            .setVersion(wrapper.getVersion().get())
+            .build();
+
+        EncodedReportRef encodedRef = EncodedReportRef.newBuilder().setReportEncoded(
+            BaseEncoding.base64().encode(ref.toByteArray())).build();
+
+        ReportResponse response = reportService.deleteReport(encodedRef).execute();
+        if (!response.getCode().equals(Code.OK.name())) {
+          Log.e(TAG, "Call failed: " + response.getCode() + " :: " + response.getErrorMessage());
+          return false;
+        }
+      }
+
+      dataStore.markSynced(wrapper.getLocalId());
       return true;
     }
 

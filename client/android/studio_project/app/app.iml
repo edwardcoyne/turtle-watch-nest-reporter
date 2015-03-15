@@ -102,14 +102,14 @@
     <orderEntry type="library" exported="" name="httpcore-4.4" level="project" />
     <orderEntry type="library" exported="" name="islandturtlewatch.com-reportEndpoint-v1-20140625054007-java-1.18.0-rc-sources" level="project" />
     <orderEntry type="library" exported="" name="google-http-client-1.19.0" level="project" />
-    <orderEntry type="library" exported="" name="httpmime-4.4" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-21.0.0" level="project" />
+    <orderEntry type="library" exported="" name="httpmime-4.4" level="project" />
     <orderEntry type="library" exported="" name="play-services-identity-6.5.87" level="project" />
     <orderEntry type="library" exported="" name="google-api-client-1.18.0-rc" level="project" />
     <orderEntry type="library" exported="" name="google-http-client-android-1.19.0" level="project" />
     <orderEntry type="library" exported="" name="google-api-client-android-1.18.0-rc" level="project" />
-    <orderEntry type="library" exported="" name="lombok-1.16.2" level="project" />
     <orderEntry type="library" exported="" name="protobuf-java-2.5.0" level="project" />
+    <orderEntry type="library" exported="" name="lombok-1.16.2" level="project" />
     <orderEntry type="library" exported="" name="gson-2.1" level="project" />
     <orderEntry type="library" exported="" name="joda-time-2.3" level="project" />
   </component>
