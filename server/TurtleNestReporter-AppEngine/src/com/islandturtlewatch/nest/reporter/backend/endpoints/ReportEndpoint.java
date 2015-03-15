@@ -90,7 +90,6 @@ public class ReportEndpoint {
   }
 
   /**
-   * This method returns refs to all the latest reports for the user.
    * @throws OAuthRequestException
    * @throws IOException If we can't write image.
    */
@@ -120,7 +119,6 @@ public class ReportEndpoint {
   }
 
   /**
-   * This method returns refs to all the latest reports for the user.
    * @throws IOException if we can't write image.
    */
   @ApiMethod(name = "updateReport")
@@ -160,6 +158,25 @@ public class ReportEndpoint {
     return ReportResponse.builder()
         .setCode(Code.OK)
         .setReportRefEncoded(BaseEncoding.base64().encode(updatedWrapper.getRef().toByteArray()))
+        .build();
+  }
+
+  @ApiMethod(name = "deleteReport")
+  public ReportResponse deleteReport(
+      User user,
+      EncodedReportRef encodedRef) throws IOException {
+    log.info("DeleteReport: " + user );
+    if (user == null) {
+      return ReportResponse.builder().setCode(Code.AUTHENTICATION_FAILURE).build();
+    }
+
+    ReportRef ref = encodedRef.toProto();
+    // Add user to ref.
+    ref = ref.toBuilder().setOwnerId(UserUtil.getUserId(user)).build();
+    store.deleteReport(ref);
+
+    return ReportResponse.builder()
+        .setCode(Code.OK)
         .build();
   }
 }

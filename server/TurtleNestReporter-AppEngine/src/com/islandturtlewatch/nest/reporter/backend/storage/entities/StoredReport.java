@@ -20,6 +20,7 @@ import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Parent;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation.City;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
+import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
 
 /**
  * Represents a report, the parent of multiple {@link StoredReportVersion}.
@@ -63,7 +64,13 @@ public class StoredReport {
 
   @Getter @Setter
   @Index
+  // deprecated, use state instead.
+  // TODO(edcoyne): see if we can remove this in the future.
   boolean active;
+
+  @Getter @Setter
+  @Index
+  ReportRef.State state;
 
   public StoredReport updateFromReport(Report report) {
     dateFound = report.hasTimestampFoundMs() ? new Date(report.getTimestampFoundMs()) : null;

@@ -128,6 +128,7 @@ public class ReportCsvGenerator {
     for (ct = 0; ct <= currentRow; ct++) {
       reportWriter.writeRow(writer, columnMap, ct);
     }
+    writer.flush();
 
     log.info("Wrote " + ct + " reports.");
   }

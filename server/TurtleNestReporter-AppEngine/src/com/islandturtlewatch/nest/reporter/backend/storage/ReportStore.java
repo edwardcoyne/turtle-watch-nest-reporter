@@ -61,6 +61,16 @@ public class ReportStore {
       }});
   }
 
+  public void deleteReport(final ReportRef ref) {
+    log.info("deleteing ref: " + ref);
+    backend().transact(new Work<Boolean>(){
+      @Override
+      public Boolean run() {
+        doDeleteReport(ref);
+        return true;
+      }});
+  }
+
   public ReportWrapper getReportLatestVersion(String userId, final long reportId) {
     final User user = loadOrCreateUser(userId);
     return backend().transact(new Work<ReportWrapper>(){
@@ -83,8 +93,7 @@ public class ReportStore {
   public ImmutableList<ReportWrapper> getActiveReports() {
     List<StoredReport> reports =
         backend().load().type(StoredReport.class)
-          // TODO(edcoyne): fix active bits on reports and re-enable
-          //.filter("active =", true)
+          .filter("state =", ReportRef.State.ACTIVE)
           .list();
     List<ReportWrapper> versions = new ArrayList<>();
     for (StoredReport report : reports) {
@@ -108,7 +117,7 @@ public class ReportStore {
         .setReportId(user.getHighestReportId() + 1)
         .setUser(user.getKey())
         .setLatestVersion(1) // start at 1 as we are adding it now.
-        .setActive(true)
+        .setState(ReportRef.State.ACTIVE)
         .build()
         .updateFromReport(report);
 
@@ -151,6 +160,23 @@ public class ReportStore {
 
     backend().save().entities(reportVersion, report).now();
     return reportVersion.toReportWrapper();
+  }
+
+  private void doDeleteReport(ReportRef ref) {
+    User user = loadOrCreateUser(ref.getOwnerId());
+    StoredReport report = loadReport(user, ref.getReportId());
+
+    if (report.getLatestVersion() != ref.getVersion()) {
+      // TODO(edcoyne): plug in conflict handling here.
+      //throw new UnsupportedOperationException(
+      log.warning(
+          "Attempting to update with old version, We don't support conflict resultion yet..."
+          + " Server version: " + report.getLatestVersion() + " Client version: "
+              + ref.getVersion());
+    }
+    report.setState(ReportRef.State.DELETED);
+
+    backend().save().entities(report).now();
   }
 
   private ImmutableList<ReportWrapper> doGetLatestReportsForUser(String userId) {
