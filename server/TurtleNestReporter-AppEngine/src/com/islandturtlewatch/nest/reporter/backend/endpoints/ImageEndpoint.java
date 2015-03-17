@@ -1,7 +1,5 @@
 package com.islandturtlewatch.nest.reporter.backend.endpoints;
 
-import org.mortbay.log.Log;
-
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
@@ -16,6 +14,9 @@ import com.islandturtlewatch.nest.reporter.backend.ClientIds;
 import com.islandturtlewatch.nest.reporter.backend.storage.ImageStore;
 import com.islandturtlewatch.nest.reporter.transport.EncodedImageRef;
 import com.islandturtlewatch.nest.reporter.transport.SerializedProto;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 @Api(name = "imageEndpoint",
@@ -55,7 +56,7 @@ public class ImageEndpoint {
     ImageRef imageRef = ImageRef.newBuilder()
         .mergeFrom(BaseEncoding.base64().decode(ref.getRefEncoded()))
         .build();
-    Log.info("Getting downloadUrl for: " + imageRef.toString());
+    Logger.getGlobal().info("Getting downloadUrl for: " + imageRef.toString());
 
     try {
       ImageDownloadRef downloadRef = ImageDownloadRef.newBuilder()
@@ -64,7 +65,7 @@ public class ImageEndpoint {
         .build();
       return SerializedProto.fromProto(downloadRef);
     } catch (Exception ex) {
-      Log.warn("Unhandled exception:", ex);
+      Logger.getGlobal().log(Level.WARNING, "Unhandled exception:", ex);
       throw ex;
     }
   }

@@ -1,6 +1,6 @@
 package com.islandturtlewatch.nest.reporter.transport;
 
-import javax.persistence.Entity;
+import com.googlecode.objectify.annotation.Entity;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

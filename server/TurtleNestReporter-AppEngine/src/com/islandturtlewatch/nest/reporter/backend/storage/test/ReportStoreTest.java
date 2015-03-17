@@ -12,25 +12,28 @@ import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
 import com.islandturtlewatch.nest.data.ReportProto.ReportWrapper;
 import com.islandturtlewatch.nest.reporter.backend.storage.ReportStore;
 
+import java.io.Closeable;
+
 public class ReportStoreTest extends TestCase {
   private final LocalServiceTestHelper helper =
       new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());
 
   private ReportStore store;
+  Closeable session;
   @Override
   protected void setUp() throws Exception {
     super.setUp();
     helper.setUp();
     // Need to clear Objectify caches.
     ObjectifyService.ofy().clear();
+    session = ObjectifyService.begin();
     store = new ReportStore();
     store.init();
   }
 
   @Override
   protected void tearDown() throws Exception {
-    // Cleans up any existing session.
-    ObjectifyFilter.complete();
+    session.close();
     helper.tearDown();
     super.tearDown();
   }

@@ -60,6 +60,7 @@ import com.islandturtlewatch.nest.reporter.transport.imageEndpoint.ImageEndpoint
 import com.islandturtlewatch.nest.reporter.transport.imageEndpoint.model.EncodedImageRef;
 import com.islandturtlewatch.nest.reporter.transport.imageEndpoint.model.SerializedProto;
 import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.ReportEndpoint;
+import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.EncodedReportRef;
 import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.ReportRequest;
 import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.ReportResponse;
 import com.islandturtlewatch.nest.reporter.util.ErrorUtil;
@@ -387,8 +388,8 @@ public class SyncService extends Service {
             .setVersion(wrapper.getVersion().get())
             .build();
 
-        EncodedReportRef encodedRef = EncodedReportRef.newBuilder().setReportEncoded(
-            BaseEncoding.base64().encode(ref.toByteArray())).build();
+        EncodedReportRef encodedRef = new EncodedReportRef().setRefEncoded(
+            BaseEncoding.base64().encode(ref.toByteArray()));
 
         ReportResponse response = reportService.deleteReport(encodedRef).execute();
         if (!response.getCode().equals(Code.OK.name())) {
