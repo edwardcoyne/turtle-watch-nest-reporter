@@ -161,7 +161,7 @@ public class ReportEndpoint {
         .build();
   }
 
-  @ApiMethod(name = "deleteReport")
+  @ApiMethod(name = "deleteReport", httpMethod = ApiMethod.HttpMethod.POST)
   public ReportResponse deleteReport(
       User user,
       EncodedReportRef encodedRef) throws IOException {

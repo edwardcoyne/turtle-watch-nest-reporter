@@ -181,7 +181,10 @@ public class ReportStore {
 
   private ImmutableList<ReportWrapper> doGetLatestReportsForUser(String userId) {
     User user = loadOrCreateUser(userId);
-    List<StoredReport> reports = backend().load().type(StoredReport.class).ancestor(user).list();
+    List<StoredReport> reports = backend().load()
+        .type(StoredReport.class).ancestor(user)
+        .filter("state =", ReportRef.State.ACTIVE)
+        .list();
     List<ReportWrapper> versions = new ArrayList<>();
     for (StoredReport report : reports) {
       versions.add(loadReportVersion(report, report.getLatestVersion()).toReportWrapper());

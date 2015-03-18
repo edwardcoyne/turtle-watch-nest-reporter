@@ -388,7 +388,8 @@ public class SyncService extends Service {
             .setVersion(wrapper.getVersion().get())
             .build();
 
-        EncodedReportRef encodedRef = new EncodedReportRef().setRefEncoded(
+        EncodedReportRef encodedRef = new EncodedReportRef();
+        encodedRef.setRefEncoded(
             BaseEncoding.base64().encode(ref.toByteArray()));
 
         ReportResponse response = reportService.deleteReport(encodedRef).execute();

@@ -46,8 +46,10 @@ public class StoredReport {
   List<Long> conflictingBranches;
 
   // What verson conflict branches were resolved to.
-  @Getter
-  Map<Long, Long> conflictingVersionResolutions;
+  // This no longer works, objectify dropped support,
+  // May have stored values so we cannot change the type until we are sure there is no old data.
+  //@Getter
+  //Map<Long, Long> conflictingVersionResolutions;
 
   @Getter
   @Index
