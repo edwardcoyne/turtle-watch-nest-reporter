@@ -3,12 +3,11 @@ package com.islandturtlewatch.nest.reporter.ui;
 import java.util.Calendar;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
-import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.view.View;
+import com.islandturtlewatch.nest.reporter.ui.ClearableDatePickerDialog.OnDateSetListener;
 
 import com.google.common.base.Optional;
 
@@ -44,7 +43,7 @@ public class CurrentDatePicker extends DialogFragment {
     int month = this.month.or(calendar.get(Calendar.MONTH));
     int day = this.day.or(calendar.get(Calendar.DAY_OF_MONTH));
 
-    return new DatePickerDialog(getActivity(), listener, year, month, day);
+    return new ClearableDatePickerDialog(getActivity(), listener, year, month, day);
   }
 
   public static void showOnView(View view, OnDateSetListener listener) {

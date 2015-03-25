@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 
+import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.islandturtlewatch.nest.data.ReportProto.GpsCoordinates;
 import com.islandturtlewatch.nest.data.ReportProto.Intervention;
@@ -19,6 +20,7 @@ import com.islandturtlewatch.nest.data.ReportProto.Relocation;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
+import com.islandturtlewatch.nest.reporter.data.Date;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.DateProtectedMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.DateRelocatedMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.EggsDestroyedMutation;
@@ -136,11 +138,8 @@ public class EditFragmentNestCare extends EditFragment {
     }
 
     @Override
-    public void onDateSet(DatePicker view,
-        int year,
-        int month,
-        int day) {
-      updateHandler.applyMutation(new DateProtectedMutation(year, month,day));
+    public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
+      updateHandler.applyMutation(new DateProtectedMutation(maybeDate));
     }
   }
   private static class HandleSetRelocationDate extends DatePickerClickHandler {
@@ -149,11 +148,8 @@ public class EditFragmentNestCare extends EditFragment {
     }
 
     @Override
-    public void onDateSet(DatePicker view,
-        int year,
-        int month,
-        int day) {
-      updateHandler.applyMutation(new DateRelocatedMutation(year, month, day));
+    public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
+      updateHandler.applyMutation(new DateRelocatedMutation(maybeDate));
     }
   }
   private static class HandleSetSelfRealeasingCage extends ClickHandler {

@@ -12,11 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 
+import com.google.common.base.Optional;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.Report.NestStatus;
 import com.islandturtlewatch.nest.data.ReportProto.Report.Species;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
+import com.islandturtlewatch.nest.reporter.data.Date;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.AbandonedBodyPitsMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.AbandonedEggCavitiesMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.DateFoundMutation;
@@ -172,11 +174,8 @@ public class EditFragmentInfo extends EditFragment {
       super(R.id.buttonDateFound);
     }
     @Override
-    public void onDateSet(DatePicker view,
-        int year,
-        int month,
-        int day) {
-      updateHandler.applyMutation(new DateFoundMutation(year, month, day));
+    public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
+      updateHandler.applyMutation(new DateFoundMutation(maybeDate));
     }
   }
 

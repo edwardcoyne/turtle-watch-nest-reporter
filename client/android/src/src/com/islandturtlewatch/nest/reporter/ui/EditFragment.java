@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +21,7 @@ import com.google.protobuf.Message;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
+import com.islandturtlewatch.nest.reporter.data.Date;
 import com.islandturtlewatch.nest.reporter.ui.split.SplitEditActivity.ListenerProvider;
 import com.islandturtlewatch.nest.reporter.util.DateUtil;
 
@@ -211,7 +211,7 @@ public abstract class EditFragment extends Fragment {
   }
 
   public abstract static class DatePickerClickHandler extends ClickHandler
-      implements DatePickerDialog.OnDateSetListener{
+      implements ClearableDatePickerDialog.OnDateSetListener {
     protected DataUpdateHandler updateHandler;
     private Optional<Integer> year = Optional.absent();
     private Optional<Integer> month = Optional.absent();
@@ -254,11 +254,10 @@ public abstract class EditFragment extends Fragment {
     }
 
     // Hide the stupid implementation detail of months being '0' indexed.
-    private class DateSetListener implements DatePickerDialog.OnDateSetListener {
+    private class DateSetListener implements ClearableDatePickerDialog.OnDateSetListener {
       @Override
-      public void onDateSet(DatePicker view,
-          int year, int monthOfYear, int dayOfMonth) {
-        DatePickerClickHandler.this.onDateSet(view, year, monthOfYear + 1, dayOfMonth);
+      public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
+        DatePickerClickHandler.this.onDateSet(view, maybeDate);
       }
     }
   }

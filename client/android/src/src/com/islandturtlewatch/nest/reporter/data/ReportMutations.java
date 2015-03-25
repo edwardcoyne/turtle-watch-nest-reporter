@@ -56,21 +56,23 @@ public class ReportMutations {
 
   
   public static class DateFoundMutation implements ReportMutation {
-    private final int year;
-    private final int month;
-    private final int day;
+    private final Optional<Date> maybeDate;
 
-    public DateFoundMutation(int year, int month, int day) {
-      this.year = year;
-      this.month = month;
-      this.day = day;
+    public DateFoundMutation(Optional<Date> maybeDate) {
+      this.maybeDate = maybeDate;
     }
 
-      @Override
+    @Override
     public Report apply(Report oldReport) {
-      return oldReport.toBuilder()
-          .setTimestampFoundMs(DateUtil.getTimestampInMs(year, month, day))
-          .build();
+      if (maybeDate.isPresent()) {
+        return oldReport.toBuilder()
+            .setTimestampFoundMs(maybeDate.get().getTimestampMs())
+            .build();
+      } else {
+        return oldReport.toBuilder()
+            .clearTimestampFoundMs()
+            .build();
+      }
     }
   }
 
@@ -636,21 +638,22 @@ public class ReportMutations {
 
   
   public static class DateRelocatedMutation implements ReportMutation {
-    private final int year;
-    private final int month;
-    private final int day;
+    private final Optional<Date> maybeDate;
 
-    public DateRelocatedMutation(int year, int month, int day) {
-      this.year = year;
-      this.month = month;
-      this.day = day;
+    public DateRelocatedMutation(Optional<Date> maybeDate) {
+      this.maybeDate = maybeDate;
     }
 
     @Override
     public Report apply(Report oldReport) {
       Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getInterventionBuilder().getRelocationBuilder()
-          .setTimestampMs(DateUtil.getTimestampInMs(year, month, day));
+      Relocation.Builder relocationBuilder =
+          updatedReport.getInterventionBuilder().getRelocationBuilder();
+      if (maybeDate.isPresent()) {
+        relocationBuilder.setTimestampMs(maybeDate.get().getTimestampMs());
+      } else {
+        relocationBuilder.clearTimestampMs();
+      }
       return updatedReport.build();
     }
   }
@@ -672,63 +675,64 @@ public class ReportMutations {
   }
   
   public static class DateProtectedMutation implements ReportMutation {
-    private final int year;
-    private final int month;
-    private final int day;
+    private final Optional<Date> maybeDate;
 
-    public DateProtectedMutation(int year, int month, int day) {
-      this.year = year;
-      this.month = month;
-      this.day = day;
+    public DateProtectedMutation(Optional<Date> maybeDate) {
+      this.maybeDate = maybeDate;
     }
 
     @Override
     public Report apply(Report oldReport) {
       Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getInterventionBuilder().getProtectionEventBuilder()
-          .setTimestampMs(DateUtil.getTimestampInMs(year, month, day));
+      ProtectionEvent.Builder eventBuilder =
+          updatedReport.getInterventionBuilder().getProtectionEventBuilder();
+      if (maybeDate.isPresent()) {
+        eventBuilder.setTimestampMs(maybeDate.get().getTimestampMs());
+      } else {
+        eventBuilder.clearTimestampMs();
+      }
       return updatedReport.build();
     }
   }
 
   
   public static class HatchDateMutation implements ReportMutation {
-    private final int year;
-    private final int month;
-    private final int day;
+    private final Optional<Date> maybeDate;
 
-    public HatchDateMutation(int year, int month, int day) {
-      this.year = year;
-      this.month = month;
-      this.day = day;
+    public HatchDateMutation(Optional<Date> maybeDate) {
+      this.maybeDate = maybeDate;
     }
 
     @Override
     public Report apply(Report oldReport) {
       Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getConditionBuilder().setHatchTimestampMs(
-          DateUtil.getTimestampInMs(year, month, day));
+      NestCondition.Builder conditionBuilder = updatedReport.getConditionBuilder();
+      if (maybeDate.isPresent()) {
+        conditionBuilder.setHatchTimestampMs(maybeDate.get().getTimestampMs());
+      } else {
+        conditionBuilder.clearHatchTimestampMs();
+      }
       return updatedReport.build();
     }
   }
 
   
   public static class AdditionalHatchDateMutation implements ReportMutation {
-    private final int year;
-    private final int month;
-    private final int day;
+    private final Optional<Date> maybeDate;
 
-    public AdditionalHatchDateMutation(int year, int month, int day) {
-      this.year = year;
-      this.month = month;
-      this.day = day;
+    public AdditionalHatchDateMutation(Optional<Date> maybeDate) {
+      this.maybeDate = maybeDate;
     }
 
     @Override
     public Report apply(Report oldReport) {
       Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getConditionBuilder().setAdditionalHatchTimestampMs(
-          DateUtil.getTimestampInMs(year, month, day));
+      NestCondition.Builder conditionBuilder = updatedReport.getConditionBuilder();
+      if (maybeDate.isPresent()) {
+        conditionBuilder.setAdditionalHatchTimestampMs(maybeDate.get().getTimestampMs());
+      } else {
+        conditionBuilder.clearAdditionalHatchTimestampMs();
+      }
       return updatedReport.build();
     }
   }
@@ -799,21 +803,22 @@ public class ReportMutations {
 
   
   public static class ExcavationDateMutation implements ReportMutation {
-    private final int year;
-    private final int month;
-    private final int day;
+    private final Optional<Date> maybeDate;
 
-    public ExcavationDateMutation(int year, int month, int day) {
-      this.year = year;
-      this.month = month;
-      this.day = day;
+    public ExcavationDateMutation(Optional<Date> maybeDate) {
+      this.maybeDate = maybeDate;
     }
 
     @Override
     public Report apply(Report oldReport) {
       Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getInterventionBuilder().getExcavationBuilder()
-          .setTimestampMs(DateUtil.getTimestampInMs(year, month, day));
+      Excavation.Builder excavationBuilder =
+          updatedReport.getInterventionBuilder().getExcavationBuilder();
+      if (maybeDate.isPresent()) {
+        excavationBuilder.setTimestampMs(maybeDate.get().getTimestampMs());
+      } else {
+        excavationBuilder.clearTimestampMs();
+      }
       return updatedReport.build();
     }
   }
@@ -988,21 +993,21 @@ public class ReportMutations {
 
   
   public static class VandalizedDateMutation implements ReportMutation {
-    private final int year;
-    private final int month;
-    private final int day;
+    private final Optional<Date> maybeDate;
 
-    public VandalizedDateMutation(int year, int month, int day) {
-      this.year = year;
-      this.month = month;
-      this.day = day;
+    public VandalizedDateMutation(Optional<Date> maybeDate) {
+      this.maybeDate = maybeDate;
     }
 
     @Override
     public Report apply(Report oldReport) {
       Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getConditionBuilder().setVandalizedTimestampMs(
-          DateUtil.getTimestampInMs(year, month, day));
+      NestCondition.Builder conditionBuilder = updatedReport.getConditionBuilder();
+      if (maybeDate.isPresent()) {
+        conditionBuilder.setVandalizedTimestampMs(maybeDate.get().getTimestampMs());
+      } else {
+        conditionBuilder.clearVandalizedTimestampMs();
+      }
       return updatedReport.build();
     }
   }
@@ -1047,21 +1052,21 @@ public class ReportMutations {
   }
   
   public static class PoachedDateMutation implements ReportMutation {
-    private final int year;
-    private final int month;
-    private final int day;
+    private final Optional<Date> maybeDate;
 
-    public PoachedDateMutation(int year, int month, int day) {
-      this.year = year;
-      this.month = month;
-      this.day = day;
+    public PoachedDateMutation(Optional<Date> maybeDate) {
+      this.maybeDate = maybeDate;
     }
 
     @Override
     public Report apply(Report oldReport) {
       Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getConditionBuilder().setPoachedTimestampMs(
-          DateUtil.getTimestampInMs(year, month, day));
+      NestCondition.Builder conditionBuilder = updatedReport.getConditionBuilder();
+      if (maybeDate.isPresent()) {
+        conditionBuilder.setPoachedTimestampMs(maybeDate.get().getTimestampMs());
+      } else {
+        conditionBuilder.clearPoachedTimestampMs();
+      }
       return updatedReport.build();
     }
   }
@@ -1111,21 +1116,21 @@ public class ReportMutations {
   }
 
   public static class EggsScatteredDateMutation implements ReportMutation {
-    private final int year;
-    private final int month;
-    private final int day;
+    private final Optional<Date> maybeDate;
 
-    public EggsScatteredDateMutation(int year, int month, int day) {
-      this.year = year;
-      this.month = month;
-      this.day = day;
+    public EggsScatteredDateMutation(Optional<Date> maybeDate) {
+      this.maybeDate = maybeDate;
     }
 
     @Override
     public Report apply(Report oldReport) {
       Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getConditionBuilder().setEggsScatteredByAnotherTimestampMs(
-          DateUtil.getTimestampInMs(year, month, day));
+      NestCondition.Builder conditionBuilder = updatedReport.getConditionBuilder();
+      if (maybeDate.isPresent()) {
+        conditionBuilder.setEggsScatteredByAnotherTimestampMs(maybeDate.get().getTimestampMs());
+      } else {
+        conditionBuilder.clearEggsScatteredByAnotherTimestampMs();
+      }
       return updatedReport.build();
     }
   }
@@ -1170,21 +1175,21 @@ public class ReportMutations {
 
   
   public static class WashoutDateMutation implements ReportMutation {
-    private final int year;
-    private final int month;
-    private final int day;
+    private final Optional<Date> maybeDate;
 
-    public WashoutDateMutation(int year, int month, int day) {
-      this.year = year;
-      this.month = month;
-      this.day = day;
+    public WashoutDateMutation(Optional<Date> maybeDate) {
+      this.maybeDate = maybeDate;
     }
 
     @Override
     public Report apply(Report oldReport) {
       Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getConditionBuilder().getWashOutBuilder()
-          .setTimestampMs(DateUtil.getTimestampInMs(year, month, day));
+      WashEvent.Builder washOutBuilder = updatedReport.getConditionBuilder().getWashOutBuilder();
+      if (maybeDate.isPresent()) {
+        washOutBuilder.setTimestampMs(maybeDate.get().getTimestampMs());
+      } else {
+        washOutBuilder.clearTimestampMs();
+      }
       return updatedReport.build();
     }
   }
@@ -1209,15 +1214,11 @@ public class ReportMutations {
   
   public static class WashoverDateMutation implements ReportMutation {
     private final Integer ordinal;
-    private final int year;
-    private final int month;
-    private final int day;
+    private final Optional<Date> maybeDate;
 
-    public WashoverDateMutation(Integer ordinal, int year, int month, int day) {
+    public WashoverDateMutation(Integer ordinal, Optional<Date> maybeDate) {
       this.ordinal = ordinal;
-      this.year = year;
-      this.month = month;
-      this.day = day;
+      this.maybeDate = maybeDate;
     }
 
     @Override
@@ -1228,8 +1229,11 @@ public class ReportMutations {
 
       WashEvent.Builder washOver = (condition.getWashOverCount() <= ordinal) ? condition
           .addWashOverBuilder() : condition.getWashOverBuilder(ordinal);
-      washOver.setTimestampMs(DateUtil.getTimestampInMs(year, month, day));
-
+      if (maybeDate.isPresent()) {
+        washOver.setTimestampMs(maybeDate.get().getTimestampMs());
+      } else {
+        washOver.clearTimestampMs();
+      }
       return updatedReport.build();
     }
   }
@@ -1281,15 +1285,11 @@ public class ReportMutations {
   
   public static class PredationDateMutation implements ReportMutation {
     private final Integer ordinal;
-    private final int year;
-    private final int month;
-    private final int day;
+    Optional<Date> maybeDate;
 
-    public PredationDateMutation(Integer ordinal, int year, int month, int day) {
+    public PredationDateMutation(Integer ordinal, Optional<Date> maybeDate) {
       this.ordinal = ordinal;
-      this.year = year;
-      this.month = month;
-      this.day = day;
+      this.maybeDate = maybeDate;
     }
 
     @Override
@@ -1300,7 +1300,11 @@ public class ReportMutations {
 
       PreditationEvent.Builder preditation = (condition.getPreditationCount() <= ordinal)
           ? condition.addPreditationBuilder() : condition.getPreditationBuilder(ordinal);
-      preditation.setTimestampMs(DateUtil.getTimestampInMs(year, month, day));
+      if(maybeDate.isPresent()) {
+        preditation.setTimestampMs(maybeDate.get().getTimestampMs());
+      } else {
+        preditation.clearTimestampMs();
+      }
 
       return updatedReport.build();
     }

@@ -9,6 +9,7 @@
     <string name="inches_short">in</string>
     <string name="cancel">Cancel</string>
     <string name="accept">Accept</string>
+    <string name="clear">Clear</string>
     
     <string name="action_change_reports">Change Report</string>
     <string name="action_new_report">New Report</string>

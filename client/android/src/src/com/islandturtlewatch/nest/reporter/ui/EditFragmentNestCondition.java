@@ -2,7 +2,6 @@ package com.islandturtlewatch.nest.reporter.ui;
 
 import java.util.Map;
 
-import android.app.DatePickerDialog.OnDateSetListener;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -22,6 +21,7 @@ import com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
+import com.islandturtlewatch.nest.reporter.data.Date;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.DeletePredationMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.DeleteWashOverMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.EggsScatteredMutation;
@@ -40,6 +40,7 @@ import com.islandturtlewatch.nest.reporter.data.ReportMutations.WashoverStormNam
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.EggsScatteredDateMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.VandalismTypeMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.PoachedEggsRemovedMutation;
+import com.islandturtlewatch.nest.reporter.ui.ClearableDatePickerDialog.OnDateSetListener;
 import com.islandturtlewatch.nest.reporter.util.DateUtil;
 
 public class EditFragmentNestCondition extends EditFragment {
@@ -150,10 +151,8 @@ public class EditFragmentNestCondition extends EditFragment {
 
     SimpleDatePickerClickHandler clickHandler = new SimpleDatePickerClickHandler(){
       @Override
-      public void onDateSet(DatePicker view, int year, int monthOfYear,
-          int dayOfMonth) {
-        updateHandler.applyMutation(
-            new WashoverDateMutation(ordinal, year, monthOfYear, dayOfMonth));
+      public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
+        updateHandler.applyMutation(new WashoverDateMutation(ordinal, maybeDate));
       }};
     if (event.hasTimestampMs()) {
       clickHandler.setDate(event.getTimestampMs());
@@ -205,9 +204,9 @@ public class EditFragmentNestCondition extends EditFragment {
         CurrentDatePicker.showOnView(view, new OnDateSetListener() {
           @Override
           public void onDateSet(
-              DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+              DatePicker view, Optional<Date> maybeDate) {
             updateHandler.applyMutation(
-                new PredationDateMutation(ordinal, year, monthOfYear, dayOfMonth));
+                new PredationDateMutation(ordinal, maybeDate));
           }
         });
       }
@@ -288,11 +287,8 @@ public class EditFragmentNestCondition extends EditFragment {
     }
 
     @Override
-    public void onDateSet(DatePicker view,
-        int year,
-        int month,
-        int day) {
-      updateHandler.applyMutation(new WashoutDateMutation(year, month, day));
+    public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
+      updateHandler.applyMutation(new WashoutDateMutation(maybeDate));
     }
   }
   private static class HandleSetVandalizedDate extends DatePickerClickHandler {
@@ -301,11 +297,8 @@ public class EditFragmentNestCondition extends EditFragment {
     }
 
     @Override
-    public void onDateSet(DatePicker view,
-        int year,
-        int month,
-        int day) {
-      updateHandler.applyMutation(new VandalizedDateMutation(year, month, day));
+    public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
+      updateHandler.applyMutation(new VandalizedDateMutation(maybeDate));
     }
   }
   private static class HandleSetPoachedDate extends DatePickerClickHandler {
@@ -314,22 +307,16 @@ public class EditFragmentNestCondition extends EditFragment {
     }
 
     @Override
-    public void onDateSet(DatePicker view,
-        int year,
-        int month,
-        int day) {
-      updateHandler.applyMutation(new PoachedDateMutation(year, month, day));
+    public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
+      updateHandler.applyMutation(new PoachedDateMutation(maybeDate));
     }
   }
   private static class HandleSetEggsScatteredDate extends DatePickerClickHandler {
     protected HandleSetEggsScatteredDate() { super(R.id.buttonDamageEggsScatteredDate); }
 
     @Override
-    public void onDateSet(DatePicker view,
-                          int year,
-                          int month,
-                          int day) {
-      updateHandler.applyMutation(new EggsScatteredDateMutation(year, month, day));
+    public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
+      updateHandler.applyMutation(new EggsScatteredDateMutation(maybeDate));
     }
   }
 

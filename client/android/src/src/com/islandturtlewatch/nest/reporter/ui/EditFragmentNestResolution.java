@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.islandturtlewatch.nest.data.ReportProto.Excavation;
 import com.islandturtlewatch.nest.data.ReportProto.Excavation.ExcavationFailureReason;
@@ -15,6 +16,7 @@ import com.islandturtlewatch.nest.data.ReportProto.NestCondition;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
+import com.islandturtlewatch.nest.reporter.data.Date;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.AdditionalHatchDateMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.DisorentationMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.ExcavationDateMutation;
@@ -148,11 +150,8 @@ public class EditFragmentNestResolution extends EditFragment {
     }
 
     @Override
-    public void onDateSet(DatePicker view,
-        int year,
-        int month,
-        int day) {
-      updateHandler.applyMutation(new HatchDateMutation(year, month, day));
+    public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
+      updateHandler.applyMutation(new HatchDateMutation(maybeDate));
     }
   }
   private static class HandleSetAdditionalHatchDate extends DatePickerClickHandler {
@@ -161,11 +160,8 @@ public class EditFragmentNestResolution extends EditFragment {
     }
 
     @Override
-    public void onDateSet(DatePicker view,
-        int year,
-        int month,
-        int day) {
-      updateHandler.applyMutation(new AdditionalHatchDateMutation(year, month, day));
+    public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
+      updateHandler.applyMutation(new AdditionalHatchDateMutation(maybeDate));
     }
   }
   private static class HandleSetExcavationDate extends DatePickerClickHandler {
@@ -174,11 +170,8 @@ public class EditFragmentNestResolution extends EditFragment {
     }
 
     @Override
-    public void onDateSet(DatePicker view,
-        int year,
-        int month,
-        int day) {
-      updateHandler.applyMutation(new ExcavationDateMutation(year, month, day));
+    public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
+      updateHandler.applyMutation(new ExcavationDateMutation(maybeDate));
     }
   }
 
