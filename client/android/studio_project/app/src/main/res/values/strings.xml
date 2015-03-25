@@ -29,6 +29,7 @@
     <string name="edit_info_label_false_crawl">False Crawl</string>
     <string name="edit_info_label_abandoned_body_pits">Abandoned Body Pits</string>
     <string name="edit_info_label_abandoned_egg_cavities">Abandoned Egg Cavities</string>
+    <string name="edit_info_label_no_digging">No Digging</string>
     <string name="edit_info_label_species">Species</string>
     <string name="edit_info_label_species_loggerhead">Loggerhead</string>
     <string name="edit_info_label_species_green">Green</string>

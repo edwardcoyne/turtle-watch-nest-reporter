@@ -19,6 +19,7 @@ import com.islandturtlewatch.nest.data.ReportProto.Report.Species;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.data.Date;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.NoDiggingMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.AbandonedBodyPitsMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.AbandonedEggCavitiesMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.DateFoundMutation;
@@ -45,7 +46,8 @@ public class EditFragmentInfo extends EditFragment {
           new HandleSetAbandonedEggCavities(),
           new HandleSetSpeciesLoggerHead(),
           new HandleSetSpeciesGreen(),
-          new HandleSetSpeciesOther());
+          new HandleSetSpeciesOther(),
+          new HandleSetNoDigging());
 
   private static final Map<Integer, TextChangeHandler> TEXT_CHANGE_HANDLERS =
       TextChangeHandler.toMap(
@@ -253,6 +255,16 @@ public class EditFragmentInfo extends EditFragment {
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
       updateHandler.applyMutation(new AbandonedEggCavitiesMutation(isChecked(view)));
+    }
+  }
+  private static class HandleSetNoDigging extends ClickHandler {
+    protected HandleSetNoDigging() {
+      super(R.id.fieldNoDigging);
+    }
+
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new NoDiggingMutation(isChecked(view)));
     }
   }
   private static class HandleSetSpeciesLoggerHead extends ClickHandler {

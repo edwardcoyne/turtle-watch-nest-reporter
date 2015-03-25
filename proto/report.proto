@@ -104,8 +104,9 @@ message NestCondition {
   
   optional bool abandoned_body_pits = 13;
   optional bool abandoned_egg_cavities = 14;
+  optional bool no_digging = 18;
 
-  // Next ID=18
+  // Next ID=19
 }
 
 message NestLocation {

@@ -12,7 +12,6 @@ import com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation.City;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation.Placement;
-import com.islandturtlewatch.nest.data.ReportProto.NestLocation.Triangulation;
 import com.islandturtlewatch.nest.data.ReportProto.Relocation;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.Report.NestStatus;
@@ -147,7 +146,6 @@ public class ReportMutations {
     }
   }
 
-  
   public static class AbandonedEggCavitiesMutation implements ReportMutation {
     private final boolean isTrue;
 
@@ -163,102 +161,20 @@ public class ReportMutations {
     }
   }
 
-  
-  public static class TriangulationNorthFtMutation implements ReportMutation {
-    private final Optional<Integer> ft;
+  public static class NoDiggingMutation implements ReportMutation {
+    private final boolean isTrue;
 
-    public TriangulationNorthFtMutation(Optional<Integer> ft) {
-      this.ft = ft;
+    public NoDiggingMutation(boolean isTrue) {
+      this.isTrue = isTrue;
     }
 
     @Override
     public Report apply(Report oldReport) {
       Report.Builder updatedReport = oldReport.toBuilder();
-      Triangulation.Builder triangulation =
-          updatedReport.getLocationBuilder().getTriangulationBuilder();
-
-      if (ft.isPresent()) {
-        triangulation.setNorthFt(ft.get());
-      } else {
-        triangulation.clearNorthFt();
-      }
-
+      updatedReport.getConditionBuilder().setNoDigging(isTrue);
       return updatedReport.build();
     }
   }
-
-  
-  public static class TriangulationNorthInMutation implements ReportMutation {
-    private final Optional<Integer> in;
-
-    public TriangulationNorthInMutation(Optional<Integer> in) {
-      this.in = in;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      Triangulation.Builder triangulation =
-          updatedReport.getLocationBuilder().getTriangulationBuilder();
-
-      if (in.isPresent()) {
-        triangulation.setNorthIn(in.get());
-      } else {
-        triangulation.clearNorthIn();
-      }
-
-      return updatedReport.build();
-    }
-  }
-
-  
-  public static class TriangulationSouthFtMutation implements ReportMutation {
-    private final Optional<Integer> ft;
-
-    public TriangulationSouthFtMutation(Optional<Integer> ft) {
-      this.ft = ft;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      Triangulation.Builder triangulation =
-          updatedReport.getLocationBuilder().getTriangulationBuilder();
-
-      if (ft.isPresent()) {
-        triangulation.setSouthFt(ft.get());
-      } else {
-        triangulation.clearSouthFt();
-      }
-
-      return updatedReport.build();
-    }
-  }
-
-  
-  public static class TriangulationSouthInMutation implements ReportMutation {
-    private final Optional<Integer> in;
-
-    public TriangulationSouthInMutation(Optional<Integer> in) {
-      this.in = in;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      Triangulation.Builder triangulation =
-          updatedReport.getLocationBuilder().getTriangulationBuilder();
-
-      if (in.isPresent()) {
-        triangulation.setSouthIn(in.get());
-      } else {
-        triangulation.clearSouthIn();
-      }
-
-      return updatedReport.build();
-    }
-  }
-
   
   public static class StreetAddressMutation implements ReportMutation {
     private final String address;
@@ -1397,39 +1313,6 @@ public class ReportMutations {
       return updatedReport.build();
     }
   }
-
-  
-  public static class TriangulationNorthMutation implements ReportMutation {
-    private final GpsCoordinates coordinates;
-
-    public TriangulationNorthMutation(GpsCoordinates coordinates) {
-      this.coordinates = coordinates;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getLocationBuilder().getTriangulationBuilder().setNorth(coordinates);
-      return updatedReport.build();
-    }
-  }
-
-  
-  public static class TriangulationSouthMutation implements ReportMutation {
-    private final GpsCoordinates coordinates;
-
-    public TriangulationSouthMutation(GpsCoordinates coordinates) {
-      this.coordinates = coordinates;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getLocationBuilder().getTriangulationBuilder().setSouth(coordinates);
-      return updatedReport.build();
-    }
-  }
-
   
   public static class NewGpsMutation implements ReportMutation {
     private final GpsCoordinates coordinates;

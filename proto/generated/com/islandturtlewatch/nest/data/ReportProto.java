@@ -4796,6 +4796,16 @@ public final class ReportProto {
      * <code>optional bool abandoned_egg_cavities = 14;</code>
      */
     boolean getAbandonedEggCavities();
+
+    // optional bool no_digging = 18;
+    /**
+     * <code>optional bool no_digging = 18;</code>
+     */
+    boolean hasNoDigging();
+    /**
+     * <code>optional bool no_digging = 18;</code>
+     */
+    boolean getNoDigging();
   }
   /**
    * Protobuf type {@code com.islandturtlewatch.nest.data.NestCondition}
@@ -4951,6 +4961,11 @@ public final class ReportProto {
             case 136: {
               bitField0_ |= 0x00000020;
               poachedEggsRemoved_ = input.readBool();
+              break;
+            }
+            case 144: {
+              bitField0_ |= 0x00008000;
+              noDigging_ = input.readBool();
               break;
             }
           }
@@ -6602,6 +6617,22 @@ public final class ReportProto {
       return abandonedEggCavities_;
     }
 
+    // optional bool no_digging = 18;
+    public static final int NO_DIGGING_FIELD_NUMBER = 18;
+    private boolean noDigging_;
+    /**
+     * <code>optional bool no_digging = 18;</code>
+     */
+    public boolean hasNoDigging() {
+      return ((bitField0_ & 0x00008000) == 0x00008000);
+    }
+    /**
+     * <code>optional bool no_digging = 18;</code>
+     */
+    public boolean getNoDigging() {
+      return noDigging_;
+    }
+
     private void initFields() {
       vandalized_ = false;
       vandalizedTimestampMs_ = 0L;
@@ -6620,6 +6651,7 @@ public final class ReportProto {
       disorientation_ = false;
       abandonedBodyPits_ = false;
       abandonedEggCavities_ = false;
+      noDigging_ = false;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -6683,6 +6715,9 @@ public final class ReportProto {
       }
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
         output.writeBool(17, poachedEggsRemoved_);
+      }
+      if (((bitField0_ & 0x00008000) == 0x00008000)) {
+        output.writeBool(18, noDigging_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -6760,6 +6795,10 @@ public final class ReportProto {
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(17, poachedEggsRemoved_);
+      }
+      if (((bitField0_ & 0x00008000) == 0x00008000)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(18, noDigging_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -6926,6 +6965,8 @@ public final class ReportProto {
         bitField0_ = (bitField0_ & ~0x00008000);
         abandonedEggCavities_ = false;
         bitField0_ = (bitField0_ & ~0x00010000);
+        noDigging_ = false;
+        bitField0_ = (bitField0_ & ~0x00020000);
         return this;
       }
 
@@ -7036,6 +7077,10 @@ public final class ReportProto {
           to_bitField0_ |= 0x00004000;
         }
         result.abandonedEggCavities_ = abandonedEggCavities_;
+        if (((from_bitField0_ & 0x00020000) == 0x00020000)) {
+          to_bitField0_ |= 0x00008000;
+        }
+        result.noDigging_ = noDigging_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -7148,6 +7193,9 @@ public final class ReportProto {
         }
         if (other.hasAbandonedEggCavities()) {
           setAbandonedEggCavities(other.getAbandonedEggCavities());
+        }
+        if (other.hasNoDigging()) {
+          setNoDigging(other.getNoDigging());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -8234,6 +8282,39 @@ public final class ReportProto {
       public Builder clearAbandonedEggCavities() {
         bitField0_ = (bitField0_ & ~0x00010000);
         abandonedEggCavities_ = false;
+        onChanged();
+        return this;
+      }
+
+      // optional bool no_digging = 18;
+      private boolean noDigging_ ;
+      /**
+       * <code>optional bool no_digging = 18;</code>
+       */
+      public boolean hasNoDigging() {
+        return ((bitField0_ & 0x00020000) == 0x00020000);
+      }
+      /**
+       * <code>optional bool no_digging = 18;</code>
+       */
+      public boolean getNoDigging() {
+        return noDigging_;
+      }
+      /**
+       * <code>optional bool no_digging = 18;</code>
+       */
+      public Builder setNoDigging(boolean value) {
+        bitField0_ |= 0x00020000;
+        noDigging_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional bool no_digging = 18;</code>
+       */
+      public Builder clearNoDigging() {
+        bitField0_ = (bitField0_ & ~0x00020000);
+        noDigging_ = false;
         onChanged();
         return this;
       }
@@ -16913,7 +16994,7 @@ public final class ReportProto {
       "THER\020\003\"h\n\nNestStatus\022\013\n\007UNKNOWN\020\001\022\021\n\rNES" +
       "T_VERIFIED\020\002\022\025\n\021NEST_NOT_VERIFIED\020\003\022\022\n\016N" +
       "EST_RELOCATED\020\004\022\017\n\013FALSE_CRAWL\020\005\",\n\005Imag" +
-      "e\022\021\n\tfile_name\030\001 \001(\t\022\020\n\010raw_data\030\002 \001(\014\"\304" +
+      "e\022\021\n\tfile_name\030\001 \001(\t\022\020\n\010raw_data\030\002 \001(\014\"\330" +
       "\007\n\rNestCondition\022\022\n\nvandalized\030\001 \001(\010\022\037\n\027",
       "vandalized_timestamp_ms\030\002 \001(\003\022T\n\016vandali" +
       "sm_type\030\017 \001(\0162<.com.islandturtlewatch.ne" +
@@ -16932,77 +17013,78 @@ public final class ReportProto {
       "estamp_ms\030\n \001(\003\022%\n\035additional_hatch_time" +
       "stamp_ms\030\013 \001(\003\022\026\n\016disorientation\030\014 \001(\010\022\033" +
       "\n\023abandoned_body_pits\030\r \001(\010\022\036\n\026abandoned" +
-      "_egg_cavities\030\016 \001(\010\0325\n\tWashEvent\022\024\n\014time" +
-      "stamp_ms\030\001 \001(\003\022\022\n\nstorm_name\030\002 \001(\t\032R\n\020Pr" +
-      "editationEvent\022\024\n\014timestamp_ms\030\001 \001(\003\022\020\n\010",
-      "predator\030\002 \001(\t\022\026\n\016number_of_eggs\030\003 \001(\005\"U" +
-      "\n\rVandalismType\022\n\n\006UNKOWN\020\001\022\022\n\016STAKES_RE" +
-      "MOVED\020\002\022\021\n\rNEST_DUG_INTO\020\003\022\021\n\rEGGS_AFFEC" +
-      "TED\020\004\"\233\010\n\014NestLocation\022\026\n\016street_address" +
-      "\030\001 \001(\t\022\017\n\007section\030\002 \001(\005\022\017\n\007details\030\003 \001(\t" +
-      "\022@\n\004city\030\004 \001(\01622.com.islandturtlewatch.n" +
-      "est.data.NestLocation.City\022J\n\tplacement\030" +
-      "\005 \001(\01627.com.islandturtlewatch.nest.data." +
-      "NestLocation.Placement\022T\n\014obstructions\030\006" +
-      " \001(\0132>.com.islandturtlewatch.nest.data.N",
-      "estLocation.NestObstructions\022\032\n\022apex_to_" +
-      "barrier_ft\030\007 \001(\005\022\032\n\022apex_to_barrier_in\030\010" +
-      " \001(\005\022\030\n\020water_to_apex_ft\030\t \001(\005\022\030\n\020water_" +
-      "to_apex_in\030\n \001(\005\022D\n\013coordinates\030\013 \001(\0132/." +
-      "com.islandturtlewatch.nest.data.GpsCoord" +
-      "inates\022R\n\rtriangulation\030\014 \001(\0132;.com.isla" +
-      "ndturtlewatch.nest.data.NestLocation.Tri" +
-      "angulation\032_\n\020NestObstructions\022\025\n\rseawal" +
-      "l_rocks\030\001 \001(\010\022\021\n\tfurniture\030\002 \001(\010\022\022\n\nesca" +
-      "rpment\030\003 \001(\010\022\r\n\005other\030\004 \001(\t\032\327\001\n\rTriangul",
-      "ation\022>\n\005north\030\001 \001(\0132/.com.islandturtlew" +
-      "atch.nest.data.GpsCoordinates\022\020\n\010north_f" +
-      "t\030\003 \001(\005\022\020\n\010north_in\030\004 \001(\005\022>\n\005south\030\002 \001(\013" +
+      "_egg_cavities\030\016 \001(\010\022\022\n\nno_digging\030\022 \001(\010\032" +
+      "5\n\tWashEvent\022\024\n\014timestamp_ms\030\001 \001(\003\022\022\n\nst" +
+      "orm_name\030\002 \001(\t\032R\n\020PreditationEvent\022\024\n\014ti",
+      "mestamp_ms\030\001 \001(\003\022\020\n\010predator\030\002 \001(\t\022\026\n\016nu" +
+      "mber_of_eggs\030\003 \001(\005\"U\n\rVandalismType\022\n\n\006U" +
+      "NKOWN\020\001\022\022\n\016STAKES_REMOVED\020\002\022\021\n\rNEST_DUG_" +
+      "INTO\020\003\022\021\n\rEGGS_AFFECTED\020\004\"\233\010\n\014NestLocati" +
+      "on\022\026\n\016street_address\030\001 \001(\t\022\017\n\007section\030\002 " +
+      "\001(\005\022\017\n\007details\030\003 \001(\t\022@\n\004city\030\004 \001(\01622.com" +
+      ".islandturtlewatch.nest.data.NestLocatio" +
+      "n.City\022J\n\tplacement\030\005 \001(\01627.com.islandtu" +
+      "rtlewatch.nest.data.NestLocation.Placeme" +
+      "nt\022T\n\014obstructions\030\006 \001(\0132>.com.islandtur",
+      "tlewatch.nest.data.NestLocation.NestObst" +
+      "ructions\022\032\n\022apex_to_barrier_ft\030\007 \001(\005\022\032\n\022" +
+      "apex_to_barrier_in\030\010 \001(\005\022\030\n\020water_to_ape" +
+      "x_ft\030\t \001(\005\022\030\n\020water_to_apex_in\030\n \001(\005\022D\n\013" +
+      "coordinates\030\013 \001(\0132/.com.islandturtlewatc" +
+      "h.nest.data.GpsCoordinates\022R\n\rtriangulat" +
+      "ion\030\014 \001(\0132;.com.islandturtlewatch.nest.d" +
+      "ata.NestLocation.Triangulation\032_\n\020NestOb" +
+      "structions\022\025\n\rseawall_rocks\030\001 \001(\010\022\021\n\tfur" +
+      "niture\030\002 \001(\010\022\022\n\nescarpment\030\003 \001(\010\022\r\n\005othe",
+      "r\030\004 \001(\t\032\327\001\n\rTriangulation\022>\n\005north\030\001 \001(\013" +
       "2/.com.islandturtlewatch.nest.data.GpsCo" +
-      "ordinates\022\020\n\010south_ft\030\005 \001(\005\022\020\n\010south_in\030" +
-      "\006 \001(\005\".\n\004City\022\016\n\nUNSET_CITY\020\001\022\006\n\002AM\020\002\022\006\n" +
-      "\002BB\020\003\022\006\n\002HB\020\004\"|\n\tPlacement\022\023\n\017UNSET_PLAC" +
-      "EMENT\020\001\022\016\n\nOPEN_BEACH\020\002\022\021\n\rIN_VEGITATION" +
-      "\020\003\022\021\n\rAT_VEGITATION\020\004\022\021\n\rAT_ESCARPMENT\020\005" +
-      "\022\021\n\rON_ESCARPMENT\020\006\"\217\005\n\014Intervention\022W\n\020",
-      "protection_event\030\001 \001(\0132=.com.islandturtl" +
-      "ewatch.nest.data.Intervention.Protection" +
-      "Event\022?\n\nrelocation\030\002 \001(\0132+.com.islandtu" +
-      "rtlewatch.nest.data.Relocation\022?\n\nexcava" +
-      "tion\030\003 \001(\0132+.com.islandturtlewatch.nest." +
-      "data.Excavation\022\017\n\007adopted\030\004 \001(\010\032\222\003\n\017Pro" +
-      "tectionEvent\022\024\n\014timestamp_ms\030\001 \001(\003\022P\n\004ty" +
-      "pe\030\002 \001(\0162B.com.islandturtlewatch.nest.da" +
-      "ta.Intervention.ProtectionEvent.Type\022T\n\006" +
-      "reason\030\003 \001(\0162D.com.islandturtlewatch.nes",
-      "t.data.Intervention.ProtectionEvent.Reas" +
-      "on\"^\n\004Type\022\016\n\nUNSET_TYPE\020\001\022\027\n\023SELF_RELEA" +
-      "SING_CAGE\020\002\022\027\n\023SELF_RELEASING_FLAT\020\003\022\024\n\020" +
-      "RESTRAINING_CAGE\020\004\"a\n\006Reason\022\020\n\014UNSET_RE" +
-      "ASON\020\001\022\026\n\022BEFORE_PREDITATION\020\002\022\025\n\021AFTER_" +
-      "PREDITATION\020\003\022\026\n\022FOR_LIGHT_PROBLEMS\020\004\"\265\003" +
-      "\n\nExcavation\022\024\n\014timestamp_ms\030\001 \001(\003\022\021\n\tex" +
-      "cavated\030\002 \001(\010\022[\n\016failure_reason\030\003 \001(\0162C." +
-      "com.islandturtlewatch.nest.data.Excavati" +
-      "on.ExcavationFailureReason\022\025\n\rfailure_ot",
-      "her\030\004 \001(\t\022\024\n\014dead_in_nest\030\005 \001(\005\022\024\n\014live_" +
-      "in_nest\030\006 \001(\005\022\026\n\016hatched_shells\030\007 \001(\005\022\023\n" +
-      "\013dead_pipped\030\010 \001(\005\022\023\n\013live_pipped\030\t \001(\005\022" +
-      "\027\n\017whole_unhatched\030\n \001(\005\022\026\n\016eggs_destroy" +
-      "ed\030\013 \001(\005\"k\n\027ExcavationFailureReason\022\020\n\014U" +
-      "NSET_REASON\020\001\022\022\n\016EGGS_NOT_FOUND\020\002\022\037\n\033EGG" +
-      "S_HATCHLINGS_TOO_DECAYED\020\003\022\t\n\005OTHER\020\004\"\364\002" +
-      "\n\nRelocation\022\025\n\rwas_relocated\030\001 \001(\010\022\024\n\014t" +
-      "imestamp_ms\030\002 \001(\003\022\023\n\013new_address\030\003 \001(\t\022D" +
-      "\n\013coordinates\030\004 \001(\0132/.com.islandturtlewa",
-      "tch.nest.data.GpsCoordinates\022\026\n\016eggs_rel" +
-      "ocated\030\005 \001(\005\022\026\n\016eggs_destroyed\030\006 \001(\005\022B\n\006" +
-      "reason\030\013 \001(\01622.com.islandturtlewatch.nes" +
-      "t.data.Relocation.Reason\"j\n\006Reason\022\020\n\014UN" +
-      "SET_REASON\020\001\022\016\n\nHIGH_WATER\020\002\022\r\n\tPREDATIO" +
-      "N\020\003\022\017\n\013WASHING_OUT\020\004\022\036\n\032CONSTRUCTION_REN" +
-      "OURISHMENT\020\005\"+\n\016GpsCoordinates\022\013\n\003lat\030\001 " +
-      "\001(\001\022\014\n\004long\030\002 \001(\001B\rB\013ReportProto"
+      "ordinates\022\020\n\010north_ft\030\003 \001(\005\022\020\n\010north_in\030" +
+      "\004 \001(\005\022>\n\005south\030\002 \001(\0132/.com.islandturtlew" +
+      "atch.nest.data.GpsCoordinates\022\020\n\010south_f" +
+      "t\030\005 \001(\005\022\020\n\010south_in\030\006 \001(\005\".\n\004City\022\016\n\nUNS" +
+      "ET_CITY\020\001\022\006\n\002AM\020\002\022\006\n\002BB\020\003\022\006\n\002HB\020\004\"|\n\tPla" +
+      "cement\022\023\n\017UNSET_PLACEMENT\020\001\022\016\n\nOPEN_BEAC" +
+      "H\020\002\022\021\n\rIN_VEGITATION\020\003\022\021\n\rAT_VEGITATION\020" +
+      "\004\022\021\n\rAT_ESCARPMENT\020\005\022\021\n\rON_ESCARPMENT\020\006\"",
+      "\217\005\n\014Intervention\022W\n\020protection_event\030\001 \001" +
+      "(\0132=.com.islandturtlewatch.nest.data.Int" +
+      "ervention.ProtectionEvent\022?\n\nrelocation\030" +
+      "\002 \001(\0132+.com.islandturtlewatch.nest.data." +
+      "Relocation\022?\n\nexcavation\030\003 \001(\0132+.com.isl" +
+      "andturtlewatch.nest.data.Excavation\022\017\n\007a" +
+      "dopted\030\004 \001(\010\032\222\003\n\017ProtectionEvent\022\024\n\014time" +
+      "stamp_ms\030\001 \001(\003\022P\n\004type\030\002 \001(\0162B.com.islan" +
+      "dturtlewatch.nest.data.Intervention.Prot" +
+      "ectionEvent.Type\022T\n\006reason\030\003 \001(\0162D.com.i",
+      "slandturtlewatch.nest.data.Intervention." +
+      "ProtectionEvent.Reason\"^\n\004Type\022\016\n\nUNSET_" +
+      "TYPE\020\001\022\027\n\023SELF_RELEASING_CAGE\020\002\022\027\n\023SELF_" +
+      "RELEASING_FLAT\020\003\022\024\n\020RESTRAINING_CAGE\020\004\"a" +
+      "\n\006Reason\022\020\n\014UNSET_REASON\020\001\022\026\n\022BEFORE_PRE" +
+      "DITATION\020\002\022\025\n\021AFTER_PREDITATION\020\003\022\026\n\022FOR" +
+      "_LIGHT_PROBLEMS\020\004\"\265\003\n\nExcavation\022\024\n\014time" +
+      "stamp_ms\030\001 \001(\003\022\021\n\texcavated\030\002 \001(\010\022[\n\016fai" +
+      "lure_reason\030\003 \001(\0162C.com.islandturtlewatc" +
+      "h.nest.data.Excavation.ExcavationFailure",
+      "Reason\022\025\n\rfailure_other\030\004 \001(\t\022\024\n\014dead_in" +
+      "_nest\030\005 \001(\005\022\024\n\014live_in_nest\030\006 \001(\005\022\026\n\016hat" +
+      "ched_shells\030\007 \001(\005\022\023\n\013dead_pipped\030\010 \001(\005\022\023" +
+      "\n\013live_pipped\030\t \001(\005\022\027\n\017whole_unhatched\030\n" +
+      " \001(\005\022\026\n\016eggs_destroyed\030\013 \001(\005\"k\n\027Excavati" +
+      "onFailureReason\022\020\n\014UNSET_REASON\020\001\022\022\n\016EGG" +
+      "S_NOT_FOUND\020\002\022\037\n\033EGGS_HATCHLINGS_TOO_DEC" +
+      "AYED\020\003\022\t\n\005OTHER\020\004\"\364\002\n\nRelocation\022\025\n\rwas_" +
+      "relocated\030\001 \001(\010\022\024\n\014timestamp_ms\030\002 \001(\003\022\023\n" +
+      "\013new_address\030\003 \001(\t\022D\n\013coordinates\030\004 \001(\0132",
+      "/.com.islandturtlewatch.nest.data.GpsCoo" +
+      "rdinates\022\026\n\016eggs_relocated\030\005 \001(\005\022\026\n\016eggs" +
+      "_destroyed\030\006 \001(\005\022B\n\006reason\030\013 \001(\01622.com.i" +
+      "slandturtlewatch.nest.data.Relocation.Re" +
+      "ason\"j\n\006Reason\022\020\n\014UNSET_REASON\020\001\022\016\n\nHIGH" +
+      "_WATER\020\002\022\r\n\tPREDATION\020\003\022\017\n\013WASHING_OUT\020\004" +
+      "\022\036\n\032CONSTRUCTION_RENOURISHMENT\020\005\"+\n\016GpsC" +
+      "oordinates\022\013\n\003lat\030\001 \001(\001\022\014\n\004long\030\002 \001(\001B\rB" +
+      "\013ReportProto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -17038,7 +17120,7 @@ public final class ReportProto {
           internal_static_com_islandturtlewatch_nest_data_NestCondition_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_islandturtlewatch_nest_data_NestCondition_descriptor,
-              new java.lang.String[] { "Vandalized", "VandalizedTimestampMs", "VandalismType", "Poached", "PoachedTimestampMs", "PoachedEggsRemoved", "RootsInvadedEggshells", "EggsScatteredByAnother", "EggsScatteredByAnotherTimestampMs", "WashOver", "WashOut", "Preditation", "HatchTimestampMs", "AdditionalHatchTimestampMs", "Disorientation", "AbandonedBodyPits", "AbandonedEggCavities", });
+              new java.lang.String[] { "Vandalized", "VandalizedTimestampMs", "VandalismType", "Poached", "PoachedTimestampMs", "PoachedEggsRemoved", "RootsInvadedEggshells", "EggsScatteredByAnother", "EggsScatteredByAnotherTimestampMs", "WashOver", "WashOut", "Preditation", "HatchTimestampMs", "AdditionalHatchTimestampMs", "Disorientation", "AbandonedBodyPits", "AbandonedEggCavities", "NoDigging", });
           internal_static_com_islandturtlewatch_nest_data_NestCondition_WashEvent_descriptor =
             internal_static_com_islandturtlewatch_nest_data_NestCondition_descriptor.getNestedTypes().get(0);
           internal_static_com_islandturtlewatch_nest_data_NestCondition_WashEvent_fieldAccessorTable = new

@@ -29,12 +29,6 @@ import com.islandturtlewatch.nest.reporter.data.ReportMutations.ObstructionsOthe
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.ObstructionsSeawallRocksMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.PlacementMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.StreetAddressMutation;
-import com.islandturtlewatch.nest.reporter.data.ReportMutations.TriangulationNorthFtMutation;
-import com.islandturtlewatch.nest.reporter.data.ReportMutations.TriangulationNorthInMutation;
-import com.islandturtlewatch.nest.reporter.data.ReportMutations.TriangulationNorthMutation;
-import com.islandturtlewatch.nest.reporter.data.ReportMutations.TriangulationSouthFtMutation;
-import com.islandturtlewatch.nest.reporter.data.ReportMutations.TriangulationSouthInMutation;
-import com.islandturtlewatch.nest.reporter.data.ReportMutations.TriangulationSouthMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.WaterToApexFtMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.WaterToApexInMutation;
 import com.islandturtlewatch.nest.reporter.ui.GpsCoordinateDialog.GpsLocationCallback;
@@ -56,16 +50,10 @@ public class EditFragmentNestLocation extends EditFragment {
           new HandleSetCityAM(),
           new HandleSetCityHB(),
           new HandleSetCityBB(),
-          new HandleSetGps(),
-          new HandleSetTriganulationNorth(),
-          new HandleSetTriganulationSouth());
+          new HandleSetGps());
 
   private static final Map<Integer, TextChangeHandler> TEXT_CHANGE_HANDLERS =
       TextChangeHandler.toMap(
-          new HandleUpdateTriangulationNorthFt(),
-          new HandleUpdateTriangulationNorthIn(),
-          new HandleUpdateTriangulationSouthFt(),
-          new HandleUpdateTriangulationSouthIn(),
           new HandleUpdateAddress(),
           new HandleUpdateDetails(),
           new HandleUpdateApexToBarrierFt(),
@@ -101,27 +89,6 @@ public class EditFragmentNestLocation extends EditFragment {
       setText(R.id.buttonGps, getString(R.string.edit_nest_location_button_gps));
     }
 
-    Triangulation triangulation = location.getTriangulation();
-    if (triangulation.hasNorth()) {
-      setText(R.id.buttonGpsNorth, GpsUtil.format(triangulation.getNorth()));
-    } else {
-      setText(R.id.buttonGpsNorth, getString(R.string.edit_nest_location_button_gps));
-    }
-    setText(R.id.fieldTriangulationNorthFt, triangulation.hasNorthFt() ?
-        Integer.toString(triangulation.getNorthFt()) : "");
-    setText(R.id.fieldTriangulationNorthIn, triangulation.hasNorthIn() ?
-        Integer.toString(triangulation.getNorthIn()) : "");
-
-    if (triangulation.hasSouth()) {
-      setText(R.id.buttonGpsSouth, GpsUtil.format(triangulation.getSouth()));
-    } else {
-      setText(R.id.buttonGpsSouth, getString(R.string.edit_nest_location_button_gps));
-    }
-    setText(R.id.fieldTriangulationSouthFt, triangulation.hasSouthFt() ?
-        Integer.toString(triangulation.getSouthFt()) : "");
-    setText(R.id.fieldTriangulationSouthIn, triangulation.hasSouthIn() ?
-        Integer.toString(triangulation.getSouthIn()) : "");
-
     setText(R.id.fieldAddress, location.hasStreetAddress() ?
         location.getStreetAddress() : "");
     setChecked(R.id.fieldLocationAM, location.getCity() == City.AM);
@@ -152,50 +119,6 @@ public class EditFragmentNestLocation extends EditFragment {
     setChecked(R.id.fieldObstructionsEscarpment, location.getObstructions().getEscarpment());
     setText(R.id.fieldObstructionsOther, location.getObstructions().hasOther() ?
         location.getObstructions().getOther() : "");
-  }
-
-  private static class HandleUpdateTriangulationNorthFt extends TextChangeHandler {
-    protected HandleUpdateTriangulationNorthFt() {
-      super(R.id.fieldTriangulationNorthFt);
-    }
-
-    @Override
-    public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(new TriangulationNorthFtMutation(getInteger(newText)));
-    }
-  }
-
-  private static class HandleUpdateTriangulationNorthIn extends TextChangeHandler {
-    protected HandleUpdateTriangulationNorthIn() {
-      super(R.id.fieldTriangulationNorthIn);
-    }
-
-    @Override
-    public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(new TriangulationNorthInMutation(getInteger(newText)));
-    }
-  }
-
-  private static class HandleUpdateTriangulationSouthFt extends TextChangeHandler {
-    protected HandleUpdateTriangulationSouthFt() {
-      super(R.id.fieldTriangulationSouthFt);
-    }
-
-    @Override
-    public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(new TriangulationSouthFtMutation(getInteger(newText)));
-    }
-  }
-
-  private static class HandleUpdateTriangulationSouthIn extends TextChangeHandler {
-    protected HandleUpdateTriangulationSouthIn() {
-      super(R.id.fieldTriangulationSouthIn);
-    }
-
-    @Override
-    public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(new TriangulationSouthInMutation(getInteger(newText)));
-    }
   }
 
   private static class HandleUpdateAddress extends TextChangeHandler {
@@ -415,46 +338,6 @@ public class EditFragmentNestLocation extends EditFragment {
 
       dialog.show(((Activity)view.getContext()).getFragmentManager(), "GPS");
 
-    }
-  }
-
-  private static class HandleSetTriganulationNorth extends ClickHandler {
-    protected HandleSetTriganulationNorth() {
-      super(R.id.buttonGpsNorth);
-    }
-
-    @Override
-    public void handleClick(View view, final DataUpdateHandler updateHandler) {
-      GpsCoordinateDialog dialog = new GpsCoordinateDialog();
-      Preconditions.checkArgument(view.getContext() instanceof Activity);
-      dialog.setCallback(new GpsLocationCallback() {
-        @Override
-        public void location(GpsCoordinates coordinates) {
-          updateHandler.applyMutation(new TriangulationNorthMutation(coordinates));
-        }
-      });
-
-      dialog.show(((Activity)view.getContext()).getFragmentManager(), "GPS");
-    }
-  }
-
-  private static class HandleSetTriganulationSouth extends ClickHandler {
-    protected HandleSetTriganulationSouth() {
-      super(R.id.buttonGpsSouth);
-    }
-
-    @Override
-    public void handleClick(View view, final DataUpdateHandler updateHandler) {
-      GpsCoordinateDialog dialog = new GpsCoordinateDialog();
-      Preconditions.checkArgument(view.getContext() instanceof Activity);
-      dialog.setCallback(new GpsLocationCallback() {
-        @Override
-        public void location(GpsCoordinates coordinates) {
-          updateHandler.applyMutation(new TriangulationSouthMutation(coordinates));
-        }
-      });
-
-      dialog.show(((Activity)view.getContext()).getFragmentManager(), "GPS");
     }
   }
 }

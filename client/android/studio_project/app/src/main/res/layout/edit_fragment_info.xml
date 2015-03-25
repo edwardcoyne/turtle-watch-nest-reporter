@@ -152,6 +152,18 @@
 	           android:text="@string/edit_info_label_abandoned_egg_cavities"
 	           android:onClick="handleClick" />
 	   </TableRow>
+        <TableRow
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+            <CheckBox
+                android:id="@+id/fieldNoDigging"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/edit_info_label_no_digging"
+                android:onClick="handleClick" />
+        </TableRow>
 	   <TableRow
          android:layout_width="wrap_content"
          android:layout_height="wrap_content" >
