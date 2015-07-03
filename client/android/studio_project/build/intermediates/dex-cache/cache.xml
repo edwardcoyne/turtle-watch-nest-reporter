@@ -2,13 +2,6 @@
 <items version="2" >
 
     <item
-        jar="/Users/edcoyne/code/repo/client/android/studio_project/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="686344a780033e4ba22b926cd225f8d4941247e6">
-        <dex dex="/Users/edcoyne/code/repo/client/android/studio_project/app/build/intermediates/pre-dexed/debug/classes-a79669123eee00cbec4ba5f7089f0edc32d9f75d.jar" />
-    </item>
-    <item
         jar="/Users/edcoyne/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/1.3.9/40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf/jsr305-1.3.9.jar"
         jumboMode="false"
         revision="21.1.2"
@@ -21,20 +14,6 @@
         revision="21.1.2"
         sha1="f6c3aed1cdfa21b5c1737c915186ea93a95a58bd">
         <dex dex="/Users/edcoyne/code/repo/client/android/studio_project/app/build/intermediates/pre-dexed/debug/jackson-core-2.1.3-0f4368a54adc1675fa7e3113c2a7f1fe35c68180.jar" />
-    </item>
-    <item
-        jar="/Users/edcoyne/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/15.0/ed727a8d9f247e2050281cb083f1c77b09dcb5cd/guava-15.0.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="ed727a8d9f247e2050281cb083f1c77b09dcb5cd">
-        <dex dex="/Users/edcoyne/code/repo/client/android/studio_project/app/build/intermediates/pre-dexed/debug/guava-15.0-ba57ac29fb5d145be4b342fd1c29b61fa5af4e50.jar" />
-    </item>
-    <item
-        jar="/Users/edcoyne/code/turtlewatch/client/android/studio_project/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
-        <dex dex="/Users/edcoyne/code/turtlewatch/client/android/studio_project/app/build/intermediates/pre-dexed/debug/classes-218dba980336d80fb19eb8fd8b9ba2944aea537a.jar" />
     </item>
     <item
         jar="/Users/edcoyne/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpmime/4.4/54646f004d5b4c37a5a75b1d416c59a3075204e2/httpmime-4.4.jar"
@@ -58,32 +37,11 @@
         <dex dex="/Users/edcoyne/code/repo/client/android/studio_project/app/build/intermediates/pre-dexed/debug/google-http-client-android-1.19.0-e003e54471cd8b3db476e8fb3e0e284fd2aabb54.jar" />
     </item>
     <item
-        jar="/Users/edcoyne/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client/1.19.0/cdca49ad0977c040f603478aa2e16b2775c8fec6/google-http-client-1.19.0.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="cdca49ad0977c040f603478aa2e16b2775c8fec6">
-        <dex dex="/Users/edcoyne/code/repo/client/android/studio_project/app/build/intermediates/pre-dexed/debug/google-http-client-1.19.0-1205a61bdb1ef221c0d57171f032add40512accf.jar" />
-    </item>
-    <item
         jar="/Users/edcoyne/.gradle/caches/modules-2/files-2.1/com.google.protobuf/protobuf-java/2.5.0/a10732c76bfacdbd633a7eb0f7968b1059a65dfa/protobuf-java-2.5.0.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="a10732c76bfacdbd633a7eb0f7968b1059a65dfa">
         <dex dex="/Users/edcoyne/code/repo/client/android/studio_project/app/build/intermediates/pre-dexed/debug/protobuf-java-2.5.0-d46f392b7c6789da2c6f168cb7b6b3e732e3f6e1.jar" />
-    </item>
-    <item
-        jar="/Users/edcoyne/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-gson/1.19.0/b3cdefb990d5212bb2a130525b20e2c44aeffc4c/google-http-client-gson-1.19.0.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="b3cdefb990d5212bb2a130525b20e2c44aeffc4c">
-        <dex dex="/Users/edcoyne/code/repo/client/android/studio_project/app/build/intermediates/pre-dexed/debug/google-http-client-gson-1.19.0-f21c09f11bc4ce13280c543224bb80c053cfff45.jar" />
-    </item>
-    <item
-        jar="/Users/edcoyne/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient-android/4.3.5/82edcaec6c7b4599eaeaaf11167ceea41db42f33/httpclient-android-4.3.5.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="82edcaec6c7b4599eaeaaf11167ceea41db42f33">
-        <dex dex="/Users/edcoyne/code/turtlewatch/client/android/studio_project/app/build/intermediates/pre-dexed/debug/httpclient-android-4.3.5-6a8ad8f1f82588506949376f18a9285bf4fab6f6.jar" />
     </item>
     <item
         jar="/Users/edcoyne/code/turtlewatch/client/android/studio_project/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
@@ -121,13 +79,6 @@
         <dex dex="/Users/edcoyne/code/turtlewatch/client/android/studio_project/app/build/intermediates/pre-dexed/debug/jackson-core-2.1.3-2873fc4ad04059418b895f5e264aed620d075641.jar" />
     </item>
     <item
-        jar="/Users/edcoyne/code/turtlewatch/client/android/studio_project/app/libs/jsr305-1.3.9.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf">
-        <dex dex="/Users/edcoyne/code/turtlewatch/client/android/studio_project/app/build/intermediates/pre-dexed/debug/jsr305-1.3.9-1c042daabaf6e024092e3cc113377afd92fe731e.jar" />
-    </item>
-    <item
         jar="/Users/edcoyne/code/repo/client/android/studio_project/app/libs/google-api-client-android-1.18.0-rc.jar"
         jumboMode="false"
         revision="21.1.2"
@@ -142,46 +93,11 @@
         <dex dex="/Users/edcoyne/code/turtlewatch/client/android/studio_project/app/build/intermediates/pre-dexed/debug/google-api-client-android-1.19.0-76c9d60b67f2cfbcbc150d14a07fb691b44c8a3d.jar" />
     </item>
     <item
-        jar="/Users/edcoyne/code/repo/client/android/studio_project/app/libs/google-oauth-client-1.18.0-rc.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="84bb5a223e42a5ba974ad51c9712253e662aa1bb">
-        <dex dex="/Users/edcoyne/code/repo/client/android/studio_project/app/build/intermediates/pre-dexed/debug/google-oauth-client-1.18.0-rc-b95bd9a28ac7606d8faf9538b9da7362191d9b40.jar" />
-    </item>
-    <item
         jar="/Users/edcoyne/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-jackson2/1.19.0/81dbf9795d387d5e80e55346582d5f2fb81a42eb/google-http-client-jackson2-1.19.0.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="81dbf9795d387d5e80e55346582d5f2fb81a42eb">
         <dex dex="/Users/edcoyne/code/turtlewatch/client/android/studio_project/app/build/intermediates/pre-dexed/debug/google-http-client-jackson2-1.19.0-f01e3b77d88b942cd335b4860dacb724f1278a32.jar" />
-    </item>
-    <item
-        jar="/Users/edcoyne/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpmime/4.3.5/1dd0d38df9c6d21e893f2e52403f1cd99e91cd81/httpmime-4.3.5.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="1dd0d38df9c6d21e893f2e52403f1cd99e91cd81">
-        <dex dex="/Users/edcoyne/code/turtlewatch/client/android/studio_project/app/build/intermediates/pre-dexed/debug/httpmime-4.3.5-0fe01e1a76eef871645ff5e07d124d87c259fc7a.jar" />
-    </item>
-    <item
-        jar="/Users/edcoyne/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client/1.19.0/6a21277d9bebe267b7ddee028b241eebc756c040/google-api-client-1.19.0.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="6a21277d9bebe267b7ddee028b241eebc756c040">
-        <dex dex="/Users/edcoyne/code/turtlewatch/client/android/studio_project/app/build/intermediates/pre-dexed/debug/google-api-client-1.19.0-7292373aa0ad269ffd63523c3730c06629aa3474.jar" />
-    </item>
-    <item
-        jar="/Users/edcoyne/code/repo/client/android/studio_project/app/libs/google-api-client-1.18.0-rc.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="15feacc39aa29e06a63bf9041c6e5898f06bade9">
-        <dex dex="/Users/edcoyne/code/repo/client/android/studio_project/app/build/intermediates/pre-dexed/debug/google-api-client-1.18.0-rc-e6b689b69899079e659de41bf2383d99b4aff315.jar" />
-    </item>
-    <item
-        jar="/Users/edcoyne/code/repo/client/android/studio_project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/6.5.87/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="79f08023cdb55c703b101d651b5c472cfcecf6e9">
-        <dex dex="/Users/edcoyne/code/repo/client/android/studio_project/app/build/intermediates/pre-dexed/debug/classes-d7d467fca196e1e6beed4ecfb8eec8cbbc27e2b4.jar" />
     </item>
     <item
         jar="/Users/edcoyne/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.0/support-annotations-21.0.0.jar"
@@ -198,18 +114,116 @@
         <dex dex="/Users/edcoyne/code/turtlewatch/client/android/studio_project/app/build/intermediates/pre-dexed/debug/guava-18.0-2d092147cb496183438cbf80c02a88ac8553beee.jar" />
     </item>
     <item
-        jar="/Users/edcoyne/code/repo/client/android/studio_project/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0/libs/internal_impl-21.0.0.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="1609e6d42d0480b0f4188e2c29f75388fa12a8f0">
-        <dex dex="/Users/edcoyne/code/repo/client/android/studio_project/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.0-56424a2cb0081df9121f6336cb50519eb3e570cc.jar" />
-    </item>
-    <item
         jar="/Users/edcoyne/code/repo/client/android/studio_project/app/libs/islandturtlewatch.com-imageEndpoint-v1-20140625054013-java-1.18.0-rc-sources.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="878c4225d21dcb55a8a51d1261611f1c077a9e54">
         <dex dex="/Users/edcoyne/code/repo/client/android/studio_project/app/build/intermediates/pre-dexed/debug/islandturtlewatch.com-imageEndpoint-v1-20140625054013-java-1.18.0-rc-sources-1d62bee04e6b2fd3c5a95ebd6a3f456a85a76a2e.jar" />
+    </item>
+    <item
+        jar="/Users/edcoyne/code/repo/client/android/studio_project/app/libs/islandturtlewatch.com-reportEndpoint-v1-20140625054007-java-1.18.0-rc-sources.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="7268336e94ebeb6e797e0eef104aa1fee8ce922c">
+        <dex dex="/Users/edcoyne/code/repo/client/android/studio_project/app/build/intermediates/pre-dexed/debug/islandturtlewatch.com-reportEndpoint-v1-20140625054007-java-1.18.0-rc-sources-f211b3cd342360946203105ff4341bab5248d26f.jar" />
+    </item>
+    <item
+        jar="/Users/edcoyne/code/turtlewatch/client/android/studio_project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/6.5.87/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="95482e7c792a7c0d5a9d5461e97726bd54fe9549">
+        <dex dex="/Users/edcoyne/code/turtlewatch/client/android/studio_project/app/build/intermediates/pre-dexed/debug/classes-0e9ee426dcd9344f45f9949a0c3962320a4777ea.jar" />
+    </item>
+    <item
+        jar="/Users/edcoyne/code/repo/client/android/studio_project/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="686344a780033e4ba22b926cd225f8d4941247e6">
+        <dex dex="/Users/edcoyne/code/repo/client/android/studio_project/app/build/intermediates/pre-dexed/debug/classes-a79669123eee00cbec4ba5f7089f0edc32d9f75d.jar" />
+    </item>
+    <item
+        jar="/Users/edcoyne/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/15.0/ed727a8d9f247e2050281cb083f1c77b09dcb5cd/guava-15.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="ed727a8d9f247e2050281cb083f1c77b09dcb5cd">
+        <dex dex="/Users/edcoyne/code/repo/client/android/studio_project/app/build/intermediates/pre-dexed/debug/guava-15.0-ba57ac29fb5d145be4b342fd1c29b61fa5af4e50.jar" />
+    </item>
+    <item
+        jar="/Users/edcoyne/code/turtlewatch/client/android/studio_project/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="/Users/edcoyne/code/turtlewatch/client/android/studio_project/app/build/intermediates/pre-dexed/debug/classes-218dba980336d80fb19eb8fd8b9ba2944aea537a.jar" />
+    </item>
+    <item
+        jar="/Users/edcoyne/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client/1.19.0/cdca49ad0977c040f603478aa2e16b2775c8fec6/google-http-client-1.19.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="cdca49ad0977c040f603478aa2e16b2775c8fec6">
+        <dex dex="/Users/edcoyne/code/repo/client/android/studio_project/app/build/intermediates/pre-dexed/debug/google-http-client-1.19.0-1205a61bdb1ef221c0d57171f032add40512accf.jar" />
+    </item>
+    <item
+        jar="/Users/edcoyne/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient-android/4.3.5/82edcaec6c7b4599eaeaaf11167ceea41db42f33/httpclient-android-4.3.5.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="82edcaec6c7b4599eaeaaf11167ceea41db42f33">
+        <dex dex="/Users/edcoyne/code/turtlewatch/client/android/studio_project/app/build/intermediates/pre-dexed/debug/httpclient-android-4.3.5-6a8ad8f1f82588506949376f18a9285bf4fab6f6.jar" />
+    </item>
+    <item
+        jar="/Users/edcoyne/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-gson/1.19.0/b3cdefb990d5212bb2a130525b20e2c44aeffc4c/google-http-client-gson-1.19.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="b3cdefb990d5212bb2a130525b20e2c44aeffc4c">
+        <dex dex="/Users/edcoyne/code/repo/client/android/studio_project/app/build/intermediates/pre-dexed/debug/google-http-client-gson-1.19.0-f21c09f11bc4ce13280c543224bb80c053cfff45.jar" />
+    </item>
+    <item
+        jar="/Users/edcoyne/code/turtlewatch/client/android/studio_project/app/libs/jsr305-1.3.9.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf">
+        <dex dex="/Users/edcoyne/code/turtlewatch/client/android/studio_project/app/build/intermediates/pre-dexed/debug/jsr305-1.3.9-1c042daabaf6e024092e3cc113377afd92fe731e.jar" />
+    </item>
+    <item
+        jar="/Users/edcoyne/code/repo/client/android/studio_project/app/libs/google-oauth-client-1.18.0-rc.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="84bb5a223e42a5ba974ad51c9712253e662aa1bb">
+        <dex dex="/Users/edcoyne/code/repo/client/android/studio_project/app/build/intermediates/pre-dexed/debug/google-oauth-client-1.18.0-rc-b95bd9a28ac7606d8faf9538b9da7362191d9b40.jar" />
+    </item>
+    <item
+        jar="/Users/edcoyne/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client/1.19.0/6a21277d9bebe267b7ddee028b241eebc756c040/google-api-client-1.19.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="6a21277d9bebe267b7ddee028b241eebc756c040">
+        <dex dex="/Users/edcoyne/code/turtlewatch/client/android/studio_project/app/build/intermediates/pre-dexed/debug/google-api-client-1.19.0-7292373aa0ad269ffd63523c3730c06629aa3474.jar" />
+    </item>
+    <item
+        jar="/Users/edcoyne/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpmime/4.3.5/1dd0d38df9c6d21e893f2e52403f1cd99e91cd81/httpmime-4.3.5.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="1dd0d38df9c6d21e893f2e52403f1cd99e91cd81">
+        <dex dex="/Users/edcoyne/code/turtlewatch/client/android/studio_project/app/build/intermediates/pre-dexed/debug/httpmime-4.3.5-0fe01e1a76eef871645ff5e07d124d87c259fc7a.jar" />
+    </item>
+    <item
+        jar="/Users/edcoyne/code/repo/client/android/studio_project/app/libs/google-api-client-1.18.0-rc.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="15feacc39aa29e06a63bf9041c6e5898f06bade9">
+        <dex dex="/Users/edcoyne/code/repo/client/android/studio_project/app/build/intermediates/pre-dexed/debug/google-api-client-1.18.0-rc-e6b689b69899079e659de41bf2383d99b4aff315.jar" />
+    </item>
+    <item
+        jar="/Users/edcoyne/code/repo/client/android/studio_project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/6.5.87/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="79f08023cdb55c703b101d651b5c472cfcecf6e9">
+        <dex dex="/Users/edcoyne/code/repo/client/android/studio_project/app/build/intermediates/pre-dexed/debug/classes-d7d467fca196e1e6beed4ecfb8eec8cbbc27e2b4.jar" />
+    </item>
+    <item
+        jar="/Users/edcoyne/code/repo/client/android/studio_project/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0/libs/internal_impl-21.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="1609e6d42d0480b0f4188e2c29f75388fa12a8f0">
+        <dex dex="/Users/edcoyne/code/repo/client/android/studio_project/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.0-56424a2cb0081df9121f6336cb50519eb3e570cc.jar" />
     </item>
     <item
         jar="/Users/edcoyne/code/turtlewatch/client/android/studio_project/backend/build/libs/backend-android-endpoints.jar"
@@ -231,20 +245,6 @@
         revision="21.1.2"
         sha1="56498efd17752898cfcc3868c1b6211a07b12b8f">
         <dex dex="/Users/edcoyne/code/repo/client/android/studio_project/app/build/intermediates/pre-dexed/debug/joda-time-2.3-0994417c3d8e558ab8840f176a55f9be3c2b52d2.jar" />
-    </item>
-    <item
-        jar="/Users/edcoyne/code/repo/client/android/studio_project/app/libs/islandturtlewatch.com-reportEndpoint-v1-20140625054007-java-1.18.0-rc-sources.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="7268336e94ebeb6e797e0eef104aa1fee8ce922c">
-        <dex dex="/Users/edcoyne/code/repo/client/android/studio_project/app/build/intermediates/pre-dexed/debug/islandturtlewatch.com-reportEndpoint-v1-20140625054007-java-1.18.0-rc-sources-f211b3cd342360946203105ff4341bab5248d26f.jar" />
-    </item>
-    <item
-        jar="/Users/edcoyne/code/turtlewatch/client/android/studio_project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/6.5.87/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="95482e7c792a7c0d5a9d5461e97726bd54fe9549">
-        <dex dex="/Users/edcoyne/code/turtlewatch/client/android/studio_project/app/build/intermediates/pre-dexed/debug/classes-0e9ee426dcd9344f45f9949a0c3962320a4777ea.jar" />
     </item>
     <item
         jar="/Users/edcoyne/code/repo/client/android/studio_project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/6.5.87/classes.jar"

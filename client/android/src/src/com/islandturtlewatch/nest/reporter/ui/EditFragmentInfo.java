@@ -119,6 +119,7 @@ public class EditFragmentInfo extends EditFragment {
 
     setChecked(R.id.fieldAbandonedBodyPits, report.getCondition().getAbandonedBodyPits());
     setChecked(R.id.fieldAbandonedEggCavities, report.getCondition().getAbandonedEggCavities());
+    setChecked(R.id.fieldNoDigging, report.getCondition().getNoDigging());
 
     setChecked(R.id.fieldSpeciesLoggerHead, report.getSpecies() == Species.LOGGERHEAD);
     setChecked(R.id.fieldSpeciesGreen, report.getSpecies() == Species.GREEN);
