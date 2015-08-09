@@ -75,7 +75,7 @@ message NestCondition {
   }
   optional VandalismType vandalism_type = 15;
 
-
+  optional bool post_hatch_washout = 20;
   optional bool poached = 3;
   optional int64 poached_timestamp_ms = 4;
   optional bool poached_eggs_removed = 17;
@@ -90,6 +90,9 @@ message NestCondition {
 
   repeated WashEvent wash_over = 7;
   optional WashEvent wash_out = 8;
+  optional WashEvent partial_washout = 19;
+  optional bool nest_inundated = 21;
+  optional int64 nest_inundated_timestamp_ms = 22;
 
   message PreditationEvent {
     optional int64 timestamp_ms = 1;
@@ -105,8 +108,11 @@ message NestCondition {
   optional bool abandoned_body_pits = 13;
   optional bool abandoned_egg_cavities = 14;
   optional bool no_digging = 18;
+  optional bool nest_depredated = 23;
+  optional bool eggs_damaged_by_another_turtle = 24;
 
-  // Next ID=19
+
+  // Next ID=25
 }
 
 message NestLocation {

@@ -8,10 +8,10 @@ public final class ImageProto {
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
   }
-  public interface ImageRefOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface ImageRefOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.islandturtlewatch.nest.data.ImageRef)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional string owner_id = 1;
     /**
      * <code>optional string owner_id = 1;</code>
      */
@@ -26,7 +26,6 @@ public final class ImageProto {
     com.google.protobuf.ByteString
         getOwnerIdBytes();
 
-    // optional uint64 report_id = 2;
     /**
      * <code>optional uint64 report_id = 2;</code>
      */
@@ -36,7 +35,6 @@ public final class ImageProto {
      */
     long getReportId();
 
-    // optional string image_name = 3;
     /**
      * <code>optional string image_name = 3;</code>
      */
@@ -59,8 +57,9 @@ public final class ImageProto {
    * </pre>
    */
   public static final class ImageRef extends
-      com.google.protobuf.GeneratedMessage
-      implements ImageRefOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:com.islandturtlewatch.nest.data.ImageRef)
+      ImageRefOrBuilder {
     // Use ImageRef.newBuilder() to construct.
     private ImageRef(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -107,8 +106,9 @@ public final class ImageProto {
               break;
             }
             case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              ownerId_ = input.readBytes();
+              ownerId_ = bs;
               break;
             }
             case 16: {
@@ -117,8 +117,9 @@ public final class ImageProto {
               break;
             }
             case 26: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000004;
-              imageName_ = input.readBytes();
+              imageName_ = bs;
               break;
             }
           }
@@ -161,7 +162,6 @@ public final class ImageProto {
     }
 
     private int bitField0_;
-    // optional string owner_id = 1;
     public static final int OWNER_ID_FIELD_NUMBER = 1;
     private java.lang.Object ownerId_;
     /**
@@ -204,7 +204,6 @@ public final class ImageProto {
       }
     }
 
-    // optional uint64 report_id = 2;
     public static final int REPORT_ID_FIELD_NUMBER = 2;
     private long reportId_;
     /**
@@ -220,7 +219,6 @@ public final class ImageProto {
       return reportId_;
     }
 
-    // optional string image_name = 3;
     public static final int IMAGE_NAME_FIELD_NUMBER = 3;
     private java.lang.Object imageName_;
     /**
@@ -271,7 +269,8 @@ public final class ImageProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -396,8 +395,9 @@ public final class ImageProto {
      * </pre>
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.islandturtlewatch.nest.data.ImageProto.ImageRefOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.islandturtlewatch.nest.data.ImageRef)
+        com.islandturtlewatch.nest.data.ImageProto.ImageRefOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.islandturtlewatch.nest.data.ImageProto.internal_static_com_islandturtlewatch_nest_data_ImageRef_descriptor;
@@ -532,7 +532,6 @@ public final class ImageProto {
       }
       private int bitField0_;
 
-      // optional string owner_id = 1;
       private java.lang.Object ownerId_ = "";
       /**
        * <code>optional string owner_id = 1;</code>
@@ -546,9 +545,12 @@ public final class ImageProto {
       public java.lang.String getOwnerId() {
         java.lang.Object ref = ownerId_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          ownerId_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            ownerId_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -606,7 +608,6 @@ public final class ImageProto {
         return this;
       }
 
-      // optional uint64 report_id = 2;
       private long reportId_ ;
       /**
        * <code>optional uint64 report_id = 2;</code>
@@ -639,7 +640,6 @@ public final class ImageProto {
         return this;
       }
 
-      // optional string image_name = 3;
       private java.lang.Object imageName_ = "";
       /**
        * <code>optional string image_name = 3;</code>
@@ -653,9 +653,12 @@ public final class ImageProto {
       public java.lang.String getImageName() {
         java.lang.Object ref = imageName_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          imageName_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            imageName_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -724,10 +727,10 @@ public final class ImageProto {
     // @@protoc_insertion_point(class_scope:com.islandturtlewatch.nest.data.ImageRef)
   }
 
-  public interface ImageUploadRefOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface ImageUploadRefOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.islandturtlewatch.nest.data.ImageUploadRef)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional .com.islandturtlewatch.nest.data.ImageRef image = 1;
     /**
      * <code>optional .com.islandturtlewatch.nest.data.ImageRef image = 1;</code>
      */
@@ -741,7 +744,6 @@ public final class ImageProto {
      */
     com.islandturtlewatch.nest.data.ImageProto.ImageRefOrBuilder getImageOrBuilder();
 
-    // optional string url = 2;
     /**
      * <code>optional string url = 2;</code>
      */
@@ -760,8 +762,9 @@ public final class ImageProto {
    * Protobuf type {@code com.islandturtlewatch.nest.data.ImageUploadRef}
    */
   public static final class ImageUploadRef extends
-      com.google.protobuf.GeneratedMessage
-      implements ImageUploadRefOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:com.islandturtlewatch.nest.data.ImageUploadRef)
+      ImageUploadRefOrBuilder {
     // Use ImageUploadRef.newBuilder() to construct.
     private ImageUploadRef(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -821,8 +824,9 @@ public final class ImageProto {
               break;
             }
             case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              url_ = input.readBytes();
+              url_ = bs;
               break;
             }
           }
@@ -865,7 +869,6 @@ public final class ImageProto {
     }
 
     private int bitField0_;
-    // optional .com.islandturtlewatch.nest.data.ImageRef image = 1;
     public static final int IMAGE_FIELD_NUMBER = 1;
     private com.islandturtlewatch.nest.data.ImageProto.ImageRef image_;
     /**
@@ -887,7 +890,6 @@ public final class ImageProto {
       return image_;
     }
 
-    // optional string url = 2;
     public static final int URL_FIELD_NUMBER = 2;
     private java.lang.Object url_;
     /**
@@ -937,7 +939,8 @@ public final class ImageProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -1051,8 +1054,9 @@ public final class ImageProto {
      * Protobuf type {@code com.islandturtlewatch.nest.data.ImageUploadRef}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.islandturtlewatch.nest.data.ImageProto.ImageUploadRefOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.islandturtlewatch.nest.data.ImageUploadRef)
+        com.islandturtlewatch.nest.data.ImageProto.ImageUploadRefOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.islandturtlewatch.nest.data.ImageProto.internal_static_com_islandturtlewatch_nest_data_ImageUploadRef_descriptor;
@@ -1185,7 +1189,6 @@ public final class ImageProto {
       }
       private int bitField0_;
 
-      // optional .com.islandturtlewatch.nest.data.ImageRef image = 1;
       private com.islandturtlewatch.nest.data.ImageProto.ImageRef image_ = com.islandturtlewatch.nest.data.ImageProto.ImageRef.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.islandturtlewatch.nest.data.ImageProto.ImageRef, com.islandturtlewatch.nest.data.ImageProto.ImageRef.Builder, com.islandturtlewatch.nest.data.ImageProto.ImageRefOrBuilder> imageBuilder_;
@@ -1294,7 +1297,7 @@ public final class ImageProto {
         if (imageBuilder_ == null) {
           imageBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.islandturtlewatch.nest.data.ImageProto.ImageRef, com.islandturtlewatch.nest.data.ImageProto.ImageRef.Builder, com.islandturtlewatch.nest.data.ImageProto.ImageRefOrBuilder>(
-                  image_,
+                  getImage(),
                   getParentForChildren(),
                   isClean());
           image_ = null;
@@ -1302,7 +1305,6 @@ public final class ImageProto {
         return imageBuilder_;
       }
 
-      // optional string url = 2;
       private java.lang.Object url_ = "";
       /**
        * <code>optional string url = 2;</code>
@@ -1316,9 +1318,12 @@ public final class ImageProto {
       public java.lang.String getUrl() {
         java.lang.Object ref = url_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          url_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            url_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -1387,10 +1392,10 @@ public final class ImageProto {
     // @@protoc_insertion_point(class_scope:com.islandturtlewatch.nest.data.ImageUploadRef)
   }
 
-  public interface ImageDownloadRefOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface ImageDownloadRefOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.islandturtlewatch.nest.data.ImageDownloadRef)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional .com.islandturtlewatch.nest.data.ImageRef image = 1;
     /**
      * <code>optional .com.islandturtlewatch.nest.data.ImageRef image = 1;</code>
      */
@@ -1404,7 +1409,6 @@ public final class ImageProto {
      */
     com.islandturtlewatch.nest.data.ImageProto.ImageRefOrBuilder getImageOrBuilder();
 
-    // optional string url = 2;
     /**
      * <code>optional string url = 2;</code>
      */
@@ -1423,8 +1427,9 @@ public final class ImageProto {
    * Protobuf type {@code com.islandturtlewatch.nest.data.ImageDownloadRef}
    */
   public static final class ImageDownloadRef extends
-      com.google.protobuf.GeneratedMessage
-      implements ImageDownloadRefOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:com.islandturtlewatch.nest.data.ImageDownloadRef)
+      ImageDownloadRefOrBuilder {
     // Use ImageDownloadRef.newBuilder() to construct.
     private ImageDownloadRef(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -1484,8 +1489,9 @@ public final class ImageProto {
               break;
             }
             case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              url_ = input.readBytes();
+              url_ = bs;
               break;
             }
           }
@@ -1528,7 +1534,6 @@ public final class ImageProto {
     }
 
     private int bitField0_;
-    // optional .com.islandturtlewatch.nest.data.ImageRef image = 1;
     public static final int IMAGE_FIELD_NUMBER = 1;
     private com.islandturtlewatch.nest.data.ImageProto.ImageRef image_;
     /**
@@ -1550,7 +1555,6 @@ public final class ImageProto {
       return image_;
     }
 
-    // optional string url = 2;
     public static final int URL_FIELD_NUMBER = 2;
     private java.lang.Object url_;
     /**
@@ -1600,7 +1604,8 @@ public final class ImageProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -1714,8 +1719,9 @@ public final class ImageProto {
      * Protobuf type {@code com.islandturtlewatch.nest.data.ImageDownloadRef}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRefOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.islandturtlewatch.nest.data.ImageDownloadRef)
+        com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRefOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.islandturtlewatch.nest.data.ImageProto.internal_static_com_islandturtlewatch_nest_data_ImageDownloadRef_descriptor;
@@ -1848,7 +1854,6 @@ public final class ImageProto {
       }
       private int bitField0_;
 
-      // optional .com.islandturtlewatch.nest.data.ImageRef image = 1;
       private com.islandturtlewatch.nest.data.ImageProto.ImageRef image_ = com.islandturtlewatch.nest.data.ImageProto.ImageRef.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           com.islandturtlewatch.nest.data.ImageProto.ImageRef, com.islandturtlewatch.nest.data.ImageProto.ImageRef.Builder, com.islandturtlewatch.nest.data.ImageProto.ImageRefOrBuilder> imageBuilder_;
@@ -1957,7 +1962,7 @@ public final class ImageProto {
         if (imageBuilder_ == null) {
           imageBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               com.islandturtlewatch.nest.data.ImageProto.ImageRef, com.islandturtlewatch.nest.data.ImageProto.ImageRef.Builder, com.islandturtlewatch.nest.data.ImageProto.ImageRefOrBuilder>(
-                  image_,
+                  getImage(),
                   getParentForChildren(),
                   isClean());
           image_ = null;
@@ -1965,7 +1970,6 @@ public final class ImageProto {
         return imageBuilder_;
       }
 
-      // optional string url = 2;
       private java.lang.Object url_ = "";
       /**
        * <code>optional string url = 2;</code>
@@ -1979,9 +1983,12 @@ public final class ImageProto {
       public java.lang.String getUrl() {
         java.lang.Object ref = url_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          url_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            url_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -2050,17 +2057,17 @@ public final class ImageProto {
     // @@protoc_insertion_point(class_scope:com.islandturtlewatch.nest.data.ImageDownloadRef)
   }
 
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_com_islandturtlewatch_nest_data_ImageRef_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_islandturtlewatch_nest_data_ImageRef_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_com_islandturtlewatch_nest_data_ImageUploadRef_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_islandturtlewatch_nest_data_ImageUploadRef_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_com_islandturtlewatch_nest_data_ImageDownloadRef_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -2084,35 +2091,35 @@ public final class ImageProto {
       "ef\022\013\n\003url\030\002 \001(\tB\014B\nImageProto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
-        public com.google.protobuf.ExtensionRegistry assignDescriptors(
-            com.google.protobuf.Descriptors.FileDescriptor root) {
-          descriptor = root;
-          internal_static_com_islandturtlewatch_nest_data_ImageRef_descriptor =
-            getDescriptor().getMessageTypes().get(0);
-          internal_static_com_islandturtlewatch_nest_data_ImageRef_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_com_islandturtlewatch_nest_data_ImageRef_descriptor,
-              new java.lang.String[] { "OwnerId", "ReportId", "ImageName", });
-          internal_static_com_islandturtlewatch_nest_data_ImageUploadRef_descriptor =
-            getDescriptor().getMessageTypes().get(1);
-          internal_static_com_islandturtlewatch_nest_data_ImageUploadRef_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_com_islandturtlewatch_nest_data_ImageUploadRef_descriptor,
-              new java.lang.String[] { "Image", "Url", });
-          internal_static_com_islandturtlewatch_nest_data_ImageDownloadRef_descriptor =
-            getDescriptor().getMessageTypes().get(2);
-          internal_static_com_islandturtlewatch_nest_data_ImageDownloadRef_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_com_islandturtlewatch_nest_data_ImageDownloadRef_descriptor,
-              new java.lang.String[] { "Image", "Url", });
-          return null;
-        }
-      };
+        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
+          public com.google.protobuf.ExtensionRegistry assignDescriptors(
+              com.google.protobuf.Descriptors.FileDescriptor root) {
+            descriptor = root;
+            return null;
+          }
+        };
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
+    internal_static_com_islandturtlewatch_nest_data_ImageRef_descriptor =
+      getDescriptor().getMessageTypes().get(0);
+    internal_static_com_islandturtlewatch_nest_data_ImageRef_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_com_islandturtlewatch_nest_data_ImageRef_descriptor,
+        new java.lang.String[] { "OwnerId", "ReportId", "ImageName", });
+    internal_static_com_islandturtlewatch_nest_data_ImageUploadRef_descriptor =
+      getDescriptor().getMessageTypes().get(1);
+    internal_static_com_islandturtlewatch_nest_data_ImageUploadRef_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_com_islandturtlewatch_nest_data_ImageUploadRef_descriptor,
+        new java.lang.String[] { "Image", "Url", });
+    internal_static_com_islandturtlewatch_nest_data_ImageDownloadRef_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_com_islandturtlewatch_nest_data_ImageDownloadRef_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_com_islandturtlewatch_nest_data_ImageDownloadRef_descriptor,
+        new java.lang.String[] { "Image", "Url", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

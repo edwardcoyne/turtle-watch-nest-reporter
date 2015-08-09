@@ -1,7 +1,5 @@
 package com.islandturtlewatch.nest.reporter.ui;
 
-import java.util.Map;
-
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -22,14 +20,20 @@ import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.data.Date;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.DeletePredationMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.DeleteWashOverMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.EggsScatteredDateMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.EggsScatteredMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.PartialWashoutDateMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.PartialWashoutStormNameMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.PoachedDateMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.PoachedEggsRemovedMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.PredationDateMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.PredationNumEggsMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.PredationPredatorMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.RootsInvadedMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.VandalismTypeMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.VandalizedDateMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.WasPoachedMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.WasVandalizedMutation;
@@ -37,17 +41,17 @@ import com.islandturtlewatch.nest.reporter.data.ReportMutations.WashoutDateMutat
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.WashoutStormNameMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.WashoverDateMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.WashoverStormNameMutation;
-import com.islandturtlewatch.nest.reporter.data.ReportMutations.EggsScatteredDateMutation;
-import com.islandturtlewatch.nest.reporter.data.ReportMutations.VandalismTypeMutation;
-import com.islandturtlewatch.nest.reporter.data.ReportMutations.PoachedEggsRemovedMutation;
 import com.islandturtlewatch.nest.reporter.ui.ClearableDatePickerDialog.OnDateSetListener;
 import com.islandturtlewatch.nest.reporter.util.DateUtil;
+
+import java.util.Map;
 
 public class EditFragmentNestCondition extends EditFragment {
   private static final Map<Integer, ClickHandler> CLICK_HANDLERS =
       ClickHandler.toMap(
           new HandleSetEggsScattered(),
           new HandleSetEggsScatteredDate(),
+          new HandleSetPostHatchWashout(),
           new HandleSetPoached(),
           new HandleSetPoachedDate(),
           new HandleSetPoachedEggsRemoved(),
@@ -57,10 +61,16 @@ public class EditFragmentNestCondition extends EditFragment {
           new HandleSetVandalismStakesRemoved(),
           new HandleSetVandalismDugInto(),
           new HandleSetVandalismEggsAffected(),
-          new HandleSetWashoutDate());
+          new HandleSetWashoutDate(),
+          new HandleSetPartialWashoutDate(),
+          new HandleSetNestInundated(),
+          new HandleSetNestInundatedDate(),
+          new HandleSetNestDepredation(),
+          new HandleUpdateEggsDamagedByAnotherTurtle());
 
   private static final Map<Integer, TextChangeHandler> TEXT_CHANGE_HANDLERS =
-      TextChangeHandler.toMap(new HandleUpdateWashoutStorm());
+      TextChangeHandler.toMap(new HandleUpdateWashoutStorm(),
+              new HandleUpdatePartialWashoutStorm());
 
   @Override
   public Map<Integer, TextChangeHandler> getTextChangeHandlers() {
@@ -96,7 +106,12 @@ public class EditFragmentNestCondition extends EditFragment {
       clearDate(R.id.buttonWashOutDate);
     }
 
+    if (condition.getPartialWashout().hasTimestampMs()) {
+      setDate(R.id.buttonPartialWashOutDate,condition.getPartialWashout().getTimestampMs());
+    }
+
     setText(R.id.fieldWashOutStormName, condition.getWashOut().getStormName());
+    setText(R.id.fieldPartialWashOutStormName, condition.getPartialWashout().getStormName());
 
     clearTable(R.id.tablePredatitation);
     for (int i = 0; i < condition.getPreditationCount(); i++) {
@@ -105,6 +120,15 @@ public class EditFragmentNestCondition extends EditFragment {
     // Add blank line.
     addPredationRow(condition.getPreditationCount(), PreditationEvent.getDefaultInstance(), false);
 
+    setChecked(R.id.fieldDamageEggsDamagedByAnotherTurtle,condition.getEggsDamagedByAnotherTurtle());
+    setChecked(R.id.fieldDamageNestDepredated, condition.getNestDepredated());
+    setChecked(R.id.fieldDamageNestInundated, condition.getNestInundated());
+    setEnabled(R.id.buttonDamageNestInundatedDate,condition.getNestInundated());
+    if (condition.hasNestInundatedTimestampMs()) {
+      setDate(R.id.buttonDamageNestInundatedDate, condition.getNestInundatedTimestampMs());
+    } else {
+      clearDate(R.id.buttonDamageNestInundatedDate);
+    }
     setChecked(R.id.fieldDamageVandalized, condition.getVandalized());
     setEnabled(R.id.buttonDamageVandalizedDate, condition.getVandalized());
     if (condition.hasVandalizedTimestampMs()) {
@@ -114,12 +138,13 @@ public class EditFragmentNestCondition extends EditFragment {
     }
     setVisible(R.id.rowVandalismType, condition.getVandalized());
     setChecked(R.id.fieldVandalismStakesRemoved,
-        condition.getVandalismType() == NestCondition.VandalismType.STAKES_REMOVED);
+            condition.getVandalismType() == NestCondition.VandalismType.STAKES_REMOVED);
     setChecked(R.id.fieldVandalismDugInto,
         condition.getVandalismType() == NestCondition.VandalismType.NEST_DUG_INTO);
     setChecked(R.id.fieldVandalismEggsAffected,
         condition.getVandalismType() == NestCondition.VandalismType.EGGS_AFFECTED);
 
+    setChecked(R.id.fieldPostHatchWashout, condition.getPostHatchWashout());
     setChecked(R.id.fieldDamagePoached, condition.getPoached());
     setEnabled(R.id.buttonDamagePoachedDate, condition.getPoached());
     if (condition.hasPoachedTimestampMs()) {
@@ -291,6 +316,19 @@ public class EditFragmentNestCondition extends EditFragment {
       updateHandler.applyMutation(new WashoutDateMutation(maybeDate));
     }
   }
+
+  private static class HandleSetPartialWashoutDate extends DatePickerClickHandler {
+    protected HandleSetPartialWashoutDate() {
+      super(R.id.buttonPartialWashOutDate);
+    }
+
+    @Override
+    public void onDateSet (DatePicker view, Optional<Date> maybeDate) {
+      updateHandler.applyMutation(new PartialWashoutDateMutation(maybeDate));
+    }
+  }
+
+
   private static class HandleSetVandalizedDate extends DatePickerClickHandler {
     protected HandleSetVandalizedDate() {
       super(R.id.buttonDamageVandalizedDate);
@@ -311,6 +349,28 @@ public class EditFragmentNestCondition extends EditFragment {
       updateHandler.applyMutation(new PoachedDateMutation(maybeDate));
     }
   }
+
+  private static class HandleSetNestInundatedDate extends DatePickerClickHandler {
+    protected HandleSetNestInundatedDate() {
+      super(R.id.buttonDamageNestInundatedDate);
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
+      updateHandler.applyMutation(new ReportMutations.NestInundatedDateMutation(maybeDate));
+    }
+  }
+  private static class HandleSetNestInundated extends ClickHandler {
+    protected HandleSetNestInundated() {
+      super(R.id.fieldDamageNestInundated);
+    }
+
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.NestInundatedMutation(isChecked(view)));
+    }
+  }
+
   private static class HandleSetEggsScatteredDate extends DatePickerClickHandler {
     protected HandleSetEggsScatteredDate() { super(R.id.buttonDamageEggsScatteredDate); }
 
@@ -329,6 +389,17 @@ public class EditFragmentNestCondition extends EditFragment {
       updateHandler.applyMutation(new WasVandalizedMutation(isChecked(view)));
     }
   }
+
+  private static class HandleSetPostHatchWashout extends ClickHandler {
+    protected HandleSetPostHatchWashout() {
+      super(R.id.fieldPostHatchWashout);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.WasPostHatchWashout(isChecked(view)));
+    }
+  }
+
   private static class HandleSetPoached extends ClickHandler {
     protected HandleSetPoached() {
       super(R.id.fieldDamagePoached);
@@ -400,6 +471,16 @@ public class EditFragmentNestCondition extends EditFragment {
     }
   }
 
+  private static class HandleSetNestDepredation extends ClickHandler {
+    protected HandleSetNestDepredation() {
+      super(R.id.fieldDamageNestDepredated);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.NestDepredatedMutation(isChecked(view)));
+    }
+  }
+
   private static class HandleUpdateWashoutStorm extends TextChangeHandler {
     protected HandleUpdateWashoutStorm() {
       super(R.id.fieldWashOutStormName);
@@ -410,4 +491,26 @@ public class EditFragmentNestCondition extends EditFragment {
       updateHandler.applyMutation(new WashoutStormNameMutation(newText));
     }
   }
+
+  private static class HandleUpdateEggsDamagedByAnotherTurtle extends ClickHandler {
+    protected HandleUpdateEggsDamagedByAnotherTurtle() {
+      super(R.id.fieldDamageEggsDamagedByAnotherTurtle);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.EggsDamagedByAnotherTurtleMutation(isChecked(view)));
+    }
+  }
+
+  private static class HandleUpdatePartialWashoutStorm extends TextChangeHandler {
+    protected HandleUpdatePartialWashoutStorm() {
+      super(R.id.fieldPartialWashOutStormName);
+    }
+
+    @Override
+    public void handleTextChange(String newName, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new PartialWashoutStormNameMutation(newName));
+    }
+  }
+
 }
