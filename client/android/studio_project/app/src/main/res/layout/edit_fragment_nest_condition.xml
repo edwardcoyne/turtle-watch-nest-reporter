@@ -20,8 +20,38 @@
 	       android:id="@+id/tableWashOver">
 	      <!-- Will be dynamically populated -->
 	   </TableLayout>
-	   
-	   <TableRow
+
+		<TableRow
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" >
+			<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/edit_nest_condition_partial_washout" />
+		</TableRow>
+
+		<TableRow
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" >
+
+			<Button
+				android:id="@+id/buttonPartialWashOutDate"
+				android:text="@string/date_button"
+				android:onClick="handleClick"  />
+
+			<com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+				android:id="@+id/fieldPartialWashOutStormName"
+				android:inputType="text"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:hint="@string/edit_nest_condition_storm_name"
+				onTextChangeHandler="handleTextChange" />
+		</TableRow>
+
+
+		<TableRow
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content" >
 	        <TextView
@@ -80,6 +110,35 @@
 	            android:layout_weight="1"
 	            android:text="@string/edit_nest_condition_damage_contact_suzi" />
 	   </TableRow>
+		<TableRow
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" >
+			<CheckBox
+				android:id="@+id/fieldDamageNestInundated"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:layout_marginBottom="5dp"
+				android:text="@string/edit_nest_condition_nest_inundated"
+				android:onClick="handleClick" />
+
+			<Button
+				android:id="@+id/buttonDamageNestInundatedDate"
+				android:text="@string/date_button"
+				android:enabled="false"
+				android:onClick="handleClick" />
+		</TableRow>
+		<TableRow>
+
+			<CheckBox
+				android:id="@+id/fieldPostHatchWashout"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/edit_nest_condition_post_hatch_washout"
+				android:onClick="handleClick" />
+		</TableRow>
+
 	   <TableRow
 	       android:layout_width="wrap_content"
 	       android:layout_height="wrap_content" >
@@ -126,6 +185,7 @@
                android:onClick="handleClick"/>
 
         </TableRow>
+
 	   <TableRow
 	       android:layout_width="wrap_content"
 	       android:layout_height="wrap_content" >
@@ -189,5 +249,31 @@
 	           android:onClick="handleClick" />
 
 	   </TableRow>
+		<TableRow
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" >
+
+			<CheckBox
+				android:id="@+id/fieldDamageNestDepredated"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/edit_nest_condition_damage_nest_depredated"
+				android:onClick="handleClick" />
+
+		</TableRow>
+		<TableRow
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" >
+
+			<CheckBox
+				android:id="@+id/fieldDamageEggsDamagedByAnotherTurtle"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/edit_nest_condition_damage_another_turtle"
+				android:onClick="handleClick" />
+
+		</TableRow>
 	</TableLayout>
 </ScrollView>
