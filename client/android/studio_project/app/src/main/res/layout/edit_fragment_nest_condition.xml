@@ -19,17 +19,12 @@
 	   <TableLayout
 	       android:id="@+id/tableWashOver">
 	      <!-- Will be dynamically populated -->
+
 	   </TableLayout>
 
         <TableRow
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/edit_nest_condition_predataion" />
-        </TableRow>
+            android:layout_height="wrap_content" ></TableRow>
         <TableLayout
             android:id="@+id/tablePredatitation">
             <!-- Will be dynamically populated -->
@@ -121,6 +116,17 @@
 	            android:layout_weight="1"
 	            android:text="@string/edit_nest_condition_damage_contact_suzi" />
 	   </TableRow>
+		<TableRow
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+
+			<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/edit_nest_condition_predataion"
+				android:layout_column="0" />
+		</TableRow>
 		<TableRow
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content" >
