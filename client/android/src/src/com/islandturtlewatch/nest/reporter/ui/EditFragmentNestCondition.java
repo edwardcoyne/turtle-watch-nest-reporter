@@ -63,8 +63,9 @@ public class EditFragmentNestCondition extends EditFragment {
           new HandleSetVandalismEggsAffected(),
           new HandleSetWashoutDate(),
           new HandleSetPartialWashoutDate(),
-          new HandleSetNestInundated(),
-          new HandleSetNestInundatedDate(),
+              //NestInundated is deprecated, use new inundatedEvent instead
+//          new HandleSetNestInundated(),
+//          new HandleSetNestInundatedDate(),
           new HandleSetNestDepredation(),
           new HandleUpdateEggsDamagedByAnotherTurtle());
 
@@ -100,6 +101,14 @@ public class EditFragmentNestCondition extends EditFragment {
     // Add blank line.
     addWashOverRow(condition.getWashOverCount(), WashEvent.getDefaultInstance(), false);
 
+    clearTable(R.id.tableInundatedEvent);
+    for (int i = 0; i < condition.getInundatedEventCount();i++) {
+      //add each inundatedEvent already in the Report
+      addInundatedEventRow(i,condition.getInundatedEvent(i),true);
+    }
+    //add one blank line as well.
+    addInundatedEventRow(condition.getInundatedEventCount(),WashEvent.getDefaultInstance(),false);
+
     if (condition.getWashOut().hasTimestampMs()) {
       setDate(R.id.buttonWashOutDate, condition.getWashOut().getTimestampMs());
     } else {
@@ -122,13 +131,13 @@ public class EditFragmentNestCondition extends EditFragment {
 
     setChecked(R.id.fieldDamageEggsDamagedByAnotherTurtle,condition.getEggsDamagedByAnotherTurtle());
     setChecked(R.id.fieldDamageNestDepredated, condition.getNestDepredated());
-    setChecked(R.id.fieldDamageNestInundated, condition.getNestInundated());
-    setEnabled(R.id.buttonDamageNestInundatedDate,condition.getNestInundated());
-    if (condition.hasNestInundatedTimestampMs()) {
-      setDate(R.id.buttonDamageNestInundatedDate, condition.getNestInundatedTimestampMs());
-    } else {
-      clearDate(R.id.buttonDamageNestInundatedDate);
-    }
+//    setChecked(R.id.fieldDamageNestInundated, condition.getNestInundated());
+//    setEnabled(R.id.buttonDamageNestInundatedDate,condition.getNestInundated());
+//    if (condition.hasNestInundatedTimestampMs()) {
+//      setDate(R.id.buttonDamageNestInundatedDate, condition.getNestInundatedTimestampMs());
+//    } else {
+//      clearDate(R.id.buttonDamageNestInundatedDate);
+//    }
     setChecked(R.id.fieldDamageVandalized, condition.getVandalized());
     setEnabled(R.id.buttonDamageVandalizedDate, condition.getVandalized());
     if (condition.hasVandalizedTimestampMs()) {
@@ -190,16 +199,17 @@ public class EditFragmentNestCondition extends EditFragment {
     storm_name.setHint(R.string.edit_nest_condition_storm_name);
     storm_name.setText(event.getStormName());
     listenerProvider.setFocusLossListener(storm_name, new TextChangeHandlerSimple() {
-        @Override
-        public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-          updateHandler.applyMutation(new WashoverStormNameMutation(ordinal, newText));
-        }
-      });
+      @Override
+      public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
+        updateHandler.applyMutation(new WashoverStormNameMutation(ordinal, newText));
+      }
+    });
 
     Button delete = new Button(getActivity());
     delete.setText("X");
     delete.setOnClickListener(listenerProvider.getOnClickListener(new ClickHandlerSimple() {
-      @Override public void handleClick(View view, DataUpdateHandler updateHandler) {
+      @Override
+      public void handleClick(View view, DataUpdateHandler updateHandler) {
         updateHandler.applyMutation(new DeleteWashOverMutation(ordinal));
       }
     }));
@@ -208,12 +218,63 @@ public class EditFragmentNestCondition extends EditFragment {
     row.setId(ordinal);
     row.addView(date_button);
     storm_name.setLayoutParams(
-        new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f));
+            new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f));
     row.addView(storm_name);
     if (showDelete) {
       row.addView(delete);
     }
     getTable(R.id.tableWashOver).addView(row);
+  }
+
+  private void addInundatedEventRow (final int ordinal, WashEvent event,  boolean showDelete) {
+    Button date_button = new Button(getActivity());
+    if (event.hasTimestampMs()) {
+      date_button.setText(DateUtil.getFormattedDate(event.getTimestampMs()));
+    } else {
+      date_button.setText(R.string.date_button);
+    }
+
+    SimpleDatePickerClickHandler clickHandler = new SimpleDatePickerClickHandler() {
+      @Override
+      public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
+        updateHandler.applyMutation(new ReportMutations.InundatedEventDateMutation(ordinal, maybeDate));
+      }};
+    if (event.hasTimestampMs()) {
+      clickHandler.setDate(event.getTimestampMs());
+    } else {
+      clickHandler.setDate(System.currentTimeMillis());
+    }
+    date_button.setOnClickListener(listenerProvider.getOnClickListener(clickHandler));
+
+    FocusMonitoredEditText storm_name = new FocusMonitoredEditText(getActivity());
+    storm_name.setHint(R.string.edit_nest_condition_storm_name);
+    storm_name.setText(event.getStormName());
+    listenerProvider.setFocusLossListener(storm_name, new TextChangeHandlerSimple() {
+      @Override
+      public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
+        updateHandler.applyMutation(new ReportMutations.InundatedEventStormNameMutation(ordinal, newText));
+      }
+    });
+
+    Button delete = new Button(getActivity());
+    delete.setText("X");
+    delete.setOnClickListener(listenerProvider.getOnClickListener(new ClickHandlerSimple() {
+      @Override
+      public void handleClick(View view, DataUpdateHandler updateHandler) {
+        updateHandler.applyMutation(new ReportMutations.DeleteInundatedEventMutation(ordinal));
+      }
+    }));
+
+    TableRow row = new TableRow(getActivity());
+    row.setId(ordinal);
+    row.addView(date_button);
+    storm_name.setLayoutParams(
+            new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT, 1f));
+    row.addView(storm_name);
+    if (showDelete) {
+      row.addView(delete);
+    }
+    getTable(R.id.tableInundatedEvent).addView(row);
   }
 
   private void addPredationRow(final int ordinal, PreditationEvent event, boolean showDelete) {
@@ -350,26 +411,26 @@ public class EditFragmentNestCondition extends EditFragment {
     }
   }
 
-  private static class HandleSetNestInundatedDate extends DatePickerClickHandler {
-    protected HandleSetNestInundatedDate() {
-      super(R.id.buttonDamageNestInundatedDate);
-    }
-
-    @Override
-    public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
-      updateHandler.applyMutation(new ReportMutations.NestInundatedDateMutation(maybeDate));
-    }
-  }
-  private static class HandleSetNestInundated extends ClickHandler {
-    protected HandleSetNestInundated() {
-      super(R.id.fieldDamageNestInundated);
-    }
-
-    @Override
-    public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(new ReportMutations.NestInundatedMutation(isChecked(view)));
-    }
-  }
+//  private static class HandleSetNestInundatedDate extends DatePickerClickHandler {
+//    protected HandleSetNestInundatedDate() {
+//      super(R.id.buttonDamageNestInundatedDate);
+//    }
+//
+//    @Override
+//    public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
+//      updateHandler.applyMutation(new ReportMutations.NestInundatedDateMutation(maybeDate));
+//    }
+//  }
+//  private static class HandleSetNestInundated extends ClickHandler {
+//    protected HandleSetNestInundated() {
+//      super(R.id.fieldDamageNestInundated);
+//    }
+//
+//    @Override
+//    public void handleClick(View view, DataUpdateHandler updateHandler) {
+//      updateHandler.applyMutation(new ReportMutations.NestInundatedMutation(isChecked(view)));
+//    }
+//  }
 
   private static class HandleSetEggsScatteredDate extends DatePickerClickHandler {
     protected HandleSetEggsScatteredDate() { super(R.id.buttonDamageEggsScatteredDate); }

@@ -25,10 +25,7 @@
         <TableRow
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" ></TableRow>
-        <TableLayout
-            android:id="@+id/tablePredatitation">
-            <!-- Will be dynamically populated -->
-        </TableLayout>
+
 
 		<TableRow
 			android:layout_width="wrap_content"
@@ -127,26 +124,47 @@
 				android:text="@string/edit_nest_condition_predataion"
 				android:layout_column="0" />
 		</TableRow>
+		<TableLayout
+			android:id="@+id/tablePredatitation">
+			<!-- Will be dynamically populated -->
+		</TableLayout>
+		<!-- NestInundated checkbox is deprecated, use new InundatedEvent instead-->
+		<!--<TableRow-->
+			<!--android:layout_width="wrap_content"-->
+			<!--android:layout_height="wrap_content" >-->
+			<!--<CheckBox-->
+				<!--android:id="@+id/fieldDamageNestInundated"-->
+				<!--android:layout_width="0dp"-->
+				<!--android:layout_height="wrap_content"-->
+				<!--android:layout_weight="1"-->
+				<!--android:layout_marginBottom="5dp"-->
+				<!--android:text="@string/edit_nest_condition_nest_inundated"-->
+				<!--android:onClick="handleClick" />-->
+
+			<!--<Button-->
+				<!--android:id="@+id/buttonDamageNestInundatedDate"-->
+				<!--android:text="@string/date_button"-->
+				<!--android:enabled="false"-->
+				<!--android:onClick="handleClick" />-->
+		<!--</TableRow>-->
 		<TableRow
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content" >
-			<CheckBox
-				android:id="@+id/fieldDamageNestInundated"
+
+			<TextView
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_weight="1"
-				android:layout_marginBottom="5dp"
-				android:text="@string/edit_nest_condition_nest_inundated"
-				android:onClick="handleClick" />
-
-			<Button
-				android:id="@+id/buttonDamageNestInundatedDate"
-				android:text="@string/date_button"
-				android:enabled="false"
-				android:onClick="handleClick" />
+				android:text="@string/edit_nest_condition_inundated_event" />
 		</TableRow>
+		<TableLayout
+			android:id="@+id/tableInundatedEvent">
+			<!-- Will be dynamically populated -->
 
-	   <TableRow
+		</TableLayout>
+
+
+		<TableRow
 	       android:layout_width="wrap_content"
 	       android:layout_height="wrap_content" >
 	
