@@ -1,7 +1,5 @@
 package com.islandturtlewatch.nest.reporter.ui;
 
-import java.util.Map;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,10 +12,10 @@ import com.islandturtlewatch.nest.data.ReportProto.GpsCoordinates;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation.City;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation.Placement;
-import com.islandturtlewatch.nest.data.ReportProto.NestLocation.Triangulation;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.ApexToBarrierFtMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.ApexToBarrierInMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.CityMutation;
@@ -33,6 +31,8 @@ import com.islandturtlewatch.nest.reporter.data.ReportMutations.WaterToApexFtMut
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.WaterToApexInMutation;
 import com.islandturtlewatch.nest.reporter.ui.GpsCoordinateDialog.GpsLocationCallback;
 import com.islandturtlewatch.nest.reporter.util.GpsUtil;
+
+import java.util.Map;
 
 public class EditFragmentNestLocation extends EditFragment {
   //private static final String TAG = EditFragmentNestLocation.class.getSimpleName();
@@ -50,6 +50,7 @@ public class EditFragmentNestLocation extends EditFragment {
           new HandleSetCityAM(),
           new HandleSetCityHB(),
           new HandleSetCityBB(),
+          new HandleSetEscarpmentOver18Inches(),
           new HandleSetGps());
 
   private static final Map<Integer, TextChangeHandler> TEXT_CHANGE_HANDLERS =
@@ -96,7 +97,7 @@ public class EditFragmentNestLocation extends EditFragment {
     setChecked(R.id.fieldLocationBB, location.getCity() == City.BB);
 
     setText(R.id.fieldDetails, location.hasDetails() ?
-        location.getDetails() : "");
+            location.getDetails() : "");
 
     setText(R.id.fieldApexToBarrier_ft, location.hasApexToBarrierFt() ?
         Integer.toString(location.getApexToBarrierFt()) : "");
@@ -113,6 +114,7 @@ public class EditFragmentNestLocation extends EditFragment {
     setChecked(R.id.fieldLocationAtVegitation, location.getPlacement() == Placement.AT_VEGITATION);
     setChecked(R.id.fieldLocationAtEscarpment, location.getPlacement() == Placement.AT_ESCARPMENT);
     setChecked(R.id.fieldLocationOnEscarpment, location.getPlacement() == Placement.ON_ESCARPMENT);
+    setChecked(R.id.fieldLocationEscarpmentOver18Inches,location.getEscarpmentOver18Inches());
 
     setChecked(R.id.fieldObstructionsSeawallRocks, location.getObstructions().getSeawallRocks());
     setChecked(R.id.fieldObstructionsFurniture, location.getObstructions().getFurniture());
@@ -261,6 +263,18 @@ public class EditFragmentNestLocation extends EditFragment {
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
       updateHandler.applyMutation(new PlacementMutation(Placement.AT_ESCARPMENT));
+    }
+  }
+
+  private static class HandleSetEscarpmentOver18Inches extends ClickHandler {
+    protected HandleSetEscarpmentOver18Inches() {
+      super(R.id.fieldLocationEscarpmentOver18Inches);
+    }
+
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(
+              new ReportMutations.EscarpmentOver18InchesMutation(isChecked(view)));
     }
   }
 

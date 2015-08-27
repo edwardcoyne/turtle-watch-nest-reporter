@@ -373,6 +373,20 @@ public class ReportMutations {
     }
   }
 
+  public static class EscarpmentOver18InchesMutation implements ReportMutation {
+    private final boolean isTrue;
+
+    public EscarpmentOver18InchesMutation(boolean isTrue) {
+      this.isTrue = isTrue;
+    }
+
+    @Override
+    public Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      updatedReport.getLocationBuilder().setEscarpmentOver18Inches(isTrue);
+      return updatedReport.build();
+    }
+  }
 
   public static class ObstructionsEscarpmentMutation implements ReportMutation {
     private final boolean isTrue;

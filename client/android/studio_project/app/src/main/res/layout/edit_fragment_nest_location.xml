@@ -194,6 +194,18 @@
 	           android:text="@string/edit_nest_location_on_escarpment"
 	           android:onClick="handleClick" />
 	   </TableRow>
+		<TableRow
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" >
+
+		<CheckBox
+			android:id="@+id/fieldLocationEscarpmentOver18Inches"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="@string/edit_nest_location_escarpment_over_18_inches"
+			android:onClick="handleClick" />
+		</TableRow>
 	   
 	   <TableRow
 	       android:layout_width="wrap_content"

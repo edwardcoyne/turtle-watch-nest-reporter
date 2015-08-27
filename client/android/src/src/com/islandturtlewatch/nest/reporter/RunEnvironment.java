@@ -1,12 +1,12 @@
 package com.islandturtlewatch.nest.reporter;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import android.os.Build;
 
 import com.google.api.client.repackaged.com.google.common.base.Preconditions;
 import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.ReportEndpoint;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RunEnvironment {
   private enum Environment{
@@ -14,8 +14,8 @@ public class RunEnvironment {
     DEVELOPMENT,
     PROD
   };
-  private static final Environment environment = Environment.PROD;
-  private static final String localAddress = "10.255.0.43";
+  private static final Environment environment = Environment.LOCAL;
+  private static final String localAddress = "10.0.0.6";
   private static final String localAddressWPort = localAddress + ":8080";
   private static final int backendVersion = 3;
 

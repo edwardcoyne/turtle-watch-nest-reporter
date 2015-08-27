@@ -129,4 +129,5 @@
     <string name="edit_nest_condition_damage_nest_depredated">Nest Completely Depredated</string>
     <string name="edit_nest_condition_damage_another_turtle">Eggs Damaged by Another Turtle</string>
     <string name="edit_nest_condition_inundated_event">Nest Inundated - Eggs Only</string>
+    <string name="edit_nest_location_escarpment_over_18_inches">Escarpment Over 18 Inches</string>
 </resources>
