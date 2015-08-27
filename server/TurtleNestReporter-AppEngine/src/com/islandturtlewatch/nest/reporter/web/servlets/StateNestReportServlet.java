@@ -33,6 +33,8 @@ import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.
 import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.InitialTreatmentColumn;
 import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.FinalTreatmentColumn;
 import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.ConditionallyMappedColumn;
+import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedPriorityColumn;
+import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedYesNoColumn;
 import com.islandturtlewatch.nest.reporter.frontend.reports.ReportCsvGenerator;
 import com.islandturtlewatch.nest.reporter.frontend.reports.ReportCsvGenerator.Column;
 import com.islandturtlewatch.nest.reporter.frontend.reports.ReportCsvGenerator.Path;
@@ -50,6 +52,12 @@ public class StateNestReportServlet extends HttpServlet {
       new StaticValueColumn("Escarpment >= 18 Encountered", "NO"),
       new MappedColumn("ID/Label", "report.nest_number"),
       sectionColumn,
+      new StaticValueColumn("Nest within Project Area","YES"),
+      new MappedColumn("City","report.location.city"),
+      new MappedColumn("Address","report.location.street_address"),
+      new MappedColumnWithDefault("Clutch Size Counted When Nest Was Made",
+              "report.intervention.relocation.eggs_relocated",
+              "UNK"),
       new InitialTreatmentColumn("Initial Treatment ",
           "report.intervention.relocation.was_relocated",
           "report.timestamp_found_ms",
@@ -65,22 +73,48 @@ public class StateNestReportServlet extends HttpServlet {
       new MappedDistanceColumn("Distance From MHW",
           "report.location.water_to_apex_ft", "report.location.water_to_apex_in"),
       new MappedColumn("Nest Relocated", "report.intervention.relocation.was_relocated"),
-      new FinalActivityColumn("Final Activity",
-          "report.condition.abandoned_body_pits", "report.condition.abandoned_egg_cavities"),
+          //not required for Nest report, only for False Crawl Report
+//      new FinalActivityColumn("Final Activity",
+//          "report.condition.abandoned_body_pits", "report.condition.abandoned_egg_cavities"),
       new MappedIsPresentColumn("Nest Washed Over", "report.condition.wash_over.0.timestamp_ms"),
-      new MappedIsPresentColumn("Nest Completely or Partially Washed Out",
-          "report.condition.wash_out.timestamp_ms"),
+      new MappedIsPresentColumn("Inundated","report.condition.inundated_event.0.timestamp_ms"),
+          //This column deprecated, has been split into distinct complete/partial columns
+//      new MappedIsPresentColumn("Nest Completely or Partially Washed Out",
+//          "report.condition.wash_out.timestamp_ms"),
+      new MappedIsPresentColumn("Complete Wash out","report.condition.wash_out.timestamp_ms"),
+      new MappedIsPresentColumn("Partial Wash out","report.condition.partial_washout_timestamp_ms"),
+      new MappedIsPresentColumn("Did Washout Occur Post-Hatch, but Pre-Inventory",
+              "report.condition.post_hatch_washout"),//TODO:(dWenzel) fix this if need be.
+      new MappedPriorityColumn("If Washed Out By A Major Storm Give Name",
+              "report.condition.wash_out.storm_name",
+              "report.condition.partial_washout_storm_name",
+              "BLANK ENTRY"),
+      new MappedIsPresentColumn("Nest Completely Depredated",
+              "report.condition.nest_completely_depredated"),//this might not be right either
       new MappedIsPresentColumn("Predation", "report.condition.preditation.0.timestamp_ms"),
+      new MappedTimestampColumn("Date(s) Predation Occurred",
+              "report.condition.preditation.0.timestamp_ms"),
+      new MappedColumn("If Predated, by What Predator(s)","report.condition.preditation.0.predator"),
+      new MappedYesNoColumn("Roots Invade Eggshells",
+              "report.condition.roots_invaded_eggshells"),
       new MappedTimestampColumn("Eggs Damaged by Another Turtle Date",
           "report.condition.eggs_scattered_by_another_timestamp_ms"),
+      new MappedYesNoColumn("Poached?",
+              "report.condition.poached"),
       new ConditionallyMappedColumn("Type of Vandalism",
-          "report.condition.vandalized", "report.condition.vandalism_type"),
+          "report.condition.vandalized",
+              "report.condition.vandalism_type"),
       new ConditionallyMappedColumn("Eggs Removed",
-          "report.condition.poached", "report.condition.poached_eggs_removed"),
+          "report.condition.poached",
+              "report.condition.poached_eggs_removed"),
       new MappedTimestampColumn("First Hatchling Emergence Date",
           "report.condition.hatch_timestamp_ms"),
+      new MappedTimestampColumn("Subsequent Emergence Date(s)",
+              "report.condition.additional_hatch_timestamp_ms"),
       new MappedColumn("Hatchlings Disoriented", "report.condition.disorientation"),
       new MappedColumn("Nest Inventoried", "report.intervention.excavation.excavated"),
+      new MappedColumn("If Nest Not Inventoried, Why Not?",
+              "report.intervention.excavation.failure_reason"),
       new MappedTimestampColumn("Date Nest Inventoried",
           "report.intervention.excavation.timestamp_ms"),
       new MappedColumn("# of Dead Hatchlings", "report.intervention.excavation.dead_in_nest"),

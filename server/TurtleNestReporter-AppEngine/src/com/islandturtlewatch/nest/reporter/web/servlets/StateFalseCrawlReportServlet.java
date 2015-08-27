@@ -40,16 +40,23 @@ public class StateFalseCrawlReportServlet extends HttpServlet {
   // This is the list of columns in the report, they will appear in this order.
   private static List<ReportColumn> reportColumns = ImmutableList.of(
       new MappedTimestampColumn("Date Crawl Recorded", "report.timestamp_found_ms"),
-      new StaticValueColumn("Species Crawl within Project Area? ", "YES"),
+      new MappedColumn("Species","report.species"),
+      new StaticValueColumn("Crawl within Project Area? ", "YES"),
+      new MappedColumn("City","report.location.city"),
+      new MappedColumn("Address","report.location.street_address"),
       new StaticValueColumn("Escarpment >= 18 Encountered", "NO"),
-      new MappedDistanceColumn("Final Activity Distance From Dune",
+      new OrderedReportWriter.FinalActivityColumn("Final Activity",
+              "report.condition.abandoned_body_pit",
+              "report.condition.abandoned_egg_cavity") ,
+      new MappedDistanceColumn("Distance From Dune",
           "report.location.apex_to_barrier_ft", "report.location.apex_to_barrier_in"),
       new MappedDistanceColumn("Distance From MHW",
           "report.location.water_to_apex_ft", "report.location.water_to_apex_in"),
       new MappedColumn("ID/Label", "report.false_crawl_number"),
       sectionColumn,
+      new MappedColumn("Additional Notes","report.additional_notes"),
       new MappedColumn("Latitude", "report.location.coordinates.lat"),
-      new MappedColumn("Longitude", "report.location.coordinates.long"));
+      new OrderedReportWriter.MappedColumnAbsoluteValueDouble("Longitude", "report.location.coordinates.long"));
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)

@@ -141,6 +141,31 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
     }
   }
 
+  public static class MappedPriorityColumn extends ReportColumn {
+    public MappedPriorityColumn (String name, final String aStringPath,
+                                 final String bStringPath, final String defaultString) {
+      super(name, new ValueFetcher() {
+        private final Path aPath = new Path(aStringPath);
+        private final Path bPath = new Path(bStringPath);
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column columnA = columnMap.get(aPath);
+          Column columnB = columnMap.get(bPath);
+          Preconditions.checkNotNull(columnA, "Missing path: " + aStringPath);
+          Preconditions.checkNotNull(columnB, "Missing path: " + bStringPath);
+          if (columnA.hasValue(rowId)) {
+            return columnA.getValue(rowId);
+          } else if (columnB.hasValue(rowId)) {
+            return columnB.getValue(rowId);
+          } else {
+            return defaultString;
+          }
+        }
+      });
+
+    }
+  }
+
   // Will output the value at valuePath if the value at controlPath is true.
   public static class ConditionallyMappedColumn extends ReportColumn {
     public ConditionallyMappedColumn(String name,
@@ -161,6 +186,22 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
       });
     }
   }
+    //converts Yes and No to Y and N
+  public static class MappedYesNoColumn extends ReportColumn {
+    public MappedYesNoColumn(String name, final String stringPath) {
+      super(name, new ValueFetcher() {
+        private final Path path = new Path(stringPath);
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column column = columnMap.get(path);
+          Preconditions.checkNotNull(column, "Missing path: " + stringPath);
+          if (column.getValue(rowId) == "Yes") {
+            return "Y";
+          }else return "N";
+        }
+      });
+    }
+  }
 
   // Value will be YES if there is a value at the path.
   public static class MappedIsPresentColumn extends ReportColumn {
@@ -170,7 +211,8 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
         @Override public String fetch(Map<Path, Column> columnMap, int rowId) {
           Column column = columnMap.get(path);
           Preconditions.checkNotNull(column, "Missing path: " + stringPath);
-          return column.hasValue(rowId) ? "YES" : "NO";
+          //changed from YES : NO to coincide with FWC Reporting requirements
+          return column.hasValue(rowId) ? "Y" : "N";
         }
       });
     }
