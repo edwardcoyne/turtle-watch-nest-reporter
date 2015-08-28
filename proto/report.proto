@@ -164,6 +164,8 @@ message NestLocation {
     optional int32 south_in = 6;
   }
   optional Triangulation triangulation = 12;
+  optional bool escarpment_over_18_inches = 13;
+// Next ID=14
 }
 
 message Intervention {

@@ -9361,6 +9361,23 @@ public final class ReportProto {
      * <code>optional .com.islandturtlewatch.nest.data.NestLocation.Triangulation triangulation = 12;</code>
      */
     com.islandturtlewatch.nest.data.ReportProto.NestLocation.TriangulationOrBuilder getTriangulationOrBuilder();
+
+    /**
+     * <code>optional bool escarpment_over_18_inches = 13;</code>
+     *
+     * <pre>
+     * Next ID=14
+     * </pre>
+     */
+    boolean hasEscarpmentOver18Inches();
+    /**
+     * <code>optional bool escarpment_over_18_inches = 13;</code>
+     *
+     * <pre>
+     * Next ID=14
+     * </pre>
+     */
+    boolean getEscarpmentOver18Inches();
   }
   /**
    * Protobuf type {@code com.islandturtlewatch.nest.data.NestLocation}
@@ -9510,6 +9527,11 @@ public final class ReportProto {
                 triangulation_ = subBuilder.buildPartial();
               }
               bitField0_ |= 0x00000800;
+              break;
+            }
+            case 104: {
+              bitField0_ |= 0x00001000;
+              escarpmentOver18Inches_ = input.readBool();
               break;
             }
           }
@@ -11741,6 +11763,29 @@ public final class ReportProto {
       return triangulation_;
     }
 
+    public static final int ESCARPMENT_OVER_18_INCHES_FIELD_NUMBER = 13;
+    private boolean escarpmentOver18Inches_;
+    /**
+     * <code>optional bool escarpment_over_18_inches = 13;</code>
+     *
+     * <pre>
+     * Next ID=14
+     * </pre>
+     */
+    public boolean hasEscarpmentOver18Inches() {
+      return ((bitField0_ & 0x00001000) == 0x00001000);
+    }
+    /**
+     * <code>optional bool escarpment_over_18_inches = 13;</code>
+     *
+     * <pre>
+     * Next ID=14
+     * </pre>
+     */
+    public boolean getEscarpmentOver18Inches() {
+      return escarpmentOver18Inches_;
+    }
+
     private void initFields() {
       streetAddress_ = "";
       section_ = 0;
@@ -11754,6 +11799,7 @@ public final class ReportProto {
       waterToApexIn_ = 0;
       coordinates_ = com.islandturtlewatch.nest.data.ReportProto.GpsCoordinates.getDefaultInstance();
       triangulation_ = com.islandturtlewatch.nest.data.ReportProto.NestLocation.Triangulation.getDefaultInstance();
+      escarpmentOver18Inches_ = false;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -11803,6 +11849,9 @@ public final class ReportProto {
       }
       if (((bitField0_ & 0x00000800) == 0x00000800)) {
         output.writeMessage(12, triangulation_);
+      }
+      if (((bitField0_ & 0x00001000) == 0x00001000)) {
+        output.writeBool(13, escarpmentOver18Inches_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -11860,6 +11909,10 @@ public final class ReportProto {
       if (((bitField0_ & 0x00000800) == 0x00000800)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(12, triangulation_);
+      }
+      if (((bitField0_ & 0x00001000) == 0x00001000)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(13, escarpmentOver18Inches_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -12017,6 +12070,8 @@ public final class ReportProto {
           triangulationBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000800);
+        escarpmentOver18Inches_ = false;
+        bitField0_ = (bitField0_ & ~0x00001000);
         return this;
       }
 
@@ -12105,6 +12160,10 @@ public final class ReportProto {
         } else {
           result.triangulation_ = triangulationBuilder_.build();
         }
+        if (((from_bitField0_ & 0x00001000) == 0x00001000)) {
+          to_bitField0_ |= 0x00001000;
+        }
+        result.escarpmentOver18Inches_ = escarpmentOver18Inches_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -12160,6 +12219,9 @@ public final class ReportProto {
         }
         if (other.hasTriangulation()) {
           mergeTriangulation(other.getTriangulation());
+        }
+        if (other.hasEscarpmentOver18Inches()) {
+          setEscarpmentOver18Inches(other.getEscarpmentOver18Inches());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -12916,6 +12978,54 @@ public final class ReportProto {
           triangulation_ = null;
         }
         return triangulationBuilder_;
+      }
+
+      private boolean escarpmentOver18Inches_ ;
+      /**
+       * <code>optional bool escarpment_over_18_inches = 13;</code>
+       *
+       * <pre>
+       * Next ID=14
+       * </pre>
+       */
+      public boolean hasEscarpmentOver18Inches() {
+        return ((bitField0_ & 0x00001000) == 0x00001000);
+      }
+      /**
+       * <code>optional bool escarpment_over_18_inches = 13;</code>
+       *
+       * <pre>
+       * Next ID=14
+       * </pre>
+       */
+      public boolean getEscarpmentOver18Inches() {
+        return escarpmentOver18Inches_;
+      }
+      /**
+       * <code>optional bool escarpment_over_18_inches = 13;</code>
+       *
+       * <pre>
+       * Next ID=14
+       * </pre>
+       */
+      public Builder setEscarpmentOver18Inches(boolean value) {
+        bitField0_ |= 0x00001000;
+        escarpmentOver18Inches_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional bool escarpment_over_18_inches = 13;</code>
+       *
+       * <pre>
+       * Next ID=14
+       * </pre>
+       */
+      public Builder clearEscarpmentOver18Inches() {
+        bitField0_ = (bitField0_ & ~0x00001000);
+        escarpmentOver18Inches_ = false;
+        onChanged();
+        return this;
       }
 
       // @@protoc_insertion_point(builder_scope:com.islandturtlewatch.nest.data.NestLocation)
@@ -17830,7 +17940,7 @@ public final class ReportProto {
       "mestamp_ms\030\001 \001(\003\022\020\n\010predator\030\002 \001(\t\022\026\n\016nu" +
       "mber_of_eggs\030\003 \001(\005\"U\n\rVandalismType\022\n\n\006U",
       "NKOWN\020\001\022\022\n\016STAKES_REMOVED\020\002\022\021\n\rNEST_DUG_" +
-      "INTO\020\003\022\021\n\rEGGS_AFFECTED\020\004\"\233\010\n\014NestLocati" +
+      "INTO\020\003\022\021\n\rEGGS_AFFECTED\020\004\"\276\010\n\014NestLocati" +
       "on\022\026\n\016street_address\030\001 \001(\t\022\017\n\007section\030\002 " +
       "\001(\005\022\017\n\007details\030\003 \001(\t\022@\n\004city\030\004 \001(\01622.com" +
       ".islandturtlewatch.nest.data.NestLocatio" +
@@ -17844,58 +17954,59 @@ public final class ReportProto {
       "coordinates\030\013 \001(\0132/.com.islandturtlewatc" +
       "h.nest.data.GpsCoordinates\022R\n\rtriangulat" +
       "ion\030\014 \001(\0132;.com.islandturtlewatch.nest.d" +
-      "ata.NestLocation.Triangulation\032_\n\020NestOb" +
-      "structions\022\025\n\rseawall_rocks\030\001 \001(\010\022\021\n\tfur" +
-      "niture\030\002 \001(\010\022\022\n\nescarpment\030\003 \001(\010\022\r\n\005othe" +
-      "r\030\004 \001(\t\032\327\001\n\rTriangulation\022>\n\005north\030\001 \001(\013" +
-      "2/.com.islandturtlewatch.nest.data.GpsCo",
-      "ordinates\022\020\n\010north_ft\030\003 \001(\005\022\020\n\010north_in\030" +
-      "\004 \001(\005\022>\n\005south\030\002 \001(\0132/.com.islandturtlew" +
-      "atch.nest.data.GpsCoordinates\022\020\n\010south_f" +
-      "t\030\005 \001(\005\022\020\n\010south_in\030\006 \001(\005\".\n\004City\022\016\n\nUNS" +
-      "ET_CITY\020\001\022\006\n\002AM\020\002\022\006\n\002BB\020\003\022\006\n\002HB\020\004\"|\n\tPla" +
-      "cement\022\023\n\017UNSET_PLACEMENT\020\001\022\016\n\nOPEN_BEAC" +
-      "H\020\002\022\021\n\rIN_VEGITATION\020\003\022\021\n\rAT_VEGITATION\020" +
-      "\004\022\021\n\rAT_ESCARPMENT\020\005\022\021\n\rON_ESCARPMENT\020\006\"" +
-      "\217\005\n\014Intervention\022W\n\020protection_event\030\001 \001" +
-      "(\0132=.com.islandturtlewatch.nest.data.Int",
-      "ervention.ProtectionEvent\022?\n\nrelocation\030" +
-      "\002 \001(\0132+.com.islandturtlewatch.nest.data." +
-      "Relocation\022?\n\nexcavation\030\003 \001(\0132+.com.isl" +
-      "andturtlewatch.nest.data.Excavation\022\017\n\007a" +
-      "dopted\030\004 \001(\010\032\222\003\n\017ProtectionEvent\022\024\n\014time" +
-      "stamp_ms\030\001 \001(\003\022P\n\004type\030\002 \001(\0162B.com.islan" +
-      "dturtlewatch.nest.data.Intervention.Prot" +
-      "ectionEvent.Type\022T\n\006reason\030\003 \001(\0162D.com.i" +
-      "slandturtlewatch.nest.data.Intervention." +
-      "ProtectionEvent.Reason\"^\n\004Type\022\016\n\nUNSET_",
-      "TYPE\020\001\022\027\n\023SELF_RELEASING_CAGE\020\002\022\027\n\023SELF_" +
-      "RELEASING_FLAT\020\003\022\024\n\020RESTRAINING_CAGE\020\004\"a" +
-      "\n\006Reason\022\020\n\014UNSET_REASON\020\001\022\026\n\022BEFORE_PRE" +
-      "DITATION\020\002\022\025\n\021AFTER_PREDITATION\020\003\022\026\n\022FOR" +
-      "_LIGHT_PROBLEMS\020\004\"\265\003\n\nExcavation\022\024\n\014time" +
-      "stamp_ms\030\001 \001(\003\022\021\n\texcavated\030\002 \001(\010\022[\n\016fai" +
-      "lure_reason\030\003 \001(\0162C.com.islandturtlewatc" +
-      "h.nest.data.Excavation.ExcavationFailure" +
-      "Reason\022\025\n\rfailure_other\030\004 \001(\t\022\024\n\014dead_in" +
-      "_nest\030\005 \001(\005\022\024\n\014live_in_nest\030\006 \001(\005\022\026\n\016hat",
-      "ched_shells\030\007 \001(\005\022\023\n\013dead_pipped\030\010 \001(\005\022\023" +
-      "\n\013live_pipped\030\t \001(\005\022\027\n\017whole_unhatched\030\n" +
-      " \001(\005\022\026\n\016eggs_destroyed\030\013 \001(\005\"k\n\027Excavati" +
-      "onFailureReason\022\020\n\014UNSET_REASON\020\001\022\022\n\016EGG" +
-      "S_NOT_FOUND\020\002\022\037\n\033EGGS_HATCHLINGS_TOO_DEC" +
-      "AYED\020\003\022\t\n\005OTHER\020\004\"\364\002\n\nRelocation\022\025\n\rwas_" +
-      "relocated\030\001 \001(\010\022\024\n\014timestamp_ms\030\002 \001(\003\022\023\n" +
-      "\013new_address\030\003 \001(\t\022D\n\013coordinates\030\004 \001(\0132" +
-      "/.com.islandturtlewatch.nest.data.GpsCoo" +
-      "rdinates\022\026\n\016eggs_relocated\030\005 \001(\005\022\026\n\016eggs",
-      "_destroyed\030\006 \001(\005\022B\n\006reason\030\013 \001(\01622.com.i" +
-      "slandturtlewatch.nest.data.Relocation.Re" +
-      "ason\"j\n\006Reason\022\020\n\014UNSET_REASON\020\001\022\016\n\nHIGH" +
-      "_WATER\020\002\022\r\n\tPREDATION\020\003\022\017\n\013WASHING_OUT\020\004" +
-      "\022\036\n\032CONSTRUCTION_RENOURISHMENT\020\005\"+\n\016GpsC" +
-      "oordinates\022\013\n\003lat\030\001 \001(\001\022\014\n\004long\030\002 \001(\001B\rB" +
-      "\013ReportProto"
+      "ata.NestLocation.Triangulation\022!\n\031escarp" +
+      "ment_over_18_inches\030\r \001(\010\032_\n\020NestObstruc" +
+      "tions\022\025\n\rseawall_rocks\030\001 \001(\010\022\021\n\tfurnitur" +
+      "e\030\002 \001(\010\022\022\n\nescarpment\030\003 \001(\010\022\r\n\005other\030\004 \001" +
+      "(\t\032\327\001\n\rTriangulation\022>\n\005north\030\001 \001(\0132/.co",
+      "m.islandturtlewatch.nest.data.GpsCoordin" +
+      "ates\022\020\n\010north_ft\030\003 \001(\005\022\020\n\010north_in\030\004 \001(\005" +
+      "\022>\n\005south\030\002 \001(\0132/.com.islandturtlewatch." +
+      "nest.data.GpsCoordinates\022\020\n\010south_ft\030\005 \001" +
+      "(\005\022\020\n\010south_in\030\006 \001(\005\".\n\004City\022\016\n\nUNSET_CI" +
+      "TY\020\001\022\006\n\002AM\020\002\022\006\n\002BB\020\003\022\006\n\002HB\020\004\"|\n\tPlacemen" +
+      "t\022\023\n\017UNSET_PLACEMENT\020\001\022\016\n\nOPEN_BEACH\020\002\022\021" +
+      "\n\rIN_VEGITATION\020\003\022\021\n\rAT_VEGITATION\020\004\022\021\n\r" +
+      "AT_ESCARPMENT\020\005\022\021\n\rON_ESCARPMENT\020\006\"\217\005\n\014I" +
+      "ntervention\022W\n\020protection_event\030\001 \001(\0132=.",
+      "com.islandturtlewatch.nest.data.Interven" +
+      "tion.ProtectionEvent\022?\n\nrelocation\030\002 \001(\013" +
+      "2+.com.islandturtlewatch.nest.data.Reloc" +
+      "ation\022?\n\nexcavation\030\003 \001(\0132+.com.islandtu" +
+      "rtlewatch.nest.data.Excavation\022\017\n\007adopte" +
+      "d\030\004 \001(\010\032\222\003\n\017ProtectionEvent\022\024\n\014timestamp" +
+      "_ms\030\001 \001(\003\022P\n\004type\030\002 \001(\0162B.com.islandturt" +
+      "lewatch.nest.data.Intervention.Protectio" +
+      "nEvent.Type\022T\n\006reason\030\003 \001(\0162D.com.island" +
+      "turtlewatch.nest.data.Intervention.Prote",
+      "ctionEvent.Reason\"^\n\004Type\022\016\n\nUNSET_TYPE\020" +
+      "\001\022\027\n\023SELF_RELEASING_CAGE\020\002\022\027\n\023SELF_RELEA" +
+      "SING_FLAT\020\003\022\024\n\020RESTRAINING_CAGE\020\004\"a\n\006Rea" +
+      "son\022\020\n\014UNSET_REASON\020\001\022\026\n\022BEFORE_PREDITAT" +
+      "ION\020\002\022\025\n\021AFTER_PREDITATION\020\003\022\026\n\022FOR_LIGH" +
+      "T_PROBLEMS\020\004\"\265\003\n\nExcavation\022\024\n\014timestamp" +
+      "_ms\030\001 \001(\003\022\021\n\texcavated\030\002 \001(\010\022[\n\016failure_" +
+      "reason\030\003 \001(\0162C.com.islandturtlewatch.nes" +
+      "t.data.Excavation.ExcavationFailureReaso" +
+      "n\022\025\n\rfailure_other\030\004 \001(\t\022\024\n\014dead_in_nest",
+      "\030\005 \001(\005\022\024\n\014live_in_nest\030\006 \001(\005\022\026\n\016hatched_" +
+      "shells\030\007 \001(\005\022\023\n\013dead_pipped\030\010 \001(\005\022\023\n\013liv" +
+      "e_pipped\030\t \001(\005\022\027\n\017whole_unhatched\030\n \001(\005\022" +
+      "\026\n\016eggs_destroyed\030\013 \001(\005\"k\n\027ExcavationFai" +
+      "lureReason\022\020\n\014UNSET_REASON\020\001\022\022\n\016EGGS_NOT" +
+      "_FOUND\020\002\022\037\n\033EGGS_HATCHLINGS_TOO_DECAYED\020" +
+      "\003\022\t\n\005OTHER\020\004\"\364\002\n\nRelocation\022\025\n\rwas_reloc" +
+      "ated\030\001 \001(\010\022\024\n\014timestamp_ms\030\002 \001(\003\022\023\n\013new_" +
+      "address\030\003 \001(\t\022D\n\013coordinates\030\004 \001(\0132/.com" +
+      ".islandturtlewatch.nest.data.GpsCoordina",
+      "tes\022\026\n\016eggs_relocated\030\005 \001(\005\022\026\n\016eggs_dest" +
+      "royed\030\006 \001(\005\022B\n\006reason\030\013 \001(\01622.com.island" +
+      "turtlewatch.nest.data.Relocation.Reason\"" +
+      "j\n\006Reason\022\020\n\014UNSET_REASON\020\001\022\016\n\nHIGH_WATE" +
+      "R\020\002\022\r\n\tPREDATION\020\003\022\017\n\013WASHING_OUT\020\004\022\036\n\032C" +
+      "ONSTRUCTION_RENOURISHMENT\020\005\"+\n\016GpsCoordi" +
+      "nates\022\013\n\003lat\030\001 \001(\001\022\014\n\004long\030\002 \001(\001B\rB\013Repo" +
+      "rtProto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -17956,7 +18067,7 @@ public final class ReportProto {
     internal_static_com_islandturtlewatch_nest_data_NestLocation_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_com_islandturtlewatch_nest_data_NestLocation_descriptor,
-        new java.lang.String[] { "StreetAddress", "Section", "Details", "City", "Placement", "Obstructions", "ApexToBarrierFt", "ApexToBarrierIn", "WaterToApexFt", "WaterToApexIn", "Coordinates", "Triangulation", });
+        new java.lang.String[] { "StreetAddress", "Section", "Details", "City", "Placement", "Obstructions", "ApexToBarrierFt", "ApexToBarrierIn", "WaterToApexFt", "WaterToApexIn", "Coordinates", "Triangulation", "EscarpmentOver18Inches", });
     internal_static_com_islandturtlewatch_nest_data_NestLocation_NestObstructions_descriptor =
       internal_static_com_islandturtlewatch_nest_data_NestLocation_descriptor.getNestedTypes().get(0);
     internal_static_com_islandturtlewatch_nest_data_NestLocation_NestObstructions_fieldAccessorTable = new
