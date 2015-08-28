@@ -48,8 +48,8 @@
     <string name="edit_nest_location_details">Details</string>
     <string name="edit_nest_location_location">Location</string>
     <string name="edit_nest_location_open_beach">Open Beach</string>
-    <string name="edit_nest_location_in_vegitation">In Vegitation</string>
-    <string name="edit_nest_location_at_vegitation">At Vegitation</string>
+    <string name="edit_nest_location_in_vegitation">In Vegetation</string>
+    <string name="edit_nest_location_at_vegitation">At Vegetation</string>
     <string name="edit_nest_location_at_escarpment">At Escarpment</string>
     <string name="edit_nest_location_on_escarpment">On Escarpment</string>
     <string name="edit_nest_location_obstructions">Obstructions</string>

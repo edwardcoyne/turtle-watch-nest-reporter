@@ -21,8 +21,24 @@
 	      <!-- Will be dynamically populated -->
 
 	   </TableLayout>
+		<TableRow
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" >
 
-        <TableRow
+			<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/edit_nest_condition_inundated_event" />
+		</TableRow>
+		<TableLayout
+			android:id="@+id/tableInundatedEvent">
+			<!-- Will be dynamically populated -->
+
+		</TableLayout>
+
+
+		<TableRow
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" ></TableRow>
 
@@ -147,21 +163,6 @@
 				<!--android:enabled="false"-->
 				<!--android:onClick="handleClick" />-->
 		<!--</TableRow>-->
-		<TableRow
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content" >
-
-			<TextView
-				android:layout_width="0dp"
-				android:layout_height="wrap_content"
-				android:layout_weight="1"
-				android:text="@string/edit_nest_condition_inundated_event" />
-		</TableRow>
-		<TableLayout
-			android:id="@+id/tableInundatedEvent">
-			<!-- Will be dynamically populated -->
-
-		</TableLayout>
 
 
 		<TableRow
@@ -300,5 +301,6 @@
 				android:onClick="handleClick" />
 
 		</TableRow>
+
 	</TableLayout>
 </ScrollView>
