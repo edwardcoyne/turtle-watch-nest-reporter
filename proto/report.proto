@@ -91,8 +91,10 @@ message NestCondition {
   repeated WashEvent wash_over = 7;
   optional WashEvent wash_out = 8;
   optional WashEvent partial_washout = 19;
+//nest_inundated is deprecated, use new inundated_event instead
   optional bool nest_inundated = 21;
   optional int64 nest_inundated_timestamp_ms = 22;
+  repeated WashEvent inundated_event = 25;
 
   message PreditationEvent {
     optional int64 timestamp_ms = 1;
@@ -112,7 +114,7 @@ message NestCondition {
   optional bool eggs_damaged_by_another_turtle = 24;
 
 
-  // Next ID=25
+  // Next ID=26
 }
 
 message NestLocation {
@@ -162,6 +164,8 @@ message NestLocation {
     optional int32 south_in = 6;
   }
   optional Triangulation triangulation = 12;
+  optional bool escarpment_over_18_inches = 13;
+// Next ID=14
 }
 
 message Intervention {

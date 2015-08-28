@@ -19,21 +19,29 @@
 	   <TableLayout
 	       android:id="@+id/tableWashOver">
 	      <!-- Will be dynamically populated -->
-	   </TableLayout>
 
-        <TableRow
+	   </TableLayout>
+		<TableRow
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" >
+
+			<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/edit_nest_condition_inundated_event" />
+		</TableRow>
+		<TableLayout
+			android:id="@+id/tableInundatedEvent">
+			<!-- Will be dynamically populated -->
+
+		</TableLayout>
+
+
+		<TableRow
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/edit_nest_condition_predataion" />
-        </TableRow>
-        <TableLayout
-            android:id="@+id/tablePredatitation">
-            <!-- Will be dynamically populated -->
-        </TableLayout>
+            android:layout_height="wrap_content" ></TableRow>
+
 
 		<TableRow
 			android:layout_width="wrap_content"
@@ -122,25 +130,42 @@
 	            android:text="@string/edit_nest_condition_damage_contact_suzi" />
 	   </TableRow>
 		<TableRow
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content" >
-			<CheckBox
-				android:id="@+id/fieldDamageNestInundated"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+
+			<TextView
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_weight="1"
-				android:layout_marginBottom="5dp"
-				android:text="@string/edit_nest_condition_nest_inundated"
-				android:onClick="handleClick" />
-
-			<Button
-				android:id="@+id/buttonDamageNestInundatedDate"
-				android:text="@string/date_button"
-				android:enabled="false"
-				android:onClick="handleClick" />
+				android:text="@string/edit_nest_condition_predataion"
+				android:layout_column="0" />
 		</TableRow>
+		<TableLayout
+			android:id="@+id/tablePredatitation">
+			<!-- Will be dynamically populated -->
+		</TableLayout>
+		<!-- NestInundated checkbox is deprecated, use new InundatedEvent instead-->
+		<!--<TableRow-->
+			<!--android:layout_width="wrap_content"-->
+			<!--android:layout_height="wrap_content" >-->
+			<!--<CheckBox-->
+				<!--android:id="@+id/fieldDamageNestInundated"-->
+				<!--android:layout_width="0dp"-->
+				<!--android:layout_height="wrap_content"-->
+				<!--android:layout_weight="1"-->
+				<!--android:layout_marginBottom="5dp"-->
+				<!--android:text="@string/edit_nest_condition_nest_inundated"-->
+				<!--android:onClick="handleClick" />-->
 
-	   <TableRow
+			<!--<Button-->
+				<!--android:id="@+id/buttonDamageNestInundatedDate"-->
+				<!--android:text="@string/date_button"-->
+				<!--android:enabled="false"-->
+				<!--android:onClick="handleClick" />-->
+		<!--</TableRow>-->
+
+
+		<TableRow
 	       android:layout_width="wrap_content"
 	       android:layout_height="wrap_content" >
 	
@@ -276,5 +301,6 @@
 				android:onClick="handleClick" />
 
 		</TableRow>
+
 	</TableLayout>
 </ScrollView>

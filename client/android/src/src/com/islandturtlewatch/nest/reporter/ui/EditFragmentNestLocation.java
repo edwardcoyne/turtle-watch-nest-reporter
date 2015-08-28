@@ -1,23 +1,24 @@
 package com.islandturtlewatch.nest.reporter.ui;
 
-import java.util.Map;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
+import com.islandturtlewatch.nest.data.ReportProto;
 import com.islandturtlewatch.nest.data.ReportProto.GpsCoordinates;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation.City;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation.Placement;
-import com.islandturtlewatch.nest.data.ReportProto.NestLocation.Triangulation;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
+import com.islandturtlewatch.nest.reporter.data.Date;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.ApexToBarrierFtMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.ApexToBarrierInMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.CityMutation;
@@ -33,6 +34,9 @@ import com.islandturtlewatch.nest.reporter.data.ReportMutations.WaterToApexFtMut
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.WaterToApexInMutation;
 import com.islandturtlewatch.nest.reporter.ui.GpsCoordinateDialog.GpsLocationCallback;
 import com.islandturtlewatch.nest.reporter.util.GpsUtil;
+import com.islandturtlewatch.nest.data.ReportProto.Intervention;
+
+import java.util.Map;
 
 public class EditFragmentNestLocation extends EditFragment {
   //private static final String TAG = EditFragmentNestLocation.class.getSimpleName();
@@ -50,6 +54,13 @@ public class EditFragmentNestLocation extends EditFragment {
           new HandleSetCityAM(),
           new HandleSetCityHB(),
           new HandleSetCityBB(),
+          new HandleSetEscarpmentOver18Inches(),
+          new HandleSetRelocated(),
+          new HandleSetHighWater(),
+          new HandleSetPredation(),
+          new HandleSetWashingOut(),
+          new HandleSetConstruction(),
+          new HandleSetRelocationDate(),
           new HandleSetGps());
 
   private static final Map<Integer, TextChangeHandler> TEXT_CHANGE_HANDLERS =
@@ -60,6 +71,7 @@ public class EditFragmentNestLocation extends EditFragment {
           new HandleUpdateApexToBarrierIn(),
           new HandleUpdateWaterToApexFt(),
           new HandleUpdateWaterToApexIn(),
+              new HandleUpdateEggsRelocated(),
           new HandleUpdateObstructionsOther());
 
   @Override
@@ -81,6 +93,7 @@ public class EditFragmentNestLocation extends EditFragment {
 
   @Override
   public void updateSection(Report report) {
+    Intervention intervention = report.getIntervention();
     NestLocation location = report.getLocation();
 
     if (report.getLocation().hasCoordinates()) {
@@ -90,13 +103,13 @@ public class EditFragmentNestLocation extends EditFragment {
     }
 
     setText(R.id.fieldAddress, location.hasStreetAddress() ?
-        location.getStreetAddress() : "");
+            location.getStreetAddress() : "");
     setChecked(R.id.fieldLocationAM, location.getCity() == City.AM);
     setChecked(R.id.fieldLocationHB, location.getCity() == City.HB);
     setChecked(R.id.fieldLocationBB, location.getCity() == City.BB);
 
     setText(R.id.fieldDetails, location.hasDetails() ?
-        location.getDetails() : "");
+            location.getDetails() : "");
 
     setText(R.id.fieldApexToBarrier_ft, location.hasApexToBarrierFt() ?
         Integer.toString(location.getApexToBarrierFt()) : "");
@@ -106,19 +119,126 @@ public class EditFragmentNestLocation extends EditFragment {
     setText(R.id.fieldWaterToApex_ft, location.hasWaterToApexFt() ?
         Integer.toString(location.getWaterToApexFt()) : "");
     setText(R.id.fieldWaterToApex_in, location.hasWaterToApexIn() ?
-        Integer.toString(location.getWaterToApexIn()) : "");
+            Integer.toString(location.getWaterToApexIn()) : "");
 
     setChecked(R.id.fieldLocationOpenBeach, location.getPlacement() == Placement.OPEN_BEACH);
     setChecked(R.id.fieldLocationInVegitation, location.getPlacement() == Placement.IN_VEGITATION);
     setChecked(R.id.fieldLocationAtVegitation, location.getPlacement() == Placement.AT_VEGITATION);
     setChecked(R.id.fieldLocationAtEscarpment, location.getPlacement() == Placement.AT_ESCARPMENT);
     setChecked(R.id.fieldLocationOnEscarpment, location.getPlacement() == Placement.ON_ESCARPMENT);
+    setEnabled(R.id.fieldLocationEscarpmentOver18Inches,
+            (isChecked(R.id.fieldLocationAtEscarpment) || isChecked(R.id.fieldLocationOnEscarpment)) );
+
+    setChecked(R.id.fieldLocationEscarpmentOver18Inches,
+            location.getEscarpmentOver18Inches()
+                    && (isChecked(R.id.fieldLocationAtEscarpment)
+                    || isChecked(R.id.fieldLocationOnEscarpment)));
 
     setChecked(R.id.fieldObstructionsSeawallRocks, location.getObstructions().getSeawallRocks());
     setChecked(R.id.fieldObstructionsFurniture, location.getObstructions().getFurniture());
     setChecked(R.id.fieldObstructionsEscarpment, location.getObstructions().getEscarpment());
     setText(R.id.fieldObstructionsOther, location.getObstructions().hasOther() ?
         location.getObstructions().getOther() : "");
+    ReportProto.Relocation relocation = intervention.getRelocation();
+    setChecked(R.id.fieldNestRelocated, relocation.getWasRelocated());
+    setVisible(R.id.tableRelocated, isChecked(R.id.fieldNestRelocated));
+
+    if (relocation.hasTimestampMs()) {
+      setDate(R.id.buttonRelocatedDate, relocation.getTimestampMs());
+    } else {
+      clearDate(R.id.buttonRelocatedDate);
+    }
+
+    if (report.getIntervention().getRelocation().hasCoordinates()) {
+      setText(R.id.buttonNewGps,
+              GpsUtil.format(report.getIntervention().getRelocation().getCoordinates()));
+    } else {
+      setText(R.id.buttonNewGps, getString(R.string.edit_nest_location_button_gps));
+    }
+
+    setText(R.id.fieldNewAddress, relocation.getNewAddress());
+    // TODO(edcoyne) Set gps coordinates
+    setText(R.id.fieldEggsRelocated, relocation.hasEggsRelocated() ?
+            Integer.toString(relocation.getEggsRelocated()) : "");
+    setText(R.id.fieldEggsDestroyed, relocation.hasEggsDestroyed() ?
+            Integer.toString(relocation.getEggsDestroyed()) : "");
+    setChecked(R.id.fieldHighWater, relocation.getReason() == ReportProto.Relocation.Reason.HIGH_WATER);
+    setChecked(R.id.fieldPredation, relocation.getReason() == ReportProto.Relocation.Reason.PREDATION);
+    setChecked(R.id.fieldWashingOut, relocation.getReason() == ReportProto.Relocation.Reason.WASHING_OUT);
+    setChecked(R.id.fieldConstruction,
+            relocation.getReason() == ReportProto.Relocation.Reason.CONSTRUCTION_RENOURISHMENT);
+  }
+
+  private static class HandleSetRelocationDate extends DatePickerClickHandler {
+    protected HandleSetRelocationDate() {
+      super(R.id.buttonRelocatedDate);
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
+      updateHandler.applyMutation(new ReportMutations.DateRelocatedMutation(maybeDate));
+    }
+  }
+  private static class HandleSetRelocated extends ClickHandler {
+    protected HandleSetRelocated() {
+      super(R.id.fieldNestRelocated);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.RelocatedMutation(isChecked(view)));
+    }
+  }
+
+  private static class HandleSetHighWater extends ClickHandler {
+    protected HandleSetHighWater() {
+      super(R.id.fieldHighWater);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(
+              new ReportMutations.RelocatedReasonMutation(ReportProto.Relocation.Reason.HIGH_WATER));
+    }
+  }
+  private static class HandleSetPredation extends ClickHandler {
+    protected HandleSetPredation() {
+      super(R.id.fieldPredation);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(
+              new ReportMutations.RelocatedReasonMutation(ReportProto.Relocation.Reason.PREDATION));
+    }
+  }
+  private static class HandleSetWashingOut extends ClickHandler {
+    protected HandleSetWashingOut() {
+      super(R.id.fieldWashingOut);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(
+              new ReportMutations.RelocatedReasonMutation(ReportProto.Relocation.Reason.WASHING_OUT));
+    }
+  }
+  private static class HandleSetConstruction extends ClickHandler {
+    protected HandleSetConstruction() {
+      super(R.id.fieldConstruction);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(
+              new ReportMutations.RelocatedReasonMutation(ReportProto.Relocation.Reason.CONSTRUCTION_RENOURISHMENT));
+    }
+  }
+
+  private static class HandleUpdateEggsRelocated extends TextChangeHandler {
+    protected HandleUpdateEggsRelocated() {
+      super(R.id.fieldEggsRelocated);
+    }
+
+    @Override
+    public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.EggsRelocatedMutation(getInteger(newText)));
+    }
   }
 
   private static class HandleUpdateAddress extends TextChangeHandler {
@@ -261,6 +381,18 @@ public class EditFragmentNestLocation extends EditFragment {
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
       updateHandler.applyMutation(new PlacementMutation(Placement.AT_ESCARPMENT));
+    }
+  }
+
+  private static class HandleSetEscarpmentOver18Inches extends ClickHandler {
+    protected HandleSetEscarpmentOver18Inches() {
+      super(R.id.fieldLocationEscarpmentOver18Inches);
+    }
+
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(
+              new ReportMutations.EscarpmentOver18InchesMutation(isChecked(view)));
     }
   }
 

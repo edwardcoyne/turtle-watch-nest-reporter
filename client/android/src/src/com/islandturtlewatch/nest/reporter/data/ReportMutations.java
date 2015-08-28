@@ -373,6 +373,20 @@ public class ReportMutations {
     }
   }
 
+  public static class EscarpmentOver18InchesMutation implements ReportMutation {
+    private final boolean isTrue;
+
+    public EscarpmentOver18InchesMutation(boolean isTrue) {
+      this.isTrue = isTrue;
+    }
+
+    @Override
+    public Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      updatedReport.getLocationBuilder().setEscarpmentOver18Inches(isTrue);
+      return updatedReport.build();
+    }
+  }
 
   public static class ObstructionsEscarpmentMutation implements ReportMutation {
     private final boolean isTrue;
@@ -1310,7 +1324,72 @@ public class ReportMutations {
         return updatedReport.build();
       }
     }
+  public static class InundatedEventDateMutation implements ReportMutation {
+    private final Integer ordinal;
+    private final Optional<Date> maybeDate;
 
+    public InundatedEventDateMutation(Integer ordinal, Optional<Date> maybeDate) {
+      this.ordinal = ordinal;
+      this.maybeDate = maybeDate;
+    }
+
+    @Override
+    public Report apply(Report oldReport) {
+      Preconditions.checkNotNull(ordinal);
+      Report.Builder updatedReport = oldReport.toBuilder();
+      NestCondition.Builder condition = updatedReport.getConditionBuilder();
+
+      WashEvent.Builder inundatedEvent = (condition.getInundatedEventCount() <= ordinal) ?
+              condition.addInundatedEventBuilder() : condition.getInundatedEventBuilder(ordinal);
+      if (maybeDate.isPresent()) {
+        inundatedEvent.setTimestampMs(maybeDate.get().getTimestampMs());
+      } else {
+        inundatedEvent.clearTimestampMs();
+      }
+      return updatedReport.build();
+    }
+  }
+
+  public static class InundatedEventStormNameMutation implements ReportMutation {
+    private final Integer ordinal;
+    private final String name;
+
+    public InundatedEventStormNameMutation(Integer ordinal, String name) {
+      this.ordinal = ordinal;
+      this.name = name;
+    }
+
+    @Override
+    public Report apply(Report oldReport) {
+      Preconditions.checkNotNull(ordinal);
+      Report.Builder updatedReport = oldReport.toBuilder();
+      NestCondition.Builder condition = updatedReport.getConditionBuilder();
+
+      WashEvent.Builder inundatedEvent = (condition.getInundatedEventCount() <= ordinal) ?
+              condition.addInundatedEventBuilder() : condition.getInundatedEventBuilder(ordinal);
+      inundatedEvent.setStormName(name);
+
+      return updatedReport.build();
+    }
+  }
+
+  public static class DeleteInundatedEventMutation implements ReportMutation {
+    private final Integer ordinal;
+
+    public DeleteInundatedEventMutation(Integer ordinal) {
+      this.ordinal = ordinal;
+    }
+
+    @Override
+    public Report apply(Report oldReport) {
+      Preconditions.checkNotNull(ordinal);
+      Report.Builder updatedReport = oldReport.toBuilder();
+      NestCondition.Builder condition = updatedReport.getConditionBuilder();
+
+      condition.removeInundatedEvent(ordinal);
+      return updatedReport.build();
+    }
+  }
 
     public static class PredationDateMutation implements ReportMutation {
       private final Integer ordinal;
