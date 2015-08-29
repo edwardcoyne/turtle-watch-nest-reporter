@@ -175,9 +175,9 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
         private final Path valuePath = new Path(valuePathStr);
         @Override public String fetch(Map<Path, Column> columnMap, int rowId) {
           Column control = Preconditions.checkNotNull(columnMap.get(controlPath),
-              "Missing path: " + controlPathStr);
+                  "Missing path: " + controlPathStr);
           Column value = Preconditions.checkNotNull(columnMap.get(valuePath),
-              "Missing path: " + controlPathStr);
+                  "Missing path: " + controlPathStr);
           if (Boolean.parseBoolean(control.getValue(rowId))) {
             return value.getValue(rowId);
           }
@@ -217,6 +217,21 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
       });
     }
   }
+  public static class MappedIsPresentYesNoColumn extends ReportColumn {
+    public MappedIsPresentYesNoColumn(String name, final String stringPath) {
+      super(name, new ValueFetcher() {
+        private final Path path = new Path(stringPath);
+        @Override public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column column = columnMap.get(path);
+          Preconditions.checkNotNull(column, "Missing path: " + stringPath);
+          //changed from YES : NO to coincide with FWC Reporting requirements
+          return column.hasValue(rowId) ? "YES" : "NO";
+        }
+      });
+    }
+  }
+
+
 
   // Column will read section number out of submitting user.
   public static class MappedSectionColumn extends ReportColumn {
