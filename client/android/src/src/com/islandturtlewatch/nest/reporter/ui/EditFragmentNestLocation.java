@@ -134,6 +134,7 @@ public class EditFragmentNestLocation extends EditFragment {
                     && (isChecked(R.id.fieldLocationAtEscarpment)
                     || isChecked(R.id.fieldLocationOnEscarpment)));
 
+
     setChecked(R.id.fieldObstructionsSeawallRocks, location.getObstructions().getSeawallRocks());
     setChecked(R.id.fieldObstructionsFurniture, location.getObstructions().getFurniture());
     setChecked(R.id.fieldObstructionsEscarpment, location.getObstructions().getEscarpment());
