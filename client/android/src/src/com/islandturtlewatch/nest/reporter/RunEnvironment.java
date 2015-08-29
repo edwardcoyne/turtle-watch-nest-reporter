@@ -14,7 +14,7 @@ public class RunEnvironment {
     DEVELOPMENT,
     PROD
   };
-  private static final Environment environment = Environment.LOCAL;
+  private static final Environment environment = Environment.PROD;
   private static final String localAddress = "10.0.0.6";
   private static final String localAddressWPort = localAddress + ":8080";
   private static final int backendVersion = 3;
