@@ -243,6 +243,17 @@
 	           android:text="@string/edit_nest_location_escarpment"
 	           android:onClick="handleClick" />
 	   </TableRow>
+
+<TableRow>
+		<CheckBox
+			android:id="@+id/fieldLocationEscarpmentOver18Inches2"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="@string/edit_nest_location_escarpment_over_18_inches"
+			android:onClick="handleClick" />
+	</TableRow>
+
 	   <TableRow
 	       android:layout_width="wrap_content"
 	       android:layout_height="wrap_content" >
@@ -263,9 +274,17 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content" >
 			<TextView
+				style="@style/Header"
+				android:text="@string/edit_nest_location_relocation" />
+		</TableRow>
+		<TableRow
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" >
+			<TextView
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_weight="1"
+				android:textSize="18sp"
 				android:text="@string/edit_nest_relocation_was_relocated" />
 
 			<ToggleButton

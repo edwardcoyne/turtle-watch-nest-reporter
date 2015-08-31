@@ -76,7 +76,7 @@
     <string name="edit_nest_condition_washout">Complete Washout</string>
     <string name="edit_nest_condition_partial_washout">Partial Washout</string>
     <string name="edit_nest_condition_storm_name">Storm Name</string>
-    <string name="edit_nest_condition_predataion">Nest Predation - Eggs Only</string>
+    <string name="edit_nest_condition_predataion">Nest Predation - Standing Water</string>
     <string name="edit_nest_condition_predator">Predator</string>
     <string name="edit_nest_condition_num_eggs"># of Eggs</string>
     <string name="edit_nest_condition_damage">Nest damage</string>
@@ -130,4 +130,5 @@
     <string name="edit_nest_condition_damage_another_turtle">Eggs Damaged by Another Turtle</string>
     <string name="edit_nest_condition_inundated_event">Nest Inundated - Eggs Only</string>
     <string name="edit_nest_location_escarpment_over_18_inches">Escarpment Over 18 Inches</string>
+    <string name="edit_nest_location_relocation">Nest Relocated</string>
 </resources>

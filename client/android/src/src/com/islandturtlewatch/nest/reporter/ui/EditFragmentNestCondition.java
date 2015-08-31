@@ -23,8 +23,6 @@ import com.islandturtlewatch.nest.reporter.data.Date;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.DeletePredationMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.DeleteWashOverMutation;
-import com.islandturtlewatch.nest.reporter.data.ReportMutations.EggsScatteredDateMutation;
-import com.islandturtlewatch.nest.reporter.data.ReportMutations.EggsScatteredMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.PartialWashoutDateMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.PartialWashoutStormNameMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.PoachedDateMutation;
@@ -49,8 +47,8 @@ import java.util.Map;
 public class EditFragmentNestCondition extends EditFragment {
   private static final Map<Integer, ClickHandler> CLICK_HANDLERS =
       ClickHandler.toMap(
-          new HandleSetEggsScattered(),
-          new HandleSetEggsScatteredDate(),
+//          new HandleSetEggsScattered(),
+//          new HandleSetEggsScatteredDate(),
           new HandleSetPostHatchWashout(),
           new HandleSetPoached(),
           new HandleSetPoachedDate(),
@@ -116,7 +114,10 @@ public class EditFragmentNestCondition extends EditFragment {
     }
 
     if (condition.getPartialWashout().hasTimestampMs()) {
-      setDate(R.id.buttonPartialWashOutDate,condition.getPartialWashout().getTimestampMs());
+      setDate(R.id.buttonPartialWashOutDate,
+              condition.getPartialWashout().getTimestampMs());
+    } else {
+      clearDate(R.id.buttonPartialWashOutDate);
     }
 
     setText(R.id.fieldWashOutStormName, condition.getWashOut().getStormName());
@@ -164,13 +165,13 @@ public class EditFragmentNestCondition extends EditFragment {
     setVisible(R.id.rowPoachedDetails, condition.getPoached());
     setChecked(R.id.fieldDamagePoachedEggsRemoved, condition.getPoachedEggsRemoved());
 
-    setChecked(R.id.fieldDamageEggsScattered, condition.getEggsScatteredByAnother());
-    setEnabled(R.id.buttonDamageEggsScatteredDate, condition.getEggsScatteredByAnother());
-    if (condition.hasEggsScatteredByAnotherTimestampMs()) {
-      setDate(R.id.buttonDamageEggsScatteredDate, condition.getEggsScatteredByAnotherTimestampMs());
-    } else {
-      clearDate(R.id.buttonDamageEggsScatteredDate);
-    }
+//    setChecked(R.id.fieldDamageEggsScattered, condition.getEggsScatteredByAnother());
+//    setEnabled(R.id.buttonDamageEggsScatteredDate, condition.getEggsScatteredByAnother());
+//    if (condition.hasEggsScatteredByAnotherTimestampMs()) {
+//      setDate(R.id.buttonDamageEggsScatteredDate, condition.getEggsScatteredByAnotherTimestampMs());
+//    } else {
+//      clearDate(R.id.buttonDamageEggsScatteredDate);
+//    }
 
     setChecked(R.id.fieldDamageRootsInvaded, condition.getRootsInvadedEggshells());
   }
@@ -432,14 +433,14 @@ public class EditFragmentNestCondition extends EditFragment {
 //    }
 //  }
 
-  private static class HandleSetEggsScatteredDate extends DatePickerClickHandler {
-    protected HandleSetEggsScatteredDate() { super(R.id.buttonDamageEggsScatteredDate); }
-
-    @Override
-    public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
-      updateHandler.applyMutation(new EggsScatteredDateMutation(maybeDate));
-    }
-  }
+//  private static class HandleSetEggsScatteredDate extends DatePickerClickHandler {
+//    protected HandleSetEggsScatteredDate() { super(R.id.buttonDamageEggsScatteredDate); }
+//
+//    @Override
+//    public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
+//      updateHandler.applyMutation(new EggsScatteredDateMutation(maybeDate));
+//    }
+//  }
 
   private static class HandleSetVandalized extends ClickHandler {
     protected HandleSetVandalized() {
@@ -488,15 +489,15 @@ public class EditFragmentNestCondition extends EditFragment {
       updateHandler.applyMutation(new RootsInvadedMutation(isChecked(view)));
     }
   }
-  private static class HandleSetEggsScattered extends ClickHandler {
-    protected HandleSetEggsScattered() {
-      super(R.id.fieldDamageEggsScattered);
-    }
-    @Override
-    public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(new EggsScatteredMutation(isChecked(view)));
-    }
-  }
+//  private static class HandleSetEggsScattered extends ClickHandler {
+//    protected HandleSetEggsScattered() {
+//      super(R.id.fieldDamageEggsScattered);
+//    }
+//    @Override
+//    public void handleClick(View view, DataUpdateHandler updateHandler) {
+//      updateHandler.applyMutation(new EggsScatteredMutation(isChecked(view)));
+//    }
+//  }
 
   private static class HandleSetVandalismStakesRemoved extends ClickHandler {
     protected HandleSetVandalismStakesRemoved() {
