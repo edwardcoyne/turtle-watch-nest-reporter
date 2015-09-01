@@ -28,6 +28,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.DatePicker.OnDateChangedListener;
 
+
 import com.google.common.base.Optional;
 import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.data.Date;
@@ -156,22 +157,21 @@ public class ClearableDatePickerDialog extends AlertDialog implements OnClickLis
     if (mCallBack != null) {
       mDatePicker.clearFocus();
       mCallBack.onDateSet(mDatePicker, Optional.of(new Date(mDatePicker.getYear(),
-              mDatePicker.getMonth() + 1, // Fix 0 indexed months.
-              mDatePicker.getDayOfMonth())));
+          mDatePicker.getMonth() + 1, // Fix 0 indexed months.
+          mDatePicker.getDayOfMonth())));
     }
   }
 
   public void handleClear(View view) {
     if (mCallBack != null) {
-      Optional<Date> maybeDate = Optional.absent();
-      mCallBack.onDateSet(mDatePicker, maybeDate);// Optional.<Date>absent());
-      this.cancel();
+      mCallBack.onDateSet(mDatePicker, Optional.<Date>absent());
+      this.dismiss();
     }
   }
 
   @Override
   protected void onStop() {
-//    tryNotifyDateSet();
+    tryNotifyDateSet();
     super.onStop();
   }
 
@@ -213,7 +213,5 @@ public class ClearableDatePickerDialog extends AlertDialog implements OnClickLis
     int month = savedInstanceState.getInt(MONTH);
     int day = savedInstanceState.getInt(DAY);
     mDatePicker.init(year, month, day, this);
-
-
   }
 }
