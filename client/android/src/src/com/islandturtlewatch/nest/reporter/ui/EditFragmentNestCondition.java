@@ -108,7 +108,8 @@ public class EditFragmentNestCondition extends EditFragment {
     addInundatedEventRow(condition.getInundatedEventCount(),WashEvent.getDefaultInstance(),false);
 
     if (condition.getWashOut().hasTimestampMs()) {
-      setDate(R.id.buttonWashOutDate, condition.getWashOut().getTimestampMs());
+      setDate(R.id.buttonWashOutDate,
+              condition.getWashOut().getTimestampMs());
     } else {
       clearDate(R.id.buttonWashOutDate);
     }
