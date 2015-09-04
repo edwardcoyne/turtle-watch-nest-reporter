@@ -164,14 +164,16 @@ public class ClearableDatePickerDialog extends AlertDialog implements OnClickLis
 
   public void handleClear(View view) {
     if (mCallBack != null) {
-      mCallBack.onDateSet(mDatePicker, Optional.<Date>absent());
-      this.hide();
+      Optional<Date> maybeDate = Optional.absent();
+      mCallBack.onDateSet(mDatePicker, maybeDate);
+//      this.cancel();
+      this.dismiss();
     }
   }
 
   @Override
   protected void onStop() {
-    tryNotifyDateSet();
+//    tryNotifyDateSet();
     super.onStop();
   }
 

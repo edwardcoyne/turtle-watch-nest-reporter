@@ -55,6 +55,7 @@ public class EditFragmentNestLocation extends EditFragment {
           new HandleSetCityHB(),
           new HandleSetCityBB(),
           new HandleSetEscarpmentOver18Inches(),
+          new HandleSetEscarpmentOver18Inches2(),
           new HandleSetRelocated(),
           new HandleSetHighWater(),
           new HandleSetPredation(),
@@ -127,12 +128,16 @@ public class EditFragmentNestLocation extends EditFragment {
     setChecked(R.id.fieldLocationAtEscarpment, location.getPlacement() == Placement.AT_ESCARPMENT);
     setChecked(R.id.fieldLocationOnEscarpment, location.getPlacement() == Placement.ON_ESCARPMENT);
     setEnabled(R.id.fieldLocationEscarpmentOver18Inches,
-            (isChecked(R.id.fieldLocationAtEscarpment) || isChecked(R.id.fieldLocationOnEscarpment)) );
+            (isChecked(R.id.fieldLocationAtEscarpment) || isChecked(R.id.fieldLocationOnEscarpment)));
 
+    setEnabled(R.id.fieldLocationEscarpmentOver18Inches2,isChecked(R.id.fieldObstructionsEscarpment));
     setChecked(R.id.fieldLocationEscarpmentOver18Inches,
             location.getEscarpmentOver18Inches()
                     && (isChecked(R.id.fieldLocationAtEscarpment)
                     || isChecked(R.id.fieldLocationOnEscarpment)));
+
+    setChecked(R.id.fieldLocationEscarpmentOver18Inches2,
+            location.getEscarpmentOver18Inches() && location.getObstructions().getEscarpment());
 
 
     setChecked(R.id.fieldObstructionsSeawallRocks, location.getObstructions().getSeawallRocks());
@@ -388,6 +393,17 @@ public class EditFragmentNestLocation extends EditFragment {
   private static class HandleSetEscarpmentOver18Inches extends ClickHandler {
     protected HandleSetEscarpmentOver18Inches() {
       super(R.id.fieldLocationEscarpmentOver18Inches);
+    }
+
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(
+              new ReportMutations.EscarpmentOver18InchesMutation(isChecked(view)));
+    }
+  }
+  private static class HandleSetEscarpmentOver18Inches2 extends ClickHandler {
+    protected HandleSetEscarpmentOver18Inches2() {
+      super(R.id.fieldLocationEscarpmentOver18Inches2);
     }
 
     @Override

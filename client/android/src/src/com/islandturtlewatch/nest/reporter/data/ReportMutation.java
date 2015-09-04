@@ -6,6 +6,7 @@ public interface ReportMutation {
   public Report apply(Report oldReport);
 
   public interface RequiresReportsModel {
+    //this is pointless
     public void setModel(ReportsModel model);
   }
 }

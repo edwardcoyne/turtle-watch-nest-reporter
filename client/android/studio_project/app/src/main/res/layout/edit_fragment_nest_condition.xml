@@ -123,18 +123,29 @@
 	   <TableRow
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content" >
-	        <TextView
-	            android:layout_width="0dp"
-	            android:layout_height="wrap_content"
-	            android:layout_weight="1"
-	            android:text="@string/edit_nest_condition_damage_contact_suzi" />
+
+		   <TextView
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:layout_weight="1"
+               android:text="@string/edit_nest_condition_damage_contact_suzi"
+			   android:layout_column="0" />
 	   </TableRow>
+		<TableRow
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			>
+
+			<Space
+				android:layout_width="20px"
+				android:layout_height="30px" />
+		</TableRow>
 		<TableRow
 			android:layout_width="match_parent"
 			android:layout_height="match_parent">
 
 			<TextView
-				android:textSize="16sp"
+				android:textSize="18sp"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_weight="1"
