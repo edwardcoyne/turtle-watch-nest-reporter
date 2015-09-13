@@ -49,7 +49,7 @@ public class StateNestReportServlet extends HttpServlet {
   // This is the list of columns in the report, they will appear in this order.
   private static List<ReportColumn> reportColumns = ImmutableList.of(
       new MappedTimestampColumn("Date Nest Recorded", "report.timestamp_found_ms"),
-      new StaticValueColumn("Escarpment >= 18 Encountered", "NO"),
+      new MappedColumn("Escarpment >= 18 Encountered", "report.location.escarpment_over_18_inches"),
       new MappedColumn("ID/Label", "report.nest_number"),
       sectionColumn,
       new StaticValueColumn("Nest within Project Area","YES"),
@@ -78,23 +78,25 @@ public class StateNestReportServlet extends HttpServlet {
 //          "report.condition.abandoned_body_pits", "report.condition.abandoned_egg_cavities"),
       new MappedIsPresentColumn("Nest Washed Over", "report.condition.wash_over.0.timestamp_ms"),
       new MappedIsPresentColumn("Inundated","report.condition.inundated_event.0.timestamp_ms"),
+
           //This column deprecated, has been split into distinct complete/partial columns
 //      new MappedIsPresentColumn("Nest Completely or Partially Washed Out",
 //          "report.condition.wash_out.timestamp_ms"),
+
       new MappedIsPresentColumn("Complete Wash out","report.condition.wash_out.timestamp_ms"),
       new MappedIsPresentColumn("Partial Wash out","report.condition.partial_washout_timestamp_ms"),
-      new MappedIsPresentColumn("Did Washout Occur Post-Hatch, but Pre-Inventory",
-              "report.condition.post_hatch_washout"),//TODO:(dWenzel) fix this if need be.
+      new MappedIsPresentColumn("Did Washout Occur Post-Hatch but Pre-Inventory",
+              "report.condition.post_hatch_washout"),
       new MappedPriorityColumn("If Washed Out By A Major Storm Give Name",
               "report.condition.wash_out.storm_name",
               "report.condition.partial_washout_storm_name",
               "BLANK ENTRY"),
       new MappedIsPresentColumn("Nest Completely Depredated",
-              "report.condition.nest_completely_depredated"),//this might not be right either
+              "report.condition.nest_depredated"),//this might not be right either
       new MappedIsPresentColumn("Predation", "report.condition.preditation.0.timestamp_ms"),
       new MappedTimestampColumn("Date(s) Predation Occurred",
               "report.condition.preditation.0.timestamp_ms"),
-      new MappedColumn("If Predated, by What Predator(s)","report.condition.preditation.0.predator"),
+      new MappedColumn("If Predated by What Predator(s)","report.condition.preditation.0.predator"),
       new MappedYesNoColumn("Roots Invade Eggshells",
               "report.condition.roots_invaded_eggshells"),
       new MappedTimestampColumn("Eggs Damaged by Another Turtle Date",
@@ -113,7 +115,7 @@ public class StateNestReportServlet extends HttpServlet {
               "report.condition.additional_hatch_timestamp_ms"),
       new MappedColumn("Hatchlings Disoriented", "report.condition.disorientation"),
       new MappedColumn("Nest Inventoried", "report.intervention.excavation.excavated"),
-      new MappedColumn("If Nest Not Inventoried, Why Not?",
+      new MappedColumn("If Nest Not Inventoried Why Not?",
               "report.intervention.excavation.failure_reason"),
       new MappedTimestampColumn("Date Nest Inventoried",
           "report.intervention.excavation.timestamp_ms"),

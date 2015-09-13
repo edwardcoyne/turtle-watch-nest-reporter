@@ -195,7 +195,7 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
         public String fetch(Map<Path, Column> columnMap, int rowId) {
           Column column = columnMap.get(path);
           Preconditions.checkNotNull(column, "Missing path: " + stringPath);
-          if (column.getValue(rowId) == "Yes") {
+          if (column.getValue(rowId) == "YES") {
             return "Y";
           }else return "N";
         }
@@ -224,7 +224,7 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
         @Override public String fetch(Map<Path, Column> columnMap, int rowId) {
           Column column = columnMap.get(path);
           Preconditions.checkNotNull(column, "Missing path: " + stringPath);
-          //changed from YES : NO to coincide with FWC Reporting requirements
+          //Leave this version as YES/NO
           return column.hasValue(rowId) ? "YES" : "NO";
         }
       });

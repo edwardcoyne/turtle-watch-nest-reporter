@@ -131,4 +131,5 @@
     <string name="edit_nest_condition_inundated_event">Nest Inundated - Standing Water</string>
     <string name="edit_nest_location_escarpment_over_18_inches">Escarpment Over 18 Inches</string>
     <string name="edit_nest_location_relocation">Nest Relocated</string>
+    <string name="edit_nest_condition_predation_eggs_only">Nest Predation - Eggs Only</string>
 </resources>

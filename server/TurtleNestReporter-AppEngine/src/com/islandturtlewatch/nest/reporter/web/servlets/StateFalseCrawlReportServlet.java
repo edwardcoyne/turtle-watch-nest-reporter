@@ -44,7 +44,7 @@ public class StateFalseCrawlReportServlet extends HttpServlet {
       new StaticValueColumn("Crawl within Project Area? ", "YES"),
       new MappedColumn("City","report.location.city"),
       new MappedColumn("Address","report.location.street_address"),
-      new StaticValueColumn("Escarpment >= 18 Encountered", "NO"),
+      new MappedColumn("Escarpment >= 18 Encountered", "report.location.escarpment_over_18_inches"),
       new OrderedReportWriter.FinalActivityColumn("Final Activity",
               "report.condition.abandoned_body_pit",
               "report.condition.abandoned_egg_cavity") ,

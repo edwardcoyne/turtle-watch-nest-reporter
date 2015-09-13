@@ -2,13 +2,6 @@
 <items version="2" >
 
     <item
-        jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/com.google.oauth-client/google-oauth-client/1.19.0/d473a8962e14a707a3716637e4898bb2dd9643f2/google-oauth-client-1.19.0.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="d473a8962e14a707a3716637e4898bb2dd9643f2">
-        <dex dex="/Users/ReverendCode/Documents/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/pre-dexed/debug/google-oauth-client-1.19.0-b496ad08316b75b8fa9d61be3eb584b6aa09c618.jar" />
-    </item>
-    <item
         jar="/Users/ReverendCode/Documents/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
         jumboMode="false"
         revision="21.1.2"
@@ -16,11 +9,18 @@
         <dex dex="/Users/ReverendCode/Documents/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-72818c7f9109918056d97276cd8126761f3076fa.jar" />
     </item>
     <item
-        jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.1.3/f6c3aed1cdfa21b5c1737c915186ea93a95a58bd/jackson-core-2.1.3.jar"
+        jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/com.google.oauth-client/google-oauth-client/1.19.0/d473a8962e14a707a3716637e4898bb2dd9643f2/google-oauth-client-1.19.0.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="f6c3aed1cdfa21b5c1737c915186ea93a95a58bd">
-        <dex dex="/Users/ReverendCode/Documents/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/pre-dexed/debug/jackson-core-2.1.3-d8e5e73e911426e16b2a211839a47e8167d820f8.jar" />
+        sha1="d473a8962e14a707a3716637e4898bb2dd9643f2">
+        <dex dex="/Users/ReverendCode/Documents/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/pre-dexed/debug/google-oauth-client-1.19.0-b496ad08316b75b8fa9d61be3eb584b6aa09c618.jar" />
+    </item>
+    <item
+        jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/18.0/cce0823396aa693798f8882e64213b1772032b09/guava-18.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="cce0823396aa693798f8882e64213b1772032b09">
+        <dex dex="/Users/ReverendCode/Documents/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/pre-dexed/debug/guava-18.0-8fa298e734acf4b9272d28d881ff48c512ee6be4.jar" />
     </item>
     <item
         jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client/1.19.0/6a21277d9bebe267b7ddee028b241eebc756c040/google-api-client-1.19.0.jar"
@@ -30,11 +30,11 @@
         <dex dex="/Users/ReverendCode/Documents/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/pre-dexed/debug/google-api-client-1.19.0-b0807f976f88004eb40739ceab94e97e0a1e71f1.jar" />
     </item>
     <item
-        jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/18.0/cce0823396aa693798f8882e64213b1772032b09/guava-18.0.jar"
+        jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.1.3/f6c3aed1cdfa21b5c1737c915186ea93a95a58bd/jackson-core-2.1.3.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="cce0823396aa693798f8882e64213b1772032b09">
-        <dex dex="/Users/ReverendCode/Documents/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/pre-dexed/debug/guava-18.0-8fa298e734acf4b9272d28d881ff48c512ee6be4.jar" />
+        sha1="f6c3aed1cdfa21b5c1737c915186ea93a95a58bd">
+        <dex dex="/Users/ReverendCode/Documents/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/pre-dexed/debug/jackson-core-2.1.3-d8e5e73e911426e16b2a211839a47e8167d820f8.jar" />
     </item>
     <item
         jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client-android/1.19.0/ba2aafb867f6af469f936ae76426cf0a280094bd/google-api-client-android-1.19.0.jar"
@@ -65,18 +65,18 @@
         <dex dex="/Users/ReverendCode/Documents/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/pre-dexed/debug/google-http-client-android-1.19.0-ec156c63c9a42c3fe85124b491c814e5ed2121db.jar" />
     </item>
     <item
-        jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient-android/4.3.5/82edcaec6c7b4599eaeaaf11167ceea41db42f33/httpclient-android-4.3.5.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="82edcaec6c7b4599eaeaaf11167ceea41db42f33">
-        <dex dex="/Users/ReverendCode/Documents/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/pre-dexed/debug/httpclient-android-4.3.5-76b692bc7318ee020984c8f8d31dde1cb4442cf1.jar" />
-    </item>
-    <item
         jar="/Users/ReverendCode/Documents/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/6.5.87/classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="79f08023cdb55c703b101d651b5c472cfcecf6e9">
         <dex dex="/Users/ReverendCode/Documents/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/pre-dexed/debug/classes-46a1df43278fcaf3c8b1c880e41c7fe3b151aa9a.jar" />
+    </item>
+    <item
+        jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient-android/4.3.5/82edcaec6c7b4599eaeaaf11167ceea41db42f33/httpclient-android-4.3.5.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="82edcaec6c7b4599eaeaaf11167ceea41db42f33">
+        <dex dex="/Users/ReverendCode/Documents/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/pre-dexed/debug/httpclient-android-4.3.5-76b692bc7318ee020984c8f8d31dde1cb4442cf1.jar" />
     </item>
     <item
         jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.1/2e66da15851f9f5b5079228f856c2f090ba98c38/gson-2.1.jar"
@@ -110,7 +110,7 @@
         jar="/Users/ReverendCode/Documents/turtle-watch-nest-reporter/client/android/studio_project/backend/build/libs/backend-android-endpoints.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="f8756b36cdd05b0b5119cf9babdef1bfab0feb09">
+        sha1="06b487465bdb5679f83d3420b2a411e156da0a6f">
         <dex dex="/Users/ReverendCode/Documents/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/pre-dexed/debug/backend-android-endpoints-1be9b848ca84e001ff2ace96c0b7ab900acb903a.jar" />
     </item>
     <item
