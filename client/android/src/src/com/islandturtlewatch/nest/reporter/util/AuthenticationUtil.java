@@ -14,7 +14,7 @@ public class AuthenticationUtil {
   private static final String DEV_CLIENT_ID = "496541743296-02j0fb8t266a6vibrtgar9bc5i46f5i9.apps.googleusercontent.com";
 
 
-  private static final String AUDIENCE = "server:client_id:" + DEV_CLIENT_ID;
+  private static final String AUDIENCE = "server:client_id:" + WEB_CLIENT_ID;
 
   public static GoogleAccountCredential getCredential(Context context, String username) {
     Preconditions.checkNotNull(username, "No username set.");

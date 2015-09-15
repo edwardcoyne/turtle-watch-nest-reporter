@@ -13,7 +13,10 @@ import java.util.regex.Pattern;
 
 import lombok.Getter;
 
+import com.google.appengine.repackaged.com.google.common.base.Flag;
+import com.google.appengine.repackaged.com.google.storage.onestore.v3.proto2api.OnestoreEntity;
 import com.google.common.base.Preconditions;
+import com.islandturtlewatch.nest.data.ReportProto;
 import com.islandturtlewatch.nest.data.ReportProto.Intervention.ProtectionEvent;
 import com.islandturtlewatch.nest.reporter.frontend.reports.ReportCsvGenerator.Column;
 import com.islandturtlewatch.nest.reporter.frontend.reports.ReportCsvGenerator.Path;
@@ -80,6 +83,25 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
     }
   }
 
+  public static class MappedSpeciesColumn extends ReportColumn {
+    public MappedSpeciesColumn(String name, final String stringPath) {
+      super(name, new ValueFetcher() {
+        private final Path path = new Path(stringPath);
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column column = columnMap.get(path);
+          Preconditions.checkNotNull(column, "Missing path: " + stringPath);
+          if (column.getValue(rowId).equals("LOGGERHEAD")) {
+            return "Cc";
+          } else if (column.getValue(rowId).equals("GREEN")) {
+            return "Cm";
+          } else return "";
+        }
+
+      });
+    }
+  }
+
   public static class MappedColumn extends ReportColumn {
     public MappedColumn(String name, final String stringPath) {
       super(name, new ValueFetcher() {
@@ -116,7 +138,7 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
           Column column = columnMap.get(path);
           Preconditions.checkNotNull(column, "Missing path: " + stringPath);
 
-          return column.hasValue(rowId) ? column.getValue(rowId) : defaultVal;
+          return (!column.getValue(rowId).equals("0")) ? column.getValue(rowId) : defaultVal;
         }
       });
     }
@@ -153,9 +175,9 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
           Column columnB = columnMap.get(bPath);
           Preconditions.checkNotNull(columnA, "Missing path: " + aStringPath);
           Preconditions.checkNotNull(columnB, "Missing path: " + bStringPath);
-          if (columnA.hasValue(rowId)) {
+          if (!columnA.getValue(rowId).equals("")) {
             return columnA.getValue(rowId);
-          } else if (columnB.hasValue(rowId)) {
+          } else if (!columnB.getValue(rowId).equals("")) {
             return columnB.getValue(rowId);
           } else {
             return defaultString;
@@ -178,7 +200,7 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
                   "Missing path: " + controlPathStr);
           Column value = Preconditions.checkNotNull(columnMap.get(valuePath),
                   "Missing path: " + controlPathStr);
-          if (Boolean.parseBoolean(control.getValue(rowId))) {
+          if (control.getValue(rowId).equals("YES")) {
             return value.getValue(rowId);
           }
           return "";
@@ -217,6 +239,56 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
       });
     }
   }
+//checks to see if the given path exists
+  //TODO: (DWenzel) find a less hacky way of doing this.
+  public static class MappedNotNullColumn extends ReportColumn {
+    public MappedNotNullColumn(String name, final String stringPath) {
+      super(name, new ValueFetcher() {
+        private final Path path = new Path(stringPath);
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column column = columnMap.get(path);
+          if (column == null) return "N";
+          else return "Y";
+//          return column.hasValue(rowId) ? "Y" : "N";
+        }
+      });
+    }
+  }
+
+  public static class MappedNotNullTimestampColumn extends ReportColumn {
+    private static DateFormat DATE_FORMAT = new SimpleDateFormat("MM/dd/yyyy");
+    public MappedNotNullTimestampColumn(String name, final String stringPath) {
+      super(name, new ValueFetcher() {
+        private final Path path = new Path(stringPath);
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+         Column column = columnMap.get(path);
+          if (column == null) return "";
+          else {
+            Long timestamp = Long.parseLong(column.getValue(rowId));
+            return DATE_FORMAT.format(new Date(timestamp));
+          }
+
+        }
+      });
+    }
+  }
+
+  public static class MappedIfExistsColumn extends ReportColumn {
+    public MappedIfExistsColumn(String name, final String stringPath) {
+      super(name, new ValueFetcher() {
+        private final Path path = new Path(stringPath);
+        @Override public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column column = columnMap.get(path);
+          if (column == null) return "";
+          else return column.getValue(rowId);
+        }
+      });
+    }
+
+  }
+
   public static class MappedIsPresentYesNoColumn extends ReportColumn {
     public MappedIsPresentYesNoColumn(String name, final String stringPath) {
       super(name, new ValueFetcher() {
@@ -286,20 +358,21 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
         @Override public String fetch(Map<Path, Column> columnMap, int rowId) {
           Column abandonedBodyPit = Preconditions.checkNotNull(columnMap.get(abandonedBodyPitPath),
               "Missing path: " + abandonedBodyPitPathStr);
-          boolean hasAbandonedBodyPit = Boolean.valueOf(abandonedBodyPit.getValue(rowId));
+//          boolean hasAbandonedBodyPit = Boolean.valueOf(abandonedBodyPit.getValue(rowId));
 
           Column abandonedEggCavities =
               Preconditions.checkNotNull(columnMap.get(abandonedEggCavitiesPath),
-              "Missing path: " + abandonedEggCavitiesPathStr);
-          boolean hasAbandonedEggCavities = Boolean.valueOf(abandonedEggCavities.getValue(rowId));
+                      "Missing path: " + abandonedEggCavitiesPathStr);
 
-          if (hasAbandonedBodyPit) {
-            return "Abandoned Body Pit";
-          }
-          if (hasAbandonedEggCavities) {
+          //Please Note: this DOES NOT work, these values are YES/NO not true/false
+//          boolean hasAbandonedEggCavities = Boolean.valueOf(abandonedEggCavities.getValue(rowId));
+
+
+          if (abandonedEggCavities.getValue(rowId).equals("YES")) {
             return "Abandoned Egg Chamber";
-          }
-
+          } else if (abandonedBodyPit.getValue(rowId).equals("YES")) {
+            return "Abandoned Body Pit";
+          } else
           return "No Digging";
         }
       });
@@ -321,34 +394,39 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
         private final Path dateProtectedPath = new Path(dateProtectedPathStr);
         private final Path protectionEventPath = new Path(protectionEventPathStr);
         @Override public String fetch(Map<Path, Column> columnMap, int rowId) {
-          Column relocated = Preconditions.checkNotNull(columnMap.get(relocatedPath),
+
+          Column relocated = columnMap.get(relocatedPath);
+                  Preconditions.checkNotNull(columnMap.get(relocatedPath),
               "Missing path: " + relocatedPathStr);
-          boolean wasRelocated = Boolean.valueOf(relocated.getValue(rowId));
+          boolean wasRelocated = (relocated.getValue(rowId) == "YES");
 
           Column dateFound = Preconditions.checkNotNull(columnMap.get(dateFoundPath),
               "Missing path: " + dateFoundPathStr);
           Column dateProtected = Preconditions.checkNotNull(columnMap.get(dateProtectedPath),
               "Missing path: " + dateProtectedPathStr);
-          Column protectionEvent = Preconditions.checkNotNull(columnMap.get(protectionEventPath),
+          Column protectionEvent = columnMap.get(protectionEventPath);
+                  Preconditions.checkNotNull(protectionEvent,
               "Missing path: " + protectionEventPathStr);
 
           // If dates are not within one day of each other this doesn't apply.
           Long dateDiff = Long.parseLong(dateProtected.getValue(rowId)) -
               Long.parseLong(dateFound.getValue(rowId));
+          String protectionType = protectionEvent.getValue(rowId);
           if (dateDiff < dayInMs) {
-            if (protectionEvent.equals(ProtectionEvent.Type.UNSET_TYPE)) {
+            if (protectionType.equals("UNSET_TYPE")) {
               return wasRelocated ? "E" : "A";
             }
-            if (protectionEvent.equals(ProtectionEvent.Type.SELF_RELEASING_FLAT)) {
-              return wasRelocated ? "F" : "B";
+             if (protectionType.equals("SELF_RELEASING_FLAT")) {
+              return  wasRelocated ? "F" : "B";
             }
-            if (protectionEvent.equals(ProtectionEvent.Type.SELF_RELEASING_CAGE)) {
+             if (protectionType.equals("SELF_RELEASING_CAGE")) {
               return wasRelocated ? "G" : "C";
             }
-            if (protectionEvent.equals(ProtectionEvent.Type.RESTRAINING_CAGE)) {
+           if (protectionType.equals("RESTRAINING_CAGE")) {
               return wasRelocated ? "H" : "D";
             }
           }
+
           return "";
         }
       });
@@ -374,7 +452,8 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
         @Override public String fetch(Map<Path, Column> columnMap, int rowId) {
           Column relocated = Preconditions.checkNotNull(columnMap.get(relocatedPath),
               "Missing path: " + relocatedPathStr);
-          boolean wasRelocated = Boolean.valueOf(relocated.getValue(rowId));
+          boolean wasRelocated = (relocated.getValue(rowId) == "YES");
+
 
           Column dateFound = Preconditions.checkNotNull(columnMap.get(dateFoundPath),
               "Missing path: " + dateFoundPathStr);
@@ -386,19 +465,20 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
           // If dates are within one day of each other this doesn't apply.
           Long dateDiff = Long.parseLong(dateProtected.getValue(rowId)) -
               Long.parseLong(dateFound.getValue(rowId));
+          String protectionType = protectionEvent.getValue(rowId);
           if (dateDiff > dayInMs) {
-            if (protectionEvent.equals(ProtectionEvent.Type.UNSET_TYPE)) {
-              return wasRelocated ? "E" : "A";
-            }
-            if (protectionEvent.equals(ProtectionEvent.Type.SELF_RELEASING_FLAT)) {
-              return wasRelocated ? "F" : "B";
-            }
-            if (protectionEvent.equals(ProtectionEvent.Type.SELF_RELEASING_CAGE)) {
-              return wasRelocated ? "G" : "C";
-            }
-            if (protectionEvent.equals(ProtectionEvent.Type.RESTRAINING_CAGE)) {
-              return wasRelocated ? "H" : "D";
-            }
+          if (protectionType.equals("UNSET_TYPE")) {
+            return wasRelocated ? "E" : "A";
+          }
+          if (protectionType.equals("SELF_RELEASING_FLAT")) {
+            return  wasRelocated ? "F" : "B";
+          }
+          if (protectionType.equals("SELF_RELEASING_CAGE")) {
+            return wasRelocated ? "G" : "C";
+          }
+          if (protectionType.equals("RESTRAINING_CAGE")) {
+            return wasRelocated ? "H" : "D";
+          }
           }
           return initialColumn.getFetcher().fetch(columnMap, rowId);
         }

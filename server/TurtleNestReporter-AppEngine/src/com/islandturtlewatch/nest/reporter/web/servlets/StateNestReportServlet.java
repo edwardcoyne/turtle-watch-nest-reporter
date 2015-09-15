@@ -1,5 +1,31 @@
 package com.islandturtlewatch.nest.reporter.web.servlets;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.net.MediaType;
+import com.islandturtlewatch.nest.reporter.backend.storage.ReportStore;
+import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter;
+import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.ConditionallyMappedColumn;
+import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.FinalTreatmentColumn;
+import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.InitialTreatmentColumn;
+import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedColumn;
+import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedSectionColumn;
+import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedColumnAbsoluteValueDouble;
+import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedColumnWithDefault;
+import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedDistanceColumn;
+import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedIsPresentColumn;
+import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedPriorityColumn;
+import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedIfExistsColumn;
+import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedNotNullColumn;
+import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedNotNullTimestampColumn;
+import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedTimestampColumn;
+import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedYesNoColumn;
+import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.ReportColumn;
+import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.RowFilter;
+import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.StaticValueColumn;
+import com.islandturtlewatch.nest.reporter.frontend.reports.ReportCsvGenerator;
+import com.islandturtlewatch.nest.reporter.frontend.reports.ReportCsvGenerator.Column;
+import com.islandturtlewatch.nest.reporter.frontend.reports.ReportCsvGenerator.Path;
+
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
@@ -15,36 +41,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import lombok.extern.java.Log;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.net.MediaType;
-import com.islandturtlewatch.nest.reporter.backend.storage.ReportStore;
-import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter;
-import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedColumn;
-import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedColumnAbsoluteValueDouble;
-import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedColumnWithDefault;
-import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedDistanceColumn;
-import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedIsPresentColumn;
-import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedSectionColumn;
-import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedTimestampColumn;
-import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.ReportColumn;
-import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.FinalActivityColumn;
-import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.RowFilter;
-import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.StaticValueColumn;
-import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.InitialTreatmentColumn;
-import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.FinalTreatmentColumn;
-import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.ConditionallyMappedColumn;
-import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedPriorityColumn;
-import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedYesNoColumn;
-import com.islandturtlewatch.nest.reporter.frontend.reports.ReportCsvGenerator;
-import com.islandturtlewatch.nest.reporter.frontend.reports.ReportCsvGenerator.Column;
-import com.islandturtlewatch.nest.reporter.frontend.reports.ReportCsvGenerator.Path;
-
 @Log
 public class StateNestReportServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   // Keep this column separate so we can test against it.
   private static ReportColumn sectionColumn = new MappedSectionColumn("Beach Zone", "ref.owner_id");
+//    private static ReportColumn sectionColumn = new StaticValueColumn("Beach Zone", "1");
 
   // This is the list of columns in the report, they will appear in this order.
   private static List<ReportColumn> reportColumns = ImmutableList.of(
@@ -63,6 +66,7 @@ public class StateNestReportServlet extends HttpServlet {
           "report.timestamp_found_ms",
           "report.intervention.protection_event.timestamp_ms",
           "report.intervention.protection_event.type"),
+          // ROW 10
       new FinalTreatmentColumn("Final Treatment ",
           "report.intervention.relocation.was_relocated",
           "report.timestamp_found_ms",
@@ -76,36 +80,40 @@ public class StateNestReportServlet extends HttpServlet {
           //not required for Nest report, only for False Crawl Report
 //      new FinalActivityColumn("Final Activity",
 //          "report.condition.abandoned_body_pits", "report.condition.abandoned_egg_cavities"),
-      new MappedIsPresentColumn("Nest Washed Over", "report.condition.wash_over.0.timestamp_ms"),
-      new MappedIsPresentColumn("Inundated","report.condition.inundated_event.0.timestamp_ms"),
+
+      new MappedNotNullColumn("Nest Washed Over", "report.condition.wash_over.0.timestamp_ms"),
+      new MappedNotNullColumn("Inundated","report.condition.inundated_event.0.timestamp_ms"),
 
           //This column deprecated, has been split into distinct complete/partial columns
 //      new MappedIsPresentColumn("Nest Completely or Partially Washed Out",
 //          "report.condition.wash_out.timestamp_ms"),
 
       new MappedIsPresentColumn("Complete Wash out","report.condition.wash_out.timestamp_ms"),
-      new MappedIsPresentColumn("Partial Wash out","report.condition.partial_washout_timestamp_ms"),
+      new MappedIsPresentColumn("Partial Wash out","report.condition.partial_washout.timestamp_ms"),
       new MappedIsPresentColumn("Did Washout Occur Post-Hatch but Pre-Inventory",
               "report.condition.post_hatch_washout"),
+          //ROW 20
       new MappedPriorityColumn("If Washed Out By A Major Storm Give Name",
               "report.condition.wash_out.storm_name",
-              "report.condition.partial_washout_storm_name",
+              "report.condition.partial_washout.storm_name",
               "BLANK ENTRY"),
       new MappedIsPresentColumn("Nest Completely Depredated",
               "report.condition.nest_depredated"),//this might not be right either
-      new MappedIsPresentColumn("Predation", "report.condition.preditation.0.timestamp_ms"),
-      new MappedTimestampColumn("Date(s) Predation Occurred",
+      new MappedNotNullColumn("Predation", "report.condition.preditation.0.timestamp_ms"),
+
+          new MappedNotNullTimestampColumn("Date(s) Predation Occurred",
               "report.condition.preditation.0.timestamp_ms"),
-      new MappedColumn("If Predated by What Predator(s)","report.condition.preditation.0.predator"),
+    new MappedIfExistsColumn("If Predated by What Predator(s)","report.condition.preditation.0.predator"),
       new MappedYesNoColumn("Roots Invade Eggshells",
               "report.condition.roots_invaded_eggshells"),
-      new MappedTimestampColumn("Eggs Damaged by Another Turtle Date",
-          "report.condition.eggs_scattered_by_another_timestamp_ms"),
+      new MappedYesNoColumn("Eggs Damaged by Another Turtle",
+          "report.condition.eggs_damaged_by_another_turtle"),
       new MappedYesNoColumn("Poached?",
               "report.condition.poached"),
       new ConditionallyMappedColumn("Type of Vandalism",
           "report.condition.vandalized",
               "report.condition.vandalism_type"),
+          //ROW 30
       new ConditionallyMappedColumn("Eggs Removed",
           "report.condition.poached",
               "report.condition.poached_eggs_removed"),
@@ -121,6 +129,7 @@ public class StateNestReportServlet extends HttpServlet {
           "report.intervention.excavation.timestamp_ms"),
       new MappedColumn("# of Dead Hatchlings", "report.intervention.excavation.dead_in_nest"),
       new MappedColumn("# of Live Hatchlings", "report.intervention.excavation.live_in_nest"),
+          //ROW 40
       new MappedColumn("# of Empty Shells", "report.intervention.excavation.hatched_shells"),
       new MappedColumn("# of Dead Pipped", "report.intervention.excavation.dead_pipped"),
       new MappedColumn("# of Live Pipped", "report.intervention.excavation.live_pipped"),
@@ -157,9 +166,9 @@ public class StateNestReportServlet extends HttpServlet {
   private class Filter implements RowFilter {
     @Override
     public boolean shouldWriteRow(Map<Path, Column> columnMap, int rowId) {
-      // If there is no section number it is a junk report.
+//       If there is no section number it is a junk report.
       boolean hasSection = !sectionColumn.getFetcher().fetch(columnMap, rowId).equals("");
-
+//        hasSection = true;
       String nest = columnMap.get(new Path("report.nest_number")).getValue(rowId);
       boolean isNest = !nest.equals("0") && !nest.equals("");
       return hasSection && isNest;
