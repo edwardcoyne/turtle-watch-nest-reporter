@@ -102,6 +102,70 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
     }
   }
 
+  public static class MappedBlankIfUnsetColumn extends ReportColumn {
+    public MappedBlankIfUnsetColumn(String name, final String stringPath) {
+      super(name, new ValueFetcher() {
+        private final Path path = new Path(stringPath);
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column column = columnMap.get(path);
+          Preconditions.checkNotNull(column, "Missing Path: " + stringPath);
+
+          //Check for "UNSET_TYPE or UNSET_REASON"
+          if (column.getValue(rowId).equals("UNSET_TYPE") ||
+                  column.getValue(rowId).equals("UNSET_REASON")) {
+            return "";
+          } else return column.getValue(rowId);
+        }
+      });
+    }
+  }
+
+  public static class MappedBlankIfUnsetWithOtherColumn extends ReportColumn {
+    public MappedBlankIfUnsetWithOtherColumn(String name, final String stringPath, final String otherString) {
+      super(name, new ValueFetcher() {
+        private final Path path = new Path(stringPath);
+        private final Path otherPath = new Path(otherString);
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column column = columnMap.get(path);
+          Preconditions.checkNotNull(column, "Missing Path: " + stringPath);
+          Column other = columnMap.get(otherPath);
+          Preconditions.checkNotNull(other, "Missing Path: " + otherString);
+
+          //Check for "UNSET_TYPE or UNSET_REASON"
+          if (column.getValue(rowId).equals("UNSET_TYPE") ||
+                  column.getValue(rowId).equals("UNSET_REASON")) {
+            return "";
+          } else if (column.getValue(rowId).equals("OTHER")) {
+            return "OTHER: " + other.getValue(rowId);
+          }
+
+
+          else return column.getValue(rowId);
+        }
+      });
+    }
+  }
+
+  public static class MappedEitherOrColumn extends ReportColumn {
+    public MappedEitherOrColumn(String name, final String stringPathA, final String stringPathB) {
+      super(name, new ValueFetcher() {
+        private final Path pathA = new Path(stringPathA);
+        private final Path pathB = new Path(stringPathB);
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column columnA = Preconditions.checkNotNull(columnMap.get(pathA), "Missing Path: " + stringPathA);
+          Column columnB = Preconditions.checkNotNull(columnMap.get(pathB), "Missing Path: " + stringPathB);
+          if (!columnA.getValue(rowId).equals("0") || !columnB.getValue(rowId).equals("0")) {
+            return "YES";
+          }
+          return "NO";
+        }
+      });
+    }
+  }
+
   public static class MappedColumn extends ReportColumn {
     public MappedColumn(String name, final String stringPath) {
       super(name, new ValueFetcher() {
@@ -143,10 +207,32 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
       });
     }
   }
+  public static class MappedShortTimestampColumn extends ReportColumn {
+    private static DateFormat shortDate = new SimpleDateFormat("MM/dd");
+    public MappedShortTimestampColumn(String name, final String stringPath, final String defaultVal) {
+      super(name, new ValueFetcher() {
+        private final Path path = new Path(stringPath);
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column column = columnMap.get(path);
+          Preconditions.checkNotNull(column, "Missing Path: " + stringPath);
+          if (column.getValue(rowId).equals("0") || !column.hasValue(rowId)) {
+            return defaultVal;
+          } else {
+            Long timestamp = Long.parseLong(column.getValue(rowId));
+            return shortDate.format(new Date(timestamp));
+          }
+        }
+      });
+    }
+  }
+
 
   // Converts timestamp at path to date.
+  // Now with option to set default value to something other than blank
   public static class MappedTimestampColumn extends ReportColumn {
     private static DateFormat DATE_FORMAT = new SimpleDateFormat("MM/dd/yyyy");
+    private static DateFormat shortDate = new SimpleDateFormat("MM/dd");
     public MappedTimestampColumn(String name, final String stringPath) {
       super(name, new ValueFetcher() {
         private final Path path = new Path(stringPath);
@@ -158,6 +244,22 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
           }
           Long timestamp = Long.parseLong(column.getValue(rowId));
           return DATE_FORMAT.format(new Date(timestamp));
+        }
+      });
+    }
+    public MappedTimestampColumn(String name, final String stringPath, final String defaultVal) {
+      super(name, new ValueFetcher() {
+        private final Path path = new Path(stringPath);
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column column = columnMap.get(path);
+          Preconditions.checkNotNull(column, "Missing Path: " + stringPath);
+          if (column.getValue(rowId).equals("0") || !column.hasValue(rowId)) {
+            return defaultVal;
+          } else {
+            Long timestamp = Long.parseLong(column.getValue(rowId));
+            return DATE_FORMAT.format(new Date(timestamp));
+          }
         }
       });
     }
@@ -225,6 +327,21 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
     }
   }
 
+  public static class MappedHasTimestampColumn extends ReportColumn {
+    public MappedHasTimestampColumn(String name, final String stringPath) {
+      super(name, new ValueFetcher() {
+        private final Path path = new Path(stringPath);
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column column = columnMap.get(path);
+          Preconditions.checkNotNull(column, "Missing Path: " + stringPath);
+          if (column.getValue(rowId).equals("") || column.getValue(rowId).equals("0")) return "N";
+          else return column.hasValue(rowId) ? "Y" : "N";
+        }
+      });
+    }
+  }
+
   // Value will be YES if there is a value at the path.
   public static class MappedIsPresentColumn extends ReportColumn {
     public MappedIsPresentColumn(String name, final String stringPath) {
@@ -249,8 +366,7 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
         public String fetch(Map<Path, Column> columnMap, int rowId) {
           Column column = columnMap.get(path);
           if (column == null) return "N";
-          else return "Y";
-//          return column.hasValue(rowId) ? "Y" : "N";
+          else return column.hasValue(rowId) ? "Y" : "N";
         }
       });
     }
@@ -265,10 +381,16 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
         public String fetch(Map<Path, Column> columnMap, int rowId) {
          Column column = columnMap.get(path);
           if (column == null) return "";
-          else {
+          else if (column.getValue(rowId).equals("0") || column.getValue(rowId).equals("")) {
+            return "";
+          } else {
             Long timestamp = Long.parseLong(column.getValue(rowId));
+
+
             return DATE_FORMAT.format(new Date(timestamp));
           }
+
+
 
         }
       });
@@ -412,7 +534,7 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
           Long dateDiff = Long.parseLong(dateProtected.getValue(rowId)) -
               Long.parseLong(dateFound.getValue(rowId));
           String protectionType = protectionEvent.getValue(rowId);
-          if (dateDiff < dayInMs) {
+          if (dateDiff <= dayInMs) {
             if (protectionType.equals("UNSET_TYPE")) {
               return wasRelocated ? "E" : "A";
             }
@@ -427,7 +549,7 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
             }
           }
 
-          return "";
+          return wasRelocated ? "E" : "A";
         }
       });
     }

@@ -8,6 +8,10 @@ import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.
 import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.FinalTreatmentColumn;
 import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.InitialTreatmentColumn;
 import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedColumn;
+import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedHasTimestampColumn;
+import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedBlankIfUnsetColumn;
+import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedSpeciesColumn;
+
 import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedSectionColumn;
 import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedColumnAbsoluteValueDouble;
 import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedColumnWithDefault;
@@ -49,10 +53,13 @@ public class StateNestReportServlet extends HttpServlet {
   private static ReportColumn sectionColumn = new MappedSectionColumn("Beach Zone", "ref.owner_id");
 //    private static ReportColumn sectionColumn = new StaticValueColumn("Beach Zone", "1");
 
+
+
   // This is the list of columns in the report, they will appear in this order.
   private static List<ReportColumn> reportColumns = ImmutableList.of(
       new MappedTimestampColumn("Date Nest Recorded", "report.timestamp_found_ms"),
       new MappedColumn("Escarpment >= 18 Encountered", "report.location.escarpment_over_18_inches"),
+      new MappedSpeciesColumn("Species","report.species"),
       new MappedColumn("ID/Label", "report.nest_number"),
       sectionColumn,
       new StaticValueColumn("Nest within Project Area","YES"),
@@ -72,6 +79,8 @@ public class StateNestReportServlet extends HttpServlet {
           "report.timestamp_found_ms",
           "report.intervention.protection_event.timestamp_ms",
           "report.intervention.protection_event.type"),
+      new MappedBlankIfUnsetColumn("Protection Event", "report.intervention.protection_event.type"),
+      new MappedTimestampColumn("Date Protected","report.intervention.protection_event.timestamp_ms"),
       new MappedDistanceColumn("Distance From Dune",
           "report.location.apex_to_barrier_ft", "report.location.apex_to_barrier_in"),
       new MappedDistanceColumn("Distance From MHW",
@@ -88,17 +97,20 @@ public class StateNestReportServlet extends HttpServlet {
 //      new MappedIsPresentColumn("Nest Completely or Partially Washed Out",
 //          "report.condition.wash_out.timestamp_ms"),
 
-      new MappedIsPresentColumn("Complete Wash out","report.condition.wash_out.timestamp_ms"),
-      new MappedIsPresentColumn("Partial Wash out","report.condition.partial_washout.timestamp_ms"),
-      new MappedIsPresentColumn("Did Washout Occur Post-Hatch but Pre-Inventory",
+      new MappedHasTimestampColumn("Complete Wash out","report.condition.wash_out.timestamp_ms"),
+      new MappedHasTimestampColumn("Partial Wash out","report.condition.partial_washout.timestamp_ms"),
+      new OrderedReportWriter.MappedEitherOrColumn("Nest Completely or Partially Washed Out",
+              "report.condition.wash_out.timestamp_ms",
+              "report.condition.partial_washout.timestamp_ms"),
+      new MappedYesNoColumn("Did Washout Occur Post-Hatch but Pre-Inventory",
               "report.condition.post_hatch_washout"),
           //ROW 20
       new MappedPriorityColumn("If Washed Out By A Major Storm Give Name",
               "report.condition.wash_out.storm_name",
               "report.condition.partial_washout.storm_name",
-              "BLANK ENTRY"),
-      new MappedIsPresentColumn("Nest Completely Depredated",
-              "report.condition.nest_depredated"),//this might not be right either
+              ""),
+      new MappedColumn("Nest Completely Depredated",
+              "report.condition.nest_depredated"),
       new MappedNotNullColumn("Predation", "report.condition.preditation.0.timestamp_ms"),
 
           new MappedNotNullTimestampColumn("Date(s) Predation Occurred",
@@ -110,21 +122,24 @@ public class StateNestReportServlet extends HttpServlet {
           "report.condition.eggs_damaged_by_another_turtle"),
       new MappedYesNoColumn("Poached?",
               "report.condition.poached"),
+          new MappedYesNoColumn("Poached (Eggs Removed)",
+                  "report.condition.poached_eggs_removed"),
       new ConditionallyMappedColumn("Type of Vandalism",
           "report.condition.vandalized",
               "report.condition.vandalism_type"),
           //ROW 30
-      new ConditionallyMappedColumn("Eggs Removed",
-          "report.condition.poached",
-              "report.condition.poached_eggs_removed"),
+
       new MappedTimestampColumn("First Hatchling Emergence Date",
-          "report.condition.hatch_timestamp_ms"),
-      new MappedTimestampColumn("Subsequent Emergence Date(s)",
-              "report.condition.additional_hatch_timestamp_ms"),
+          "report.condition.hatch_timestamp_ms",
+              "UNK"),
+      new OrderedReportWriter.MappedShortTimestampColumn("Subsequent Emergence Date(s)",
+              "report.condition.additional_hatch_timestamp_ms",
+              "UNK"),
       new MappedColumn("Hatchlings Disoriented", "report.condition.disorientation"),
       new MappedColumn("Nest Inventoried", "report.intervention.excavation.excavated"),
-      new MappedColumn("If Nest Not Inventoried Why Not?",
-              "report.intervention.excavation.failure_reason"),
+      new OrderedReportWriter.MappedBlankIfUnsetWithOtherColumn("If Nest Not Inventoried Why Not?",
+              "report.intervention.excavation.failure_reason",
+              "report.intervention.excavation.failure_other"),
       new MappedTimestampColumn("Date Nest Inventoried",
           "report.intervention.excavation.timestamp_ms"),
       new MappedColumn("# of Dead Hatchlings", "report.intervention.excavation.dead_in_nest"),
@@ -138,7 +153,9 @@ public class StateNestReportServlet extends HttpServlet {
       new MappedColumnWithDefault("Initial Clutch Size",
           "report.intervention.relocation.eggs_relocated",
           "UNK"),
-      new MappedColumnAbsoluteValueDouble("Latitude", "report.location.coordinates.lat"),
+          new MappedColumn("Additional Notes","report.additional_notes"),
+
+          new MappedColumnAbsoluteValueDouble("Latitude", "report.location.coordinates.lat"),
       new MappedColumnAbsoluteValueDouble("Longitude", "report.location.coordinates.long"));
 
   @Override
@@ -154,7 +171,8 @@ public class StateNestReportServlet extends HttpServlet {
     generator.addAllRows(store.getActiveReports());
 
     response.setHeader("content-disposition",
-        "inline; filename=\"nest_reporter_state_nest_report_" + new Date().toString() + ".csv\"");
+        "inline; filename=\"nest_reporter_state_nest_report_" +
+                new Date().toString() + ".csv\"");
     response.setCharacterEncoding("UTF-8");
     ServletOutputStream outputStream = response.getOutputStream();
     OutputStreamWriter writer = new OutputStreamWriter(outputStream, Charset.forName("UTF-8"));
@@ -168,7 +186,6 @@ public class StateNestReportServlet extends HttpServlet {
     public boolean shouldWriteRow(Map<Path, Column> columnMap, int rowId) {
 //       If there is no section number it is a junk report.
       boolean hasSection = !sectionColumn.getFetcher().fetch(columnMap, rowId).equals("");
-//        hasSection = true;
       String nest = columnMap.get(new Path("report.nest_number")).getValue(rowId);
       boolean isNest = !nest.equals("0") && !nest.equals("");
       return hasSection && isNest;
