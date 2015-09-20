@@ -155,7 +155,14 @@ public class EditFragmentNestCondition extends EditFragment {
     setChecked(R.id.fieldVandalismEggsAffected,
         condition.getVandalismType() == NestCondition.VandalismType.EGGS_AFFECTED);
 
-    setChecked(R.id.fieldPostHatchWashout, condition.getPostHatchWashout());
+    setEnabled(R.id.fieldPostHatchWashout,(
+            condition.getPartialWashout().hasTimestampMs() ||
+    condition.getWashOut().hasTimestampMs()));
+
+    setChecked(R.id.fieldPostHatchWashout, condition.getPostHatchWashout() &&
+            (condition.getWashOut().hasTimestampMs() ||
+            condition.getPartialWashout().hasTimestampMs()));
+
     setChecked(R.id.fieldDamagePoached, condition.getPoached());
     setEnabled(R.id.buttonDamagePoachedDate, condition.getPoached());
     if (condition.hasPoachedTimestampMs()) {

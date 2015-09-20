@@ -149,7 +149,7 @@
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_weight="1"
-				android:text="@string/edit_nest_condition_predataion"
+				android:text="@string/edit_nest_condition_predation_eggs_only"
 				android:layout_column="0" />
 		</TableRow>
 		<TableLayout

@@ -11,6 +11,9 @@ import com.google.api.client.repackaged.com.google.common.base.Preconditions;
 public class AuthenticationUtil {
   // NOTE: this is the WEB client id, not the android client id. Ask google why, not me.
   private static final String WEB_CLIENT_ID = "362099484578.apps.googleusercontent.com";
+  private static final String DEV_CLIENT_ID = "496541743296-02j0fb8t266a6vibrtgar9bc5i46f5i9.apps.googleusercontent.com";
+
+
   private static final String AUDIENCE = "server:client_id:" + WEB_CLIENT_ID;
 
   public static GoogleAccountCredential getCredential(Context context, String username) {

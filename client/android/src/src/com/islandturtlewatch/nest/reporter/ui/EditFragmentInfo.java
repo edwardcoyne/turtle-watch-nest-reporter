@@ -1,9 +1,5 @@
 package com.islandturtlewatch.nest.reporter.ui;
 
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,19 +15,24 @@ import com.islandturtlewatch.nest.data.ReportProto.Report.Species;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.data.Date;
-import com.islandturtlewatch.nest.reporter.data.ReportMutations.NoDiggingMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.AbandonedBodyPitsMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.AbandonedEggCavitiesMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.DateFoundMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.FalseCrawlNumberMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.NestNumberMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.NestStatusMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.NoDiggingMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.ObserversMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.SpeciesMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.SpeciesOtherMutation;
 import com.islandturtlewatch.nest.reporter.util.DateUtil;
 import com.islandturtlewatch.nest.reporter.util.DialogUtil;
 import com.islandturtlewatch.nest.reporter.util.SettingsUtil;
+
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class EditFragmentInfo extends EditFragment {
   private static final Map<Integer, ClickHandler> CLICK_HANDLERS =
@@ -114,7 +115,7 @@ public class EditFragmentInfo extends EditFragment {
 
     setChecked(R.id.fieldNestVerified, report.getStatus() == NestStatus.NEST_VERIFIED);
     setChecked(R.id.fieldNestNotVerified, report.getStatus() == NestStatus.NEST_NOT_VERIFIED);
-    setChecked(R.id.fieldNestRelocated, report.getStatus() == NestStatus.NEST_RELOCATED);
+    setChecked(R.id.fieldNestRelocated, report.getIntervention().getRelocation().getWasRelocated());
     setChecked(R.id.fieldFalseCrawl, report.getStatus() == NestStatus.FALSE_CRAWL);
 
     setChecked(R.id.fieldAbandonedBodyPits, report.getCondition().getAbandonedBodyPits());
@@ -222,7 +223,7 @@ public class EditFragmentInfo extends EditFragment {
 
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(new NestStatusMutation(NestStatus.NEST_RELOCATED));
+      updateHandler.applyMutation(new ReportMutations.RelocatedMutation(isChecked(view)));
     }
   }
 

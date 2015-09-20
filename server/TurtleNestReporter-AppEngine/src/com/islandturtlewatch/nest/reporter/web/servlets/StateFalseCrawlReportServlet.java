@@ -20,6 +20,8 @@ import com.google.common.net.MediaType;
 import com.islandturtlewatch.nest.reporter.backend.storage.ReportStore;
 import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter;
 import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedColumn;
+import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedSpeciesColumn;
+
 import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedDistanceColumn;
 import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedSectionColumn;
 import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedTimestampColumn;
@@ -36,20 +38,29 @@ public class StateFalseCrawlReportServlet extends HttpServlet {
 
   // Keep this column separate so we can test against it.
   private static ReportColumn sectionColumn = new MappedSectionColumn("Beach Zone", "ref.owner_id");
+//  private static ReportColumn sectionColumn = new StaticValueColumn("Beach Zone", "1");
+
 
   // This is the list of columns in the report, they will appear in this order.
   private static List<ReportColumn> reportColumns = ImmutableList.of(
       new MappedTimestampColumn("Date Crawl Recorded", "report.timestamp_found_ms"),
-      new StaticValueColumn("Species Crawl within Project Area? ", "YES"),
-      new StaticValueColumn("Escarpment >= 18 Encountered", "NO"),
-      new MappedDistanceColumn("Final Activity Distance From Dune",
+      new MappedSpeciesColumn("Species","report.species"),
+      new StaticValueColumn("Crawl within Project Area? ", "YES"),
+      new MappedColumn("City","report.location.city"),
+      new MappedColumn("Address","report.location.street_address"),
+      new MappedColumn("Escarpment >= 18 Encountered", "report.location.escarpment_over_18_inches"),
+      new OrderedReportWriter.FinalActivityColumn("Final Activity",
+              "report.condition.abandoned_body_pits",
+              "report.condition.abandoned_egg_cavities") ,
+      new MappedDistanceColumn("Distance From Dune",
           "report.location.apex_to_barrier_ft", "report.location.apex_to_barrier_in"),
       new MappedDistanceColumn("Distance From MHW",
           "report.location.water_to_apex_ft", "report.location.water_to_apex_in"),
       new MappedColumn("ID/Label", "report.false_crawl_number"),
       sectionColumn,
+      new MappedColumn("Additional Notes","report.additional_notes"),
       new MappedColumn("Latitude", "report.location.coordinates.lat"),
-      new MappedColumn("Longitude", "report.location.coordinates.long"));
+      new OrderedReportWriter.MappedColumnAbsoluteValueDouble("Longitude", "report.location.coordinates.long"));
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -79,7 +90,6 @@ public class StateFalseCrawlReportServlet extends HttpServlet {
     public boolean shouldWriteRow(Map<Path, Column> columnMap, int rowId) {
       // If there is no section number it is a junk report.
       boolean hasSection = !sectionColumn.getFetcher().fetch(columnMap, rowId).equals("");
-
       String falseCrawl = columnMap.get(new Path("report.false_crawl_number")).getValue(rowId);
       boolean isFalseCrawl = !falseCrawl.equals("") && !falseCrawl.equals("0");
       return hasSection && isFalseCrawl;
