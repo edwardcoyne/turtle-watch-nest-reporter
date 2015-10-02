@@ -1,7 +1,5 @@
 package com.islandturtlewatch.nest.reporter.ui;
 
-import java.util.Map;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 
 import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableList;
 import com.islandturtlewatch.nest.data.ReportProto.Excavation;
 import com.islandturtlewatch.nest.data.ReportProto.Excavation.ExcavationFailureReason;
 import com.islandturtlewatch.nest.data.ReportProto.NestCondition;
@@ -31,6 +28,8 @@ import com.islandturtlewatch.nest.reporter.data.ReportMutations.ExcavationLivePi
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.ExcavationWholeUnhatchedMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.HatchDateMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.WasExcavatedMutation;
+
+import java.util.Map;
 
 public class EditFragmentNestResolution extends EditFragment {
   private static final Map<Integer, ClickHandler> CLICK_HANDLERS =
@@ -91,19 +90,20 @@ public class EditFragmentNestResolution extends EditFragment {
     Excavation excavation = report.getIntervention().getExcavation();
     setChecked(R.id.fieldExcavated, excavation.getExcavated());
 
-    setVisible(!excavation.getExcavated(), ImmutableList.of(R.id.rowWhyNotExcavatedLabel,
-        R.id.rowWhyNotExcavatedFields1, R.id.rowWhyNotExcavatedFields2));
+//    setVisible(!excavation.getExcavated(), ImmutableList.of(R.id.rowWhyNotExcavatedLabel,
+//            R.id.rowWhyNotExcavatedFields1, R.id.rowWhyNotExcavatedFields2, R.id.textPleaseSpecify));
 
-    setChecked(R.id.fieldEggsNotFound,
-        excavation.getFailureReason() == ExcavationFailureReason.EGGS_NOT_FOUND);
-    setChecked(R.id.fieldEggsTooDecayed,
-        excavation.getFailureReason() == ExcavationFailureReason.EGGS_HATCHLINGS_TOO_DECAYED);
-    setChecked(R.id.fieldNoExcavationOther,
-        excavation.getFailureReason() == ExcavationFailureReason.OTHER);
-    setEnabled(R.id.fieldNoExcavationOtherValue,
-        excavation.getFailureReason() == ExcavationFailureReason.OTHER);
-    setText(R.id.fieldNoExcavationOtherValue, excavation.getFailureOther());
-
+//    if (!excavation.getExcavated()) {
+      setChecked(R.id.fieldEggsNotFound,
+              excavation.getFailureReason() == ExcavationFailureReason.EGGS_NOT_FOUND);
+      setChecked(R.id.fieldEggsTooDecayed,
+              excavation.getFailureReason() == ExcavationFailureReason.EGGS_HATCHLINGS_TOO_DECAYED);
+      setChecked(R.id.fieldNoExcavationOther,
+              excavation.getFailureReason() == ExcavationFailureReason.OTHER);
+      setEnabled(R.id.fieldNoExcavationOtherValue,
+              excavation.getFailureReason() == ExcavationFailureReason.OTHER);
+      setText(R.id.fieldNoExcavationOtherValue, excavation.getFailureOther());
+//    }
     if (excavation.hasTimestampMs()) {
       setDate(R.id.buttonExcavationDate, excavation.getTimestampMs());
     } else {
@@ -191,6 +191,9 @@ public class EditFragmentNestResolution extends EditFragment {
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
       updateHandler.applyMutation(new WasExcavatedMutation(isChecked(view)));
+//      if (isChecked(view)) {
+        updateHandler.applyMutation(new ExcavationFailureMutation(ExcavationFailureReason.UNSET_REASON));
+//      }
     }
   }
   private static class HandleSetEggsNotFound extends ClickHandler {
@@ -199,8 +202,12 @@ public class EditFragmentNestResolution extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(
-          new ExcavationFailureMutation(ExcavationFailureReason.EGGS_NOT_FOUND));
+      if (isChecked(view)) {
+        updateHandler.applyMutation(
+                new ExcavationFailureMutation(ExcavationFailureReason.EGGS_NOT_FOUND));
+      } else {
+        new ExcavationFailureMutation(ExcavationFailureReason.UNSET_REASON);
+      }
     }
   }
   private static class HandleSetEggsTooDecayed extends ClickHandler {
@@ -209,8 +216,12 @@ public class EditFragmentNestResolution extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(
-          new ExcavationFailureMutation(ExcavationFailureReason.EGGS_HATCHLINGS_TOO_DECAYED));
+      if (isChecked(view)) {
+        updateHandler.applyMutation(
+                new ExcavationFailureMutation(ExcavationFailureReason.EGGS_HATCHLINGS_TOO_DECAYED));
+      } else {
+        new ExcavationFailureMutation(ExcavationFailureReason.UNSET_REASON);
+      }
     }
   }
   private static class HandleSetReasonOther extends ClickHandler {
@@ -219,7 +230,11 @@ public class EditFragmentNestResolution extends EditFragment {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(new ExcavationFailureMutation(ExcavationFailureReason.OTHER));
+      if (isChecked(view)) {//checkbox should be in it's final state by this point.
+        updateHandler.applyMutation(new ExcavationFailureMutation(ExcavationFailureReason.OTHER));
+      }  else {
+        new ExcavationFailureMutation(ExcavationFailureReason.UNSET_REASON);
+      }
     }
   }
 

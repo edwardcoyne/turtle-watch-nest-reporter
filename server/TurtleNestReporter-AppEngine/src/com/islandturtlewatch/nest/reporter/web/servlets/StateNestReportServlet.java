@@ -51,7 +51,7 @@ public class StateNestReportServlet extends HttpServlet {
 
   // Keep this column separate so we can test against it.
   private static ReportColumn sectionColumn = new MappedSectionColumn("Beach Zone", "ref.owner_id");
-//    private static ReportColumn sectionColumn = new StaticValueColumn("Beach Zone", "1");
+//    private static ReportColumn sectionColumn = new StaticValueColumn("**TEST**", "1");
 
 
 
@@ -124,6 +124,7 @@ public class StateNestReportServlet extends HttpServlet {
               "report.condition.poached"),
           new MappedYesNoColumn("Poached (Eggs Removed)",
                   "report.condition.poached_eggs_removed"),
+      new MappedYesNoColumn("Vandalized","report.condition.vandalized"),
       new ConditionallyMappedColumn("Type of Vandalism",
           "report.condition.vandalized",
               "report.condition.vandalism_type"),
