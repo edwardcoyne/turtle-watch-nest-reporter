@@ -86,6 +86,7 @@ public class StateNestReportServlet extends HttpServlet {
       new MappedDistanceColumn("Distance From MHW",
           "report.location.water_to_apex_ft", "report.location.water_to_apex_in"),
       new MappedColumn("Nest Relocated", "report.intervention.relocation.was_relocated"),
+      new MappedTimestampColumn("Date Relocated","report.intervention.relocation.timestamp_ms"),
           //not required for Nest report, only for False Crawl Report
 //      new FinalActivityColumn("Final Activity",
 //          "report.condition.abandoned_body_pits", "report.condition.abandoned_egg_cavities"),

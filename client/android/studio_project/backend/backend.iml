@@ -6,6 +6,12 @@
         <option name="GRADLE_PROJECT_PATH" value=":backend" />
       </configuration>
     </facet>
+    <facet type="java-gradle" name="Java-Gradle">
+      <configuration>
+        <option name="BUILD_FOLDER_PATH" value="$MODULE_DIR$/build" />
+        <option name="BUILDABLE" value="true" />
+      </configuration>
+    </facet>
     <facet type="app-engine-gradle" name="App Engine Gradle">
       <configuration>
         <option name="HTTP_ADDRESS" value="0.0.0.0" />
@@ -13,12 +19,6 @@
         <option name="WAR_DIR" value="$MODULE_DIR$/build/exploded-app" />
         <option name="WEB_APP_DIR" value="$MODULE_DIR$/src/main/webapp" />
         <option name="APPENGINE_SDKROOT" value="$USER_HOME$/.gradle/appengine-sdk/appengine-java-sdk-1.9.14" />
-      </configuration>
-    </facet>
-    <facet type="java-gradle" name="Java-Gradle">
-      <configuration>
-        <option name="BUILD_FOLDER_PATH" value="$MODULE_DIR$/build" />
-        <option name="BUILDABLE" value="true" />
       </configuration>
     </facet>
   </component>
@@ -70,7 +70,7 @@
     <orderEntry type="library" exported="" name="jdo2-api-2.3-eb" level="project" />
     <orderEntry type="library" exported="" name="google-http-client-jdo-1.20.0" level="project" />
     <orderEntry type="library" exported="" name="transaction-api-1.1" level="project" />
-    <orderEntry type="library" exported="" name="appengine-api-1.0-sdk-1.9.26" level="project" />
+    <orderEntry type="library" exported="" name="appengine-api-1.0-sdk-1.9.27" level="project" />
     <orderEntry type="library" exported="" name="guava-19.0-rc2" level="project" />
     <orderEntry type="library" exported="" name="google-api-client-1.20.0" level="project" />
     <orderEntry type="library" exported="" name="google-http-client-appengine-1.20.0" level="project" />
