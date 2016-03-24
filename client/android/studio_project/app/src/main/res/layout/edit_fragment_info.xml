@@ -132,7 +132,15 @@
 	           android:text="@string/edit_info_label_false_crawl"
 	           android:onClick="handleClick"/>
 	   </TableRow>
-	
+
+		<CheckBox
+			android:id="@+id/fieldPossibleFalseCrawl"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="@string/edit_info_label_possible_false_crawl"
+			android:onClick="handleClick"
+			/>
 	   <TableRow
 	       android:layout_marginTop="20dp"
 	       android:layout_width="wrap_content"

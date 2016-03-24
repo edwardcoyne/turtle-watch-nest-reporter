@@ -24,6 +24,13 @@
        		       android:layout_height="wrap_content"
                    android:onClick="handleClick"/>
        </TableRow>
+		<com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+			android:id="@+id/fieldAdoptee"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:hint="@string/hintAdoptee"
+			onTextChangeHandler="handleTextChange"
+			/>
 	   <TableRow
 	       android:layout_width="wrap_content"
 	       android:layout_height="wrap_content" >

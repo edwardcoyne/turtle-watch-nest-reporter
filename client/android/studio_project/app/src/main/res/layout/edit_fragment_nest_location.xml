@@ -71,6 +71,14 @@
 	           android:onClick="handleClick" />
 	       
 	   </TableRow>
+		<CheckBox
+			android:id="@+id/fieldLocationCortezReplacementArea"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="@string/edit_nest_location_within_replacement_area"
+			android:onClick="handleClick"
+			/>
 	   <TableRow
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content" >

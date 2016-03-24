@@ -67,25 +67,19 @@
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/jni" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/rs" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/assets" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/bundles" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/classes" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/coverage-instrumented-classes" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/dependency-cache" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/dex" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/dex-cache" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jacoco" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/javaResources" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/libs" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/lint" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/manifests" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/ndk" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/pre-dexed" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/proguard" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/res" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/resources" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/rs" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/symbols" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/tmp" />
       <excludeFolder url="file://$MODULE_DIR$/build/outputs" />
+      <excludeFolder url="file://$MODULE_DIR$/build/tmp" />
     </content>
     <content url="file://$MODULE_DIR$/../../../../proto/generated">
       <sourceFolder url="file://$MODULE_DIR$/../../../../proto/generated" isTestSource="false" />
@@ -95,23 +89,26 @@
     <orderEntry type="library" exported="" name="google-oauth-client-1.19.0" level="project" />
     <orderEntry type="library" exported="" name="jsr305-1.3.9" level="project" />
     <orderEntry type="library" exported="" name="1_jsr305-1.3.9" level="project" />
-    <orderEntry type="library" exported="" name="google-api-client-1.19.0" level="project" />
+    <orderEntry type="library" exported="" name="play-services-base-8.4.0" level="project" />
+    <orderEntry type="library" exported="" name="play-services-basement-8.4.0" level="project" />
     <orderEntry type="library" exported="" name="jackson-core-2.1.3" level="project" />
     <orderEntry type="library" exported="" name="1_jackson-core-2.1.3" level="project" />
-    <orderEntry type="library" exported="" name="support-v4-21.0.3" level="project" />
+    <orderEntry type="library" exported="" name="google-api-client-1.19.0" level="project" />
     <orderEntry type="library" exported="" name="httpclient-android-4.3.5" level="project" />
     <orderEntry type="library" exported="" name="google-http-client-gson-1.19.0" level="project" />
     <orderEntry type="library" exported="" name="google-api-client-android-1.19.0" level="project" />
+    <orderEntry type="library" exported="" name="support-v4-23.0.0" level="project" />
     <orderEntry type="library" exported="" name="guava-18.0" level="project" />
-    <orderEntry type="library" exported="" name="google-http-client-1.19.0" level="project" />
-    <orderEntry type="library" exported="" name="backend-android-endpoints" level="project" />
     <orderEntry type="library" exported="" name="httpmime-4.3.5" level="project" />
+    <orderEntry type="library" exported="" name="backend-android-endpoints" level="project" />
+    <orderEntry type="library" exported="" name="google-http-client-1.19.0" level="project" />
+    <orderEntry type="library" exported="" name="play-services-identity-8.4.0" level="project" />
     <orderEntry type="library" exported="" name="google-http-client-android-1.19.0" level="project" />
-    <orderEntry type="library" exported="" name="google-http-client-jackson2-1.19.0" level="project" />
-    <orderEntry type="library" exported="" name="protobuf-java-2.5.0" level="project" />
     <orderEntry type="library" exported="" name="lombok-1.16.2" level="project" />
-    <orderEntry type="library" exported="" name="support-annotations-21.0.3" level="project" />
+    <orderEntry type="library" exported="" name="protobuf-java-2.5.0" level="project" />
+    <orderEntry type="library" exported="" name="google-http-client-jackson2-1.19.0" level="project" />
     <orderEntry type="library" exported="" name="gson-2.1" level="project" />
     <orderEntry type="library" exported="" name="joda-time-2.3" level="project" />
+    <orderEntry type="library" exported="" name="support-annotations-23.0.0" level="project" />
   </component>
 </module>

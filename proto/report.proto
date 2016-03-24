@@ -45,7 +45,7 @@ message Report {
     FALSE_CRAWL = 5;
   }
   optional NestStatus status = 6;
-
+  optional bool possible_false_crawl = 13;
   optional NestLocation location = 7;
   optional string observers = 8;
   optional NestCondition condition = 9;
@@ -54,6 +54,7 @@ message Report {
   optional string additional_notes = 11;
 
   repeated Image image = 12;
+  //NEXT ID = 14
 }
 
 message Image {
@@ -74,7 +75,7 @@ message NestCondition {
     EGGS_AFFECTED = 4;
   }
   optional VandalismType vandalism_type = 15;
-
+  optional bool nest_dug_into = 26;
   optional bool post_hatch_washout = 20;
   optional bool poached = 3;
   optional int64 poached_timestamp_ms = 4;
@@ -114,7 +115,7 @@ message NestCondition {
   optional bool eggs_damaged_by_another_turtle = 24;
 
 
-  // Next ID=26
+  // Next ID=27
 }
 
 message NestLocation {
@@ -129,6 +130,7 @@ message NestLocation {
     HB = 4;    
   }
   optional City city = 4;
+  optional bool in_cortez_groin_replacement_area = 14;
 
   enum Placement {
     UNSET_PLACEMENT = 1;
@@ -165,7 +167,7 @@ message NestLocation {
   }
   optional Triangulation triangulation = 12;
   optional bool escarpment_over_18_inches = 13;
-// Next ID=14
+// Next ID=15
 }
 
 message Intervention {
@@ -194,6 +196,8 @@ message Intervention {
   optional Excavation excavation = 3;
 
   optional bool adopted = 4;
+  optional string adoptee = 5;
+  //NEXT ID = 6
 }
 
 message Excavation {

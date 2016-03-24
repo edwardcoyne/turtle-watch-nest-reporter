@@ -1,7 +1,5 @@
 package com.islandturtlewatch.nest.reporter.ui.split;
 
-import java.util.Map;
-
 import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.Intent;
@@ -56,6 +54,8 @@ import com.islandturtlewatch.nest.reporter.util.AuthenticationUtil;
 import com.islandturtlewatch.nest.reporter.util.DialogUtil;
 import com.islandturtlewatch.nest.reporter.util.ReportUtil;
 import com.islandturtlewatch.nest.reporter.util.SettingsUtil;
+
+import java.util.Map;
 
 public class SplitEditActivity extends FragmentActivity implements EditView {
   //private static final String TAG = SplitEditActivity.class.getSimpleName();
@@ -113,6 +113,7 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
           View view,
           int position,
           long id) {
+        //TODO(dWenzel): display modal window here
         model.switchActiveReport(id);
         updateDisplay(model.getActiveReport());
         DrawerLayout drawer = ((DrawerLayout) findViewById(R.id.drawer_layout));

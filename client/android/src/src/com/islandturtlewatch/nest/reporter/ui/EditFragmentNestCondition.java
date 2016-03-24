@@ -54,6 +54,7 @@ public class EditFragmentNestCondition extends EditFragment {
           new HandleSetPoachedDate(),
           new HandleSetPoachedEggsRemoved(),
           new HandleSetRootsInvaded(),
+          new HandleSetNestDugInto(),
           new HandleSetVandalized(),
           new HandleSetVandalizedDate(),
           new HandleSetVandalismStakesRemoved(),
@@ -155,14 +156,15 @@ public class EditFragmentNestCondition extends EditFragment {
     setChecked(R.id.fieldVandalismEggsAffected,
         condition.getVandalismType() == NestCondition.VandalismType.EGGS_AFFECTED);
 
-    setEnabled(R.id.fieldPostHatchWashout,(
+    setEnabled(R.id.fieldPostHatchWashout, (
             condition.getPartialWashout().hasTimestampMs() ||
-    condition.getWashOut().hasTimestampMs()));
+                    condition.getWashOut().hasTimestampMs()));
 
     setChecked(R.id.fieldPostHatchWashout, condition.getPostHatchWashout() &&
             (condition.getWashOut().hasTimestampMs() ||
-            condition.getPartialWashout().hasTimestampMs()));
+                    condition.getPartialWashout().hasTimestampMs()));
 
+    setChecked(R.id.fieldNestDugInto,condition.getNestDugInto());
     setChecked(R.id.fieldDamagePoached, condition.getPoached());
     setEnabled(R.id.buttonDamagePoachedDate, condition.getPoached());
     if (condition.hasPoachedTimestampMs()) {
@@ -449,6 +451,17 @@ public class EditFragmentNestCondition extends EditFragment {
 //      updateHandler.applyMutation(new EggsScatteredDateMutation(maybeDate));
 //    }
 //  }
+
+  private static class HandleSetNestDugInto extends ClickHandler {
+    protected HandleSetNestDugInto() {
+      super(R.id.fieldNestDugInto);
+    }
+
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.WasNestDugIntoMutation(isChecked(view)));
+    }
+  }
 
   private static class HandleSetVandalized extends ClickHandler {
     protected HandleSetVandalized() {

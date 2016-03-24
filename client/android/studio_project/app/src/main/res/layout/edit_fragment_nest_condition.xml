@@ -223,6 +223,14 @@
                android:onClick="handleClick"/>
 
         </TableRow>
+		<CheckBox
+			android:id="@+id/fieldNestDugInto"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="@string/edit_nest_condition_nest_dug_into"
+			android:onClick="handleClick"
+			/>
 
 	   <TableRow
 	       android:layout_width="wrap_content"

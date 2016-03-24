@@ -132,6 +132,21 @@ public class ReportMutations {
     }
   }
 
+  public static class PossibleFalseCrawlMutation implements ReportMutation {
+    private final boolean isTrue;
+
+    public PossibleFalseCrawlMutation(boolean isTrue) {
+      this.isTrue = isTrue;
+    }
+
+    @Override
+    public Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      updatedReport.setPossibleFalseCrawl(isTrue);
+      return updatedReport.build();
+    }
+  }
+
   public static class AbandonedBodyPitsMutation implements ReportMutation {
     private final boolean isTrue;
 
@@ -385,6 +400,21 @@ public class ReportMutations {
     public Report apply(Report oldReport) {
       Report.Builder updatedReport = oldReport.toBuilder();
       updatedReport.getLocationBuilder().setEscarpmentOver18Inches(isTrue);
+      return updatedReport.build();
+    }
+  }
+
+  public static class WithinReplacementArea implements ReportMutation {
+    private final boolean isTrue;
+
+    public WithinReplacementArea(boolean isTrue) {
+      this.isTrue = isTrue;
+    }
+
+    @Override
+    public Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      updatedReport.getLocationBuilder().setInCortezGroinReplacementArea(isTrue);
       return updatedReport.build();
     }
   }
@@ -716,6 +746,18 @@ public class ReportMutations {
     }
   }
 
+  public static class AdopteeNameMutation implements ReportMutation {
+    private final String adoptee;
+    public AdopteeNameMutation(String adoptee) {
+      this.adoptee = adoptee;
+    }
+    @Override
+    public Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      updatedReport.getInterventionBuilder().setAdoptee(adoptee);
+      return updatedReport.build();
+    }
+  }
 
   public static class ExcavationFailureOtherMutation implements ReportMutation {
     private final String reason;
@@ -978,6 +1020,21 @@ public class ReportMutations {
         builder.clearVandalismType();
       }
 
+      return updatedReport.build();
+    }
+  }
+
+  public static class WasNestDugIntoMutation implements ReportMutation {
+    private final boolean isTrue;
+
+    public WasNestDugIntoMutation(boolean isTrue) {
+      this.isTrue = isTrue;
+    }
+
+    @Override
+    public Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      updatedReport.getConditionBuilder().setNestDugInto(isTrue);
       return updatedReport.build();
     }
   }

@@ -133,4 +133,8 @@
     <string name="edit_nest_location_relocation">Nest Relocated</string>
     <string name="edit_nest_condition_predation_eggs_only">Nest Predation - Eggs Only</string>
     <string name="give_reason_text">When Other is selected, you must specify why no excavation was done.</string>
+    <string name="edit_nest_location_within_replacement_area">Within Cortez Groin Replacement Area</string>
+    <string name="edit_nest_condition_nest_dug_into">Nest Dug Into</string>
+    <string name="hintAdoptee">Adoptee</string>
+    <string name="edit_info_label_possible_false_crawl">Possible False Crawl</string>
 </resources>

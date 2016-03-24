@@ -54,6 +54,7 @@ public class EditFragmentNestLocation extends EditFragment {
           new HandleSetCityAM(),
           new HandleSetCityHB(),
           new HandleSetCityBB(),
+          new HandleSetWithinReplacementArea(),
           new HandleSetEscarpmentOver18Inches(),
           new HandleSetEscarpmentOver18Inches2(),
           new HandleSetRelocated(),
@@ -72,7 +73,7 @@ public class EditFragmentNestLocation extends EditFragment {
           new HandleUpdateApexToBarrierIn(),
           new HandleUpdateWaterToApexFt(),
           new HandleUpdateWaterToApexIn(),
-              new HandleUpdateEggsRelocated(),
+          new HandleUpdateEggsRelocated(),
           new HandleUpdateObstructionsOther());
 
   @Override
@@ -108,6 +109,7 @@ public class EditFragmentNestLocation extends EditFragment {
     setChecked(R.id.fieldLocationAM, location.getCity() == City.AM);
     setChecked(R.id.fieldLocationHB, location.getCity() == City.HB);
     setChecked(R.id.fieldLocationBB, location.getCity() == City.BB);
+    setChecked(R.id.fieldLocationCortezReplacementArea, location.getInCortezGroinReplacementArea());
 
     setText(R.id.fieldDetails, location.hasDetails() ?
             location.getDetails() : "");
@@ -401,6 +403,19 @@ public class EditFragmentNestLocation extends EditFragment {
               new ReportMutations.EscarpmentOver18InchesMutation(isChecked(view)));
     }
   }
+
+  private static class HandleSetWithinReplacementArea extends ClickHandler {
+    protected HandleSetWithinReplacementArea() {
+      super(R.id.fieldLocationCortezReplacementArea);
+    }
+
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(
+              new ReportMutations.WithinReplacementArea(isChecked(view)));
+    }
+  }
+
   private static class HandleSetEscarpmentOver18Inches2 extends ClickHandler {
     protected HandleSetEscarpmentOver18Inches2() {
       super(R.id.fieldLocationEscarpmentOver18Inches2);

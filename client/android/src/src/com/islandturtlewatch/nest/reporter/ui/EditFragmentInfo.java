@@ -43,6 +43,7 @@ public class EditFragmentInfo extends EditFragment {
           new HandleSetNestNotVerified(),
           new HandleSetNestRelocated(),
           new HandleSetFalseCrawl(),
+          new HandleSetPossibleFalseCrawl(),
           new HandleSetAbandonedBodyPits(),
           new HandleSetAbandonedEggCavities(),
           new HandleSetSpeciesLoggerHead(),
@@ -95,11 +96,11 @@ public class EditFragmentInfo extends EditFragment {
     setText(R.id.fieldSectionNumber, Integer.toString(sectionNumber));
 
     setText(R.id.fieldNestNumber, report.hasNestNumber() ?
-        Integer.toString(report.getNestNumber()) : "");
+            Integer.toString(report.getNestNumber()) : "");
     setVisible(R.id.rowNestNumber, report.hasNestNumber());
 
     setText(R.id.fieldFalseCrawlNumber, report.hasFalseCrawlNumber() ?
-        Integer.toString(report.getFalseCrawlNumber()) : "");
+            Integer.toString(report.getFalseCrawlNumber()) : "");
     setVisible(R.id.rowFalseCrawlNumber, report.hasFalseCrawlNumber());
 
     if (report.hasTimestampFoundMs()) {
@@ -117,6 +118,7 @@ public class EditFragmentInfo extends EditFragment {
     setChecked(R.id.fieldNestNotVerified, report.getStatus() == NestStatus.NEST_NOT_VERIFIED);
     setChecked(R.id.fieldNestRelocated, report.getIntervention().getRelocation().getWasRelocated());
     setChecked(R.id.fieldFalseCrawl, report.getStatus() == NestStatus.FALSE_CRAWL);
+    setChecked(R.id.fieldPossibleFalseCrawl, report.getPossibleFalseCrawl());
 
     setChecked(R.id.fieldAbandonedBodyPits, report.getCondition().getAbandonedBodyPits());
     setChecked(R.id.fieldAbandonedEggCavities, report.getCondition().getAbandonedEggCavities());
@@ -202,6 +204,7 @@ public class EditFragmentInfo extends EditFragment {
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
       updateHandler.applyMutation(new NestStatusMutation(NestStatus.NEST_VERIFIED));
+      updateHandler.applyMutation(new ReportMutations.PossibleFalseCrawlMutation(false));
     }
   }
 
@@ -213,6 +216,7 @@ public class EditFragmentInfo extends EditFragment {
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
       updateHandler.applyMutation(new NestStatusMutation(NestStatus.NEST_NOT_VERIFIED));
+      updateHandler.applyMutation(new ReportMutations.PossibleFalseCrawlMutation(false));
     }
   }
 
@@ -224,6 +228,19 @@ public class EditFragmentInfo extends EditFragment {
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
       updateHandler.applyMutation(new ReportMutations.RelocatedMutation(isChecked(view)));
+    }
+  }
+
+  private static class HandleSetPossibleFalseCrawl extends ClickHandler {
+    protected HandleSetPossibleFalseCrawl() {
+      super(R.id.fieldPossibleFalseCrawl);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.PossibleFalseCrawlMutation(isChecked(view)));
+      if (isChecked(view)) {
+        updateHandler.applyMutation(new NestStatusMutation(NestStatus.FALSE_CRAWL));
+      }
     }
   }
 

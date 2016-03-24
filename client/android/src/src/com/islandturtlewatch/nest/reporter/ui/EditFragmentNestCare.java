@@ -18,6 +18,7 @@ import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.data.Date;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.DateProtectedMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.EggsDestroyedMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.NewAddressMutation;
@@ -51,6 +52,7 @@ public class EditFragmentNestCare extends EditFragment {
   private static final Map<Integer, TextChangeHandler> TEXT_CHANGE_HANDLERS =
       TextChangeHandler.toMap(
           new HandleUpdateNewAddress(),
+          new HandleUpdateAdoptee(),
 //          new HandleUpdateEggsRelocated(),
           new HandleUpdateEggsDestroyed());
 
@@ -75,6 +77,8 @@ public class EditFragmentNestCare extends EditFragment {
   public void updateSection(Report report) {
     Intervention intervention = report.getIntervention();
     setChecked(R.id.fieldNestAdopted, intervention.getAdopted());
+    setVisible(R.id.fieldAdoptee,intervention.getAdopted());
+    setText(R.id.fieldAdoptee,intervention.getAdoptee());
 
     if (intervention.getProtectionEvent().hasTimestampMs()) {
       setDate(R.id.buttonProtectedDate, intervention.getProtectionEvent().getTimestampMs());
@@ -288,6 +292,16 @@ public class EditFragmentNestCare extends EditFragment {
 //      updateHandler.applyMutation(new EggsRelocatedMutation(getInteger(newText)));
 //    }
 //  }
+  private static class HandleUpdateAdoptee extends TextChangeHandler {
+  protected HandleUpdateAdoptee() {
+    super(R.id.fieldAdoptee);
+  }
+  @Override
+  public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
+    updateHandler.applyMutation(new ReportMutations.AdopteeNameMutation(newText));
+  }
+}
+
   private static class HandleUpdateEggsDestroyed extends TextChangeHandler {
     protected HandleUpdateEggsDestroyed() {
       super(R.id.fieldEggsDestroyed);
