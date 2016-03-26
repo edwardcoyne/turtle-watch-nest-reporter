@@ -137,4 +137,5 @@
     <string name="edit_nest_condition_nest_dug_into">Nest Dug Into</string>
     <string name="hintAdoptee">Adoptee</string>
     <string name="edit_info_label_possible_false_crawl">Possible False Crawl</string>
+    <string name="OK">OK</string>
 </resources>

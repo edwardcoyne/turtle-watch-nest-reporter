@@ -1,7 +1,5 @@
 package com.islandturtlewatch.nest.reporter.data;
 
-import java.util.List;
-
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,6 +17,8 @@ import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.ReportRestorer;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore.CachedReportWrapper;
 import com.islandturtlewatch.nest.reporter.util.ImageUtil;
+
+import java.util.List;
 
 public class ReportsModel {
   private static final String TAG = ReportsModel.class.getSimpleName();
@@ -83,6 +83,8 @@ public class ReportsModel {
   public Report getActiveReport() {
     return activeReport.get();
   }
+
+  public long getActiveReportId() { return activeReport.getId();}
 
   /**
    * Get report we are currently working on.

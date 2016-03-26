@@ -1,7 +1,9 @@
 package com.islandturtlewatch.nest.reporter.ui.split;
 
 import android.accounts.AccountManager;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -33,6 +35,7 @@ import com.islandturtlewatch.nest.reporter.data.LocalDataStore;
 import com.islandturtlewatch.nest.reporter.data.ReportsModel;
 import com.islandturtlewatch.nest.reporter.data.ReportsModel.ReportsListItemViewFactory;
 import com.islandturtlewatch.nest.reporter.service.SyncService;
+import com.islandturtlewatch.nest.reporter.ui.ConfirmationDialogReportParser;
 import com.islandturtlewatch.nest.reporter.ui.EditFragment;
 import com.islandturtlewatch.nest.reporter.ui.EditFragment.ClickHandler;
 import com.islandturtlewatch.nest.reporter.ui.EditFragment.ClickHandlerSimple;
@@ -114,14 +117,36 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
           int position,
           long id) {
         //TODO(dWenzel): display modal window here
+        long oldId = model.getActiveReportId();
         model.switchActiveReport(id);
-        updateDisplay(model.getActiveReport());
+        Report newReport = model.getActiveReport();
+
+        confirmSwitchReport(newReport, oldId);
         DrawerLayout drawer = ((DrawerLayout) findViewById(R.id.drawer_layout));
         drawer.closeDrawers();
       }
     });
   }
 
+  private void confirmSwitchReport(Report newReport, final long id) {
+    AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+    dialog.setMessage(ConfirmationDialogReportParser.parseReport(newReport));
+    dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialog, int which) {
+//        model.switchActiveReport(id);
+        updateDisplay(model.getActiveReport());
+      }
+    });
+    dialog.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialog, int which) {
+        model.switchActiveReport(id);
+        updateDisplay(model.getActiveReport());
+      }
+    });
+    dialog.show();
+  }
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     // Inflate the menu items for use in the action bar
