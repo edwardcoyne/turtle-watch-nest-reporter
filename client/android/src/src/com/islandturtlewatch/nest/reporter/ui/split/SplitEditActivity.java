@@ -130,6 +130,7 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
 
   private void confirmSwitchReport(Report newReport, final long id) {
     AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+    dialog.setTitle(R.string.confirmChangeReport);
     dialog.setMessage(ConfirmationDialogReportParser.parseReport(newReport));
     dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
       @Override

@@ -47,6 +47,8 @@ public class StateFalseCrawlReportServlet extends HttpServlet {
       new MappedSpeciesColumn("Species","report.species"),
       new StaticValueColumn("Crawl within Project Area? ", "YES"),
       new MappedColumn("City","report.location.city"),
+      new OrderedReportWriter.MappedYesNoColumn("Within Cortez Groin Replacement Area",
+              "report.possible_false_crawl"),
       new MappedColumn("Address","report.location.street_address"),
       new MappedColumn("Escarpment >= 18 Encountered", "report.location.escarpment_over_18_inches"),
       new OrderedReportWriter.FinalActivityColumn("Final Activity",
@@ -57,6 +59,7 @@ public class StateFalseCrawlReportServlet extends HttpServlet {
       new MappedDistanceColumn("Distance From MHW",
           "report.location.water_to_apex_ft", "report.location.water_to_apex_in"),
       new MappedColumn("ID/Label", "report.false_crawl_number"),
+          //TODO(DWenzel): add possible false crawl
       sectionColumn,
       new MappedColumn("Additional Notes","report.additional_notes"),
       new MappedColumn("Latitude", "report.location.coordinates.lat"),

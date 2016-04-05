@@ -74,6 +74,7 @@ public class EditFragmentNestLocation extends EditFragment {
           new HandleUpdateWaterToApexFt(),
           new HandleUpdateWaterToApexIn(),
           new HandleUpdateEggsRelocated(),
+          new HandleUpdateEggsDestroyed(),
           new HandleUpdateObstructionsOther());
 
   @Override
@@ -246,6 +247,14 @@ public class EditFragmentNestLocation extends EditFragment {
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
       updateHandler.applyMutation(new ReportMutations.EggsRelocatedMutation(getInteger(newText)));
+    }
+  }
+  private static class HandleUpdateEggsDestroyed extends TextChangeHandler {
+    protected HandleUpdateEggsDestroyed() {super(R.id.fieldEggsDestroyed);}
+
+    @Override
+    public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.EggsDestroyedMutation(getInteger(newText)));
     }
   }
 
