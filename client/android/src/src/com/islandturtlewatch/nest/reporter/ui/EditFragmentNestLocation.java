@@ -63,6 +63,7 @@ public class EditFragmentNestLocation extends EditFragment {
           new HandleSetWashingOut(),
           new HandleSetConstruction(),
           new HandleSetRelocationDate(),
+          new HandleSetSeawardOfArmoringStructure(),
           new HandleSetGps());
 
   private static final Map<Integer, TextChangeHandler> TEXT_CHANGE_HANDLERS =
@@ -142,6 +143,7 @@ public class EditFragmentNestLocation extends EditFragment {
     setChecked(R.id.fieldLocationEscarpmentOver18Inches2,
             location.getEscarpmentOver18Inches() && location.getObstructions().getEscarpment());
 
+    setChecked(R.id.fieldSeawardOfArmoringStructure,report.getNestSeawardOfArmoringStructure());
 
     setChecked(R.id.fieldObstructionsSeawallRocks, location.getObstructions().getSeawallRocks());
     setChecked(R.id.fieldObstructionsFurniture, location.getObstructions().getFurniture());
@@ -445,6 +447,15 @@ public class EditFragmentNestLocation extends EditFragment {
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
       updateHandler.applyMutation(new PlacementMutation(Placement.ON_ESCARPMENT));
+    }
+  }
+
+  private static class HandleSetSeawardOfArmoringStructure extends ClickHandler {
+    protected HandleSetSeawardOfArmoringStructure() { super(R.id.fieldSeawardOfArmoringStructure);}
+
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.SeawardOfArmoringStructuresMutation(isChecked(view)));
     }
   }
 

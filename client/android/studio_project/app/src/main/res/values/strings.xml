@@ -139,4 +139,6 @@
     <string name="edit_info_label_possible_false_crawl">Possible False Crawl</string>
     <string name="OK">OK</string>
     <string name="confirmChangeReport">Are you sure you want to edit this report?</string>
+    <string name="edit_nest_location_coastal_armoring">Coastal Armoring</string>
+    <string name="edit_seaward_of_armoring_structure">Is the nest seaward of any man-made coastal armoring structure? (e.g. Seawalls)</string>
 </resources>

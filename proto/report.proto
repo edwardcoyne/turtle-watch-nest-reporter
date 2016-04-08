@@ -47,6 +47,7 @@ message Report {
   optional NestStatus status = 6;
   optional bool possible_false_crawl = 13;
   optional NestLocation location = 7;
+  optional bool nest_seaward_of_armoring_structure = 14;
   optional string observers = 8;
   optional NestCondition condition = 9;
   optional Intervention intervention = 10;
@@ -54,7 +55,7 @@ message Report {
   optional string additional_notes = 11;
 
   repeated Image image = 12;
-  //NEXT ID = 14
+  //NEXT ID = 15
 }
 
 message Image {

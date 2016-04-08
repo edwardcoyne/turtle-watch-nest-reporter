@@ -355,6 +355,19 @@ public class ReportMutations {
     }
   }
 
+  public static class SeawardOfArmoringStructuresMutation implements ReportMutation {
+    private final boolean isTrue;
+
+    public SeawardOfArmoringStructuresMutation(boolean isTrue) {
+      this.isTrue = isTrue;
+    }
+    @Override
+    public Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      updatedReport.setNestSeawardOfArmoringStructure(isTrue);
+      return updatedReport.build();
+    }
+  }
 
   public static class ObstructionsSeawallRocksMutation implements ReportMutation {
     private final boolean isTrue;
