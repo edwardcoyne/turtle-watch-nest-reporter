@@ -141,4 +141,5 @@
     <string name="confirmChangeReport">Are you sure you want to edit this report?</string>
     <string name="edit_nest_location_coastal_armoring">Coastal Armoring</string>
     <string name="edit_seaward_of_armoring_structure">Is the nest seaward of any man-made coastal armoring structure? (e.g. Seawalls)</string>
+    <string name="edit_within_3_feet">Nest within 3 feet of structure</string>
 </resources>

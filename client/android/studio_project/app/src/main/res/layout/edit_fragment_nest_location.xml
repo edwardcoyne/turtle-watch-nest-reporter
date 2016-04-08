@@ -229,9 +229,22 @@
 				android:id="@+id/fieldSeawardOfArmoringStructure"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:layout_weight="1"
 				android:text="@string/edit_seaward_of_armoring_structure"
 				android:onClick="handleClick"
 				/>
+
+		</TableRow>
+		<TableRow>
+			<CheckBox
+				android:id="@+id/fieldWithin3FeetofStructure"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/edit_within_3_feet"
+				android:onClick="handleClick"
+				/>
+
 
 		</TableRow>
 	   

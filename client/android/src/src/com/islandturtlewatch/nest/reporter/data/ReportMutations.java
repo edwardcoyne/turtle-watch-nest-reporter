@@ -369,6 +369,20 @@ public class ReportMutations {
     }
   }
 
+  public static class Within3FeetofStructureMutation implements ReportMutation {
+    private final boolean isTrue;
+
+    public Within3FeetofStructureMutation(boolean isTrue) {
+      this.isTrue = isTrue;
+    }
+    @Override
+    public Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      updatedReport.setWithin3FeetOfStructure(isTrue);
+      return updatedReport.build();
+    }
+  }
+
   public static class ObstructionsSeawallRocksMutation implements ReportMutation {
     private final boolean isTrue;
 
