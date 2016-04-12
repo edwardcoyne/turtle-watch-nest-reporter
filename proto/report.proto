@@ -49,6 +49,7 @@ message Report {
   optional NestLocation location = 7;
   optional bool nest_seaward_of_armoring_structure = 14;
   optional bool within_3_feet_of_structure = 15;
+  optional string type_of_structure = 16;
   optional string observers = 8;
   optional NestCondition condition = 9;
   optional Intervention intervention = 10;
@@ -56,7 +57,7 @@ message Report {
   optional string additional_notes = 11;
 
   repeated Image image = 12;
-  //NEXT ID = 16
+  //NEXT ID = 17
 }
 
 message Image {
@@ -100,12 +101,28 @@ message NestCondition {
   repeated WashEvent inundated_event = 25;
 
   message PreditationEvent {
+    enum PredatorType {//THIS SHOULD BE THE OTHER WAY ROUND
+      ONLY_RACCOON = 1;
+      ONLY_FOX = 2;
+      ONLY_COYOTE = 3;
+      ONLY_DOG = 4;
+      CANINE_UNK = 5;
+      ONLY_HOG = 6;
+      ONLY_ARMADILLO = 7;
+      MAMMAL_UNK = 8;
+      ONLY_GHOST_CRAB = 9;
+      ONLY_ANTS = 10;
+      RACCOON_GHOST = 11;
+      COYOTE_GHOST = 12;
+      OTHER = 13;
+    }
     optional int64 timestamp_ms = 1;
     optional string predator = 2;
     optional int32 number_of_eggs = 3;
+
   }
   repeated PreditationEvent preditation = 9;
-
+  optional bool actively_record_events = 27 [default = true];
   optional int64 hatch_timestamp_ms = 10;
   optional int64 additional_hatch_timestamp_ms = 11;
   optional bool disorientation = 12;
@@ -117,7 +134,7 @@ message NestCondition {
   optional bool eggs_damaged_by_another_turtle = 24;
 
 
-  // Next ID=27
+  // Next ID=28
 }
 
 message NestLocation {

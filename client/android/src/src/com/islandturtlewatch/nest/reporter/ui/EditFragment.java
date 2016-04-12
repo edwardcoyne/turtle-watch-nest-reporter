@@ -1,10 +1,5 @@
 package com.islandturtlewatch.nest.reporter.ui;
 
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.common.base.Optional;
@@ -24,6 +20,11 @@ import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.data.Date;
 import com.islandturtlewatch.nest.reporter.ui.split.SplitEditActivity.ListenerProvider;
 import com.islandturtlewatch.nest.reporter.util.DateUtil;
+
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class EditFragment extends Fragment {
   private static final String TAG = EditFragment.class.getSimpleName();
@@ -58,6 +59,14 @@ public abstract class EditFragment extends Fragment {
    * Override to update fragment's display.
    */
   protected abstract void updateSection(Report report);
+
+  /*
+  * Handlers for all OnItemSelected events (for spinners)
+  * */
+
+  public Map<Integer,OnItemSelectedHandler> getOnItemSelectedHandlers() {
+    return Collections.emptyMap();
+  }
 
   /**
    * Handlers for all click events.
@@ -189,6 +198,30 @@ public abstract class EditFragment extends Fragment {
       //ErrorUtil.showErrorMessage(context, "Value is not a number: " + text);
       return Optional.absent();
     }
+  }
+  protected static String getSelectedName(View view) {
+    if (view instanceof Spinner) {
+      return ((Spinner)view).getSelectedItem().toString();
+    } else {
+      throw new UnsupportedOperationException("We don't support getSelectedName on " + view);
+    }
+  }
+
+  public static abstract class OnItemSelectedHandler implements OnItemSelectedHandlerSimple {
+    protected final int resourceId;
+    protected OnItemSelectedHandler(int resourceId) {this.resourceId = resourceId;}
+
+    static Map<Integer, OnItemSelectedHandler> toMap(OnItemSelectedHandler... selectedHandlers) {
+      ImmutableMap.Builder<Integer,OnItemSelectedHandler> builder = ImmutableMap.builder();
+      for (OnItemSelectedHandler handler : selectedHandlers) {
+        builder.put(handler.resourceId, handler);
+      }
+      return builder.build();
+    }
+  }
+
+  public interface OnItemSelectedHandlerSimple{
+    void handleItemSelected(String selectedText, DataUpdateHandler updateHandler);
   }
 
   public static abstract class ClickHandler implements ClickHandlerSimple {

@@ -383,6 +383,25 @@ public class ReportMutations {
     }
   }
 
+  public static class TypeOfStructureMutation implements ReportMutation {
+    private final String structureType;
+
+    public TypeOfStructureMutation(String details) {
+      this.structureType = details;
+    }
+
+    @Override
+    public Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      if (structureType.isEmpty()) {
+        updatedReport.clearTypeOfStructure();
+      } else {
+        updatedReport.setTypeOfStructure(structureType);
+      }
+      return updatedReport.build();
+    }
+  }
+
   public static class ObstructionsSeawallRocksMutation implements ReportMutation {
     private final boolean isTrue;
 
@@ -1555,8 +1574,23 @@ public class ReportMutations {
       }
     }
 
+  public static class ActivelyRecordPredationMutation implements ReportMutation {
+    private final boolean isTrue;
 
-    public static class DeletePredationMutation implements ReportMutation {
+
+    public ActivelyRecordPredationMutation( boolean isTrue) {
+      this.isTrue = isTrue;
+    }
+      @Override
+      public Report apply(Report oldReport) {
+        Report.Builder updatedReport = oldReport.toBuilder();
+       updatedReport.getConditionBuilder().setActivelyRecordEvents(isTrue);
+        return updatedReport.build();
+      }
+    }
+
+
+  public static class DeletePredationMutation implements ReportMutation {
       private final Integer ordinal;
 
       public DeletePredationMutation(Integer ordinal) {
@@ -1567,9 +1601,6 @@ public class ReportMutations {
       public Report apply(Report oldReport) {
         Preconditions.checkNotNull(ordinal);
         Report.Builder updatedReport = oldReport.toBuilder();
-        NestCondition.Builder condition = updatedReport.getConditionBuilder();
-
-        condition.removePreditation(ordinal);
 
         return updatedReport.build();
       }

@@ -8,7 +8,10 @@ public class ReportUtil {
 
   public static String getShortName(Report report) {
     if (report.getStatus() == NestStatus.FALSE_CRAWL) {
-      return "False Crawl " + report.getFalseCrawlNumber();
+      if (!report.getPossibleFalseCrawl()) {
+        return "False Crawl " + report.getFalseCrawlNumber();
+      }
+      return "False Crawl " + report.getFalseCrawlNumber() + " (PFC)";
     } else {
       return "Nest " + report.getNestNumber();
     }

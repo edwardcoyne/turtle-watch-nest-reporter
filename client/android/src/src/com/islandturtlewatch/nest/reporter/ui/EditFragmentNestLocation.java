@@ -77,6 +77,7 @@ public class EditFragmentNestLocation extends EditFragment {
           new HandleUpdateWaterToApexIn(),
           new HandleUpdateEggsRelocated(),
           new HandleUpdateEggsDestroyed(),
+          new HandleUpdateTypeOfStructure(),
           new HandleUpdateObstructionsOther());
 
   @Override
@@ -148,6 +149,8 @@ public class EditFragmentNestLocation extends EditFragment {
 
     setVisible(R.id.fieldWithin3FeetofStructure, isChecked(R.id.fieldSeawardOfArmoringStructure));
     setChecked(R.id.fieldWithin3FeetofStructure, report.getWithin3FeetOfStructure());
+    setText(R.id.fieldTypeOfStructure, report.hasTypeOfStructure() ?
+            report.getTypeOfStructure() : "");
 
     setChecked(R.id.fieldObstructionsSeawallRocks, location.getObstructions().getSeawallRocks());
     setChecked(R.id.fieldObstructionsFurniture, location.getObstructions().getFurniture());
@@ -469,6 +472,17 @@ public class EditFragmentNestLocation extends EditFragment {
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
       updateHandler.applyMutation(new ReportMutations.Within3FeetofStructureMutation(isChecked(view)));
+    }
+  }
+
+  private static class HandleUpdateTypeOfStructure extends TextChangeHandler {
+    protected HandleUpdateTypeOfStructure() {
+      super(R.id.fieldTypeOfStructure);
+    }
+
+    @Override
+    public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.TypeOfStructureMutation(newText));
     }
   }
 

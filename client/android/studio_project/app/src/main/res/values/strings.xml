@@ -142,4 +142,6 @@
     <string name="edit_nest_location_coastal_armoring">Coastal Armoring</string>
     <string name="edit_seaward_of_armoring_structure">Is the nest seaward of any man-made coastal armoring structure? (e.g. Seawalls)</string>
     <string name="edit_within_3_feet">Nest within 3 feet of structure</string>
+    <string name="edit_type_of_structure">Type of Structure</string>
+    <string name="edit_actively_record_predation_events">Do you actively look for\nand record predation events?</string>
 </resources>

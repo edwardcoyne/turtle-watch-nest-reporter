@@ -68,7 +68,7 @@
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_weight="1"
-				android:hint="@string/edit_nest_condition_storm_name"
+				android:hint="@string/edit_nest_condition_storm_name"/>
 				onTextChangeHandler="handleTextChange" />
 		</TableRow>
 
@@ -140,6 +140,28 @@
 				android:layout_width="20px"
 				android:layout_height="30px" />
 		</TableRow>
+		<TableRow>
+			<CheckBox
+				android:id="@+id/fieldActivelyRecordEvents"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/edit_actively_record_predation_events"
+				android:onClick="handleClick"
+				/>
+		</TableRow>
+		<TableRow>
+			<com.islandturtlewatch.nest.reporter.ui.MonitoredSpinner
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:id="@+id/fieldPredatorSelect"
+				android:entries="@array/predator_array"
+				OnItemSelected="handleItemSelected">
+
+
+			</com.islandturtlewatch.nest.reporter.ui.MonitoredSpinner>
+
+		</TableRow>
+
 		<TableRow
 			android:layout_width="match_parent"
 			android:layout_height="match_parent">

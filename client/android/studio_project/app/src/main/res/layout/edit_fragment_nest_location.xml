@@ -244,8 +244,16 @@
 				android:text="@string/edit_within_3_feet"
 				android:onClick="handleClick"
 				/>
-
-
+		</TableRow>
+		<TableRow>
+			<com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+				android:id="@+id/fieldTypeOfStructure"
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:layout_weight="1"
+				android:hint="@string/edit_type_of_structure"
+				onTextChangeHandler="handleTextChange"
+				/>
 		</TableRow>
 	   
 	   <TableRow

@@ -37,4 +37,11 @@ public class FocusMonitoredEditText extends EditText {
       handler.get().handleTextChange(getText().toString(), updateHandler.get());
     }
   }
+
+  public void updateValues() {
+    if (handler.isPresent()) {
+      Preconditions.checkArgument(updateHandler.isPresent(), "must call setDataUpdateHandler()");
+      handler.get().handleTextChange(getText().toString(),updateHandler.get());
+    }
+  }
 }

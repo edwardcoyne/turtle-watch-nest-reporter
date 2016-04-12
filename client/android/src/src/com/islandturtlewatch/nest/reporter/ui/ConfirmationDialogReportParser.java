@@ -30,7 +30,7 @@ public class ConfirmationDialogReportParser {
         zone = String.valueOf(report.getLocation().getSection());
         if (report.hasFalseCrawlNumber()) {
             id = "False Crawl ID: " + String.valueOf(report.getFalseCrawlNumber());
-            if (report.getPossibleFalseCrawl() == true) id += " (Possible False Crawl)";
+            if (report.getPossibleFalseCrawl()) id += " (Possible False Crawl)";
         } else id = "Nest ID: " + String.valueOf(report.getNestNumber());
         if (report.getTimestampFoundMs() == 0) {
             dateRecorded = "Not Recorded";

@@ -108,6 +108,7 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
         TextView view =
             (TextView) inflator.inflate(R.layout.reports_list_item, parent, false);
         view.setText(ReportUtil.getShortName(report));
+
         return view;
       }}));
     drawerList.setOnItemClickListener(new OnItemClickListener() {
@@ -116,7 +117,6 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
           View view,
           int position,
           long id) {
-        //TODO(dWenzel): display modal window here
         long oldId = model.getActiveReportId();
         model.switchActiveReport(id);
         Report newReport = model.getActiveReport();
@@ -126,6 +126,11 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
         drawer.closeDrawers();
       }
     });
+
+
+
+
+
   }
 
   private void confirmSwitchReport(Report newReport, final long id) {
@@ -242,6 +247,17 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
    }
   }
 
+  public void handleItemSelected(View view, String selectedText) {
+    Map<Integer,EditFragment.OnItemSelectedHandler> itemSelectedHandlers =
+            sectionManager.getCurrentOnItemSelectedHandlers();
+    Preconditions.checkArgument(itemSelectedHandlers.containsKey(view.getId()),
+            "No On Item Selected handler registered for %s", view.getId());
+
+
+    itemSelectedHandlers.get(view.getId()).handleItemSelected(selectedText.toString(),presenter.getUpdateHandler());
+
+  }
+
   public void handleClick(View view) {
     Map<Integer, ClickHandler> clickHandlers = sectionManager.getCurrentClickHandlers();
     Preconditions.checkArgument(clickHandlers.containsKey(view.getId()),
@@ -291,6 +307,10 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
     void updateSections(Report report) {
       currentFragment.updateDisplay(report);
       currentReport = Optional.of(report);
+    }
+
+    Map<Integer, EditFragment.OnItemSelectedHandler> getCurrentOnItemSelectedHandlers() {
+      return currentFragment.getOnItemSelectedHandlers();
     }
 
     Map<Integer, ClickHandler> getCurrentClickHandlers() {
@@ -355,7 +375,7 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
       };
     }
 
-    public TextWatcher getTextchangedListener(final TextChangeHandlerSimple handler) {
+    public TextWatcher getTextChangedListener(final TextChangeHandlerSimple handler) {
       return new TextWatcher() {
         @Override
         public void afterTextChanged(Editable newText) {
@@ -373,6 +393,8 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
     public DataUpdateHandler getUpdateHandler() {
       return presenter.getUpdateHandler();
     }
+
+
 
     public void setFocusLossListener(FocusMonitoredEditText editText,
         TextChangeHandlerSimple handler) {
