@@ -48,6 +48,8 @@ import com.islandturtlewatch.nest.reporter.util.DateUtil;
 import java.util.Map;
 
 public class EditFragmentNestCondition extends EditFragment {
+
+  private final int NUM_PREDATORS = 13;
   private static final Map<Integer, ClickHandler> CLICK_HANDLERS =
       ClickHandler.toMap(
 //          new HandleSetEggsScattered(),
@@ -69,6 +71,7 @@ public class EditFragmentNestCondition extends EditFragment {
           new HandleSetProportionMost(),
           new HandleSetProportionSome(),
           new HandleSetProportionFew(),
+          new HandleSetPredatorDate(),
           new HandleSetActivelyRecordPredationEvents(),
               //NestInundated is deprecated, use new inundatedEvent instead
 //          new HandleSetNestInundated(),
@@ -86,6 +89,8 @@ public class EditFragmentNestCondition extends EditFragment {
       TextChangeHandler.toMap(
               new HandleUpdateWashoutStorm(),
               new HandleDescribeControlMethods(),
+              new HandleUpdateNumEggs(),
+              new HandleUpdatePredatorOther(),
               new HandleUpdatePartialWashoutStorm());
 
   @Override
@@ -150,24 +155,29 @@ public class EditFragmentNestCondition extends EditFragment {
     setText(R.id.fieldPartialWashOutStormName, condition.getPartialWashout().getStormName());
     setText(R.id.fieldDescribeControlMethods,condition.getDescribeControlMethods());
 
-    if (condition.getPreditation(0).hasTimestampMs()) {
-      setDate(R.id.buttonPredatorDate,condition.getPreditation(0).getTimestampMs());
-    } else clearDate(R.id.buttonPredatorDate);
+if (condition.getPreditationCount()>0) {
+  if (condition.getPreditation(0).hasTimestampMs()) {
+    setDate(R.id.buttonPredatorDate, condition.getPreditation(0).getTimestampMs());
+  } else clearDate(R.id.buttonPredatorDate);
 
-    if (condition.getPreditation(0).hasNumberOfEggs()) {
-      setText(R.id.fieldNumberEggs, Integer.toString(condition.getPreditation(0).getNumberOfEggs()));
-    } else setText(R.id.fieldNumberEggs,"");
+  if (condition.getPreditation(0).hasNumberOfEggs()) {
+    setText(R.id.fieldNumberEggs, Integer.toString(condition.getPreditation(0).getNumberOfEggs()));
+  } else setText(R.id.fieldNumberEggs, "");
 
-    Spinner pSpinner = (Spinner) getActivity().findViewById(R.id.fieldPredatorSelect);
-    if (condition.getPreditation(0).hasPredator()) {
-      int predNum = getPredatorIndex(condition.getPreditation(0).getPredator())
-      pSpinner.setSelection(getPredatorIndex(condition.getPreditation(0).getPredator()));
-    } else {
-      pSpinner.setSelection(0);
-    }
-    setVisible(R.id.fieldPredatorOther,showFieldOther);
-    setText(R.id.fieldPredatorOther,condition.getPreditation(0).getPredator());
+  Spinner pSpinner = (Spinner) getActivity().findViewById(R.id.fieldPredatorSelect);
+  boolean showFieldOther;
 
+  if (condition.getPreditation(0).hasPredator()) {
+    int predNum = getPredatorIndex(condition.getPreditation(0).getPredator());
+    showFieldOther = (predNum == NUM_PREDATORS);
+    pSpinner.setSelection(getPredatorIndex(condition.getPreditation(0).getPredator()));
+  } else {
+    showFieldOther = false;
+    pSpinner.setSelection(0);
+  }
+  setVisible(R.id.fieldPredatorOther, showFieldOther);
+  setText(R.id.fieldPredatorOther, condition.getPreditation(0).getPredator());
+}
 //    clearTable(R.id.tablePredatitation);
 //    for (int i = 0; i < condition.getPreditationCount(); i++) {
 //      addPredationRow(i, condition.getPreditation(i), true);
@@ -519,7 +529,16 @@ public class EditFragmentNestCondition extends EditFragment {
     }
   }
 
+  private static class HandleSetPredatorDate extends DatePickerClickHandler {
+    protected HandleSetPredatorDate() {
+      super(R.id.buttonPredatorDate);
+    }
 
+    @Override
+    public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
+      updateHandler.applyMutation(new PredationDateMutation(0,maybeDate));
+    }
+  }
 
   private static class HandleSetWashoutDate extends DatePickerClickHandler {
     protected HandleSetWashoutDate() {
@@ -749,6 +768,18 @@ public class EditFragmentNestCondition extends EditFragment {
       updateHandler.applyMutation(new ReportMutations.EggsDamagedByAnotherTurtleMutation(isChecked(view)));
     }
   }
+
+
+  private static class HandleUpdateNumEggs extends TextChangeHandler {
+    protected HandleUpdateNumEggs() {
+      super(R.id.fieldNumberEggs);
+    }
+
+    @Override
+    public void handleTextChange(String newName, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.PredationNumEggsMutation(0,getInteger(newName)));
+    }
+  }
   private static class HandleDescribeControlMethods extends TextChangeHandler {
     protected HandleDescribeControlMethods() {
       super(R.id.fieldDescribeControlMethods);
@@ -757,6 +788,17 @@ public class EditFragmentNestCondition extends EditFragment {
     @Override
     public void handleTextChange(String newName, DataUpdateHandler updateHandler) {
       updateHandler.applyMutation(new ReportMutations.ControlMethodDescriptionMutation(newName));
+    }
+  }
+
+  private static class HandleUpdatePredatorOther extends TextChangeHandler {
+    protected HandleUpdatePredatorOther() {
+      super(R.id.fieldPredatorOther);
+    }
+
+    @Override
+    public void handleTextChange(String newName, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.PredationPredatorMutation(0,newName));
     }
   }
 

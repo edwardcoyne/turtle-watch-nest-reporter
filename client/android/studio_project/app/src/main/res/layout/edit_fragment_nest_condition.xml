@@ -221,7 +221,9 @@
 				android:id="@+id/fieldNumberEggs"
 				android:layout_height="wrap_content"
 				android:layout_width="wrap_content"
-				android:hint="@string/edit_num_eggs" />
+				android:inputType="number"
+				android:hint="@string/edit_num_eggs"
+				onTextChangeHandler="handleTextChange"/>
 
 		</TableRow>
 
@@ -243,7 +245,8 @@
 				android:id="@+id/fieldPredatorOther"
 				android:layout_height="wrap_content"
 				android:layout_width="wrap_content"
-				android:hint="@string/edit_specify_predator"/>
+				android:hint="@string/edit_specify_predator"
+				onTextChangeHandler="handleTextChange"/>
 		</TableRow>
 
 		<TableLayout
