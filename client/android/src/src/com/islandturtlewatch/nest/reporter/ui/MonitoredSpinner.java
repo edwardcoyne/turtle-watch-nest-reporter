@@ -5,7 +5,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.google.common.base.Optional;
 
@@ -23,7 +22,6 @@ public class MonitoredSpinner extends Spinner {
             String name = attributeSet.getAttributeName(i);
             if (name.equals("OnItemSelected")) {
                 itemSelectedMethodName = Optional.of(attributeSet.getAttributeValue(i));
-                Toast.makeText(getContext(),"creating spinner",Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -52,7 +50,8 @@ public class MonitoredSpinner extends Spinner {
                     }
                 }
                 try {
-                    handler.get().invoke(getContext(), view, newText);
+
+                    handler.get().invoke(getContext(), parent, newText);
                 } catch (IllegalAccessException e) {
                     throw new IllegalStateException("Could not execute non "
                             + "public method of the activity", e);

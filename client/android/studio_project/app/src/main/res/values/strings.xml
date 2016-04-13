@@ -144,4 +144,13 @@
     <string name="edit_within_3_feet">Nest within 3 feet of structure</string>
     <string name="edit_type_of_structure">Type of Structure</string>
     <string name="edit_actively_record_predation_events">Do you actively look for\nand record predation events?</string>
+    <string name="edit_describe_control_methods">If predator control methods other than screening/caging were employed, please describe</string>
+    <string name="edit_prop_recorded_events">What proportion of mammalian predation events are you likely recording?</string>
+    <string name="edit_all">All</string>
+    <string name="edit_most">Most</string>
+    <string name="edit_some">Some</string>
+    <string name="edit_few">Few</string>
+    <string name="edit_provide_notes">(Provide details in the Notes Section.)</string>
+    <string name="edit_num_eggs"># of Eggs</string>
+    <string name="edit_specify_predator">Please Specify Predator</string>
 </resources>

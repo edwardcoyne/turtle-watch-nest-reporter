@@ -359,7 +359,6 @@ public class EditFragmentNestLocation extends EditFragment {
     protected HandleSetCityBB() {
       super(R.id.fieldLocationBB);
     }
-
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
       updateHandler.applyMutation(new CityMutation(City.BB));

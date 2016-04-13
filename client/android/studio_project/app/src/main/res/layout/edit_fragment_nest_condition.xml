@@ -149,19 +149,50 @@
 				android:onClick="handleClick"
 				/>
 		</TableRow>
+
 		<TableRow>
-			<com.islandturtlewatch.nest.reporter.ui.MonitoredSpinner
+			<TextView
 				android:layout_height="wrap_content"
 				android:layout_width="wrap_content"
-				android:id="@+id/fieldPredatorSelect"
-				android:entries="@array/predator_array"
-				OnItemSelected="handleItemSelected">
-
-
-			</com.islandturtlewatch.nest.reporter.ui.MonitoredSpinner>
-
+				android:text="@string/edit_prop_recorded_events"
+				/>
 		</TableRow>
-
+		<TableRow
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content">
+			<CheckBox
+				android:id="@+id/fieldRecordedAll"
+				android:text="@string/edit_all"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:onClick="handleClick"
+				/>
+			<CheckBox
+				android:id="@+id/fieldRecordedMost"
+				android:text="@string/edit_most"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:onClick="handleClick"
+				/>
+			<CheckBox
+				android:id="@+id/fieldRecordedSome"
+				android:text="@string/edit_some"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:onClick="handleClick"
+				/>
+			<CheckBox
+				android:id="@+id/fieldRecordedFew"
+				android:text="@string/edit_few"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:onClick="handleClick"
+				/>
+		</TableRow>
 		<TableRow
 			android:layout_width="match_parent"
 			android:layout_height="match_parent">
@@ -174,6 +205,47 @@
 				android:text="@string/edit_nest_condition_predation_eggs_only"
 				android:layout_column="0" />
 		</TableRow>
+
+		<TableRow
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content">
+			<Button
+				android:id="@+id/buttonPredatorDate"
+				android:text="@string/date_button"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:onClick="handleClick"
+				android:layout_weight="1" />
+
+			<com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+				android:id="@+id/fieldNumberEggs"
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:hint="@string/edit_num_eggs" />
+
+		</TableRow>
+
+		<TableRow
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+
+			<com.islandturtlewatch.nest.reporter.ui.MonitoredSpinner
+				android:id="@+id/fieldPredatorSelect"
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:entries="@array/predator_array"
+				OnItemSelected="handleItemSelected"
+				/>
+		</TableRow>
+
+		<TableRow>
+			<com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+				android:id="@+id/fieldPredatorOther"
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:hint="@string/edit_specify_predator"/>
+		</TableRow>
+
 		<TableLayout
 			android:id="@+id/tablePredatitation">
 			<!-- Will be dynamically populated -->
@@ -217,6 +289,32 @@
 	            android:enabled="false"
 	            android:onClick="handleClick" />
 	   </TableRow>
+		<TableRow>
+			<TextView
+				android:id="@+id/fieldProvideDetailsText"
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:text="@string/edit_provide_notes"
+				/>
+
+		</TableRow>
+		<TableRow
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+
+			<com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+				android:id="@+id/fieldDescribeControlMethods"
+				android:layout_width="0dp"
+				android:lines="5"
+				android:layout_height="match_parent"
+				android:hint="@string/edit_describe_control_methods"
+				android:inputType="textMultiLine"
+				android:gravity="top|left"
+				onTextChangeHandler="handleTextChange"
+			 />
+
+		</TableRow>
+
        <TableRow
             android:id="@+id/rowVandalismType"
             android:layout_width="wrap_content"

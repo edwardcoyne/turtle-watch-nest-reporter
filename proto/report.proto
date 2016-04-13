@@ -69,6 +69,7 @@ message Image {
 
 message NestCondition {
   optional bool vandalized = 1;
+  optional string describe_control_methods = 28;
   optional int64 vandalized_timestamp_ms = 2;
 
   enum VandalismType {
@@ -123,6 +124,14 @@ message NestCondition {
   }
   repeated PreditationEvent preditation = 9;
   optional bool actively_record_events = 27 [default = true];
+
+enum ProportionEventsRecorded {
+  ALL = 1;
+  MOST = 2;
+  SOME = 3;
+  FEW = 4;
+}
+  optional ProportionEventsRecorded prop_events_recorded = 29;
   optional int64 hatch_timestamp_ms = 10;
   optional int64 additional_hatch_timestamp_ms = 11;
   optional bool disorientation = 12;
@@ -134,7 +143,7 @@ message NestCondition {
   optional bool eggs_damaged_by_another_turtle = 24;
 
 
-  // Next ID=28
+  // Next ID=30
 }
 
 message NestLocation {

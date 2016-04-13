@@ -211,6 +211,19 @@ public class ReportMutations {
     }
   }
 
+  public static class PropEventsRecordedMutation implements ReportMutation {
+    private final NestCondition.ProportionEventsRecorded proportion;
+    public PropEventsRecordedMutation(NestCondition.ProportionEventsRecorded proportion) {
+      this.proportion = proportion;
+    }
+
+    @Override
+    public Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      updatedReport.getConditionBuilder().setPropEventsRecorded(proportion);
+      return updatedReport.build();
+    }
+  }
 
   public static class CityMutation implements ReportMutation {
     private final City city;
@@ -1715,7 +1728,20 @@ public class ReportMutations {
         return updatedReport.build();
       }
     }
+  public static class ControlMethodDescriptionMutation implements ReportMutation {
+    private final String other;
 
+    public ControlMethodDescriptionMutation(String other) {
+      this.other = other;
+    }
+
+    @Override
+    public Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      updatedReport.getConditionBuilder().setDescribeControlMethods(other);
+      return updatedReport.build();
+    }
+  }
 
     public static class SpeciesOtherMutation implements ReportMutation {
       private final String other;

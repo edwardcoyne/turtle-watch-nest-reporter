@@ -65,6 +65,10 @@ public class EditFragmentNestCondition extends EditFragment {
           new HandleSetVandalismEggsAffected(),
           new HandleSetWashoutDate(),
           new HandleSetPartialWashoutDate(),
+          new HandleSetProportionAll(),
+          new HandleSetProportionMost(),
+          new HandleSetProportionSome(),
+          new HandleSetProportionFew(),
           new HandleSetActivelyRecordPredationEvents(),
               //NestInundated is deprecated, use new inundatedEvent instead
 //          new HandleSetNestInundated(),
@@ -81,6 +85,7 @@ public class EditFragmentNestCondition extends EditFragment {
   private static final Map<Integer, TextChangeHandler> TEXT_CHANGE_HANDLERS =
       TextChangeHandler.toMap(
               new HandleUpdateWashoutStorm(),
+              new HandleDescribeControlMethods(),
               new HandleUpdatePartialWashoutStorm());
 
   @Override
@@ -136,15 +141,39 @@ public class EditFragmentNestCondition extends EditFragment {
       clearDate(R.id.buttonPartialWashOutDate);
     }
 
+    setChecked(R.id.fieldRecordedAll,condition.getPropEventsRecorded() == NestCondition.ProportionEventsRecorded.ALL);
+    setChecked(R.id.fieldRecordedMost, condition.getPropEventsRecorded() == NestCondition.ProportionEventsRecorded.MOST);
+    setChecked(R.id.fieldRecordedSome,condition.getPropEventsRecorded() == NestCondition.ProportionEventsRecorded.SOME);
+    setChecked(R.id.fieldRecordedFew, condition.getPropEventsRecorded() == NestCondition.ProportionEventsRecorded.FEW);
+
     setText(R.id.fieldWashOutStormName, condition.getWashOut().getStormName());
     setText(R.id.fieldPartialWashOutStormName, condition.getPartialWashout().getStormName());
+    setText(R.id.fieldDescribeControlMethods,condition.getDescribeControlMethods());
 
-    clearTable(R.id.tablePredatitation);
-    for (int i = 0; i < condition.getPreditationCount(); i++) {
-      addPredationRow(i, condition.getPreditation(i), true);
+    if (condition.getPreditation(0).hasTimestampMs()) {
+      setDate(R.id.buttonPredatorDate,condition.getPreditation(0).getTimestampMs());
+    } else clearDate(R.id.buttonPredatorDate);
+
+    if (condition.getPreditation(0).hasNumberOfEggs()) {
+      setText(R.id.fieldNumberEggs, Integer.toString(condition.getPreditation(0).getNumberOfEggs()));
+    } else setText(R.id.fieldNumberEggs,"");
+
+    Spinner pSpinner = (Spinner) getActivity().findViewById(R.id.fieldPredatorSelect);
+    if (condition.getPreditation(0).hasPredator()) {
+      int predNum = getPredatorIndex(condition.getPreditation(0).getPredator())
+      pSpinner.setSelection(getPredatorIndex(condition.getPreditation(0).getPredator()));
+    } else {
+      pSpinner.setSelection(0);
     }
-    // Add blank line.
-    addPredationRow(condition.getPreditationCount(), PreditationEvent.getDefaultInstance(), false);
+    setVisible(R.id.fieldPredatorOther,showFieldOther);
+    setText(R.id.fieldPredatorOther,condition.getPreditation(0).getPredator());
+
+//    clearTable(R.id.tablePredatitation);
+//    for (int i = 0; i < condition.getPreditationCount(); i++) {
+//      addPredationRow(i, condition.getPreditation(i), true);
+//    }
+//    // Add blank line.
+//    addPredationRow(condition.getPreditationCount(), PreditationEvent.getDefaultInstance(), false);
 
     setChecked(R.id.fieldDamageEggsDamagedByAnotherTurtle,condition.getEggsDamagedByAnotherTurtle());
     setChecked(R.id.fieldDamageNestDepredated, condition.getNestDepredated());
@@ -156,6 +185,8 @@ public class EditFragmentNestCondition extends EditFragment {
 //      clearDate(R.id.buttonDamageNestInundatedDate);
 //    }
     setChecked(R.id.fieldDamageVandalized, condition.getVandalized());
+    setVisible(R.id.fieldProvideDetailsText,condition.getVandalized());
+
     setEnabled(R.id.buttonDamageVandalizedDate, condition.getVandalized());
     if (condition.hasVandalizedTimestampMs()) {
       setDate(R.id.buttonDamageVandalizedDate, condition.getVandalizedTimestampMs());
@@ -359,8 +390,11 @@ public class EditFragmentNestCondition extends EditFragment {
     predatorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     predatorSpinner.setAdapter(predatorAdapter);
     predator.setVisibility(View.INVISIBLE);
+
   if (event.hasPredator()) {
     predatorSpinner.setSelection(getPredatorIndex(event.getPredator()));
+  }else {
+    predatorSpinner.setSelection(0);
   }
     predatorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
       @Override
@@ -369,9 +403,11 @@ public class EditFragmentNestCondition extends EditFragment {
 
         if (mPredator.equals("Other")) {
           predator.setVisibility(View.VISIBLE);
-        } else {
-          predator.setVisibility(View.INVISIBLE);
-          //TODO: update spinner here
+          predator.setText("");
+
+        } else if (position == 0){
+          //on start
+        }else {
 
         }
       }
@@ -439,6 +475,52 @@ public class EditFragmentNestCondition extends EditFragment {
     return (TableLayout)view;
   }
 
+  private static class HandleSetProportionAll extends ClickHandler {
+    protected HandleSetProportionAll () {
+      super(R.id.fieldRecordedAll);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.
+              PropEventsRecordedMutation(NestCondition.ProportionEventsRecorded.ALL));
+    }
+  }
+
+  private static class HandleSetProportionMost extends ClickHandler {
+    protected HandleSetProportionMost () {
+      super(R.id.fieldRecordedMost);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.
+              PropEventsRecordedMutation(NestCondition.ProportionEventsRecorded.MOST));
+    }
+  }
+
+  private static class HandleSetProportionSome extends ClickHandler {
+    protected HandleSetProportionSome () {
+      super(R.id.fieldRecordedSome);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.
+              PropEventsRecordedMutation(NestCondition.ProportionEventsRecorded.SOME));
+    }
+  }
+
+  private static class HandleSetProportionFew extends ClickHandler {
+    protected HandleSetProportionFew () {
+      super(R.id.fieldRecordedFew);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.
+              PropEventsRecordedMutation(NestCondition.ProportionEventsRecorded.FEW));
+    }
+  }
+
+
+
   private static class HandleSetWashoutDate extends DatePickerClickHandler {
     protected HandleSetWashoutDate() {
       super(R.id.buttonWashOutDate);
@@ -460,7 +542,6 @@ public class EditFragmentNestCondition extends EditFragment {
       updateHandler.applyMutation(new PartialWashoutDateMutation(maybeDate));
     }
   }
-
 
   private static class HandleSetVandalizedDate extends DatePickerClickHandler {
     protected HandleSetVandalizedDate() {
@@ -614,6 +695,8 @@ public class EditFragmentNestCondition extends EditFragment {
           Optional.of(NestCondition.VandalismType.NEST_DUG_INTO)));
     }
   }
+
+
   private static class HandleSetVandalismEggsAffected extends ClickHandler {
     protected HandleSetVandalismEggsAffected() {
       super(R.id.fieldVandalismEggsAffected);
@@ -653,7 +736,6 @@ public class EditFragmentNestCondition extends EditFragment {
     }
     @Override
     public void handleItemSelected(String selectedPredator, DataUpdateHandler updateHandler) {
-
       updateHandler.applyMutation(new ReportMutations.PredationPredatorMutation(0,selectedPredator));
     }
   }
@@ -665,6 +747,16 @@ public class EditFragmentNestCondition extends EditFragment {
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
       updateHandler.applyMutation(new ReportMutations.EggsDamagedByAnotherTurtleMutation(isChecked(view)));
+    }
+  }
+  private static class HandleDescribeControlMethods extends TextChangeHandler {
+    protected HandleDescribeControlMethods() {
+      super(R.id.fieldDescribeControlMethods);
+    }
+
+    @Override
+    public void handleTextChange(String newName, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.ControlMethodDescriptionMutation(newName));
     }
   }
 
