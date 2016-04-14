@@ -1107,6 +1107,21 @@ public class ReportMutations {
     }
   }
 
+  public static class GhostCrabDamageAtMost10EggsMutation implements ReportMutation {
+    private final boolean isTrue;
+
+    public GhostCrabDamageAtMost10EggsMutation(boolean isTrue) {
+      this.isTrue = isTrue;
+    }
+
+    @Override
+    public Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      updatedReport.getConditionBuilder().setGhostDamage10OrLess(isTrue);
+      return updatedReport.build();
+    }
+  }
+
   public static class WasNestDugIntoMutation implements ReportMutation {
     private final boolean isTrue;
 
@@ -1358,7 +1373,58 @@ public class ReportMutations {
       }
     }
 
-    public static class WashoutDateMutation implements ReportMutation {
+  public static class OtherImpactDateMutation implements ReportMutation {
+    private final Optional<Date> maybeDate;
+
+    public OtherImpactDateMutation(Optional<Date> maybeDate) {
+      this.maybeDate = maybeDate;
+    }
+
+    @Override
+    public Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      NestCondition.StormImpact.Builder stormImpactBuilder = updatedReport.getConditionBuilder().getStormImpactBuilder();
+      if (maybeDate.isPresent()) {
+        stormImpactBuilder.setTimestampMs(maybeDate.get().getTimestampMs());
+      } else {
+        stormImpactBuilder.clearTimestampMs();
+      }
+      return updatedReport.build();
+    }
+  }
+  public static class OtherImpactStormNameMutation implements ReportMutation {
+    private final String stormName;
+
+    public OtherImpactStormNameMutation(String stormName) {
+      this.stormName = stormName;
+    }
+
+    @Override
+    public Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      updatedReport.getConditionBuilder().getStormImpactBuilder().setStormName(stormName);
+      return updatedReport.build();
+    }
+  }
+  public static class OtherImpactDetailsMutation implements ReportMutation {
+    private final String details;
+
+    public OtherImpactDetailsMutation(String details) {
+      this.details = details;
+    }
+
+    @Override
+    public Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      updatedReport.getConditionBuilder().getStormImpactBuilder().setOtherImpact(details);
+      return updatedReport.build();
+    }
+  }
+
+
+
+
+  public static class WashoutDateMutation implements ReportMutation {
       private final Optional<Date> maybeDate;
 
       public WashoutDateMutation(Optional<Date> maybeDate) {
@@ -1394,6 +1460,74 @@ public class ReportMutations {
         return updatedReport.build();
       }
     }
+
+
+  public static class AccretionDateMutation implements ReportMutation {
+    private final Integer ordinal;
+    private final Optional<Date> maybeDate;
+
+    public AccretionDateMutation(Integer ordinal, Optional<Date> maybeDate) {
+      this.ordinal = ordinal;
+      this.maybeDate = maybeDate;
+    }
+
+    @Override
+    public Report apply(Report oldReport) {
+      Preconditions.checkNotNull(ordinal);
+      Report.Builder updatedReport = oldReport.toBuilder();
+      NestCondition.Builder condition = updatedReport.getConditionBuilder();
+
+      WashEvent.Builder  accretion = (condition.getAccretionCount() <= ordinal) ? condition
+              .addAccretionBuilder() : condition.getAccretionBuilder(ordinal);
+      if (maybeDate.isPresent()) {
+        accretion.setTimestampMs(maybeDate.get().getTimestampMs());
+      } else {
+        accretion.clearTimestampMs();
+      }
+      return updatedReport.build();
+    }
+  }
+  public static class AccretionStormNameMutation implements ReportMutation {
+    private final Integer ordinal;
+    private final String name;
+
+    public AccretionStormNameMutation(Integer ordinal, String name) {
+      this.ordinal = ordinal;
+      this.name = name;
+    }
+
+    @Override
+    public Report apply(Report oldReport) {
+      Preconditions.checkNotNull(ordinal);
+      Report.Builder updatedReport = oldReport.toBuilder();
+      NestCondition.Builder condition = updatedReport.getConditionBuilder();
+
+      WashEvent.Builder accretion = (condition.getAccretionCount() <= ordinal) ? condition
+              .addAccretionBuilder() : condition.getAccretionBuilder(ordinal);
+      accretion.setStormName(name);
+
+      return updatedReport.build();
+    }
+  }
+
+  public static class DeleteAccretionMutation implements ReportMutation {
+    private final Integer ordinal;
+
+    public DeleteAccretionMutation(Integer ordinal) {
+      this.ordinal = ordinal;
+    }
+
+    @Override
+    public Report apply(Report oldReport) {
+      Preconditions.checkNotNull(ordinal);
+      Report.Builder updatedReport = oldReport.toBuilder();
+      NestCondition.Builder condition = updatedReport.getConditionBuilder();
+
+      condition.removeAccretion(ordinal);
+
+      return updatedReport.build();
+    }
+  }
 
 
     public static class WashoverDateMutation implements ReportMutation {
@@ -1465,6 +1599,7 @@ public class ReportMutations {
         return updatedReport.build();
       }
     }
+
   public static class InundatedEventDateMutation implements ReportMutation {
     private final Integer ordinal;
     private final Optional<Date> maybeDate;

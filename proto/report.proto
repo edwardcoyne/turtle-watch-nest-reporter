@@ -68,6 +68,7 @@ message Image {
 }
 
 message NestCondition {
+  optional bool ghost_damage_10_or_less = 31 [default = true];
   optional bool vandalized = 1;
   optional string describe_control_methods = 28;
   optional int64 vandalized_timestamp_ms = 2;
@@ -78,9 +79,16 @@ message NestCondition {
     NEST_DUG_INTO = 3;
     EGGS_AFFECTED = 4;
   }
+  message StormImpact {
+    optional int64 timestamp_ms = 1;
+    optional string storm_name = 2;
+    optional string other_impact = 3;
+  }
   optional VandalismType vandalism_type = 15;
   optional bool nest_dug_into = 26;
   optional bool post_hatch_washout = 20;
+  repeated WashEvent accretion = 30;
+  optional StormImpact storm_impact = 32;
   optional bool poached = 3;
   optional int64 poached_timestamp_ms = 4;
   optional bool poached_eggs_removed = 17;
@@ -144,7 +152,7 @@ enum ProportionEventsRecorded {
   optional bool eggs_damaged_by_another_turtle = 24;
 
 
-  // Next ID=30
+  // Next ID=33
 }
 
 message NestLocation {

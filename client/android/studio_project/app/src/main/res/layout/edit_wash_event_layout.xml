@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/buttonWashEventDate"
+        android:text="@string/date_button"
+        android:onClick="handleClick"
+        />
+    <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+        android:id="@+id/fieldWashEventStormName"
+        android:hint="@string/edit_storm_name"
+        onTextChangeHandler="handleTextChange"
+        />
+
+
+</TableLayout>

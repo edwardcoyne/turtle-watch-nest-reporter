@@ -153,4 +153,10 @@
     <string name="edit_provide_notes">(Provide details in the Notes Section.)</string>
     <string name="edit_num_eggs"># of Eggs</string>
     <string name="edit_specify_predator">Please Specify Predator</string>
+    <string name="edit_storm_name">Storm Name</string>
+    <string name="edit_add_accretion_event"><u>+Add Accretion Event</u></string>
+    <string name="edit_accretion_header">Accretion</string>
+    <string name="edit_damage_10_or_fewer">Did ghost crabs damage 10 or fewer eggs?</string>
+    <string name="title_other_storm_impact">Other Storm Impact (Be specific)</string>
+    <string name="hint_other_details">Please enter details here</string>
 </resources>

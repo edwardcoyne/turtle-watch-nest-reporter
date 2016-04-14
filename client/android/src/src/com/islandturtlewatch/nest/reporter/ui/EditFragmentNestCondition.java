@@ -13,6 +13,7 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
@@ -72,6 +73,9 @@ public class EditFragmentNestCondition extends EditFragment {
           new HandleSetProportionSome(),
           new HandleSetProportionFew(),
           new HandleSetPredatorDate(),
+          new HandleAddAccretionRow(),
+          new HandleSetStormImpactDate(),
+          new HandleGhostCrabDamageAtMost10Eggs(),
           new HandleSetActivelyRecordPredationEvents(),
               //NestInundated is deprecated, use new inundatedEvent instead
 //          new HandleSetNestInundated(),
@@ -88,6 +92,8 @@ public class EditFragmentNestCondition extends EditFragment {
   private static final Map<Integer, TextChangeHandler> TEXT_CHANGE_HANDLERS =
       TextChangeHandler.toMap(
               new HandleUpdateWashoutStorm(),
+              new HandleUpdateStormImpactStormName(),
+              new HandleUpdateStormImpactOtherImpact(),
               new HandleDescribeControlMethods(),
               new HandleUpdateNumEggs(),
               new HandleUpdatePredatorOther(),
@@ -112,11 +118,12 @@ public class EditFragmentNestCondition extends EditFragment {
       ViewGroup container,
       Bundle savedInstanceState) {
     return inflater.inflate(R.layout.edit_fragment_nest_condition, container, false);
+
   }
 
   @Override
   public void updateSection(Report report) {
-    NestCondition condition = report.getCondition();
+    final NestCondition condition = report.getCondition();
 
     clearTable(R.id.tableWashOver);
     for (int i = 0; i < condition.getWashOverCount(); i++) {
@@ -124,6 +131,23 @@ public class EditFragmentNestCondition extends EditFragment {
     }
     // Add blank line.
     addWashOverRow(condition.getWashOverCount(), WashEvent.getDefaultInstance(), false);
+
+
+    clearTable(R.id.tableAccretionEvent);
+    for (int i = 0; i < condition.getAccretionCount(); i++) {
+      addAccretionRow(i,condition.getAccretion(i),true);
+    }
+    final TextView addAccretionRow = (TextView) getView().findViewById(R.id.fieldAddAccretionRow);
+    addAccretionRow.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        WashEvent.Builder builder = WashEvent.newBuilder();
+        builder.setStormName("");
+
+        addAccretionRow(condition.getAccretionCount(),builder.build(),false);
+
+      }
+    });
 
     clearTable(R.id.tableInundatedEvent);
     for (int i = 0; i < condition.getInundatedEventCount();i++) {
@@ -196,6 +220,19 @@ if (condition.getPreditationCount()>0) {
 //    } else {
 //      clearDate(R.id.buttonDamageNestInundatedDate);
 //    }
+
+    if (condition.getStormImpact().hasTimestampMs()) {
+  setDate(R.id.buttonOtherStormImpactDate, condition.getStormImpact().getTimestampMs());
+} else {
+      clearDate(R.id.buttonOtherStormImpactDate);
+    }
+
+    setText(R.id.fieldOtherStormImpactStormName,condition.getStormImpact().getStormName());
+    setText(R.id.fieldOtherStormImpactOtherImpact, condition.getStormImpact().getOtherImpact());
+    setVisible(R.id.fieldOtherStormImpactOtherImpact,condition.getStormImpact().hasTimestampMs());
+
+    setChecked(R.id.fieldGhostCrabsDamaged10OrLess,condition.getGhostDamage10OrLess());
+
     setChecked(R.id.fieldDamageVandalized, condition.getVandalized());
     setVisible(R.id.fieldProvideDetailsText,condition.getVandalized());
 
@@ -242,6 +279,59 @@ if (condition.getPreditationCount()>0) {
 
     setChecked(R.id.fieldDamageRootsInvaded, condition.getRootsInvadedEggshells());
     setChecked(R.id.fieldActivelyRecordEvents,condition.getActivelyRecordEvents());
+  }
+
+
+  private void addAccretionRow(final int ordinal, WashEvent accretion, boolean showDelete) {
+    Button date_button = new Button(getActivity());
+    if (accretion.hasTimestampMs()) {
+      date_button.setText(DateUtil.getFormattedDate(accretion.getTimestampMs()));
+    } else {
+      date_button.setText(R.string.date_button);
+    }
+
+    SimpleDatePickerClickHandler clickHandler = new SimpleDatePickerClickHandler(){
+      @Override
+      public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
+        updateHandler.applyMutation(new ReportMutations.AccretionDateMutation(ordinal, maybeDate));
+      }};
+    if (accretion.hasTimestampMs()) {
+      clickHandler.setDate(accretion.getTimestampMs());
+    } else {
+      clickHandler.setDate(System.currentTimeMillis());
+    }
+    date_button.setOnClickListener(listenerProvider.getOnClickListener(clickHandler));
+
+    FocusMonitoredEditText storm_name = new FocusMonitoredEditText(getActivity());
+    storm_name.setHint(R.string.edit_nest_condition_storm_name);
+    storm_name.setText(accretion.getStormName());
+    listenerProvider.setFocusLossListener(storm_name, new TextChangeHandlerSimple() {
+      @Override
+      public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
+        updateHandler.applyMutation(new ReportMutations.AccretionStormNameMutation(ordinal, newText));
+      }
+    });
+
+    Button delete = new Button(getActivity());
+    delete.setText("X");
+    delete.setOnClickListener(listenerProvider.getOnClickListener(new ClickHandlerSimple() {
+      @Override
+      public void handleClick(View view, DataUpdateHandler updateHandler) {
+        updateHandler.applyMutation(new ReportMutations.DeleteAccretionMutation(ordinal));
+      }
+    }));
+
+    TableRow row = new TableRow(getActivity());
+    row.setId(ordinal);
+    row.addView(date_button);
+    storm_name.setLayoutParams(
+            new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f));
+    row.addView(storm_name);
+    if (showDelete) {
+      row.addView(delete);
+    }
+    getTable(R.id.tableAccretionEvent).addView(row);
+
   }
 
   private void addWashOverRow(final int ordinal, WashEvent event, boolean showDelete) {
@@ -487,6 +577,16 @@ if (condition.getPreditationCount()>0) {
     return (TableLayout)view;
   }
 
+  private static class HandleAddAccretionRow extends ClickHandler {
+    protected HandleAddAccretionRow () {
+      super(R.id.fieldAddAccretionRow);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+
+    }
+  }
+
   private static class HandleSetProportionAll extends ClickHandler {
     protected HandleSetProportionAll () {
       super(R.id.fieldRecordedAll);
@@ -530,6 +630,41 @@ if (condition.getPreditationCount()>0) {
               PropEventsRecordedMutation(NestCondition.ProportionEventsRecorded.FEW));
     }
   }
+
+  private static class HandleSetStormImpactDate extends DatePickerClickHandler {
+    protected HandleSetStormImpactDate() {
+      super(R.id.buttonOtherStormImpactDate);
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
+      updateHandler.applyMutation(new ReportMutations.OtherImpactDateMutation(maybeDate));
+    }
+  }
+
+  private static class HandleUpdateStormImpactStormName extends TextChangeHandler {
+    protected HandleUpdateStormImpactStormName() {
+      super(R.id.fieldOtherStormImpactStormName);
+    }
+
+    @Override
+    public void handleTextChange(String newName, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.OtherImpactStormNameMutation(newName));
+    }
+  }
+
+  private static class HandleUpdateStormImpactOtherImpact extends TextChangeHandler {
+    protected HandleUpdateStormImpactOtherImpact() {
+      super(R.id.fieldOtherStormImpactOtherImpact);
+    }
+
+    @Override
+    public void handleTextChange(String newName, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.OtherImpactDetailsMutation(newName));
+    }
+  }
+
+
 
   private static class HandleSetPredatorDate extends DatePickerClickHandler {
     protected HandleSetPredatorDate() {
@@ -760,6 +895,16 @@ if (condition.getPreditationCount()>0) {
     @Override
     public void handleItemSelected(String selectedPredator, DataUpdateHandler updateHandler) {
       updateHandler.applyMutation(new ReportMutations.PredatorSpinnerMutation(0, selectedPredator));
+    }
+  }
+
+  private static class HandleGhostCrabDamageAtMost10Eggs extends ClickHandler {
+    protected HandleGhostCrabDamageAtMost10Eggs() {
+      super(R.id.fieldGhostCrabsDamaged10OrLess);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.GhostCrabDamageAtMost10EggsMutation(isChecked(view)));
     }
   }
 

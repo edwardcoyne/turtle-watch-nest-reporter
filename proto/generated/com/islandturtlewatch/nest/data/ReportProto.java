@@ -5072,6 +5072,15 @@ public final class ReportProto {
       com.google.protobuf.MessageOrBuilder {
 
     /**
+     * <code>optional bool ghost_damage_10_or_less = 31 [default = true];</code>
+     */
+    boolean hasGhostDamage10OrLess();
+    /**
+     * <code>optional bool ghost_damage_10_or_less = 31 [default = true];</code>
+     */
+    boolean getGhostDamage10OrLess();
+
+    /**
      * <code>optional bool vandalized = 1;</code>
      */
     boolean hasVandalized();
@@ -5129,6 +5138,43 @@ public final class ReportProto {
      * <code>optional bool post_hatch_washout = 20;</code>
      */
     boolean getPostHatchWashout();
+
+    /**
+     * <code>repeated .com.islandturtlewatch.nest.data.NestCondition.WashEvent accretion = 30;</code>
+     */
+    java.util.List<com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent> 
+        getAccretionList();
+    /**
+     * <code>repeated .com.islandturtlewatch.nest.data.NestCondition.WashEvent accretion = 30;</code>
+     */
+    com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent getAccretion(int index);
+    /**
+     * <code>repeated .com.islandturtlewatch.nest.data.NestCondition.WashEvent accretion = 30;</code>
+     */
+    int getAccretionCount();
+    /**
+     * <code>repeated .com.islandturtlewatch.nest.data.NestCondition.WashEvent accretion = 30;</code>
+     */
+    java.util.List<? extends com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEventOrBuilder> 
+        getAccretionOrBuilderList();
+    /**
+     * <code>repeated .com.islandturtlewatch.nest.data.NestCondition.WashEvent accretion = 30;</code>
+     */
+    com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEventOrBuilder getAccretionOrBuilder(
+        int index);
+
+    /**
+     * <code>optional .com.islandturtlewatch.nest.data.NestCondition.StormImpact storm_impact = 32;</code>
+     */
+    boolean hasStormImpact();
+    /**
+     * <code>optional .com.islandturtlewatch.nest.data.NestCondition.StormImpact storm_impact = 32;</code>
+     */
+    com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact getStormImpact();
+    /**
+     * <code>optional .com.islandturtlewatch.nest.data.NestCondition.StormImpact storm_impact = 32;</code>
+     */
+    com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpactOrBuilder getStormImpactOrBuilder();
 
     /**
      * <code>optional bool poached = 3;</code>
@@ -5451,46 +5497,46 @@ public final class ReportProto {
               break;
             }
             case 8: {
-              bitField0_ |= 0x00000001;
+              bitField0_ |= 0x00000002;
               vandalized_ = input.readBool();
               break;
             }
             case 16: {
-              bitField0_ |= 0x00000004;
+              bitField0_ |= 0x00000008;
               vandalizedTimestampMs_ = input.readInt64();
               break;
             }
             case 24: {
-              bitField0_ |= 0x00000040;
+              bitField0_ |= 0x00000100;
               poached_ = input.readBool();
               break;
             }
             case 32: {
-              bitField0_ |= 0x00000080;
+              bitField0_ |= 0x00000200;
               poachedTimestampMs_ = input.readInt64();
               break;
             }
             case 40: {
-              bitField0_ |= 0x00000200;
+              bitField0_ |= 0x00000800;
               rootsInvadedEggshells_ = input.readBool();
               break;
             }
             case 48: {
-              bitField0_ |= 0x00000400;
+              bitField0_ |= 0x00001000;
               eggsScatteredByAnother_ = input.readBool();
               break;
             }
             case 58: {
-              if (!((mutable_bitField0_ & 0x00001000) == 0x00001000)) {
+              if (!((mutable_bitField0_ & 0x00008000) == 0x00008000)) {
                 washOver_ = new java.util.ArrayList<com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent>();
-                mutable_bitField0_ |= 0x00001000;
+                mutable_bitField0_ |= 0x00008000;
               }
               washOver_.add(input.readMessage(com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent.PARSER, extensionRegistry));
               break;
             }
             case 66: {
               com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent.Builder subBuilder = null;
-              if (((bitField0_ & 0x00001000) == 0x00001000)) {
+              if (((bitField0_ & 0x00004000) == 0x00004000)) {
                 subBuilder = washOut_.toBuilder();
               }
               washOut_ = input.readMessage(com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent.PARSER, extensionRegistry);
@@ -5498,39 +5544,39 @@ public final class ReportProto {
                 subBuilder.mergeFrom(washOut_);
                 washOut_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00001000;
+              bitField0_ |= 0x00004000;
               break;
             }
             case 74: {
-              if (!((mutable_bitField0_ & 0x00040000) == 0x00040000)) {
+              if (!((mutable_bitField0_ & 0x00200000) == 0x00200000)) {
                 preditation_ = new java.util.ArrayList<com.islandturtlewatch.nest.data.ReportProto.NestCondition.PreditationEvent>();
-                mutable_bitField0_ |= 0x00040000;
+                mutable_bitField0_ |= 0x00200000;
               }
               preditation_.add(input.readMessage(com.islandturtlewatch.nest.data.ReportProto.NestCondition.PreditationEvent.PARSER, extensionRegistry));
               break;
             }
             case 80: {
-              bitField0_ |= 0x00040000;
+              bitField0_ |= 0x00100000;
               hatchTimestampMs_ = input.readInt64();
               break;
             }
             case 88: {
-              bitField0_ |= 0x00080000;
+              bitField0_ |= 0x00200000;
               additionalHatchTimestampMs_ = input.readInt64();
               break;
             }
             case 96: {
-              bitField0_ |= 0x00100000;
+              bitField0_ |= 0x00400000;
               disorientation_ = input.readBool();
               break;
             }
             case 104: {
-              bitField0_ |= 0x00200000;
+              bitField0_ |= 0x00800000;
               abandonedBodyPits_ = input.readBool();
               break;
             }
             case 112: {
-              bitField0_ |= 0x00400000;
+              bitField0_ |= 0x01000000;
               abandonedEggCavities_ = input.readBool();
               break;
             }
@@ -5540,29 +5586,29 @@ public final class ReportProto {
               if (value == null) {
                 unknownFields.mergeVarintField(15, rawValue);
               } else {
-                bitField0_ |= 0x00000008;
+                bitField0_ |= 0x00000010;
                 vandalismType_ = value;
               }
               break;
             }
             case 128: {
-              bitField0_ |= 0x00000800;
+              bitField0_ |= 0x00002000;
               eggsScatteredByAnotherTimestampMs_ = input.readInt64();
               break;
             }
             case 136: {
-              bitField0_ |= 0x00000100;
+              bitField0_ |= 0x00000400;
               poachedEggsRemoved_ = input.readBool();
               break;
             }
             case 144: {
-              bitField0_ |= 0x00800000;
+              bitField0_ |= 0x02000000;
               noDigging_ = input.readBool();
               break;
             }
             case 154: {
               com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent.Builder subBuilder = null;
-              if (((bitField0_ & 0x00002000) == 0x00002000)) {
+              if (((bitField0_ & 0x00008000) == 0x00008000)) {
                 subBuilder = partialWashout_.toBuilder();
               }
               partialWashout_ = input.readMessage(com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent.PARSER, extensionRegistry);
@@ -5570,55 +5616,55 @@ public final class ReportProto {
                 subBuilder.mergeFrom(partialWashout_);
                 partialWashout_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00002000;
+              bitField0_ |= 0x00008000;
               break;
             }
             case 160: {
-              bitField0_ |= 0x00000020;
+              bitField0_ |= 0x00000040;
               postHatchWashout_ = input.readBool();
               break;
             }
             case 168: {
-              bitField0_ |= 0x00004000;
+              bitField0_ |= 0x00010000;
               nestInundated_ = input.readBool();
               break;
             }
             case 176: {
-              bitField0_ |= 0x00008000;
+              bitField0_ |= 0x00020000;
               nestInundatedTimestampMs_ = input.readInt64();
               break;
             }
             case 184: {
-              bitField0_ |= 0x01000000;
+              bitField0_ |= 0x04000000;
               nestDepredated_ = input.readBool();
               break;
             }
             case 192: {
-              bitField0_ |= 0x02000000;
+              bitField0_ |= 0x08000000;
               eggsDamagedByAnotherTurtle_ = input.readBool();
               break;
             }
             case 202: {
-              if (!((mutable_bitField0_ & 0x00020000) == 0x00020000)) {
+              if (!((mutable_bitField0_ & 0x00100000) == 0x00100000)) {
                 inundatedEvent_ = new java.util.ArrayList<com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent>();
-                mutable_bitField0_ |= 0x00020000;
+                mutable_bitField0_ |= 0x00100000;
               }
               inundatedEvent_.add(input.readMessage(com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent.PARSER, extensionRegistry));
               break;
             }
             case 208: {
-              bitField0_ |= 0x00000010;
+              bitField0_ |= 0x00000020;
               nestDugInto_ = input.readBool();
               break;
             }
             case 216: {
-              bitField0_ |= 0x00010000;
+              bitField0_ |= 0x00040000;
               activelyRecordEvents_ = input.readBool();
               break;
             }
             case 226: {
               com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000002;
+              bitField0_ |= 0x00000004;
               describeControlMethods_ = bs;
               break;
             }
@@ -5628,9 +5674,35 @@ public final class ReportProto {
               if (value == null) {
                 unknownFields.mergeVarintField(29, rawValue);
               } else {
-                bitField0_ |= 0x00020000;
+                bitField0_ |= 0x00080000;
                 propEventsRecorded_ = value;
               }
+              break;
+            }
+            case 242: {
+              if (!((mutable_bitField0_ & 0x00000080) == 0x00000080)) {
+                accretion_ = new java.util.ArrayList<com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent>();
+                mutable_bitField0_ |= 0x00000080;
+              }
+              accretion_.add(input.readMessage(com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent.PARSER, extensionRegistry));
+              break;
+            }
+            case 248: {
+              bitField0_ |= 0x00000001;
+              ghostDamage10OrLess_ = input.readBool();
+              break;
+            }
+            case 258: {
+              com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000080) == 0x00000080)) {
+                subBuilder = stormImpact_.toBuilder();
+              }
+              stormImpact_ = input.readMessage(com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(stormImpact_);
+                stormImpact_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00000080;
               break;
             }
           }
@@ -5641,14 +5713,17 @@ public final class ReportProto {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e.getMessage()).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00001000) == 0x00001000)) {
+        if (((mutable_bitField0_ & 0x00008000) == 0x00008000)) {
           washOver_ = java.util.Collections.unmodifiableList(washOver_);
         }
-        if (((mutable_bitField0_ & 0x00040000) == 0x00040000)) {
+        if (((mutable_bitField0_ & 0x00200000) == 0x00200000)) {
           preditation_ = java.util.Collections.unmodifiableList(preditation_);
         }
-        if (((mutable_bitField0_ & 0x00020000) == 0x00020000)) {
+        if (((mutable_bitField0_ & 0x00100000) == 0x00100000)) {
           inundatedEvent_ = java.util.Collections.unmodifiableList(inundatedEvent_);
+        }
+        if (((mutable_bitField0_ & 0x00000080) == 0x00000080)) {
+          accretion_ = java.util.Collections.unmodifiableList(accretion_);
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -5879,6 +5954,717 @@ public final class ReportProto {
       }
 
       // @@protoc_insertion_point(enum_scope:com.islandturtlewatch.nest.data.NestCondition.ProportionEventsRecorded)
+    }
+
+    public interface StormImpactOrBuilder extends
+        // @@protoc_insertion_point(interface_extends:com.islandturtlewatch.nest.data.NestCondition.StormImpact)
+        com.google.protobuf.MessageOrBuilder {
+
+      /**
+       * <code>optional int64 timestamp_ms = 1;</code>
+       */
+      boolean hasTimestampMs();
+      /**
+       * <code>optional int64 timestamp_ms = 1;</code>
+       */
+      long getTimestampMs();
+
+      /**
+       * <code>optional string storm_name = 2;</code>
+       */
+      boolean hasStormName();
+      /**
+       * <code>optional string storm_name = 2;</code>
+       */
+      java.lang.String getStormName();
+      /**
+       * <code>optional string storm_name = 2;</code>
+       */
+      com.google.protobuf.ByteString
+          getStormNameBytes();
+
+      /**
+       * <code>optional string other_impact = 3;</code>
+       */
+      boolean hasOtherImpact();
+      /**
+       * <code>optional string other_impact = 3;</code>
+       */
+      java.lang.String getOtherImpact();
+      /**
+       * <code>optional string other_impact = 3;</code>
+       */
+      com.google.protobuf.ByteString
+          getOtherImpactBytes();
+    }
+    /**
+     * Protobuf type {@code com.islandturtlewatch.nest.data.NestCondition.StormImpact}
+     */
+    public static final class StormImpact extends
+        com.google.protobuf.GeneratedMessage implements
+        // @@protoc_insertion_point(message_implements:com.islandturtlewatch.nest.data.NestCondition.StormImpact)
+        StormImpactOrBuilder {
+      // Use StormImpact.newBuilder() to construct.
+      private StormImpact(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+        super(builder);
+        this.unknownFields = builder.getUnknownFields();
+      }
+      private StormImpact(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+      private static final StormImpact defaultInstance;
+      public static StormImpact getDefaultInstance() {
+        return defaultInstance;
+      }
+
+      public StormImpact getDefaultInstanceForType() {
+        return defaultInstance;
+      }
+
+      private final com.google.protobuf.UnknownFieldSet unknownFields;
+      @java.lang.Override
+      public final com.google.protobuf.UnknownFieldSet
+          getUnknownFields() {
+        return this.unknownFields;
+      }
+      private StormImpact(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        initFields();
+        int mutable_bitField0_ = 0;
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+            com.google.protobuf.UnknownFieldSet.newBuilder();
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              default: {
+                if (!parseUnknownField(input, unknownFields,
+                                       extensionRegistry, tag)) {
+                  done = true;
+                }
+                break;
+              }
+              case 8: {
+                bitField0_ |= 0x00000001;
+                timestampMs_ = input.readInt64();
+                break;
+              }
+              case 18: {
+                com.google.protobuf.ByteString bs = input.readBytes();
+                bitField0_ |= 0x00000002;
+                stormName_ = bs;
+                break;
+              }
+              case 26: {
+                com.google.protobuf.ByteString bs = input.readBytes();
+                bitField0_ |= 0x00000004;
+                otherImpact_ = bs;
+                break;
+              }
+            }
+          }
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(this);
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(
+              e.getMessage()).setUnfinishedMessage(this);
+        } finally {
+          this.unknownFields = unknownFields.build();
+          makeExtensionsImmutable();
+        }
+      }
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.islandturtlewatch.nest.data.ReportProto.internal_static_com_islandturtlewatch_nest_data_NestCondition_StormImpact_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.islandturtlewatch.nest.data.ReportProto.internal_static_com_islandturtlewatch_nest_data_NestCondition_StormImpact_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact.class, com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact.Builder.class);
+      }
+
+      public static com.google.protobuf.Parser<StormImpact> PARSER =
+          new com.google.protobuf.AbstractParser<StormImpact>() {
+        public StormImpact parsePartialFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return new StormImpact(input, extensionRegistry);
+        }
+      };
+
+      @java.lang.Override
+      public com.google.protobuf.Parser<StormImpact> getParserForType() {
+        return PARSER;
+      }
+
+      private int bitField0_;
+      public static final int TIMESTAMP_MS_FIELD_NUMBER = 1;
+      private long timestampMs_;
+      /**
+       * <code>optional int64 timestamp_ms = 1;</code>
+       */
+      public boolean hasTimestampMs() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>optional int64 timestamp_ms = 1;</code>
+       */
+      public long getTimestampMs() {
+        return timestampMs_;
+      }
+
+      public static final int STORM_NAME_FIELD_NUMBER = 2;
+      private java.lang.Object stormName_;
+      /**
+       * <code>optional string storm_name = 2;</code>
+       */
+      public boolean hasStormName() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>optional string storm_name = 2;</code>
+       */
+      public java.lang.String getStormName() {
+        java.lang.Object ref = stormName_;
+        if (ref instanceof java.lang.String) {
+          return (java.lang.String) ref;
+        } else {
+          com.google.protobuf.ByteString bs = 
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            stormName_ = s;
+          }
+          return s;
+        }
+      }
+      /**
+       * <code>optional string storm_name = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getStormNameBytes() {
+        java.lang.Object ref = stormName_;
+        if (ref instanceof java.lang.String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          stormName_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+
+      public static final int OTHER_IMPACT_FIELD_NUMBER = 3;
+      private java.lang.Object otherImpact_;
+      /**
+       * <code>optional string other_impact = 3;</code>
+       */
+      public boolean hasOtherImpact() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>optional string other_impact = 3;</code>
+       */
+      public java.lang.String getOtherImpact() {
+        java.lang.Object ref = otherImpact_;
+        if (ref instanceof java.lang.String) {
+          return (java.lang.String) ref;
+        } else {
+          com.google.protobuf.ByteString bs = 
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            otherImpact_ = s;
+          }
+          return s;
+        }
+      }
+      /**
+       * <code>optional string other_impact = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getOtherImpactBytes() {
+        java.lang.Object ref = otherImpact_;
+        if (ref instanceof java.lang.String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          otherImpact_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+
+      private void initFields() {
+        timestampMs_ = 0L;
+        stormName_ = "";
+        otherImpact_ = "";
+      }
+      private byte memoizedIsInitialized = -1;
+      public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized == 1) return true;
+        if (isInitialized == 0) return false;
+
+        memoizedIsInitialized = 1;
+        return true;
+      }
+
+      public void writeTo(com.google.protobuf.CodedOutputStream output)
+                          throws java.io.IOException {
+        getSerializedSize();
+        if (((bitField0_ & 0x00000001) == 0x00000001)) {
+          output.writeInt64(1, timestampMs_);
+        }
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          output.writeBytes(2, getStormNameBytes());
+        }
+        if (((bitField0_ & 0x00000004) == 0x00000004)) {
+          output.writeBytes(3, getOtherImpactBytes());
+        }
+        getUnknownFields().writeTo(output);
+      }
+
+      private int memoizedSerializedSize = -1;
+      public int getSerializedSize() {
+        int size = memoizedSerializedSize;
+        if (size != -1) return size;
+
+        size = 0;
+        if (((bitField0_ & 0x00000001) == 0x00000001)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeInt64Size(1, timestampMs_);
+        }
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeBytesSize(2, getStormNameBytes());
+        }
+        if (((bitField0_ & 0x00000004) == 0x00000004)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeBytesSize(3, getOtherImpactBytes());
+        }
+        size += getUnknownFields().getSerializedSize();
+        memoizedSerializedSize = size;
+        return size;
+      }
+
+      private static final long serialVersionUID = 0L;
+      @java.lang.Override
+      protected java.lang.Object writeReplace()
+          throws java.io.ObjectStreamException {
+        return super.writeReplace();
+      }
+
+      public static com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact parseFrom(
+          com.google.protobuf.ByteString data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact parseFrom(
+          com.google.protobuf.ByteString data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact parseFrom(byte[] data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact parseFrom(
+          byte[] data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact parseFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return PARSER.parseFrom(input);
+      }
+      public static com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact parseFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return PARSER.parseFrom(input, extensionRegistry);
+      }
+      public static com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact parseDelimitedFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return PARSER.parseDelimitedFrom(input);
+      }
+      public static com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact parseDelimitedFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return PARSER.parseDelimitedFrom(input, extensionRegistry);
+      }
+      public static com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact parseFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return PARSER.parseFrom(input);
+      }
+      public static com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact parseFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return PARSER.parseFrom(input, extensionRegistry);
+      }
+
+      public static Builder newBuilder() { return Builder.create(); }
+      public Builder newBuilderForType() { return newBuilder(); }
+      public static Builder newBuilder(com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact prototype) {
+        return newBuilder().mergeFrom(prototype);
+      }
+      public Builder toBuilder() { return newBuilder(this); }
+
+      @java.lang.Override
+      protected Builder newBuilderForType(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        Builder builder = new Builder(parent);
+        return builder;
+      }
+      /**
+       * Protobuf type {@code com.islandturtlewatch.nest.data.NestCondition.StormImpact}
+       */
+      public static final class Builder extends
+          com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+          // @@protoc_insertion_point(builder_implements:com.islandturtlewatch.nest.data.NestCondition.StormImpact)
+          com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpactOrBuilder {
+        public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+          return com.islandturtlewatch.nest.data.ReportProto.internal_static_com_islandturtlewatch_nest_data_NestCondition_StormImpact_descriptor;
+        }
+
+        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+          return com.islandturtlewatch.nest.data.ReportProto.internal_static_com_islandturtlewatch_nest_data_NestCondition_StormImpact_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                  com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact.class, com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact.Builder.class);
+        }
+
+        // Construct using com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact.newBuilder()
+        private Builder() {
+          maybeForceBuilderInitialization();
+        }
+
+        private Builder(
+            com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+          super(parent);
+          maybeForceBuilderInitialization();
+        }
+        private void maybeForceBuilderInitialization() {
+          if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          }
+        }
+        private static Builder create() {
+          return new Builder();
+        }
+
+        public Builder clear() {
+          super.clear();
+          timestampMs_ = 0L;
+          bitField0_ = (bitField0_ & ~0x00000001);
+          stormName_ = "";
+          bitField0_ = (bitField0_ & ~0x00000002);
+          otherImpact_ = "";
+          bitField0_ = (bitField0_ & ~0x00000004);
+          return this;
+        }
+
+        public Builder clone() {
+          return create().mergeFrom(buildPartial());
+        }
+
+        public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+          return com.islandturtlewatch.nest.data.ReportProto.internal_static_com_islandturtlewatch_nest_data_NestCondition_StormImpact_descriptor;
+        }
+
+        public com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact getDefaultInstanceForType() {
+          return com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact.getDefaultInstance();
+        }
+
+        public com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact build() {
+          com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact result = buildPartial();
+          if (!result.isInitialized()) {
+            throw newUninitializedMessageException(result);
+          }
+          return result;
+        }
+
+        public com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact buildPartial() {
+          com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact result = new com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact(this);
+          int from_bitField0_ = bitField0_;
+          int to_bitField0_ = 0;
+          if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+            to_bitField0_ |= 0x00000001;
+          }
+          result.timestampMs_ = timestampMs_;
+          if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+            to_bitField0_ |= 0x00000002;
+          }
+          result.stormName_ = stormName_;
+          if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+            to_bitField0_ |= 0x00000004;
+          }
+          result.otherImpact_ = otherImpact_;
+          result.bitField0_ = to_bitField0_;
+          onBuilt();
+          return result;
+        }
+
+        public Builder mergeFrom(com.google.protobuf.Message other) {
+          if (other instanceof com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact) {
+            return mergeFrom((com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact)other);
+          } else {
+            super.mergeFrom(other);
+            return this;
+          }
+        }
+
+        public Builder mergeFrom(com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact other) {
+          if (other == com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact.getDefaultInstance()) return this;
+          if (other.hasTimestampMs()) {
+            setTimestampMs(other.getTimestampMs());
+          }
+          if (other.hasStormName()) {
+            bitField0_ |= 0x00000002;
+            stormName_ = other.stormName_;
+            onChanged();
+          }
+          if (other.hasOtherImpact()) {
+            bitField0_ |= 0x00000004;
+            otherImpact_ = other.otherImpact_;
+            onChanged();
+          }
+          this.mergeUnknownFields(other.getUnknownFields());
+          return this;
+        }
+
+        public final boolean isInitialized() {
+          return true;
+        }
+
+        public Builder mergeFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact parsedMessage = null;
+          try {
+            parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            parsedMessage = (com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact) e.getUnfinishedMessage();
+            throw e;
+          } finally {
+            if (parsedMessage != null) {
+              mergeFrom(parsedMessage);
+            }
+          }
+          return this;
+        }
+        private int bitField0_;
+
+        private long timestampMs_ ;
+        /**
+         * <code>optional int64 timestamp_ms = 1;</code>
+         */
+        public boolean hasTimestampMs() {
+          return ((bitField0_ & 0x00000001) == 0x00000001);
+        }
+        /**
+         * <code>optional int64 timestamp_ms = 1;</code>
+         */
+        public long getTimestampMs() {
+          return timestampMs_;
+        }
+        /**
+         * <code>optional int64 timestamp_ms = 1;</code>
+         */
+        public Builder setTimestampMs(long value) {
+          bitField0_ |= 0x00000001;
+          timestampMs_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>optional int64 timestamp_ms = 1;</code>
+         */
+        public Builder clearTimestampMs() {
+          bitField0_ = (bitField0_ & ~0x00000001);
+          timestampMs_ = 0L;
+          onChanged();
+          return this;
+        }
+
+        private java.lang.Object stormName_ = "";
+        /**
+         * <code>optional string storm_name = 2;</code>
+         */
+        public boolean hasStormName() {
+          return ((bitField0_ & 0x00000002) == 0x00000002);
+        }
+        /**
+         * <code>optional string storm_name = 2;</code>
+         */
+        public java.lang.String getStormName() {
+          java.lang.Object ref = stormName_;
+          if (!(ref instanceof java.lang.String)) {
+            com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
+            java.lang.String s = bs.toStringUtf8();
+            if (bs.isValidUtf8()) {
+              stormName_ = s;
+            }
+            return s;
+          } else {
+            return (java.lang.String) ref;
+          }
+        }
+        /**
+         * <code>optional string storm_name = 2;</code>
+         */
+        public com.google.protobuf.ByteString
+            getStormNameBytes() {
+          java.lang.Object ref = stormName_;
+          if (ref instanceof String) {
+            com.google.protobuf.ByteString b = 
+                com.google.protobuf.ByteString.copyFromUtf8(
+                    (java.lang.String) ref);
+            stormName_ = b;
+            return b;
+          } else {
+            return (com.google.protobuf.ByteString) ref;
+          }
+        }
+        /**
+         * <code>optional string storm_name = 2;</code>
+         */
+        public Builder setStormName(
+            java.lang.String value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+          stormName_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>optional string storm_name = 2;</code>
+         */
+        public Builder clearStormName() {
+          bitField0_ = (bitField0_ & ~0x00000002);
+          stormName_ = getDefaultInstance().getStormName();
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>optional string storm_name = 2;</code>
+         */
+        public Builder setStormNameBytes(
+            com.google.protobuf.ByteString value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+          stormName_ = value;
+          onChanged();
+          return this;
+        }
+
+        private java.lang.Object otherImpact_ = "";
+        /**
+         * <code>optional string other_impact = 3;</code>
+         */
+        public boolean hasOtherImpact() {
+          return ((bitField0_ & 0x00000004) == 0x00000004);
+        }
+        /**
+         * <code>optional string other_impact = 3;</code>
+         */
+        public java.lang.String getOtherImpact() {
+          java.lang.Object ref = otherImpact_;
+          if (!(ref instanceof java.lang.String)) {
+            com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
+            java.lang.String s = bs.toStringUtf8();
+            if (bs.isValidUtf8()) {
+              otherImpact_ = s;
+            }
+            return s;
+          } else {
+            return (java.lang.String) ref;
+          }
+        }
+        /**
+         * <code>optional string other_impact = 3;</code>
+         */
+        public com.google.protobuf.ByteString
+            getOtherImpactBytes() {
+          java.lang.Object ref = otherImpact_;
+          if (ref instanceof String) {
+            com.google.protobuf.ByteString b = 
+                com.google.protobuf.ByteString.copyFromUtf8(
+                    (java.lang.String) ref);
+            otherImpact_ = b;
+            return b;
+          } else {
+            return (com.google.protobuf.ByteString) ref;
+          }
+        }
+        /**
+         * <code>optional string other_impact = 3;</code>
+         */
+        public Builder setOtherImpact(
+            java.lang.String value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+          otherImpact_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>optional string other_impact = 3;</code>
+         */
+        public Builder clearOtherImpact() {
+          bitField0_ = (bitField0_ & ~0x00000004);
+          otherImpact_ = getDefaultInstance().getOtherImpact();
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>optional string other_impact = 3;</code>
+         */
+        public Builder setOtherImpactBytes(
+            com.google.protobuf.ByteString value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+          otherImpact_ = value;
+          onChanged();
+          return this;
+        }
+
+        // @@protoc_insertion_point(builder_scope:com.islandturtlewatch.nest.data.NestCondition.StormImpact)
+      }
+
+      static {
+        defaultInstance = new StormImpact(true);
+        defaultInstance.initFields();
+      }
+
+      // @@protoc_insertion_point(class_scope:com.islandturtlewatch.nest.data.NestCondition.StormImpact)
     }
 
     public interface WashEventOrBuilder extends
@@ -7410,13 +8196,28 @@ public final class ReportProto {
     }
 
     private int bitField0_;
+    public static final int GHOST_DAMAGE_10_OR_LESS_FIELD_NUMBER = 31;
+    private boolean ghostDamage10OrLess_;
+    /**
+     * <code>optional bool ghost_damage_10_or_less = 31 [default = true];</code>
+     */
+    public boolean hasGhostDamage10OrLess() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>optional bool ghost_damage_10_or_less = 31 [default = true];</code>
+     */
+    public boolean getGhostDamage10OrLess() {
+      return ghostDamage10OrLess_;
+    }
+
     public static final int VANDALIZED_FIELD_NUMBER = 1;
     private boolean vandalized_;
     /**
      * <code>optional bool vandalized = 1;</code>
      */
     public boolean hasVandalized() {
-      return ((bitField0_ & 0x00000001) == 0x00000001);
+      return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
      * <code>optional bool vandalized = 1;</code>
@@ -7431,7 +8232,7 @@ public final class ReportProto {
      * <code>optional string describe_control_methods = 28;</code>
      */
     public boolean hasDescribeControlMethods() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
+      return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
      * <code>optional string describe_control_methods = 28;</code>
@@ -7473,7 +8274,7 @@ public final class ReportProto {
      * <code>optional int64 vandalized_timestamp_ms = 2;</code>
      */
     public boolean hasVandalizedTimestampMs() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
+      return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     /**
      * <code>optional int64 vandalized_timestamp_ms = 2;</code>
@@ -7488,7 +8289,7 @@ public final class ReportProto {
      * <code>optional .com.islandturtlewatch.nest.data.NestCondition.VandalismType vandalism_type = 15;</code>
      */
     public boolean hasVandalismType() {
-      return ((bitField0_ & 0x00000008) == 0x00000008);
+      return ((bitField0_ & 0x00000010) == 0x00000010);
     }
     /**
      * <code>optional .com.islandturtlewatch.nest.data.NestCondition.VandalismType vandalism_type = 15;</code>
@@ -7503,7 +8304,7 @@ public final class ReportProto {
      * <code>optional bool nest_dug_into = 26;</code>
      */
     public boolean hasNestDugInto() {
-      return ((bitField0_ & 0x00000010) == 0x00000010);
+      return ((bitField0_ & 0x00000020) == 0x00000020);
     }
     /**
      * <code>optional bool nest_dug_into = 26;</code>
@@ -7518,7 +8319,7 @@ public final class ReportProto {
      * <code>optional bool post_hatch_washout = 20;</code>
      */
     public boolean hasPostHatchWashout() {
-      return ((bitField0_ & 0x00000020) == 0x00000020);
+      return ((bitField0_ & 0x00000040) == 0x00000040);
     }
     /**
      * <code>optional bool post_hatch_washout = 20;</code>
@@ -7527,13 +8328,69 @@ public final class ReportProto {
       return postHatchWashout_;
     }
 
+    public static final int ACCRETION_FIELD_NUMBER = 30;
+    private java.util.List<com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent> accretion_;
+    /**
+     * <code>repeated .com.islandturtlewatch.nest.data.NestCondition.WashEvent accretion = 30;</code>
+     */
+    public java.util.List<com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent> getAccretionList() {
+      return accretion_;
+    }
+    /**
+     * <code>repeated .com.islandturtlewatch.nest.data.NestCondition.WashEvent accretion = 30;</code>
+     */
+    public java.util.List<? extends com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEventOrBuilder> 
+        getAccretionOrBuilderList() {
+      return accretion_;
+    }
+    /**
+     * <code>repeated .com.islandturtlewatch.nest.data.NestCondition.WashEvent accretion = 30;</code>
+     */
+    public int getAccretionCount() {
+      return accretion_.size();
+    }
+    /**
+     * <code>repeated .com.islandturtlewatch.nest.data.NestCondition.WashEvent accretion = 30;</code>
+     */
+    public com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent getAccretion(int index) {
+      return accretion_.get(index);
+    }
+    /**
+     * <code>repeated .com.islandturtlewatch.nest.data.NestCondition.WashEvent accretion = 30;</code>
+     */
+    public com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEventOrBuilder getAccretionOrBuilder(
+        int index) {
+      return accretion_.get(index);
+    }
+
+    public static final int STORM_IMPACT_FIELD_NUMBER = 32;
+    private com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact stormImpact_;
+    /**
+     * <code>optional .com.islandturtlewatch.nest.data.NestCondition.StormImpact storm_impact = 32;</code>
+     */
+    public boolean hasStormImpact() {
+      return ((bitField0_ & 0x00000080) == 0x00000080);
+    }
+    /**
+     * <code>optional .com.islandturtlewatch.nest.data.NestCondition.StormImpact storm_impact = 32;</code>
+     */
+    public com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact getStormImpact() {
+      return stormImpact_;
+    }
+    /**
+     * <code>optional .com.islandturtlewatch.nest.data.NestCondition.StormImpact storm_impact = 32;</code>
+     */
+    public com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpactOrBuilder getStormImpactOrBuilder() {
+      return stormImpact_;
+    }
+
     public static final int POACHED_FIELD_NUMBER = 3;
     private boolean poached_;
     /**
      * <code>optional bool poached = 3;</code>
      */
     public boolean hasPoached() {
-      return ((bitField0_ & 0x00000040) == 0x00000040);
+      return ((bitField0_ & 0x00000100) == 0x00000100);
     }
     /**
      * <code>optional bool poached = 3;</code>
@@ -7548,7 +8405,7 @@ public final class ReportProto {
      * <code>optional int64 poached_timestamp_ms = 4;</code>
      */
     public boolean hasPoachedTimestampMs() {
-      return ((bitField0_ & 0x00000080) == 0x00000080);
+      return ((bitField0_ & 0x00000200) == 0x00000200);
     }
     /**
      * <code>optional int64 poached_timestamp_ms = 4;</code>
@@ -7563,7 +8420,7 @@ public final class ReportProto {
      * <code>optional bool poached_eggs_removed = 17;</code>
      */
     public boolean hasPoachedEggsRemoved() {
-      return ((bitField0_ & 0x00000100) == 0x00000100);
+      return ((bitField0_ & 0x00000400) == 0x00000400);
     }
     /**
      * <code>optional bool poached_eggs_removed = 17;</code>
@@ -7578,7 +8435,7 @@ public final class ReportProto {
      * <code>optional bool roots_invaded_eggshells = 5;</code>
      */
     public boolean hasRootsInvadedEggshells() {
-      return ((bitField0_ & 0x00000200) == 0x00000200);
+      return ((bitField0_ & 0x00000800) == 0x00000800);
     }
     /**
      * <code>optional bool roots_invaded_eggshells = 5;</code>
@@ -7593,7 +8450,7 @@ public final class ReportProto {
      * <code>optional bool eggs_scattered_by_another = 6;</code>
      */
     public boolean hasEggsScatteredByAnother() {
-      return ((bitField0_ & 0x00000400) == 0x00000400);
+      return ((bitField0_ & 0x00001000) == 0x00001000);
     }
     /**
      * <code>optional bool eggs_scattered_by_another = 6;</code>
@@ -7608,7 +8465,7 @@ public final class ReportProto {
      * <code>optional int64 eggs_scattered_by_another_timestamp_ms = 16;</code>
      */
     public boolean hasEggsScatteredByAnotherTimestampMs() {
-      return ((bitField0_ & 0x00000800) == 0x00000800);
+      return ((bitField0_ & 0x00002000) == 0x00002000);
     }
     /**
      * <code>optional int64 eggs_scattered_by_another_timestamp_ms = 16;</code>
@@ -7658,7 +8515,7 @@ public final class ReportProto {
      * <code>optional .com.islandturtlewatch.nest.data.NestCondition.WashEvent wash_out = 8;</code>
      */
     public boolean hasWashOut() {
-      return ((bitField0_ & 0x00001000) == 0x00001000);
+      return ((bitField0_ & 0x00004000) == 0x00004000);
     }
     /**
      * <code>optional .com.islandturtlewatch.nest.data.NestCondition.WashEvent wash_out = 8;</code>
@@ -7679,7 +8536,7 @@ public final class ReportProto {
      * <code>optional .com.islandturtlewatch.nest.data.NestCondition.WashEvent partial_washout = 19;</code>
      */
     public boolean hasPartialWashout() {
-      return ((bitField0_ & 0x00002000) == 0x00002000);
+      return ((bitField0_ & 0x00008000) == 0x00008000);
     }
     /**
      * <code>optional .com.islandturtlewatch.nest.data.NestCondition.WashEvent partial_washout = 19;</code>
@@ -7704,7 +8561,7 @@ public final class ReportProto {
      * </pre>
      */
     public boolean hasNestInundated() {
-      return ((bitField0_ & 0x00004000) == 0x00004000);
+      return ((bitField0_ & 0x00010000) == 0x00010000);
     }
     /**
      * <code>optional bool nest_inundated = 21;</code>
@@ -7723,7 +8580,7 @@ public final class ReportProto {
      * <code>optional int64 nest_inundated_timestamp_ms = 22;</code>
      */
     public boolean hasNestInundatedTimestampMs() {
-      return ((bitField0_ & 0x00008000) == 0x00008000);
+      return ((bitField0_ & 0x00020000) == 0x00020000);
     }
     /**
      * <code>optional int64 nest_inundated_timestamp_ms = 22;</code>
@@ -7808,7 +8665,7 @@ public final class ReportProto {
      * <code>optional bool actively_record_events = 27 [default = true];</code>
      */
     public boolean hasActivelyRecordEvents() {
-      return ((bitField0_ & 0x00010000) == 0x00010000);
+      return ((bitField0_ & 0x00040000) == 0x00040000);
     }
     /**
      * <code>optional bool actively_record_events = 27 [default = true];</code>
@@ -7823,7 +8680,7 @@ public final class ReportProto {
      * <code>optional .com.islandturtlewatch.nest.data.NestCondition.ProportionEventsRecorded prop_events_recorded = 29;</code>
      */
     public boolean hasPropEventsRecorded() {
-      return ((bitField0_ & 0x00020000) == 0x00020000);
+      return ((bitField0_ & 0x00080000) == 0x00080000);
     }
     /**
      * <code>optional .com.islandturtlewatch.nest.data.NestCondition.ProportionEventsRecorded prop_events_recorded = 29;</code>
@@ -7838,7 +8695,7 @@ public final class ReportProto {
      * <code>optional int64 hatch_timestamp_ms = 10;</code>
      */
     public boolean hasHatchTimestampMs() {
-      return ((bitField0_ & 0x00040000) == 0x00040000);
+      return ((bitField0_ & 0x00100000) == 0x00100000);
     }
     /**
      * <code>optional int64 hatch_timestamp_ms = 10;</code>
@@ -7853,7 +8710,7 @@ public final class ReportProto {
      * <code>optional int64 additional_hatch_timestamp_ms = 11;</code>
      */
     public boolean hasAdditionalHatchTimestampMs() {
-      return ((bitField0_ & 0x00080000) == 0x00080000);
+      return ((bitField0_ & 0x00200000) == 0x00200000);
     }
     /**
      * <code>optional int64 additional_hatch_timestamp_ms = 11;</code>
@@ -7868,7 +8725,7 @@ public final class ReportProto {
      * <code>optional bool disorientation = 12;</code>
      */
     public boolean hasDisorientation() {
-      return ((bitField0_ & 0x00100000) == 0x00100000);
+      return ((bitField0_ & 0x00400000) == 0x00400000);
     }
     /**
      * <code>optional bool disorientation = 12;</code>
@@ -7883,7 +8740,7 @@ public final class ReportProto {
      * <code>optional bool abandoned_body_pits = 13;</code>
      */
     public boolean hasAbandonedBodyPits() {
-      return ((bitField0_ & 0x00200000) == 0x00200000);
+      return ((bitField0_ & 0x00800000) == 0x00800000);
     }
     /**
      * <code>optional bool abandoned_body_pits = 13;</code>
@@ -7898,7 +8755,7 @@ public final class ReportProto {
      * <code>optional bool abandoned_egg_cavities = 14;</code>
      */
     public boolean hasAbandonedEggCavities() {
-      return ((bitField0_ & 0x00400000) == 0x00400000);
+      return ((bitField0_ & 0x01000000) == 0x01000000);
     }
     /**
      * <code>optional bool abandoned_egg_cavities = 14;</code>
@@ -7913,7 +8770,7 @@ public final class ReportProto {
      * <code>optional bool no_digging = 18;</code>
      */
     public boolean hasNoDigging() {
-      return ((bitField0_ & 0x00800000) == 0x00800000);
+      return ((bitField0_ & 0x02000000) == 0x02000000);
     }
     /**
      * <code>optional bool no_digging = 18;</code>
@@ -7928,7 +8785,7 @@ public final class ReportProto {
      * <code>optional bool nest_depredated = 23;</code>
      */
     public boolean hasNestDepredated() {
-      return ((bitField0_ & 0x01000000) == 0x01000000);
+      return ((bitField0_ & 0x04000000) == 0x04000000);
     }
     /**
      * <code>optional bool nest_depredated = 23;</code>
@@ -7943,7 +8800,7 @@ public final class ReportProto {
      * <code>optional bool eggs_damaged_by_another_turtle = 24;</code>
      */
     public boolean hasEggsDamagedByAnotherTurtle() {
-      return ((bitField0_ & 0x02000000) == 0x02000000);
+      return ((bitField0_ & 0x08000000) == 0x08000000);
     }
     /**
      * <code>optional bool eggs_damaged_by_another_turtle = 24;</code>
@@ -7953,12 +8810,15 @@ public final class ReportProto {
     }
 
     private void initFields() {
+      ghostDamage10OrLess_ = true;
       vandalized_ = false;
       describeControlMethods_ = "";
       vandalizedTimestampMs_ = 0L;
       vandalismType_ = com.islandturtlewatch.nest.data.ReportProto.NestCondition.VandalismType.UNKOWN;
       nestDugInto_ = false;
       postHatchWashout_ = false;
+      accretion_ = java.util.Collections.emptyList();
+      stormImpact_ = com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact.getDefaultInstance();
       poached_ = false;
       poachedTimestampMs_ = 0L;
       poachedEggsRemoved_ = false;
@@ -7996,92 +8856,101 @@ public final class ReportProto {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeBool(1, vandalized_);
       }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         output.writeInt64(2, vandalizedTimestampMs_);
       }
-      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+      if (((bitField0_ & 0x00000100) == 0x00000100)) {
         output.writeBool(3, poached_);
       }
-      if (((bitField0_ & 0x00000080) == 0x00000080)) {
+      if (((bitField0_ & 0x00000200) == 0x00000200)) {
         output.writeInt64(4, poachedTimestampMs_);
       }
-      if (((bitField0_ & 0x00000200) == 0x00000200)) {
+      if (((bitField0_ & 0x00000800) == 0x00000800)) {
         output.writeBool(5, rootsInvadedEggshells_);
       }
-      if (((bitField0_ & 0x00000400) == 0x00000400)) {
+      if (((bitField0_ & 0x00001000) == 0x00001000)) {
         output.writeBool(6, eggsScatteredByAnother_);
       }
       for (int i = 0; i < washOver_.size(); i++) {
         output.writeMessage(7, washOver_.get(i));
       }
-      if (((bitField0_ & 0x00001000) == 0x00001000)) {
+      if (((bitField0_ & 0x00004000) == 0x00004000)) {
         output.writeMessage(8, washOut_);
       }
       for (int i = 0; i < preditation_.size(); i++) {
         output.writeMessage(9, preditation_.get(i));
       }
-      if (((bitField0_ & 0x00040000) == 0x00040000)) {
+      if (((bitField0_ & 0x00100000) == 0x00100000)) {
         output.writeInt64(10, hatchTimestampMs_);
       }
-      if (((bitField0_ & 0x00080000) == 0x00080000)) {
+      if (((bitField0_ & 0x00200000) == 0x00200000)) {
         output.writeInt64(11, additionalHatchTimestampMs_);
       }
-      if (((bitField0_ & 0x00100000) == 0x00100000)) {
+      if (((bitField0_ & 0x00400000) == 0x00400000)) {
         output.writeBool(12, disorientation_);
       }
-      if (((bitField0_ & 0x00200000) == 0x00200000)) {
+      if (((bitField0_ & 0x00800000) == 0x00800000)) {
         output.writeBool(13, abandonedBodyPits_);
       }
-      if (((bitField0_ & 0x00400000) == 0x00400000)) {
+      if (((bitField0_ & 0x01000000) == 0x01000000)) {
         output.writeBool(14, abandonedEggCavities_);
       }
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
         output.writeEnum(15, vandalismType_.getNumber());
       }
-      if (((bitField0_ & 0x00000800) == 0x00000800)) {
+      if (((bitField0_ & 0x00002000) == 0x00002000)) {
         output.writeInt64(16, eggsScatteredByAnotherTimestampMs_);
       }
-      if (((bitField0_ & 0x00000100) == 0x00000100)) {
+      if (((bitField0_ & 0x00000400) == 0x00000400)) {
         output.writeBool(17, poachedEggsRemoved_);
       }
-      if (((bitField0_ & 0x00800000) == 0x00800000)) {
+      if (((bitField0_ & 0x02000000) == 0x02000000)) {
         output.writeBool(18, noDigging_);
       }
-      if (((bitField0_ & 0x00002000) == 0x00002000)) {
+      if (((bitField0_ & 0x00008000) == 0x00008000)) {
         output.writeMessage(19, partialWashout_);
       }
-      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
         output.writeBool(20, postHatchWashout_);
       }
-      if (((bitField0_ & 0x00004000) == 0x00004000)) {
+      if (((bitField0_ & 0x00010000) == 0x00010000)) {
         output.writeBool(21, nestInundated_);
       }
-      if (((bitField0_ & 0x00008000) == 0x00008000)) {
+      if (((bitField0_ & 0x00020000) == 0x00020000)) {
         output.writeInt64(22, nestInundatedTimestampMs_);
       }
-      if (((bitField0_ & 0x01000000) == 0x01000000)) {
+      if (((bitField0_ & 0x04000000) == 0x04000000)) {
         output.writeBool(23, nestDepredated_);
       }
-      if (((bitField0_ & 0x02000000) == 0x02000000)) {
+      if (((bitField0_ & 0x08000000) == 0x08000000)) {
         output.writeBool(24, eggsDamagedByAnotherTurtle_);
       }
       for (int i = 0; i < inundatedEvent_.size(); i++) {
         output.writeMessage(25, inundatedEvent_.get(i));
       }
-      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
         output.writeBool(26, nestDugInto_);
       }
-      if (((bitField0_ & 0x00010000) == 0x00010000)) {
+      if (((bitField0_ & 0x00040000) == 0x00040000)) {
         output.writeBool(27, activelyRecordEvents_);
       }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         output.writeBytes(28, getDescribeControlMethodsBytes());
       }
-      if (((bitField0_ & 0x00020000) == 0x00020000)) {
+      if (((bitField0_ & 0x00080000) == 0x00080000)) {
         output.writeEnum(29, propEventsRecorded_.getNumber());
+      }
+      for (int i = 0; i < accretion_.size(); i++) {
+        output.writeMessage(30, accretion_.get(i));
+      }
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBool(31, ghostDamage10OrLess_);
+      }
+      if (((bitField0_ & 0x00000080) == 0x00000080)) {
+        output.writeMessage(32, stormImpact_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -8092,27 +8961,27 @@ public final class ReportProto {
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(1, vandalized_);
       }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(2, vandalizedTimestampMs_);
       }
-      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+      if (((bitField0_ & 0x00000100) == 0x00000100)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(3, poached_);
       }
-      if (((bitField0_ & 0x00000080) == 0x00000080)) {
+      if (((bitField0_ & 0x00000200) == 0x00000200)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(4, poachedTimestampMs_);
       }
-      if (((bitField0_ & 0x00000200) == 0x00000200)) {
+      if (((bitField0_ & 0x00000800) == 0x00000800)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(5, rootsInvadedEggshells_);
       }
-      if (((bitField0_ & 0x00000400) == 0x00000400)) {
+      if (((bitField0_ & 0x00001000) == 0x00001000)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(6, eggsScatteredByAnother_);
       }
@@ -8120,7 +8989,7 @@ public final class ReportProto {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(7, washOver_.get(i));
       }
-      if (((bitField0_ & 0x00001000) == 0x00001000)) {
+      if (((bitField0_ & 0x00004000) == 0x00004000)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(8, washOut_);
       }
@@ -8128,63 +8997,63 @@ public final class ReportProto {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(9, preditation_.get(i));
       }
-      if (((bitField0_ & 0x00040000) == 0x00040000)) {
+      if (((bitField0_ & 0x00100000) == 0x00100000)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(10, hatchTimestampMs_);
       }
-      if (((bitField0_ & 0x00080000) == 0x00080000)) {
+      if (((bitField0_ & 0x00200000) == 0x00200000)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(11, additionalHatchTimestampMs_);
       }
-      if (((bitField0_ & 0x00100000) == 0x00100000)) {
+      if (((bitField0_ & 0x00400000) == 0x00400000)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(12, disorientation_);
       }
-      if (((bitField0_ & 0x00200000) == 0x00200000)) {
+      if (((bitField0_ & 0x00800000) == 0x00800000)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(13, abandonedBodyPits_);
       }
-      if (((bitField0_ & 0x00400000) == 0x00400000)) {
+      if (((bitField0_ & 0x01000000) == 0x01000000)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(14, abandonedEggCavities_);
       }
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(15, vandalismType_.getNumber());
       }
-      if (((bitField0_ & 0x00000800) == 0x00000800)) {
+      if (((bitField0_ & 0x00002000) == 0x00002000)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(16, eggsScatteredByAnotherTimestampMs_);
       }
-      if (((bitField0_ & 0x00000100) == 0x00000100)) {
+      if (((bitField0_ & 0x00000400) == 0x00000400)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(17, poachedEggsRemoved_);
       }
-      if (((bitField0_ & 0x00800000) == 0x00800000)) {
+      if (((bitField0_ & 0x02000000) == 0x02000000)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(18, noDigging_);
       }
-      if (((bitField0_ & 0x00002000) == 0x00002000)) {
+      if (((bitField0_ & 0x00008000) == 0x00008000)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(19, partialWashout_);
       }
-      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(20, postHatchWashout_);
       }
-      if (((bitField0_ & 0x00004000) == 0x00004000)) {
+      if (((bitField0_ & 0x00010000) == 0x00010000)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(21, nestInundated_);
       }
-      if (((bitField0_ & 0x00008000) == 0x00008000)) {
+      if (((bitField0_ & 0x00020000) == 0x00020000)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(22, nestInundatedTimestampMs_);
       }
-      if (((bitField0_ & 0x01000000) == 0x01000000)) {
+      if (((bitField0_ & 0x04000000) == 0x04000000)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(23, nestDepredated_);
       }
-      if (((bitField0_ & 0x02000000) == 0x02000000)) {
+      if (((bitField0_ & 0x08000000) == 0x08000000)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(24, eggsDamagedByAnotherTurtle_);
       }
@@ -8192,21 +9061,33 @@ public final class ReportProto {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(25, inundatedEvent_.get(i));
       }
-      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(26, nestDugInto_);
       }
-      if (((bitField0_ & 0x00010000) == 0x00010000)) {
+      if (((bitField0_ & 0x00040000) == 0x00040000)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(27, activelyRecordEvents_);
       }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(28, getDescribeControlMethodsBytes());
       }
-      if (((bitField0_ & 0x00020000) == 0x00020000)) {
+      if (((bitField0_ & 0x00080000) == 0x00080000)) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(29, propEventsRecorded_.getNumber());
+      }
+      for (int i = 0; i < accretion_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(30, accretion_.get(i));
+      }
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(31, ghostDamage10OrLess_);
+      }
+      if (((bitField0_ & 0x00000080) == 0x00000080)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(32, stormImpact_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -8317,6 +9198,8 @@ public final class ReportProto {
       }
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getAccretionFieldBuilder();
+          getStormImpactFieldBuilder();
           getWashOverFieldBuilder();
           getWashOutFieldBuilder();
           getPartialWashoutFieldBuilder();
@@ -8330,33 +9213,47 @@ public final class ReportProto {
 
       public Builder clear() {
         super.clear();
-        vandalized_ = false;
+        ghostDamage10OrLess_ = true;
         bitField0_ = (bitField0_ & ~0x00000001);
-        describeControlMethods_ = "";
+        vandalized_ = false;
         bitField0_ = (bitField0_ & ~0x00000002);
-        vandalizedTimestampMs_ = 0L;
+        describeControlMethods_ = "";
         bitField0_ = (bitField0_ & ~0x00000004);
-        vandalismType_ = com.islandturtlewatch.nest.data.ReportProto.NestCondition.VandalismType.UNKOWN;
+        vandalizedTimestampMs_ = 0L;
         bitField0_ = (bitField0_ & ~0x00000008);
-        nestDugInto_ = false;
+        vandalismType_ = com.islandturtlewatch.nest.data.ReportProto.NestCondition.VandalismType.UNKOWN;
         bitField0_ = (bitField0_ & ~0x00000010);
-        postHatchWashout_ = false;
+        nestDugInto_ = false;
         bitField0_ = (bitField0_ & ~0x00000020);
-        poached_ = false;
+        postHatchWashout_ = false;
         bitField0_ = (bitField0_ & ~0x00000040);
-        poachedTimestampMs_ = 0L;
-        bitField0_ = (bitField0_ & ~0x00000080);
-        poachedEggsRemoved_ = false;
+        if (accretionBuilder_ == null) {
+          accretion_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000080);
+        } else {
+          accretionBuilder_.clear();
+        }
+        if (stormImpactBuilder_ == null) {
+          stormImpact_ = com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact.getDefaultInstance();
+        } else {
+          stormImpactBuilder_.clear();
+        }
         bitField0_ = (bitField0_ & ~0x00000100);
-        rootsInvadedEggshells_ = false;
+        poached_ = false;
         bitField0_ = (bitField0_ & ~0x00000200);
-        eggsScatteredByAnother_ = false;
+        poachedTimestampMs_ = 0L;
         bitField0_ = (bitField0_ & ~0x00000400);
-        eggsScatteredByAnotherTimestampMs_ = 0L;
+        poachedEggsRemoved_ = false;
         bitField0_ = (bitField0_ & ~0x00000800);
+        rootsInvadedEggshells_ = false;
+        bitField0_ = (bitField0_ & ~0x00001000);
+        eggsScatteredByAnother_ = false;
+        bitField0_ = (bitField0_ & ~0x00002000);
+        eggsScatteredByAnotherTimestampMs_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00004000);
         if (washOverBuilder_ == null) {
           washOver_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00001000);
+          bitField0_ = (bitField0_ & ~0x00008000);
         } else {
           washOverBuilder_.clear();
         }
@@ -8365,49 +9262,49 @@ public final class ReportProto {
         } else {
           washOutBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00002000);
+        bitField0_ = (bitField0_ & ~0x00010000);
         if (partialWashoutBuilder_ == null) {
           partialWashout_ = com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent.getDefaultInstance();
         } else {
           partialWashoutBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00004000);
+        bitField0_ = (bitField0_ & ~0x00020000);
         nestInundated_ = false;
-        bitField0_ = (bitField0_ & ~0x00008000);
+        bitField0_ = (bitField0_ & ~0x00040000);
         nestInundatedTimestampMs_ = 0L;
-        bitField0_ = (bitField0_ & ~0x00010000);
+        bitField0_ = (bitField0_ & ~0x00080000);
         if (inundatedEventBuilder_ == null) {
           inundatedEvent_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00020000);
+          bitField0_ = (bitField0_ & ~0x00100000);
         } else {
           inundatedEventBuilder_.clear();
         }
         if (preditationBuilder_ == null) {
           preditation_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00040000);
+          bitField0_ = (bitField0_ & ~0x00200000);
         } else {
           preditationBuilder_.clear();
         }
         activelyRecordEvents_ = true;
-        bitField0_ = (bitField0_ & ~0x00080000);
-        propEventsRecorded_ = com.islandturtlewatch.nest.data.ReportProto.NestCondition.ProportionEventsRecorded.ALL;
-        bitField0_ = (bitField0_ & ~0x00100000);
-        hatchTimestampMs_ = 0L;
-        bitField0_ = (bitField0_ & ~0x00200000);
-        additionalHatchTimestampMs_ = 0L;
         bitField0_ = (bitField0_ & ~0x00400000);
-        disorientation_ = false;
+        propEventsRecorded_ = com.islandturtlewatch.nest.data.ReportProto.NestCondition.ProportionEventsRecorded.ALL;
         bitField0_ = (bitField0_ & ~0x00800000);
-        abandonedBodyPits_ = false;
+        hatchTimestampMs_ = 0L;
         bitField0_ = (bitField0_ & ~0x01000000);
-        abandonedEggCavities_ = false;
+        additionalHatchTimestampMs_ = 0L;
         bitField0_ = (bitField0_ & ~0x02000000);
-        noDigging_ = false;
+        disorientation_ = false;
         bitField0_ = (bitField0_ & ~0x04000000);
-        nestDepredated_ = false;
+        abandonedBodyPits_ = false;
         bitField0_ = (bitField0_ & ~0x08000000);
-        eggsDamagedByAnotherTurtle_ = false;
+        abandonedEggCavities_ = false;
         bitField0_ = (bitField0_ & ~0x10000000);
+        noDigging_ = false;
+        bitField0_ = (bitField0_ & ~0x20000000);
+        nestDepredated_ = false;
+        bitField0_ = (bitField0_ & ~0x40000000);
+        eggsDamagedByAnotherTurtle_ = false;
+        bitField0_ = (bitField0_ & ~0x80000000);
         return this;
       }
 
@@ -8439,140 +9336,161 @@ public final class ReportProto {
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
-        result.vandalized_ = vandalized_;
+        result.ghostDamage10OrLess_ = ghostDamage10OrLess_;
         if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
-        result.describeControlMethods_ = describeControlMethods_;
+        result.vandalized_ = vandalized_;
         if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
-        result.vandalizedTimestampMs_ = vandalizedTimestampMs_;
+        result.describeControlMethods_ = describeControlMethods_;
         if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
           to_bitField0_ |= 0x00000008;
         }
-        result.vandalismType_ = vandalismType_;
+        result.vandalizedTimestampMs_ = vandalizedTimestampMs_;
         if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
           to_bitField0_ |= 0x00000010;
         }
-        result.nestDugInto_ = nestDugInto_;
+        result.vandalismType_ = vandalismType_;
         if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
           to_bitField0_ |= 0x00000020;
         }
-        result.postHatchWashout_ = postHatchWashout_;
+        result.nestDugInto_ = nestDugInto_;
         if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
           to_bitField0_ |= 0x00000040;
         }
-        result.poached_ = poached_;
-        if (((from_bitField0_ & 0x00000080) == 0x00000080)) {
+        result.postHatchWashout_ = postHatchWashout_;
+        if (accretionBuilder_ == null) {
+          if (((bitField0_ & 0x00000080) == 0x00000080)) {
+            accretion_ = java.util.Collections.unmodifiableList(accretion_);
+            bitField0_ = (bitField0_ & ~0x00000080);
+          }
+          result.accretion_ = accretion_;
+        } else {
+          result.accretion_ = accretionBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000100) == 0x00000100)) {
           to_bitField0_ |= 0x00000080;
         }
-        result.poachedTimestampMs_ = poachedTimestampMs_;
-        if (((from_bitField0_ & 0x00000100) == 0x00000100)) {
+        if (stormImpactBuilder_ == null) {
+          result.stormImpact_ = stormImpact_;
+        } else {
+          result.stormImpact_ = stormImpactBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000200) == 0x00000200)) {
           to_bitField0_ |= 0x00000100;
         }
-        result.poachedEggsRemoved_ = poachedEggsRemoved_;
-        if (((from_bitField0_ & 0x00000200) == 0x00000200)) {
+        result.poached_ = poached_;
+        if (((from_bitField0_ & 0x00000400) == 0x00000400)) {
           to_bitField0_ |= 0x00000200;
         }
-        result.rootsInvadedEggshells_ = rootsInvadedEggshells_;
-        if (((from_bitField0_ & 0x00000400) == 0x00000400)) {
+        result.poachedTimestampMs_ = poachedTimestampMs_;
+        if (((from_bitField0_ & 0x00000800) == 0x00000800)) {
           to_bitField0_ |= 0x00000400;
         }
-        result.eggsScatteredByAnother_ = eggsScatteredByAnother_;
-        if (((from_bitField0_ & 0x00000800) == 0x00000800)) {
+        result.poachedEggsRemoved_ = poachedEggsRemoved_;
+        if (((from_bitField0_ & 0x00001000) == 0x00001000)) {
           to_bitField0_ |= 0x00000800;
+        }
+        result.rootsInvadedEggshells_ = rootsInvadedEggshells_;
+        if (((from_bitField0_ & 0x00002000) == 0x00002000)) {
+          to_bitField0_ |= 0x00001000;
+        }
+        result.eggsScatteredByAnother_ = eggsScatteredByAnother_;
+        if (((from_bitField0_ & 0x00004000) == 0x00004000)) {
+          to_bitField0_ |= 0x00002000;
         }
         result.eggsScatteredByAnotherTimestampMs_ = eggsScatteredByAnotherTimestampMs_;
         if (washOverBuilder_ == null) {
-          if (((bitField0_ & 0x00001000) == 0x00001000)) {
+          if (((bitField0_ & 0x00008000) == 0x00008000)) {
             washOver_ = java.util.Collections.unmodifiableList(washOver_);
-            bitField0_ = (bitField0_ & ~0x00001000);
+            bitField0_ = (bitField0_ & ~0x00008000);
           }
           result.washOver_ = washOver_;
         } else {
           result.washOver_ = washOverBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00002000) == 0x00002000)) {
-          to_bitField0_ |= 0x00001000;
+        if (((from_bitField0_ & 0x00010000) == 0x00010000)) {
+          to_bitField0_ |= 0x00004000;
         }
         if (washOutBuilder_ == null) {
           result.washOut_ = washOut_;
         } else {
           result.washOut_ = washOutBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00004000) == 0x00004000)) {
-          to_bitField0_ |= 0x00002000;
+        if (((from_bitField0_ & 0x00020000) == 0x00020000)) {
+          to_bitField0_ |= 0x00008000;
         }
         if (partialWashoutBuilder_ == null) {
           result.partialWashout_ = partialWashout_;
         } else {
           result.partialWashout_ = partialWashoutBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00008000) == 0x00008000)) {
-          to_bitField0_ |= 0x00004000;
+        if (((from_bitField0_ & 0x00040000) == 0x00040000)) {
+          to_bitField0_ |= 0x00010000;
         }
         result.nestInundated_ = nestInundated_;
-        if (((from_bitField0_ & 0x00010000) == 0x00010000)) {
-          to_bitField0_ |= 0x00008000;
+        if (((from_bitField0_ & 0x00080000) == 0x00080000)) {
+          to_bitField0_ |= 0x00020000;
         }
         result.nestInundatedTimestampMs_ = nestInundatedTimestampMs_;
         if (inundatedEventBuilder_ == null) {
-          if (((bitField0_ & 0x00020000) == 0x00020000)) {
+          if (((bitField0_ & 0x00100000) == 0x00100000)) {
             inundatedEvent_ = java.util.Collections.unmodifiableList(inundatedEvent_);
-            bitField0_ = (bitField0_ & ~0x00020000);
+            bitField0_ = (bitField0_ & ~0x00100000);
           }
           result.inundatedEvent_ = inundatedEvent_;
         } else {
           result.inundatedEvent_ = inundatedEventBuilder_.build();
         }
         if (preditationBuilder_ == null) {
-          if (((bitField0_ & 0x00040000) == 0x00040000)) {
+          if (((bitField0_ & 0x00200000) == 0x00200000)) {
             preditation_ = java.util.Collections.unmodifiableList(preditation_);
-            bitField0_ = (bitField0_ & ~0x00040000);
+            bitField0_ = (bitField0_ & ~0x00200000);
           }
           result.preditation_ = preditation_;
         } else {
           result.preditation_ = preditationBuilder_.build();
         }
-        if (((from_bitField0_ & 0x00080000) == 0x00080000)) {
-          to_bitField0_ |= 0x00010000;
-        }
-        result.activelyRecordEvents_ = activelyRecordEvents_;
-        if (((from_bitField0_ & 0x00100000) == 0x00100000)) {
-          to_bitField0_ |= 0x00020000;
-        }
-        result.propEventsRecorded_ = propEventsRecorded_;
-        if (((from_bitField0_ & 0x00200000) == 0x00200000)) {
+        if (((from_bitField0_ & 0x00400000) == 0x00400000)) {
           to_bitField0_ |= 0x00040000;
         }
-        result.hatchTimestampMs_ = hatchTimestampMs_;
-        if (((from_bitField0_ & 0x00400000) == 0x00400000)) {
+        result.activelyRecordEvents_ = activelyRecordEvents_;
+        if (((from_bitField0_ & 0x00800000) == 0x00800000)) {
           to_bitField0_ |= 0x00080000;
         }
-        result.additionalHatchTimestampMs_ = additionalHatchTimestampMs_;
-        if (((from_bitField0_ & 0x00800000) == 0x00800000)) {
+        result.propEventsRecorded_ = propEventsRecorded_;
+        if (((from_bitField0_ & 0x01000000) == 0x01000000)) {
           to_bitField0_ |= 0x00100000;
         }
-        result.disorientation_ = disorientation_;
-        if (((from_bitField0_ & 0x01000000) == 0x01000000)) {
+        result.hatchTimestampMs_ = hatchTimestampMs_;
+        if (((from_bitField0_ & 0x02000000) == 0x02000000)) {
           to_bitField0_ |= 0x00200000;
         }
-        result.abandonedBodyPits_ = abandonedBodyPits_;
-        if (((from_bitField0_ & 0x02000000) == 0x02000000)) {
+        result.additionalHatchTimestampMs_ = additionalHatchTimestampMs_;
+        if (((from_bitField0_ & 0x04000000) == 0x04000000)) {
           to_bitField0_ |= 0x00400000;
         }
-        result.abandonedEggCavities_ = abandonedEggCavities_;
-        if (((from_bitField0_ & 0x04000000) == 0x04000000)) {
+        result.disorientation_ = disorientation_;
+        if (((from_bitField0_ & 0x08000000) == 0x08000000)) {
           to_bitField0_ |= 0x00800000;
         }
-        result.noDigging_ = noDigging_;
-        if (((from_bitField0_ & 0x08000000) == 0x08000000)) {
+        result.abandonedBodyPits_ = abandonedBodyPits_;
+        if (((from_bitField0_ & 0x10000000) == 0x10000000)) {
           to_bitField0_ |= 0x01000000;
         }
-        result.nestDepredated_ = nestDepredated_;
-        if (((from_bitField0_ & 0x10000000) == 0x10000000)) {
+        result.abandonedEggCavities_ = abandonedEggCavities_;
+        if (((from_bitField0_ & 0x20000000) == 0x20000000)) {
           to_bitField0_ |= 0x02000000;
+        }
+        result.noDigging_ = noDigging_;
+        if (((from_bitField0_ & 0x40000000) == 0x40000000)) {
+          to_bitField0_ |= 0x04000000;
+        }
+        result.nestDepredated_ = nestDepredated_;
+        if (((from_bitField0_ & 0x80000000) == 0x80000000)) {
+          to_bitField0_ |= 0x08000000;
         }
         result.eggsDamagedByAnotherTurtle_ = eggsDamagedByAnotherTurtle_;
         result.bitField0_ = to_bitField0_;
@@ -8591,11 +9509,14 @@ public final class ReportProto {
 
       public Builder mergeFrom(com.islandturtlewatch.nest.data.ReportProto.NestCondition other) {
         if (other == com.islandturtlewatch.nest.data.ReportProto.NestCondition.getDefaultInstance()) return this;
+        if (other.hasGhostDamage10OrLess()) {
+          setGhostDamage10OrLess(other.getGhostDamage10OrLess());
+        }
         if (other.hasVandalized()) {
           setVandalized(other.getVandalized());
         }
         if (other.hasDescribeControlMethods()) {
-          bitField0_ |= 0x00000002;
+          bitField0_ |= 0x00000004;
           describeControlMethods_ = other.describeControlMethods_;
           onChanged();
         }
@@ -8610,6 +9531,35 @@ public final class ReportProto {
         }
         if (other.hasPostHatchWashout()) {
           setPostHatchWashout(other.getPostHatchWashout());
+        }
+        if (accretionBuilder_ == null) {
+          if (!other.accretion_.isEmpty()) {
+            if (accretion_.isEmpty()) {
+              accretion_ = other.accretion_;
+              bitField0_ = (bitField0_ & ~0x00000080);
+            } else {
+              ensureAccretionIsMutable();
+              accretion_.addAll(other.accretion_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.accretion_.isEmpty()) {
+            if (accretionBuilder_.isEmpty()) {
+              accretionBuilder_.dispose();
+              accretionBuilder_ = null;
+              accretion_ = other.accretion_;
+              bitField0_ = (bitField0_ & ~0x00000080);
+              accretionBuilder_ = 
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                   getAccretionFieldBuilder() : null;
+            } else {
+              accretionBuilder_.addAllMessages(other.accretion_);
+            }
+          }
+        }
+        if (other.hasStormImpact()) {
+          mergeStormImpact(other.getStormImpact());
         }
         if (other.hasPoached()) {
           setPoached(other.getPoached());
@@ -8633,7 +9583,7 @@ public final class ReportProto {
           if (!other.washOver_.isEmpty()) {
             if (washOver_.isEmpty()) {
               washOver_ = other.washOver_;
-              bitField0_ = (bitField0_ & ~0x00001000);
+              bitField0_ = (bitField0_ & ~0x00008000);
             } else {
               ensureWashOverIsMutable();
               washOver_.addAll(other.washOver_);
@@ -8646,7 +9596,7 @@ public final class ReportProto {
               washOverBuilder_.dispose();
               washOverBuilder_ = null;
               washOver_ = other.washOver_;
-              bitField0_ = (bitField0_ & ~0x00001000);
+              bitField0_ = (bitField0_ & ~0x00008000);
               washOverBuilder_ = 
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getWashOverFieldBuilder() : null;
@@ -8671,7 +9621,7 @@ public final class ReportProto {
           if (!other.inundatedEvent_.isEmpty()) {
             if (inundatedEvent_.isEmpty()) {
               inundatedEvent_ = other.inundatedEvent_;
-              bitField0_ = (bitField0_ & ~0x00020000);
+              bitField0_ = (bitField0_ & ~0x00100000);
             } else {
               ensureInundatedEventIsMutable();
               inundatedEvent_.addAll(other.inundatedEvent_);
@@ -8684,7 +9634,7 @@ public final class ReportProto {
               inundatedEventBuilder_.dispose();
               inundatedEventBuilder_ = null;
               inundatedEvent_ = other.inundatedEvent_;
-              bitField0_ = (bitField0_ & ~0x00020000);
+              bitField0_ = (bitField0_ & ~0x00100000);
               inundatedEventBuilder_ = 
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getInundatedEventFieldBuilder() : null;
@@ -8697,7 +9647,7 @@ public final class ReportProto {
           if (!other.preditation_.isEmpty()) {
             if (preditation_.isEmpty()) {
               preditation_ = other.preditation_;
-              bitField0_ = (bitField0_ & ~0x00040000);
+              bitField0_ = (bitField0_ & ~0x00200000);
             } else {
               ensurePreditationIsMutable();
               preditation_.addAll(other.preditation_);
@@ -8710,7 +9660,7 @@ public final class ReportProto {
               preditationBuilder_.dispose();
               preditationBuilder_ = null;
               preditation_ = other.preditation_;
-              bitField0_ = (bitField0_ & ~0x00040000);
+              bitField0_ = (bitField0_ & ~0x00200000);
               preditationBuilder_ = 
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getPreditationFieldBuilder() : null;
@@ -8776,12 +9726,44 @@ public final class ReportProto {
       }
       private int bitField0_;
 
+      private boolean ghostDamage10OrLess_ = true;
+      /**
+       * <code>optional bool ghost_damage_10_or_less = 31 [default = true];</code>
+       */
+      public boolean hasGhostDamage10OrLess() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>optional bool ghost_damage_10_or_less = 31 [default = true];</code>
+       */
+      public boolean getGhostDamage10OrLess() {
+        return ghostDamage10OrLess_;
+      }
+      /**
+       * <code>optional bool ghost_damage_10_or_less = 31 [default = true];</code>
+       */
+      public Builder setGhostDamage10OrLess(boolean value) {
+        bitField0_ |= 0x00000001;
+        ghostDamage10OrLess_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional bool ghost_damage_10_or_less = 31 [default = true];</code>
+       */
+      public Builder clearGhostDamage10OrLess() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        ghostDamage10OrLess_ = true;
+        onChanged();
+        return this;
+      }
+
       private boolean vandalized_ ;
       /**
        * <code>optional bool vandalized = 1;</code>
        */
       public boolean hasVandalized() {
-        return ((bitField0_ & 0x00000001) == 0x00000001);
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
        * <code>optional bool vandalized = 1;</code>
@@ -8793,7 +9775,7 @@ public final class ReportProto {
        * <code>optional bool vandalized = 1;</code>
        */
       public Builder setVandalized(boolean value) {
-        bitField0_ |= 0x00000001;
+        bitField0_ |= 0x00000002;
         vandalized_ = value;
         onChanged();
         return this;
@@ -8802,7 +9784,7 @@ public final class ReportProto {
        * <code>optional bool vandalized = 1;</code>
        */
       public Builder clearVandalized() {
-        bitField0_ = (bitField0_ & ~0x00000001);
+        bitField0_ = (bitField0_ & ~0x00000002);
         vandalized_ = false;
         onChanged();
         return this;
@@ -8813,7 +9795,7 @@ public final class ReportProto {
        * <code>optional string describe_control_methods = 28;</code>
        */
       public boolean hasDescribeControlMethods() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
+        return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
        * <code>optional string describe_control_methods = 28;</code>
@@ -8856,7 +9838,7 @@ public final class ReportProto {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000002;
+  bitField0_ |= 0x00000004;
         describeControlMethods_ = value;
         onChanged();
         return this;
@@ -8865,7 +9847,7 @@ public final class ReportProto {
        * <code>optional string describe_control_methods = 28;</code>
        */
       public Builder clearDescribeControlMethods() {
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000004);
         describeControlMethods_ = getDefaultInstance().getDescribeControlMethods();
         onChanged();
         return this;
@@ -8878,7 +9860,7 @@ public final class ReportProto {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000002;
+  bitField0_ |= 0x00000004;
         describeControlMethods_ = value;
         onChanged();
         return this;
@@ -8889,7 +9871,7 @@ public final class ReportProto {
        * <code>optional int64 vandalized_timestamp_ms = 2;</code>
        */
       public boolean hasVandalizedTimestampMs() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
+        return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
        * <code>optional int64 vandalized_timestamp_ms = 2;</code>
@@ -8901,7 +9883,7 @@ public final class ReportProto {
        * <code>optional int64 vandalized_timestamp_ms = 2;</code>
        */
       public Builder setVandalizedTimestampMs(long value) {
-        bitField0_ |= 0x00000004;
+        bitField0_ |= 0x00000008;
         vandalizedTimestampMs_ = value;
         onChanged();
         return this;
@@ -8910,7 +9892,7 @@ public final class ReportProto {
        * <code>optional int64 vandalized_timestamp_ms = 2;</code>
        */
       public Builder clearVandalizedTimestampMs() {
-        bitField0_ = (bitField0_ & ~0x00000004);
+        bitField0_ = (bitField0_ & ~0x00000008);
         vandalizedTimestampMs_ = 0L;
         onChanged();
         return this;
@@ -8921,7 +9903,7 @@ public final class ReportProto {
        * <code>optional .com.islandturtlewatch.nest.data.NestCondition.VandalismType vandalism_type = 15;</code>
        */
       public boolean hasVandalismType() {
-        return ((bitField0_ & 0x00000008) == 0x00000008);
+        return ((bitField0_ & 0x00000010) == 0x00000010);
       }
       /**
        * <code>optional .com.islandturtlewatch.nest.data.NestCondition.VandalismType vandalism_type = 15;</code>
@@ -8936,7 +9918,7 @@ public final class ReportProto {
         if (value == null) {
           throw new NullPointerException();
         }
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000010;
         vandalismType_ = value;
         onChanged();
         return this;
@@ -8945,7 +9927,7 @@ public final class ReportProto {
        * <code>optional .com.islandturtlewatch.nest.data.NestCondition.VandalismType vandalism_type = 15;</code>
        */
       public Builder clearVandalismType() {
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000010);
         vandalismType_ = com.islandturtlewatch.nest.data.ReportProto.NestCondition.VandalismType.UNKOWN;
         onChanged();
         return this;
@@ -8956,7 +9938,7 @@ public final class ReportProto {
        * <code>optional bool nest_dug_into = 26;</code>
        */
       public boolean hasNestDugInto() {
-        return ((bitField0_ & 0x00000010) == 0x00000010);
+        return ((bitField0_ & 0x00000020) == 0x00000020);
       }
       /**
        * <code>optional bool nest_dug_into = 26;</code>
@@ -8968,7 +9950,7 @@ public final class ReportProto {
        * <code>optional bool nest_dug_into = 26;</code>
        */
       public Builder setNestDugInto(boolean value) {
-        bitField0_ |= 0x00000010;
+        bitField0_ |= 0x00000020;
         nestDugInto_ = value;
         onChanged();
         return this;
@@ -8977,7 +9959,7 @@ public final class ReportProto {
        * <code>optional bool nest_dug_into = 26;</code>
        */
       public Builder clearNestDugInto() {
-        bitField0_ = (bitField0_ & ~0x00000010);
+        bitField0_ = (bitField0_ & ~0x00000020);
         nestDugInto_ = false;
         onChanged();
         return this;
@@ -8988,7 +9970,7 @@ public final class ReportProto {
        * <code>optional bool post_hatch_washout = 20;</code>
        */
       public boolean hasPostHatchWashout() {
-        return ((bitField0_ & 0x00000020) == 0x00000020);
+        return ((bitField0_ & 0x00000040) == 0x00000040);
       }
       /**
        * <code>optional bool post_hatch_washout = 20;</code>
@@ -9000,7 +9982,7 @@ public final class ReportProto {
        * <code>optional bool post_hatch_washout = 20;</code>
        */
       public Builder setPostHatchWashout(boolean value) {
-        bitField0_ |= 0x00000020;
+        bitField0_ |= 0x00000040;
         postHatchWashout_ = value;
         onChanged();
         return this;
@@ -9009,10 +9991,366 @@ public final class ReportProto {
        * <code>optional bool post_hatch_washout = 20;</code>
        */
       public Builder clearPostHatchWashout() {
-        bitField0_ = (bitField0_ & ~0x00000020);
+        bitField0_ = (bitField0_ & ~0x00000040);
         postHatchWashout_ = false;
         onChanged();
         return this;
+      }
+
+      private java.util.List<com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent> accretion_ =
+        java.util.Collections.emptyList();
+      private void ensureAccretionIsMutable() {
+        if (!((bitField0_ & 0x00000080) == 0x00000080)) {
+          accretion_ = new java.util.ArrayList<com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent>(accretion_);
+          bitField0_ |= 0x00000080;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilder<
+          com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent, com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent.Builder, com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEventOrBuilder> accretionBuilder_;
+
+      /**
+       * <code>repeated .com.islandturtlewatch.nest.data.NestCondition.WashEvent accretion = 30;</code>
+       */
+      public java.util.List<com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent> getAccretionList() {
+        if (accretionBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(accretion_);
+        } else {
+          return accretionBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .com.islandturtlewatch.nest.data.NestCondition.WashEvent accretion = 30;</code>
+       */
+      public int getAccretionCount() {
+        if (accretionBuilder_ == null) {
+          return accretion_.size();
+        } else {
+          return accretionBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .com.islandturtlewatch.nest.data.NestCondition.WashEvent accretion = 30;</code>
+       */
+      public com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent getAccretion(int index) {
+        if (accretionBuilder_ == null) {
+          return accretion_.get(index);
+        } else {
+          return accretionBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .com.islandturtlewatch.nest.data.NestCondition.WashEvent accretion = 30;</code>
+       */
+      public Builder setAccretion(
+          int index, com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent value) {
+        if (accretionBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureAccretionIsMutable();
+          accretion_.set(index, value);
+          onChanged();
+        } else {
+          accretionBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.islandturtlewatch.nest.data.NestCondition.WashEvent accretion = 30;</code>
+       */
+      public Builder setAccretion(
+          int index, com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent.Builder builderForValue) {
+        if (accretionBuilder_ == null) {
+          ensureAccretionIsMutable();
+          accretion_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          accretionBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.islandturtlewatch.nest.data.NestCondition.WashEvent accretion = 30;</code>
+       */
+      public Builder addAccretion(com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent value) {
+        if (accretionBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureAccretionIsMutable();
+          accretion_.add(value);
+          onChanged();
+        } else {
+          accretionBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.islandturtlewatch.nest.data.NestCondition.WashEvent accretion = 30;</code>
+       */
+      public Builder addAccretion(
+          int index, com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent value) {
+        if (accretionBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureAccretionIsMutable();
+          accretion_.add(index, value);
+          onChanged();
+        } else {
+          accretionBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.islandturtlewatch.nest.data.NestCondition.WashEvent accretion = 30;</code>
+       */
+      public Builder addAccretion(
+          com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent.Builder builderForValue) {
+        if (accretionBuilder_ == null) {
+          ensureAccretionIsMutable();
+          accretion_.add(builderForValue.build());
+          onChanged();
+        } else {
+          accretionBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.islandturtlewatch.nest.data.NestCondition.WashEvent accretion = 30;</code>
+       */
+      public Builder addAccretion(
+          int index, com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent.Builder builderForValue) {
+        if (accretionBuilder_ == null) {
+          ensureAccretionIsMutable();
+          accretion_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          accretionBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.islandturtlewatch.nest.data.NestCondition.WashEvent accretion = 30;</code>
+       */
+      public Builder addAllAccretion(
+          java.lang.Iterable<? extends com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent> values) {
+        if (accretionBuilder_ == null) {
+          ensureAccretionIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, accretion_);
+          onChanged();
+        } else {
+          accretionBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.islandturtlewatch.nest.data.NestCondition.WashEvent accretion = 30;</code>
+       */
+      public Builder clearAccretion() {
+        if (accretionBuilder_ == null) {
+          accretion_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000080);
+          onChanged();
+        } else {
+          accretionBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.islandturtlewatch.nest.data.NestCondition.WashEvent accretion = 30;</code>
+       */
+      public Builder removeAccretion(int index) {
+        if (accretionBuilder_ == null) {
+          ensureAccretionIsMutable();
+          accretion_.remove(index);
+          onChanged();
+        } else {
+          accretionBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.islandturtlewatch.nest.data.NestCondition.WashEvent accretion = 30;</code>
+       */
+      public com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent.Builder getAccretionBuilder(
+          int index) {
+        return getAccretionFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .com.islandturtlewatch.nest.data.NestCondition.WashEvent accretion = 30;</code>
+       */
+      public com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEventOrBuilder getAccretionOrBuilder(
+          int index) {
+        if (accretionBuilder_ == null) {
+          return accretion_.get(index);  } else {
+          return accretionBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .com.islandturtlewatch.nest.data.NestCondition.WashEvent accretion = 30;</code>
+       */
+      public java.util.List<? extends com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEventOrBuilder> 
+           getAccretionOrBuilderList() {
+        if (accretionBuilder_ != null) {
+          return accretionBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(accretion_);
+        }
+      }
+      /**
+       * <code>repeated .com.islandturtlewatch.nest.data.NestCondition.WashEvent accretion = 30;</code>
+       */
+      public com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent.Builder addAccretionBuilder() {
+        return getAccretionFieldBuilder().addBuilder(
+            com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .com.islandturtlewatch.nest.data.NestCondition.WashEvent accretion = 30;</code>
+       */
+      public com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent.Builder addAccretionBuilder(
+          int index) {
+        return getAccretionFieldBuilder().addBuilder(
+            index, com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .com.islandturtlewatch.nest.data.NestCondition.WashEvent accretion = 30;</code>
+       */
+      public java.util.List<com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent.Builder> 
+           getAccretionBuilderList() {
+        return getAccretionFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilder<
+          com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent, com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent.Builder, com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEventOrBuilder> 
+          getAccretionFieldBuilder() {
+        if (accretionBuilder_ == null) {
+          accretionBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+              com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent, com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent.Builder, com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEventOrBuilder>(
+                  accretion_,
+                  ((bitField0_ & 0x00000080) == 0x00000080),
+                  getParentForChildren(),
+                  isClean());
+          accretion_ = null;
+        }
+        return accretionBuilder_;
+      }
+
+      private com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact stormImpact_ = com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact, com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact.Builder, com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpactOrBuilder> stormImpactBuilder_;
+      /**
+       * <code>optional .com.islandturtlewatch.nest.data.NestCondition.StormImpact storm_impact = 32;</code>
+       */
+      public boolean hasStormImpact() {
+        return ((bitField0_ & 0x00000100) == 0x00000100);
+      }
+      /**
+       * <code>optional .com.islandturtlewatch.nest.data.NestCondition.StormImpact storm_impact = 32;</code>
+       */
+      public com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact getStormImpact() {
+        if (stormImpactBuilder_ == null) {
+          return stormImpact_;
+        } else {
+          return stormImpactBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>optional .com.islandturtlewatch.nest.data.NestCondition.StormImpact storm_impact = 32;</code>
+       */
+      public Builder setStormImpact(com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact value) {
+        if (stormImpactBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          stormImpact_ = value;
+          onChanged();
+        } else {
+          stormImpactBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000100;
+        return this;
+      }
+      /**
+       * <code>optional .com.islandturtlewatch.nest.data.NestCondition.StormImpact storm_impact = 32;</code>
+       */
+      public Builder setStormImpact(
+          com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact.Builder builderForValue) {
+        if (stormImpactBuilder_ == null) {
+          stormImpact_ = builderForValue.build();
+          onChanged();
+        } else {
+          stormImpactBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000100;
+        return this;
+      }
+      /**
+       * <code>optional .com.islandturtlewatch.nest.data.NestCondition.StormImpact storm_impact = 32;</code>
+       */
+      public Builder mergeStormImpact(com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact value) {
+        if (stormImpactBuilder_ == null) {
+          if (((bitField0_ & 0x00000100) == 0x00000100) &&
+              stormImpact_ != com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact.getDefaultInstance()) {
+            stormImpact_ =
+              com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact.newBuilder(stormImpact_).mergeFrom(value).buildPartial();
+          } else {
+            stormImpact_ = value;
+          }
+          onChanged();
+        } else {
+          stormImpactBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000100;
+        return this;
+      }
+      /**
+       * <code>optional .com.islandturtlewatch.nest.data.NestCondition.StormImpact storm_impact = 32;</code>
+       */
+      public Builder clearStormImpact() {
+        if (stormImpactBuilder_ == null) {
+          stormImpact_ = com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact.getDefaultInstance();
+          onChanged();
+        } else {
+          stormImpactBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000100);
+        return this;
+      }
+      /**
+       * <code>optional .com.islandturtlewatch.nest.data.NestCondition.StormImpact storm_impact = 32;</code>
+       */
+      public com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact.Builder getStormImpactBuilder() {
+        bitField0_ |= 0x00000100;
+        onChanged();
+        return getStormImpactFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .com.islandturtlewatch.nest.data.NestCondition.StormImpact storm_impact = 32;</code>
+       */
+      public com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpactOrBuilder getStormImpactOrBuilder() {
+        if (stormImpactBuilder_ != null) {
+          return stormImpactBuilder_.getMessageOrBuilder();
+        } else {
+          return stormImpact_;
+        }
+      }
+      /**
+       * <code>optional .com.islandturtlewatch.nest.data.NestCondition.StormImpact storm_impact = 32;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilder<
+          com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact, com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact.Builder, com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpactOrBuilder> 
+          getStormImpactFieldBuilder() {
+        if (stormImpactBuilder_ == null) {
+          stormImpactBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact, com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpact.Builder, com.islandturtlewatch.nest.data.ReportProto.NestCondition.StormImpactOrBuilder>(
+                  getStormImpact(),
+                  getParentForChildren(),
+                  isClean());
+          stormImpact_ = null;
+        }
+        return stormImpactBuilder_;
       }
 
       private boolean poached_ ;
@@ -9020,7 +10358,7 @@ public final class ReportProto {
        * <code>optional bool poached = 3;</code>
        */
       public boolean hasPoached() {
-        return ((bitField0_ & 0x00000040) == 0x00000040);
+        return ((bitField0_ & 0x00000200) == 0x00000200);
       }
       /**
        * <code>optional bool poached = 3;</code>
@@ -9032,7 +10370,7 @@ public final class ReportProto {
        * <code>optional bool poached = 3;</code>
        */
       public Builder setPoached(boolean value) {
-        bitField0_ |= 0x00000040;
+        bitField0_ |= 0x00000200;
         poached_ = value;
         onChanged();
         return this;
@@ -9041,7 +10379,7 @@ public final class ReportProto {
        * <code>optional bool poached = 3;</code>
        */
       public Builder clearPoached() {
-        bitField0_ = (bitField0_ & ~0x00000040);
+        bitField0_ = (bitField0_ & ~0x00000200);
         poached_ = false;
         onChanged();
         return this;
@@ -9052,7 +10390,7 @@ public final class ReportProto {
        * <code>optional int64 poached_timestamp_ms = 4;</code>
        */
       public boolean hasPoachedTimestampMs() {
-        return ((bitField0_ & 0x00000080) == 0x00000080);
+        return ((bitField0_ & 0x00000400) == 0x00000400);
       }
       /**
        * <code>optional int64 poached_timestamp_ms = 4;</code>
@@ -9064,7 +10402,7 @@ public final class ReportProto {
        * <code>optional int64 poached_timestamp_ms = 4;</code>
        */
       public Builder setPoachedTimestampMs(long value) {
-        bitField0_ |= 0x00000080;
+        bitField0_ |= 0x00000400;
         poachedTimestampMs_ = value;
         onChanged();
         return this;
@@ -9073,7 +10411,7 @@ public final class ReportProto {
        * <code>optional int64 poached_timestamp_ms = 4;</code>
        */
       public Builder clearPoachedTimestampMs() {
-        bitField0_ = (bitField0_ & ~0x00000080);
+        bitField0_ = (bitField0_ & ~0x00000400);
         poachedTimestampMs_ = 0L;
         onChanged();
         return this;
@@ -9084,7 +10422,7 @@ public final class ReportProto {
        * <code>optional bool poached_eggs_removed = 17;</code>
        */
       public boolean hasPoachedEggsRemoved() {
-        return ((bitField0_ & 0x00000100) == 0x00000100);
+        return ((bitField0_ & 0x00000800) == 0x00000800);
       }
       /**
        * <code>optional bool poached_eggs_removed = 17;</code>
@@ -9096,7 +10434,7 @@ public final class ReportProto {
        * <code>optional bool poached_eggs_removed = 17;</code>
        */
       public Builder setPoachedEggsRemoved(boolean value) {
-        bitField0_ |= 0x00000100;
+        bitField0_ |= 0x00000800;
         poachedEggsRemoved_ = value;
         onChanged();
         return this;
@@ -9105,7 +10443,7 @@ public final class ReportProto {
        * <code>optional bool poached_eggs_removed = 17;</code>
        */
       public Builder clearPoachedEggsRemoved() {
-        bitField0_ = (bitField0_ & ~0x00000100);
+        bitField0_ = (bitField0_ & ~0x00000800);
         poachedEggsRemoved_ = false;
         onChanged();
         return this;
@@ -9116,7 +10454,7 @@ public final class ReportProto {
        * <code>optional bool roots_invaded_eggshells = 5;</code>
        */
       public boolean hasRootsInvadedEggshells() {
-        return ((bitField0_ & 0x00000200) == 0x00000200);
+        return ((bitField0_ & 0x00001000) == 0x00001000);
       }
       /**
        * <code>optional bool roots_invaded_eggshells = 5;</code>
@@ -9128,7 +10466,7 @@ public final class ReportProto {
        * <code>optional bool roots_invaded_eggshells = 5;</code>
        */
       public Builder setRootsInvadedEggshells(boolean value) {
-        bitField0_ |= 0x00000200;
+        bitField0_ |= 0x00001000;
         rootsInvadedEggshells_ = value;
         onChanged();
         return this;
@@ -9137,7 +10475,7 @@ public final class ReportProto {
        * <code>optional bool roots_invaded_eggshells = 5;</code>
        */
       public Builder clearRootsInvadedEggshells() {
-        bitField0_ = (bitField0_ & ~0x00000200);
+        bitField0_ = (bitField0_ & ~0x00001000);
         rootsInvadedEggshells_ = false;
         onChanged();
         return this;
@@ -9148,7 +10486,7 @@ public final class ReportProto {
        * <code>optional bool eggs_scattered_by_another = 6;</code>
        */
       public boolean hasEggsScatteredByAnother() {
-        return ((bitField0_ & 0x00000400) == 0x00000400);
+        return ((bitField0_ & 0x00002000) == 0x00002000);
       }
       /**
        * <code>optional bool eggs_scattered_by_another = 6;</code>
@@ -9160,7 +10498,7 @@ public final class ReportProto {
        * <code>optional bool eggs_scattered_by_another = 6;</code>
        */
       public Builder setEggsScatteredByAnother(boolean value) {
-        bitField0_ |= 0x00000400;
+        bitField0_ |= 0x00002000;
         eggsScatteredByAnother_ = value;
         onChanged();
         return this;
@@ -9169,7 +10507,7 @@ public final class ReportProto {
        * <code>optional bool eggs_scattered_by_another = 6;</code>
        */
       public Builder clearEggsScatteredByAnother() {
-        bitField0_ = (bitField0_ & ~0x00000400);
+        bitField0_ = (bitField0_ & ~0x00002000);
         eggsScatteredByAnother_ = false;
         onChanged();
         return this;
@@ -9180,7 +10518,7 @@ public final class ReportProto {
        * <code>optional int64 eggs_scattered_by_another_timestamp_ms = 16;</code>
        */
       public boolean hasEggsScatteredByAnotherTimestampMs() {
-        return ((bitField0_ & 0x00000800) == 0x00000800);
+        return ((bitField0_ & 0x00004000) == 0x00004000);
       }
       /**
        * <code>optional int64 eggs_scattered_by_another_timestamp_ms = 16;</code>
@@ -9192,7 +10530,7 @@ public final class ReportProto {
        * <code>optional int64 eggs_scattered_by_another_timestamp_ms = 16;</code>
        */
       public Builder setEggsScatteredByAnotherTimestampMs(long value) {
-        bitField0_ |= 0x00000800;
+        bitField0_ |= 0x00004000;
         eggsScatteredByAnotherTimestampMs_ = value;
         onChanged();
         return this;
@@ -9201,7 +10539,7 @@ public final class ReportProto {
        * <code>optional int64 eggs_scattered_by_another_timestamp_ms = 16;</code>
        */
       public Builder clearEggsScatteredByAnotherTimestampMs() {
-        bitField0_ = (bitField0_ & ~0x00000800);
+        bitField0_ = (bitField0_ & ~0x00004000);
         eggsScatteredByAnotherTimestampMs_ = 0L;
         onChanged();
         return this;
@@ -9210,9 +10548,9 @@ public final class ReportProto {
       private java.util.List<com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent> washOver_ =
         java.util.Collections.emptyList();
       private void ensureWashOverIsMutable() {
-        if (!((bitField0_ & 0x00001000) == 0x00001000)) {
+        if (!((bitField0_ & 0x00008000) == 0x00008000)) {
           washOver_ = new java.util.ArrayList<com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent>(washOver_);
-          bitField0_ |= 0x00001000;
+          bitField0_ |= 0x00008000;
          }
       }
 
@@ -9362,7 +10700,7 @@ public final class ReportProto {
       public Builder clearWashOver() {
         if (washOverBuilder_ == null) {
           washOver_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00001000);
+          bitField0_ = (bitField0_ & ~0x00008000);
           onChanged();
         } else {
           washOverBuilder_.clear();
@@ -9439,7 +10777,7 @@ public final class ReportProto {
           washOverBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
               com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent, com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent.Builder, com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEventOrBuilder>(
                   washOver_,
-                  ((bitField0_ & 0x00001000) == 0x00001000),
+                  ((bitField0_ & 0x00008000) == 0x00008000),
                   getParentForChildren(),
                   isClean());
           washOver_ = null;
@@ -9454,7 +10792,7 @@ public final class ReportProto {
        * <code>optional .com.islandturtlewatch.nest.data.NestCondition.WashEvent wash_out = 8;</code>
        */
       public boolean hasWashOut() {
-        return ((bitField0_ & 0x00002000) == 0x00002000);
+        return ((bitField0_ & 0x00010000) == 0x00010000);
       }
       /**
        * <code>optional .com.islandturtlewatch.nest.data.NestCondition.WashEvent wash_out = 8;</code>
@@ -9479,7 +10817,7 @@ public final class ReportProto {
         } else {
           washOutBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00002000;
+        bitField0_ |= 0x00010000;
         return this;
       }
       /**
@@ -9493,7 +10831,7 @@ public final class ReportProto {
         } else {
           washOutBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00002000;
+        bitField0_ |= 0x00010000;
         return this;
       }
       /**
@@ -9501,7 +10839,7 @@ public final class ReportProto {
        */
       public Builder mergeWashOut(com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent value) {
         if (washOutBuilder_ == null) {
-          if (((bitField0_ & 0x00002000) == 0x00002000) &&
+          if (((bitField0_ & 0x00010000) == 0x00010000) &&
               washOut_ != com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent.getDefaultInstance()) {
             washOut_ =
               com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent.newBuilder(washOut_).mergeFrom(value).buildPartial();
@@ -9512,7 +10850,7 @@ public final class ReportProto {
         } else {
           washOutBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00002000;
+        bitField0_ |= 0x00010000;
         return this;
       }
       /**
@@ -9525,14 +10863,14 @@ public final class ReportProto {
         } else {
           washOutBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00002000);
+        bitField0_ = (bitField0_ & ~0x00010000);
         return this;
       }
       /**
        * <code>optional .com.islandturtlewatch.nest.data.NestCondition.WashEvent wash_out = 8;</code>
        */
       public com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent.Builder getWashOutBuilder() {
-        bitField0_ |= 0x00002000;
+        bitField0_ |= 0x00010000;
         onChanged();
         return getWashOutFieldBuilder().getBuilder();
       }
@@ -9570,7 +10908,7 @@ public final class ReportProto {
        * <code>optional .com.islandturtlewatch.nest.data.NestCondition.WashEvent partial_washout = 19;</code>
        */
       public boolean hasPartialWashout() {
-        return ((bitField0_ & 0x00004000) == 0x00004000);
+        return ((bitField0_ & 0x00020000) == 0x00020000);
       }
       /**
        * <code>optional .com.islandturtlewatch.nest.data.NestCondition.WashEvent partial_washout = 19;</code>
@@ -9595,7 +10933,7 @@ public final class ReportProto {
         } else {
           partialWashoutBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00004000;
+        bitField0_ |= 0x00020000;
         return this;
       }
       /**
@@ -9609,7 +10947,7 @@ public final class ReportProto {
         } else {
           partialWashoutBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00004000;
+        bitField0_ |= 0x00020000;
         return this;
       }
       /**
@@ -9617,7 +10955,7 @@ public final class ReportProto {
        */
       public Builder mergePartialWashout(com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent value) {
         if (partialWashoutBuilder_ == null) {
-          if (((bitField0_ & 0x00004000) == 0x00004000) &&
+          if (((bitField0_ & 0x00020000) == 0x00020000) &&
               partialWashout_ != com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent.getDefaultInstance()) {
             partialWashout_ =
               com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent.newBuilder(partialWashout_).mergeFrom(value).buildPartial();
@@ -9628,7 +10966,7 @@ public final class ReportProto {
         } else {
           partialWashoutBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00004000;
+        bitField0_ |= 0x00020000;
         return this;
       }
       /**
@@ -9641,14 +10979,14 @@ public final class ReportProto {
         } else {
           partialWashoutBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00004000);
+        bitField0_ = (bitField0_ & ~0x00020000);
         return this;
       }
       /**
        * <code>optional .com.islandturtlewatch.nest.data.NestCondition.WashEvent partial_washout = 19;</code>
        */
       public com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent.Builder getPartialWashoutBuilder() {
-        bitField0_ |= 0x00004000;
+        bitField0_ |= 0x00020000;
         onChanged();
         return getPartialWashoutFieldBuilder().getBuilder();
       }
@@ -9688,7 +11026,7 @@ public final class ReportProto {
        * </pre>
        */
       public boolean hasNestInundated() {
-        return ((bitField0_ & 0x00008000) == 0x00008000);
+        return ((bitField0_ & 0x00040000) == 0x00040000);
       }
       /**
        * <code>optional bool nest_inundated = 21;</code>
@@ -9708,7 +11046,7 @@ public final class ReportProto {
        * </pre>
        */
       public Builder setNestInundated(boolean value) {
-        bitField0_ |= 0x00008000;
+        bitField0_ |= 0x00040000;
         nestInundated_ = value;
         onChanged();
         return this;
@@ -9721,7 +11059,7 @@ public final class ReportProto {
        * </pre>
        */
       public Builder clearNestInundated() {
-        bitField0_ = (bitField0_ & ~0x00008000);
+        bitField0_ = (bitField0_ & ~0x00040000);
         nestInundated_ = false;
         onChanged();
         return this;
@@ -9732,7 +11070,7 @@ public final class ReportProto {
        * <code>optional int64 nest_inundated_timestamp_ms = 22;</code>
        */
       public boolean hasNestInundatedTimestampMs() {
-        return ((bitField0_ & 0x00010000) == 0x00010000);
+        return ((bitField0_ & 0x00080000) == 0x00080000);
       }
       /**
        * <code>optional int64 nest_inundated_timestamp_ms = 22;</code>
@@ -9744,7 +11082,7 @@ public final class ReportProto {
        * <code>optional int64 nest_inundated_timestamp_ms = 22;</code>
        */
       public Builder setNestInundatedTimestampMs(long value) {
-        bitField0_ |= 0x00010000;
+        bitField0_ |= 0x00080000;
         nestInundatedTimestampMs_ = value;
         onChanged();
         return this;
@@ -9753,7 +11091,7 @@ public final class ReportProto {
        * <code>optional int64 nest_inundated_timestamp_ms = 22;</code>
        */
       public Builder clearNestInundatedTimestampMs() {
-        bitField0_ = (bitField0_ & ~0x00010000);
+        bitField0_ = (bitField0_ & ~0x00080000);
         nestInundatedTimestampMs_ = 0L;
         onChanged();
         return this;
@@ -9762,9 +11100,9 @@ public final class ReportProto {
       private java.util.List<com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent> inundatedEvent_ =
         java.util.Collections.emptyList();
       private void ensureInundatedEventIsMutable() {
-        if (!((bitField0_ & 0x00020000) == 0x00020000)) {
+        if (!((bitField0_ & 0x00100000) == 0x00100000)) {
           inundatedEvent_ = new java.util.ArrayList<com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent>(inundatedEvent_);
-          bitField0_ |= 0x00020000;
+          bitField0_ |= 0x00100000;
          }
       }
 
@@ -9914,7 +11252,7 @@ public final class ReportProto {
       public Builder clearInundatedEvent() {
         if (inundatedEventBuilder_ == null) {
           inundatedEvent_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00020000);
+          bitField0_ = (bitField0_ & ~0x00100000);
           onChanged();
         } else {
           inundatedEventBuilder_.clear();
@@ -9991,7 +11329,7 @@ public final class ReportProto {
           inundatedEventBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
               com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent, com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent.Builder, com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEventOrBuilder>(
                   inundatedEvent_,
-                  ((bitField0_ & 0x00020000) == 0x00020000),
+                  ((bitField0_ & 0x00100000) == 0x00100000),
                   getParentForChildren(),
                   isClean());
           inundatedEvent_ = null;
@@ -10002,9 +11340,9 @@ public final class ReportProto {
       private java.util.List<com.islandturtlewatch.nest.data.ReportProto.NestCondition.PreditationEvent> preditation_ =
         java.util.Collections.emptyList();
       private void ensurePreditationIsMutable() {
-        if (!((bitField0_ & 0x00040000) == 0x00040000)) {
+        if (!((bitField0_ & 0x00200000) == 0x00200000)) {
           preditation_ = new java.util.ArrayList<com.islandturtlewatch.nest.data.ReportProto.NestCondition.PreditationEvent>(preditation_);
-          bitField0_ |= 0x00040000;
+          bitField0_ |= 0x00200000;
          }
       }
 
@@ -10154,7 +11492,7 @@ public final class ReportProto {
       public Builder clearPreditation() {
         if (preditationBuilder_ == null) {
           preditation_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00040000);
+          bitField0_ = (bitField0_ & ~0x00200000);
           onChanged();
         } else {
           preditationBuilder_.clear();
@@ -10231,7 +11569,7 @@ public final class ReportProto {
           preditationBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
               com.islandturtlewatch.nest.data.ReportProto.NestCondition.PreditationEvent, com.islandturtlewatch.nest.data.ReportProto.NestCondition.PreditationEvent.Builder, com.islandturtlewatch.nest.data.ReportProto.NestCondition.PreditationEventOrBuilder>(
                   preditation_,
-                  ((bitField0_ & 0x00040000) == 0x00040000),
+                  ((bitField0_ & 0x00200000) == 0x00200000),
                   getParentForChildren(),
                   isClean());
           preditation_ = null;
@@ -10244,7 +11582,7 @@ public final class ReportProto {
        * <code>optional bool actively_record_events = 27 [default = true];</code>
        */
       public boolean hasActivelyRecordEvents() {
-        return ((bitField0_ & 0x00080000) == 0x00080000);
+        return ((bitField0_ & 0x00400000) == 0x00400000);
       }
       /**
        * <code>optional bool actively_record_events = 27 [default = true];</code>
@@ -10256,7 +11594,7 @@ public final class ReportProto {
        * <code>optional bool actively_record_events = 27 [default = true];</code>
        */
       public Builder setActivelyRecordEvents(boolean value) {
-        bitField0_ |= 0x00080000;
+        bitField0_ |= 0x00400000;
         activelyRecordEvents_ = value;
         onChanged();
         return this;
@@ -10265,7 +11603,7 @@ public final class ReportProto {
        * <code>optional bool actively_record_events = 27 [default = true];</code>
        */
       public Builder clearActivelyRecordEvents() {
-        bitField0_ = (bitField0_ & ~0x00080000);
+        bitField0_ = (bitField0_ & ~0x00400000);
         activelyRecordEvents_ = true;
         onChanged();
         return this;
@@ -10276,7 +11614,7 @@ public final class ReportProto {
        * <code>optional .com.islandturtlewatch.nest.data.NestCondition.ProportionEventsRecorded prop_events_recorded = 29;</code>
        */
       public boolean hasPropEventsRecorded() {
-        return ((bitField0_ & 0x00100000) == 0x00100000);
+        return ((bitField0_ & 0x00800000) == 0x00800000);
       }
       /**
        * <code>optional .com.islandturtlewatch.nest.data.NestCondition.ProportionEventsRecorded prop_events_recorded = 29;</code>
@@ -10291,7 +11629,7 @@ public final class ReportProto {
         if (value == null) {
           throw new NullPointerException();
         }
-        bitField0_ |= 0x00100000;
+        bitField0_ |= 0x00800000;
         propEventsRecorded_ = value;
         onChanged();
         return this;
@@ -10300,7 +11638,7 @@ public final class ReportProto {
        * <code>optional .com.islandturtlewatch.nest.data.NestCondition.ProportionEventsRecorded prop_events_recorded = 29;</code>
        */
       public Builder clearPropEventsRecorded() {
-        bitField0_ = (bitField0_ & ~0x00100000);
+        bitField0_ = (bitField0_ & ~0x00800000);
         propEventsRecorded_ = com.islandturtlewatch.nest.data.ReportProto.NestCondition.ProportionEventsRecorded.ALL;
         onChanged();
         return this;
@@ -10311,7 +11649,7 @@ public final class ReportProto {
        * <code>optional int64 hatch_timestamp_ms = 10;</code>
        */
       public boolean hasHatchTimestampMs() {
-        return ((bitField0_ & 0x00200000) == 0x00200000);
+        return ((bitField0_ & 0x01000000) == 0x01000000);
       }
       /**
        * <code>optional int64 hatch_timestamp_ms = 10;</code>
@@ -10323,7 +11661,7 @@ public final class ReportProto {
        * <code>optional int64 hatch_timestamp_ms = 10;</code>
        */
       public Builder setHatchTimestampMs(long value) {
-        bitField0_ |= 0x00200000;
+        bitField0_ |= 0x01000000;
         hatchTimestampMs_ = value;
         onChanged();
         return this;
@@ -10332,7 +11670,7 @@ public final class ReportProto {
        * <code>optional int64 hatch_timestamp_ms = 10;</code>
        */
       public Builder clearHatchTimestampMs() {
-        bitField0_ = (bitField0_ & ~0x00200000);
+        bitField0_ = (bitField0_ & ~0x01000000);
         hatchTimestampMs_ = 0L;
         onChanged();
         return this;
@@ -10343,7 +11681,7 @@ public final class ReportProto {
        * <code>optional int64 additional_hatch_timestamp_ms = 11;</code>
        */
       public boolean hasAdditionalHatchTimestampMs() {
-        return ((bitField0_ & 0x00400000) == 0x00400000);
+        return ((bitField0_ & 0x02000000) == 0x02000000);
       }
       /**
        * <code>optional int64 additional_hatch_timestamp_ms = 11;</code>
@@ -10355,7 +11693,7 @@ public final class ReportProto {
        * <code>optional int64 additional_hatch_timestamp_ms = 11;</code>
        */
       public Builder setAdditionalHatchTimestampMs(long value) {
-        bitField0_ |= 0x00400000;
+        bitField0_ |= 0x02000000;
         additionalHatchTimestampMs_ = value;
         onChanged();
         return this;
@@ -10364,7 +11702,7 @@ public final class ReportProto {
        * <code>optional int64 additional_hatch_timestamp_ms = 11;</code>
        */
       public Builder clearAdditionalHatchTimestampMs() {
-        bitField0_ = (bitField0_ & ~0x00400000);
+        bitField0_ = (bitField0_ & ~0x02000000);
         additionalHatchTimestampMs_ = 0L;
         onChanged();
         return this;
@@ -10375,7 +11713,7 @@ public final class ReportProto {
        * <code>optional bool disorientation = 12;</code>
        */
       public boolean hasDisorientation() {
-        return ((bitField0_ & 0x00800000) == 0x00800000);
+        return ((bitField0_ & 0x04000000) == 0x04000000);
       }
       /**
        * <code>optional bool disorientation = 12;</code>
@@ -10387,7 +11725,7 @@ public final class ReportProto {
        * <code>optional bool disorientation = 12;</code>
        */
       public Builder setDisorientation(boolean value) {
-        bitField0_ |= 0x00800000;
+        bitField0_ |= 0x04000000;
         disorientation_ = value;
         onChanged();
         return this;
@@ -10396,7 +11734,7 @@ public final class ReportProto {
        * <code>optional bool disorientation = 12;</code>
        */
       public Builder clearDisorientation() {
-        bitField0_ = (bitField0_ & ~0x00800000);
+        bitField0_ = (bitField0_ & ~0x04000000);
         disorientation_ = false;
         onChanged();
         return this;
@@ -10407,7 +11745,7 @@ public final class ReportProto {
        * <code>optional bool abandoned_body_pits = 13;</code>
        */
       public boolean hasAbandonedBodyPits() {
-        return ((bitField0_ & 0x01000000) == 0x01000000);
+        return ((bitField0_ & 0x08000000) == 0x08000000);
       }
       /**
        * <code>optional bool abandoned_body_pits = 13;</code>
@@ -10419,7 +11757,7 @@ public final class ReportProto {
        * <code>optional bool abandoned_body_pits = 13;</code>
        */
       public Builder setAbandonedBodyPits(boolean value) {
-        bitField0_ |= 0x01000000;
+        bitField0_ |= 0x08000000;
         abandonedBodyPits_ = value;
         onChanged();
         return this;
@@ -10428,7 +11766,7 @@ public final class ReportProto {
        * <code>optional bool abandoned_body_pits = 13;</code>
        */
       public Builder clearAbandonedBodyPits() {
-        bitField0_ = (bitField0_ & ~0x01000000);
+        bitField0_ = (bitField0_ & ~0x08000000);
         abandonedBodyPits_ = false;
         onChanged();
         return this;
@@ -10439,7 +11777,7 @@ public final class ReportProto {
        * <code>optional bool abandoned_egg_cavities = 14;</code>
        */
       public boolean hasAbandonedEggCavities() {
-        return ((bitField0_ & 0x02000000) == 0x02000000);
+        return ((bitField0_ & 0x10000000) == 0x10000000);
       }
       /**
        * <code>optional bool abandoned_egg_cavities = 14;</code>
@@ -10451,7 +11789,7 @@ public final class ReportProto {
        * <code>optional bool abandoned_egg_cavities = 14;</code>
        */
       public Builder setAbandonedEggCavities(boolean value) {
-        bitField0_ |= 0x02000000;
+        bitField0_ |= 0x10000000;
         abandonedEggCavities_ = value;
         onChanged();
         return this;
@@ -10460,7 +11798,7 @@ public final class ReportProto {
        * <code>optional bool abandoned_egg_cavities = 14;</code>
        */
       public Builder clearAbandonedEggCavities() {
-        bitField0_ = (bitField0_ & ~0x02000000);
+        bitField0_ = (bitField0_ & ~0x10000000);
         abandonedEggCavities_ = false;
         onChanged();
         return this;
@@ -10471,7 +11809,7 @@ public final class ReportProto {
        * <code>optional bool no_digging = 18;</code>
        */
       public boolean hasNoDigging() {
-        return ((bitField0_ & 0x04000000) == 0x04000000);
+        return ((bitField0_ & 0x20000000) == 0x20000000);
       }
       /**
        * <code>optional bool no_digging = 18;</code>
@@ -10483,7 +11821,7 @@ public final class ReportProto {
        * <code>optional bool no_digging = 18;</code>
        */
       public Builder setNoDigging(boolean value) {
-        bitField0_ |= 0x04000000;
+        bitField0_ |= 0x20000000;
         noDigging_ = value;
         onChanged();
         return this;
@@ -10492,7 +11830,7 @@ public final class ReportProto {
        * <code>optional bool no_digging = 18;</code>
        */
       public Builder clearNoDigging() {
-        bitField0_ = (bitField0_ & ~0x04000000);
+        bitField0_ = (bitField0_ & ~0x20000000);
         noDigging_ = false;
         onChanged();
         return this;
@@ -10503,7 +11841,7 @@ public final class ReportProto {
        * <code>optional bool nest_depredated = 23;</code>
        */
       public boolean hasNestDepredated() {
-        return ((bitField0_ & 0x08000000) == 0x08000000);
+        return ((bitField0_ & 0x40000000) == 0x40000000);
       }
       /**
        * <code>optional bool nest_depredated = 23;</code>
@@ -10515,7 +11853,7 @@ public final class ReportProto {
        * <code>optional bool nest_depredated = 23;</code>
        */
       public Builder setNestDepredated(boolean value) {
-        bitField0_ |= 0x08000000;
+        bitField0_ |= 0x40000000;
         nestDepredated_ = value;
         onChanged();
         return this;
@@ -10524,7 +11862,7 @@ public final class ReportProto {
        * <code>optional bool nest_depredated = 23;</code>
        */
       public Builder clearNestDepredated() {
-        bitField0_ = (bitField0_ & ~0x08000000);
+        bitField0_ = (bitField0_ & ~0x40000000);
         nestDepredated_ = false;
         onChanged();
         return this;
@@ -10535,7 +11873,7 @@ public final class ReportProto {
        * <code>optional bool eggs_damaged_by_another_turtle = 24;</code>
        */
       public boolean hasEggsDamagedByAnotherTurtle() {
-        return ((bitField0_ & 0x10000000) == 0x10000000);
+        return ((bitField0_ & 0x80000000) == 0x80000000);
       }
       /**
        * <code>optional bool eggs_damaged_by_another_turtle = 24;</code>
@@ -10547,7 +11885,7 @@ public final class ReportProto {
        * <code>optional bool eggs_damaged_by_another_turtle = 24;</code>
        */
       public Builder setEggsDamagedByAnotherTurtle(boolean value) {
-        bitField0_ |= 0x10000000;
+        bitField0_ |= 0x80000000;
         eggsDamagedByAnotherTurtle_ = value;
         onChanged();
         return this;
@@ -10556,7 +11894,7 @@ public final class ReportProto {
        * <code>optional bool eggs_damaged_by_another_turtle = 24;</code>
        */
       public Builder clearEggsDamagedByAnotherTurtle() {
-        bitField0_ = (bitField0_ & ~0x10000000);
+        bitField0_ = (bitField0_ & ~0x80000000);
         eggsDamagedByAnotherTurtle_ = false;
         onChanged();
         return this;
@@ -19449,6 +20787,11 @@ public final class ReportProto {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_islandturtlewatch_nest_data_NestCondition_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_islandturtlewatch_nest_data_NestCondition_StormImpact_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_com_islandturtlewatch_nest_data_NestCondition_StormImpact_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_com_islandturtlewatch_nest_data_NestCondition_WashEvent_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -19539,120 +20882,127 @@ public final class ReportProto {
       "\007UNKNOWN\020\001\022\021\n\rNEST_VERIFIED\020\002\022\025\n\021NEST_NO",
       "T_VERIFIED\020\003\022\022\n\016NEST_RELOCATED\020\004\022\017\n\013FALS" +
       "E_CRAWL\020\005\",\n\005Image\022\021\n\tfile_name\030\001 \001(\t\022\020\n" +
-      "\010raw_data\030\002 \001(\014\"\246\016\n\rNestCondition\022\022\n\nvan" +
-      "dalized\030\001 \001(\010\022 \n\030describe_control_method" +
-      "s\030\034 \001(\t\022\037\n\027vandalized_timestamp_ms\030\002 \001(\003" +
-      "\022T\n\016vandalism_type\030\017 \001(\0162<.com.islandtur" +
-      "tlewatch.nest.data.NestCondition.Vandali" +
-      "smType\022\025\n\rnest_dug_into\030\032 \001(\010\022\032\n\022post_ha" +
-      "tch_washout\030\024 \001(\010\022\017\n\007poached\030\003 \001(\010\022\034\n\024po" +
-      "ached_timestamp_ms\030\004 \001(\003\022\034\n\024poached_eggs",
-      "_removed\030\021 \001(\010\022\037\n\027roots_invaded_eggshell" +
-      "s\030\005 \001(\010\022!\n\031eggs_scattered_by_another\030\006 \001" +
-      "(\010\022.\n&eggs_scattered_by_another_timestam" +
-      "p_ms\030\020 \001(\003\022K\n\twash_over\030\007 \003(\01328.com.isla" +
-      "ndturtlewatch.nest.data.NestCondition.Wa" +
-      "shEvent\022J\n\010wash_out\030\010 \001(\01328.com.islandtu" +
-      "rtlewatch.nest.data.NestCondition.WashEv" +
-      "ent\022Q\n\017partial_washout\030\023 \001(\01328.com.islan" +
-      "dturtlewatch.nest.data.NestCondition.Was" +
-      "hEvent\022\026\n\016nest_inundated\030\025 \001(\010\022#\n\033nest_i",
-      "nundated_timestamp_ms\030\026 \001(\003\022Q\n\017inundated" +
-      "_event\030\031 \003(\01328.com.islandturtlewatch.nes" +
-      "t.data.NestCondition.WashEvent\022T\n\013predit" +
-      "ation\030\t \003(\0132?.com.islandturtlewatch.nest" +
-      ".data.NestCondition.PreditationEvent\022$\n\026" +
-      "actively_record_events\030\033 \001(\010:\004true\022e\n\024pr" +
-      "op_events_recorded\030\035 \001(\0162G.com.islandtur" +
-      "tlewatch.nest.data.NestCondition.Proport" +
-      "ionEventsRecorded\022\032\n\022hatch_timestamp_ms\030" +
-      "\n \001(\003\022%\n\035additional_hatch_timestamp_ms\030\013",
-      " \001(\003\022\026\n\016disorientation\030\014 \001(\010\022\033\n\023abandone" +
-      "d_body_pits\030\r \001(\010\022\036\n\026abandoned_egg_cavit" +
-      "ies\030\016 \001(\010\022\022\n\nno_digging\030\022 \001(\010\022\027\n\017nest_de" +
-      "predated\030\027 \001(\010\022&\n\036eggs_damaged_by_anothe" +
-      "r_turtle\030\030 \001(\010\0325\n\tWashEvent\022\024\n\014timestamp" +
-      "_ms\030\001 \001(\003\022\022\n\nstorm_name\030\002 \001(\t\032\327\002\n\020Predit" +
-      "ationEvent\022\024\n\014timestamp_ms\030\001 \001(\003\022\020\n\010pred" +
-      "ator\030\002 \001(\t\022\026\n\016number_of_eggs\030\003 \001(\005\022\035\n\025pr" +
-      "edator_spinner_text\030\004 \001(\t\"\343\001\n\014PredatorTy" +
-      "pe\022\020\n\014ONLY_RACCOON\020\001\022\014\n\010ONLY_FOX\020\002\022\017\n\013ON",
-      "LY_COYOTE\020\003\022\014\n\010ONLY_DOG\020\004\022\016\n\nCANINE_UNK\020" +
-      "\005\022\014\n\010ONLY_HOG\020\006\022\022\n\016ONLY_ARMADILLO\020\007\022\016\n\nM" +
-      "AMMAL_UNK\020\010\022\023\n\017ONLY_GHOST_CRAB\020\t\022\r\n\tONLY" +
-      "_ANTS\020\n\022\021\n\rRACCOON_GHOST\020\013\022\020\n\014COYOTE_GHO" +
-      "ST\020\014\022\t\n\005OTHER\020\r\"U\n\rVandalismType\022\n\n\006UNKO" +
-      "WN\020\001\022\022\n\016STAKES_REMOVED\020\002\022\021\n\rNEST_DUG_INT" +
-      "O\020\003\022\021\n\rEGGS_AFFECTED\020\004\"@\n\030ProportionEven" +
-      "tsRecorded\022\007\n\003ALL\020\001\022\010\n\004MOST\020\002\022\010\n\004SOME\020\003\022" +
-      "\007\n\003FEW\020\004\"\350\010\n\014NestLocation\022\026\n\016street_addr" +
-      "ess\030\001 \001(\t\022\017\n\007section\030\002 \001(\005\022\017\n\007details\030\003 ",
-      "\001(\t\022@\n\004city\030\004 \001(\01622.com.islandturtlewatc" +
-      "h.nest.data.NestLocation.City\022(\n in_cort" +
-      "ez_groin_replacement_area\030\016 \001(\010\022J\n\tplace" +
-      "ment\030\005 \001(\01627.com.islandturtlewatch.nest." +
-      "data.NestLocation.Placement\022T\n\014obstructi" +
-      "ons\030\006 \001(\0132>.com.islandturtlewatch.nest.d" +
-      "ata.NestLocation.NestObstructions\022\032\n\022ape" +
-      "x_to_barrier_ft\030\007 \001(\005\022\032\n\022apex_to_barrier" +
-      "_in\030\010 \001(\005\022\030\n\020water_to_apex_ft\030\t \001(\005\022\030\n\020w" +
-      "ater_to_apex_in\030\n \001(\005\022D\n\013coordinates\030\013 \001",
-      "(\0132/.com.islandturtlewatch.nest.data.Gps" +
-      "Coordinates\022R\n\rtriangulation\030\014 \001(\0132;.com" +
-      ".islandturtlewatch.nest.data.NestLocatio" +
-      "n.Triangulation\022!\n\031escarpment_over_18_in" +
-      "ches\030\r \001(\010\032_\n\020NestObstructions\022\025\n\rseawal" +
-      "l_rocks\030\001 \001(\010\022\021\n\tfurniture\030\002 \001(\010\022\022\n\nesca" +
-      "rpment\030\003 \001(\010\022\r\n\005other\030\004 \001(\t\032\327\001\n\rTriangul" +
-      "ation\022>\n\005north\030\001 \001(\0132/.com.islandturtlew" +
-      "atch.nest.data.GpsCoordinates\022\020\n\010north_f" +
-      "t\030\003 \001(\005\022\020\n\010north_in\030\004 \001(\005\022>\n\005south\030\002 \001(\013",
-      "2/.com.islandturtlewatch.nest.data.GpsCo" +
-      "ordinates\022\020\n\010south_ft\030\005 \001(\005\022\020\n\010south_in\030" +
-      "\006 \001(\005\".\n\004City\022\016\n\nUNSET_CITY\020\001\022\006\n\002AM\020\002\022\006\n" +
-      "\002BB\020\003\022\006\n\002HB\020\004\"|\n\tPlacement\022\023\n\017UNSET_PLAC" +
-      "EMENT\020\001\022\016\n\nOPEN_BEACH\020\002\022\021\n\rIN_VEGITATION" +
-      "\020\003\022\021\n\rAT_VEGITATION\020\004\022\021\n\rAT_ESCARPMENT\020\005" +
-      "\022\021\n\rON_ESCARPMENT\020\006\"\240\005\n\014Intervention\022W\n\020" +
-      "protection_event\030\001 \001(\0132=.com.islandturtl" +
+      "\010raw_data\030\002 \001(\014\"\273\020\n\rNestCondition\022%\n\027gho" +
+      "st_damage_10_or_less\030\037 \001(\010:\004true\022\022\n\nvand" +
+      "alized\030\001 \001(\010\022 \n\030describe_control_methods" +
+      "\030\034 \001(\t\022\037\n\027vandalized_timestamp_ms\030\002 \001(\003\022" +
+      "T\n\016vandalism_type\030\017 \001(\0162<.com.islandturt" +
+      "lewatch.nest.data.NestCondition.Vandalis" +
+      "mType\022\025\n\rnest_dug_into\030\032 \001(\010\022\032\n\022post_hat" +
+      "ch_washout\030\024 \001(\010\022K\n\taccretion\030\036 \003(\01328.co",
+      "m.islandturtlewatch.nest.data.NestCondit" +
+      "ion.WashEvent\022P\n\014storm_impact\030  \001(\0132:.co" +
+      "m.islandturtlewatch.nest.data.NestCondit" +
+      "ion.StormImpact\022\017\n\007poached\030\003 \001(\010\022\034\n\024poac" +
+      "hed_timestamp_ms\030\004 \001(\003\022\034\n\024poached_eggs_r" +
+      "emoved\030\021 \001(\010\022\037\n\027roots_invaded_eggshells\030" +
+      "\005 \001(\010\022!\n\031eggs_scattered_by_another\030\006 \001(\010" +
+      "\022.\n&eggs_scattered_by_another_timestamp_" +
+      "ms\030\020 \001(\003\022K\n\twash_over\030\007 \003(\01328.com.island" +
+      "turtlewatch.nest.data.NestCondition.Wash",
+      "Event\022J\n\010wash_out\030\010 \001(\01328.com.islandturt" +
+      "lewatch.nest.data.NestCondition.WashEven" +
+      "t\022Q\n\017partial_washout\030\023 \001(\01328.com.islandt" +
+      "urtlewatch.nest.data.NestCondition.WashE" +
+      "vent\022\026\n\016nest_inundated\030\025 \001(\010\022#\n\033nest_inu" +
+      "ndated_timestamp_ms\030\026 \001(\003\022Q\n\017inundated_e" +
+      "vent\030\031 \003(\01328.com.islandturtlewatch.nest." +
+      "data.NestCondition.WashEvent\022T\n\013preditat" +
+      "ion\030\t \003(\0132?.com.islandturtlewatch.nest.d" +
+      "ata.NestCondition.PreditationEvent\022$\n\026ac",
+      "tively_record_events\030\033 \001(\010:\004true\022e\n\024prop" +
+      "_events_recorded\030\035 \001(\0162G.com.islandturtl" +
+      "ewatch.nest.data.NestCondition.Proportio" +
+      "nEventsRecorded\022\032\n\022hatch_timestamp_ms\030\n " +
+      "\001(\003\022%\n\035additional_hatch_timestamp_ms\030\013 \001" +
+      "(\003\022\026\n\016disorientation\030\014 \001(\010\022\033\n\023abandoned_" +
+      "body_pits\030\r \001(\010\022\036\n\026abandoned_egg_cavitie" +
+      "s\030\016 \001(\010\022\022\n\nno_digging\030\022 \001(\010\022\027\n\017nest_depr" +
+      "edated\030\027 \001(\010\022&\n\036eggs_damaged_by_another_" +
+      "turtle\030\030 \001(\010\032M\n\013StormImpact\022\024\n\014timestamp",
+      "_ms\030\001 \001(\003\022\022\n\nstorm_name\030\002 \001(\t\022\024\n\014other_i" +
+      "mpact\030\003 \001(\t\0325\n\tWashEvent\022\024\n\014timestamp_ms" +
+      "\030\001 \001(\003\022\022\n\nstorm_name\030\002 \001(\t\032\327\002\n\020Preditati" +
+      "onEvent\022\024\n\014timestamp_ms\030\001 \001(\003\022\020\n\010predato" +
+      "r\030\002 \001(\t\022\026\n\016number_of_eggs\030\003 \001(\005\022\035\n\025preda" +
+      "tor_spinner_text\030\004 \001(\t\"\343\001\n\014PredatorType\022" +
+      "\020\n\014ONLY_RACCOON\020\001\022\014\n\010ONLY_FOX\020\002\022\017\n\013ONLY_" +
+      "COYOTE\020\003\022\014\n\010ONLY_DOG\020\004\022\016\n\nCANINE_UNK\020\005\022\014" +
+      "\n\010ONLY_HOG\020\006\022\022\n\016ONLY_ARMADILLO\020\007\022\016\n\nMAMM" +
+      "AL_UNK\020\010\022\023\n\017ONLY_GHOST_CRAB\020\t\022\r\n\tONLY_AN",
+      "TS\020\n\022\021\n\rRACCOON_GHOST\020\013\022\020\n\014COYOTE_GHOST\020" +
+      "\014\022\t\n\005OTHER\020\r\"U\n\rVandalismType\022\n\n\006UNKOWN\020" +
+      "\001\022\022\n\016STAKES_REMOVED\020\002\022\021\n\rNEST_DUG_INTO\020\003" +
+      "\022\021\n\rEGGS_AFFECTED\020\004\"@\n\030ProportionEventsR" +
+      "ecorded\022\007\n\003ALL\020\001\022\010\n\004MOST\020\002\022\010\n\004SOME\020\003\022\007\n\003" +
+      "FEW\020\004\"\350\010\n\014NestLocation\022\026\n\016street_address" +
+      "\030\001 \001(\t\022\017\n\007section\030\002 \001(\005\022\017\n\007details\030\003 \001(\t" +
+      "\022@\n\004city\030\004 \001(\01622.com.islandturtlewatch.n" +
+      "est.data.NestLocation.City\022(\n in_cortez_" +
+      "groin_replacement_area\030\016 \001(\010\022J\n\tplacemen",
+      "t\030\005 \001(\01627.com.islandturtlewatch.nest.dat" +
+      "a.NestLocation.Placement\022T\n\014obstructions" +
+      "\030\006 \001(\0132>.com.islandturtlewatch.nest.data" +
+      ".NestLocation.NestObstructions\022\032\n\022apex_t" +
+      "o_barrier_ft\030\007 \001(\005\022\032\n\022apex_to_barrier_in" +
+      "\030\010 \001(\005\022\030\n\020water_to_apex_ft\030\t \001(\005\022\030\n\020wate" +
+      "r_to_apex_in\030\n \001(\005\022D\n\013coordinates\030\013 \001(\0132" +
+      "/.com.islandturtlewatch.nest.data.GpsCoo" +
+      "rdinates\022R\n\rtriangulation\030\014 \001(\0132;.com.is" +
+      "landturtlewatch.nest.data.NestLocation.T",
+      "riangulation\022!\n\031escarpment_over_18_inche" +
+      "s\030\r \001(\010\032_\n\020NestObstructions\022\025\n\rseawall_r" +
+      "ocks\030\001 \001(\010\022\021\n\tfurniture\030\002 \001(\010\022\022\n\nescarpm" +
+      "ent\030\003 \001(\010\022\r\n\005other\030\004 \001(\t\032\327\001\n\rTriangulati" +
+      "on\022>\n\005north\030\001 \001(\0132/.com.islandturtlewatc" +
+      "h.nest.data.GpsCoordinates\022\020\n\010north_ft\030\003" +
+      " \001(\005\022\020\n\010north_in\030\004 \001(\005\022>\n\005south\030\002 \001(\0132/." +
+      "com.islandturtlewatch.nest.data.GpsCoord" +
+      "inates\022\020\n\010south_ft\030\005 \001(\005\022\020\n\010south_in\030\006 \001" +
+      "(\005\".\n\004City\022\016\n\nUNSET_CITY\020\001\022\006\n\002AM\020\002\022\006\n\002BB",
+      "\020\003\022\006\n\002HB\020\004\"|\n\tPlacement\022\023\n\017UNSET_PLACEME" +
+      "NT\020\001\022\016\n\nOPEN_BEACH\020\002\022\021\n\rIN_VEGITATION\020\003\022" +
+      "\021\n\rAT_VEGITATION\020\004\022\021\n\rAT_ESCARPMENT\020\005\022\021\n" +
+      "\rON_ESCARPMENT\020\006\"\240\005\n\014Intervention\022W\n\020pro" +
+      "tection_event\030\001 \001(\0132=.com.islandturtlewa" +
+      "tch.nest.data.Intervention.ProtectionEve" +
+      "nt\022?\n\nrelocation\030\002 \001(\0132+.com.islandturtl" +
+      "ewatch.nest.data.Relocation\022?\n\nexcavatio" +
+      "n\030\003 \001(\0132+.com.islandturtlewatch.nest.dat" +
+      "a.Excavation\022\017\n\007adopted\030\004 \001(\010\022\017\n\007adoptee",
+      "\030\005 \001(\t\032\222\003\n\017ProtectionEvent\022\024\n\014timestamp_" +
+      "ms\030\001 \001(\003\022P\n\004type\030\002 \001(\0162B.com.islandturtl" +
       "ewatch.nest.data.Intervention.Protection" +
-      "Event\022?\n\nrelocation\030\002 \001(\0132+.com.islandtu",
-      "rtlewatch.nest.data.Relocation\022?\n\nexcava" +
-      "tion\030\003 \001(\0132+.com.islandturtlewatch.nest." +
-      "data.Excavation\022\017\n\007adopted\030\004 \001(\010\022\017\n\007adop" +
-      "tee\030\005 \001(\t\032\222\003\n\017ProtectionEvent\022\024\n\014timesta" +
-      "mp_ms\030\001 \001(\003\022P\n\004type\030\002 \001(\0162B.com.islandtu" +
-      "rtlewatch.nest.data.Intervention.Protect" +
-      "ionEvent.Type\022T\n\006reason\030\003 \001(\0162D.com.isla" +
-      "ndturtlewatch.nest.data.Intervention.Pro" +
-      "tectionEvent.Reason\"^\n\004Type\022\016\n\nUNSET_TYP" +
-      "E\020\001\022\027\n\023SELF_RELEASING_CAGE\020\002\022\027\n\023SELF_REL",
-      "EASING_FLAT\020\003\022\024\n\020RESTRAINING_CAGE\020\004\"a\n\006R" +
-      "eason\022\020\n\014UNSET_REASON\020\001\022\026\n\022BEFORE_PREDIT" +
-      "ATION\020\002\022\025\n\021AFTER_PREDITATION\020\003\022\026\n\022FOR_LI" +
-      "GHT_PROBLEMS\020\004\"\265\003\n\nExcavation\022\024\n\014timesta" +
-      "mp_ms\030\001 \001(\003\022\021\n\texcavated\030\002 \001(\010\022[\n\016failur" +
-      "e_reason\030\003 \001(\0162C.com.islandturtlewatch.n" +
-      "est.data.Excavation.ExcavationFailureRea" +
-      "son\022\025\n\rfailure_other\030\004 \001(\t\022\024\n\014dead_in_ne" +
-      "st\030\005 \001(\005\022\024\n\014live_in_nest\030\006 \001(\005\022\026\n\016hatche" +
-      "d_shells\030\007 \001(\005\022\023\n\013dead_pipped\030\010 \001(\005\022\023\n\013l",
-      "ive_pipped\030\t \001(\005\022\027\n\017whole_unhatched\030\n \001(" +
-      "\005\022\026\n\016eggs_destroyed\030\013 \001(\005\"k\n\027ExcavationF" +
-      "ailureReason\022\020\n\014UNSET_REASON\020\001\022\022\n\016EGGS_N" +
-      "OT_FOUND\020\002\022\037\n\033EGGS_HATCHLINGS_TOO_DECAYE" +
-      "D\020\003\022\t\n\005OTHER\020\004\"\364\002\n\nRelocation\022\025\n\rwas_rel" +
-      "ocated\030\001 \001(\010\022\024\n\014timestamp_ms\030\002 \001(\003\022\023\n\013ne" +
-      "w_address\030\003 \001(\t\022D\n\013coordinates\030\004 \001(\0132/.c" +
-      "om.islandturtlewatch.nest.data.GpsCoordi" +
-      "nates\022\026\n\016eggs_relocated\030\005 \001(\005\022\026\n\016eggs_de" +
-      "stroyed\030\006 \001(\005\022B\n\006reason\030\013 \001(\01622.com.isla",
-      "ndturtlewatch.nest.data.Relocation.Reaso" +
-      "n\"j\n\006Reason\022\020\n\014UNSET_REASON\020\001\022\016\n\nHIGH_WA" +
-      "TER\020\002\022\r\n\tPREDATION\020\003\022\017\n\013WASHING_OUT\020\004\022\036\n" +
-      "\032CONSTRUCTION_RENOURISHMENT\020\005\"+\n\016GpsCoor" +
-      "dinates\022\013\n\003lat\030\001 \001(\001\022\014\n\004long\030\002 \001(\001B\rB\013Re" +
-      "portProto"
+      "Event.Type\022T\n\006reason\030\003 \001(\0162D.com.islandt" +
+      "urtlewatch.nest.data.Intervention.Protec" +
+      "tionEvent.Reason\"^\n\004Type\022\016\n\nUNSET_TYPE\020\001" +
+      "\022\027\n\023SELF_RELEASING_CAGE\020\002\022\027\n\023SELF_RELEAS" +
+      "ING_FLAT\020\003\022\024\n\020RESTRAINING_CAGE\020\004\"a\n\006Reas" +
+      "on\022\020\n\014UNSET_REASON\020\001\022\026\n\022BEFORE_PREDITATI" +
+      "ON\020\002\022\025\n\021AFTER_PREDITATION\020\003\022\026\n\022FOR_LIGHT",
+      "_PROBLEMS\020\004\"\265\003\n\nExcavation\022\024\n\014timestamp_" +
+      "ms\030\001 \001(\003\022\021\n\texcavated\030\002 \001(\010\022[\n\016failure_r" +
+      "eason\030\003 \001(\0162C.com.islandturtlewatch.nest" +
+      ".data.Excavation.ExcavationFailureReason" +
+      "\022\025\n\rfailure_other\030\004 \001(\t\022\024\n\014dead_in_nest\030" +
+      "\005 \001(\005\022\024\n\014live_in_nest\030\006 \001(\005\022\026\n\016hatched_s" +
+      "hells\030\007 \001(\005\022\023\n\013dead_pipped\030\010 \001(\005\022\023\n\013live" +
+      "_pipped\030\t \001(\005\022\027\n\017whole_unhatched\030\n \001(\005\022\026" +
+      "\n\016eggs_destroyed\030\013 \001(\005\"k\n\027ExcavationFail" +
+      "ureReason\022\020\n\014UNSET_REASON\020\001\022\022\n\016EGGS_NOT_",
+      "FOUND\020\002\022\037\n\033EGGS_HATCHLINGS_TOO_DECAYED\020\003" +
+      "\022\t\n\005OTHER\020\004\"\364\002\n\nRelocation\022\025\n\rwas_reloca" +
+      "ted\030\001 \001(\010\022\024\n\014timestamp_ms\030\002 \001(\003\022\023\n\013new_a" +
+      "ddress\030\003 \001(\t\022D\n\013coordinates\030\004 \001(\0132/.com." +
+      "islandturtlewatch.nest.data.GpsCoordinat" +
+      "es\022\026\n\016eggs_relocated\030\005 \001(\005\022\026\n\016eggs_destr" +
+      "oyed\030\006 \001(\005\022B\n\006reason\030\013 \001(\01622.com.islandt" +
+      "urtlewatch.nest.data.Relocation.Reason\"j" +
+      "\n\006Reason\022\020\n\014UNSET_REASON\020\001\022\016\n\nHIGH_WATER" +
+      "\020\002\022\r\n\tPREDATION\020\003\022\017\n\013WASHING_OUT\020\004\022\036\n\032CO",
+      "NSTRUCTION_RENOURISHMENT\020\005\"+\n\016GpsCoordin" +
+      "ates\022\013\n\003lat\030\001 \001(\001\022\014\n\004long\030\002 \001(\001B\rB\013Repor" +
+      "tProto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -19695,15 +21045,21 @@ public final class ReportProto {
     internal_static_com_islandturtlewatch_nest_data_NestCondition_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_com_islandturtlewatch_nest_data_NestCondition_descriptor,
-        new java.lang.String[] { "Vandalized", "DescribeControlMethods", "VandalizedTimestampMs", "VandalismType", "NestDugInto", "PostHatchWashout", "Poached", "PoachedTimestampMs", "PoachedEggsRemoved", "RootsInvadedEggshells", "EggsScatteredByAnother", "EggsScatteredByAnotherTimestampMs", "WashOver", "WashOut", "PartialWashout", "NestInundated", "NestInundatedTimestampMs", "InundatedEvent", "Preditation", "ActivelyRecordEvents", "PropEventsRecorded", "HatchTimestampMs", "AdditionalHatchTimestampMs", "Disorientation", "AbandonedBodyPits", "AbandonedEggCavities", "NoDigging", "NestDepredated", "EggsDamagedByAnotherTurtle", });
-    internal_static_com_islandturtlewatch_nest_data_NestCondition_WashEvent_descriptor =
+        new java.lang.String[] { "GhostDamage10OrLess", "Vandalized", "DescribeControlMethods", "VandalizedTimestampMs", "VandalismType", "NestDugInto", "PostHatchWashout", "Accretion", "StormImpact", "Poached", "PoachedTimestampMs", "PoachedEggsRemoved", "RootsInvadedEggshells", "EggsScatteredByAnother", "EggsScatteredByAnotherTimestampMs", "WashOver", "WashOut", "PartialWashout", "NestInundated", "NestInundatedTimestampMs", "InundatedEvent", "Preditation", "ActivelyRecordEvents", "PropEventsRecorded", "HatchTimestampMs", "AdditionalHatchTimestampMs", "Disorientation", "AbandonedBodyPits", "AbandonedEggCavities", "NoDigging", "NestDepredated", "EggsDamagedByAnotherTurtle", });
+    internal_static_com_islandturtlewatch_nest_data_NestCondition_StormImpact_descriptor =
       internal_static_com_islandturtlewatch_nest_data_NestCondition_descriptor.getNestedTypes().get(0);
+    internal_static_com_islandturtlewatch_nest_data_NestCondition_StormImpact_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_com_islandturtlewatch_nest_data_NestCondition_StormImpact_descriptor,
+        new java.lang.String[] { "TimestampMs", "StormName", "OtherImpact", });
+    internal_static_com_islandturtlewatch_nest_data_NestCondition_WashEvent_descriptor =
+      internal_static_com_islandturtlewatch_nest_data_NestCondition_descriptor.getNestedTypes().get(1);
     internal_static_com_islandturtlewatch_nest_data_NestCondition_WashEvent_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_com_islandturtlewatch_nest_data_NestCondition_WashEvent_descriptor,
         new java.lang.String[] { "TimestampMs", "StormName", });
     internal_static_com_islandturtlewatch_nest_data_NestCondition_PreditationEvent_descriptor =
-      internal_static_com_islandturtlewatch_nest_data_NestCondition_descriptor.getNestedTypes().get(1);
+      internal_static_com_islandturtlewatch_nest_data_NestCondition_descriptor.getNestedTypes().get(2);
     internal_static_com_islandturtlewatch_nest_data_NestCondition_PreditationEvent_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_com_islandturtlewatch_nest_data_NestCondition_PreditationEvent_descriptor,
