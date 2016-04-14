@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--Changing these WILL break the Predator Spinner, Handle with care-->
     <string-array name="predator_array" >
         <item>[Please Select Predator Type]</item>
         <item>Raccoon Only</item>
@@ -17,5 +18,6 @@
         <item>Other</item>
 
         </string-array>
+
 
 </resources>

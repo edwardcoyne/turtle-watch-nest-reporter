@@ -252,9 +252,7 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
             sectionManager.getCurrentOnItemSelectedHandlers();
     Preconditions.checkArgument(itemSelectedHandlers.containsKey(view.getId()),
             "No On Item Selected handler registered for %s", view.getId());
-
-
-    itemSelectedHandlers.get(view.getId()).handleItemSelected(selectedText,presenter.getUpdateHandler());
+      itemSelectedHandlers.get(view.getId()).handleItemSelected(selectedText, presenter.getUpdateHandler());
 
   }
 

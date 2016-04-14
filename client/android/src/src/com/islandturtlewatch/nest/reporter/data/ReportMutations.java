@@ -1060,6 +1060,30 @@ public class ReportMutations {
     }
   }
 
+  public static class PredatorSpinnerMutation implements ReportMutation {
+    private final Integer ordinal;
+    private final String predator;
+
+    public PredatorSpinnerMutation(Integer ordinal, String predator) {
+      this.ordinal = ordinal;
+      this.predator = predator;
+    }
+
+    @Override
+    public Report apply(Report oldReport) {
+      Preconditions.checkNotNull(ordinal);
+      Report.Builder updatedReport = oldReport.toBuilder();
+      NestCondition.Builder condition = updatedReport.getConditionBuilder();
+
+      PreditationEvent.Builder preditation = (condition.getPreditationCount() <= ordinal)
+              ? condition.addPreditationBuilder() : condition.getPreditationBuilder(ordinal);
+      preditation.setPredatorSpinnerText(predator);
+
+      return updatedReport.build();
+    }
+  }
+
+
   public static class VandalismTypeMutation implements ReportMutation {
     private final Optional<NestCondition.VandalismType> vandalismType;
 

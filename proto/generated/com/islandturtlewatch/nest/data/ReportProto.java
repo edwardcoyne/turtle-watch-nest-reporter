@@ -6470,6 +6470,20 @@ public final class ReportProto {
        * <code>optional int32 number_of_eggs = 3;</code>
        */
       int getNumberOfEggs();
+
+      /**
+       * <code>optional string predator_spinner_text = 4;</code>
+       */
+      boolean hasPredatorSpinnerText();
+      /**
+       * <code>optional string predator_spinner_text = 4;</code>
+       */
+      java.lang.String getPredatorSpinnerText();
+      /**
+       * <code>optional string predator_spinner_text = 4;</code>
+       */
+      com.google.protobuf.ByteString
+          getPredatorSpinnerTextBytes();
     }
     /**
      * Protobuf type {@code com.islandturtlewatch.nest.data.NestCondition.PreditationEvent}
@@ -6537,6 +6551,12 @@ public final class ReportProto {
               case 24: {
                 bitField0_ |= 0x00000004;
                 numberOfEggs_ = input.readInt32();
+                break;
+              }
+              case 34: {
+                com.google.protobuf.ByteString bs = input.readBytes();
+                bitField0_ |= 0x00000008;
+                predatorSpinnerText_ = bs;
                 break;
               }
             }
@@ -6836,10 +6856,53 @@ public final class ReportProto {
         return numberOfEggs_;
       }
 
+      public static final int PREDATOR_SPINNER_TEXT_FIELD_NUMBER = 4;
+      private java.lang.Object predatorSpinnerText_;
+      /**
+       * <code>optional string predator_spinner_text = 4;</code>
+       */
+      public boolean hasPredatorSpinnerText() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>optional string predator_spinner_text = 4;</code>
+       */
+      public java.lang.String getPredatorSpinnerText() {
+        java.lang.Object ref = predatorSpinnerText_;
+        if (ref instanceof java.lang.String) {
+          return (java.lang.String) ref;
+        } else {
+          com.google.protobuf.ByteString bs = 
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            predatorSpinnerText_ = s;
+          }
+          return s;
+        }
+      }
+      /**
+       * <code>optional string predator_spinner_text = 4;</code>
+       */
+      public com.google.protobuf.ByteString
+          getPredatorSpinnerTextBytes() {
+        java.lang.Object ref = predatorSpinnerText_;
+        if (ref instanceof java.lang.String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          predatorSpinnerText_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+
       private void initFields() {
         timestampMs_ = 0L;
         predator_ = "";
         numberOfEggs_ = 0;
+        predatorSpinnerText_ = "";
       }
       private byte memoizedIsInitialized = -1;
       public final boolean isInitialized() {
@@ -6863,6 +6926,9 @@ public final class ReportProto {
         if (((bitField0_ & 0x00000004) == 0x00000004)) {
           output.writeInt32(3, numberOfEggs_);
         }
+        if (((bitField0_ & 0x00000008) == 0x00000008)) {
+          output.writeBytes(4, getPredatorSpinnerTextBytes());
+        }
         getUnknownFields().writeTo(output);
       }
 
@@ -6883,6 +6949,10 @@ public final class ReportProto {
         if (((bitField0_ & 0x00000004) == 0x00000004)) {
           size += com.google.protobuf.CodedOutputStream
             .computeInt32Size(3, numberOfEggs_);
+        }
+        if (((bitField0_ & 0x00000008) == 0x00000008)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeBytesSize(4, getPredatorSpinnerTextBytes());
         }
         size += getUnknownFields().getSerializedSize();
         memoizedSerializedSize = size;
@@ -7007,6 +7077,8 @@ public final class ReportProto {
           bitField0_ = (bitField0_ & ~0x00000002);
           numberOfEggs_ = 0;
           bitField0_ = (bitField0_ & ~0x00000004);
+          predatorSpinnerText_ = "";
+          bitField0_ = (bitField0_ & ~0x00000008);
           return this;
         }
 
@@ -7047,6 +7119,10 @@ public final class ReportProto {
             to_bitField0_ |= 0x00000004;
           }
           result.numberOfEggs_ = numberOfEggs_;
+          if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+            to_bitField0_ |= 0x00000008;
+          }
+          result.predatorSpinnerText_ = predatorSpinnerText_;
           result.bitField0_ = to_bitField0_;
           onBuilt();
           return result;
@@ -7073,6 +7149,11 @@ public final class ReportProto {
           }
           if (other.hasNumberOfEggs()) {
             setNumberOfEggs(other.getNumberOfEggs());
+          }
+          if (other.hasPredatorSpinnerText()) {
+            bitField0_ |= 0x00000008;
+            predatorSpinnerText_ = other.predatorSpinnerText_;
+            onChanged();
           }
           this.mergeUnknownFields(other.getUnknownFields());
           return this;
@@ -7237,6 +7318,82 @@ public final class ReportProto {
         public Builder clearNumberOfEggs() {
           bitField0_ = (bitField0_ & ~0x00000004);
           numberOfEggs_ = 0;
+          onChanged();
+          return this;
+        }
+
+        private java.lang.Object predatorSpinnerText_ = "";
+        /**
+         * <code>optional string predator_spinner_text = 4;</code>
+         */
+        public boolean hasPredatorSpinnerText() {
+          return ((bitField0_ & 0x00000008) == 0x00000008);
+        }
+        /**
+         * <code>optional string predator_spinner_text = 4;</code>
+         */
+        public java.lang.String getPredatorSpinnerText() {
+          java.lang.Object ref = predatorSpinnerText_;
+          if (!(ref instanceof java.lang.String)) {
+            com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
+            java.lang.String s = bs.toStringUtf8();
+            if (bs.isValidUtf8()) {
+              predatorSpinnerText_ = s;
+            }
+            return s;
+          } else {
+            return (java.lang.String) ref;
+          }
+        }
+        /**
+         * <code>optional string predator_spinner_text = 4;</code>
+         */
+        public com.google.protobuf.ByteString
+            getPredatorSpinnerTextBytes() {
+          java.lang.Object ref = predatorSpinnerText_;
+          if (ref instanceof String) {
+            com.google.protobuf.ByteString b = 
+                com.google.protobuf.ByteString.copyFromUtf8(
+                    (java.lang.String) ref);
+            predatorSpinnerText_ = b;
+            return b;
+          } else {
+            return (com.google.protobuf.ByteString) ref;
+          }
+        }
+        /**
+         * <code>optional string predator_spinner_text = 4;</code>
+         */
+        public Builder setPredatorSpinnerText(
+            java.lang.String value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
+          predatorSpinnerText_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>optional string predator_spinner_text = 4;</code>
+         */
+        public Builder clearPredatorSpinnerText() {
+          bitField0_ = (bitField0_ & ~0x00000008);
+          predatorSpinnerText_ = getDefaultInstance().getPredatorSpinnerText();
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>optional string predator_spinner_text = 4;</code>
+         */
+        public Builder setPredatorSpinnerTextBytes(
+            com.google.protobuf.ByteString value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
+          predatorSpinnerText_ = value;
           onChanged();
           return this;
         }
@@ -19382,7 +19539,7 @@ public final class ReportProto {
       "\007UNKNOWN\020\001\022\021\n\rNEST_VERIFIED\020\002\022\025\n\021NEST_NO",
       "T_VERIFIED\020\003\022\022\n\016NEST_RELOCATED\020\004\022\017\n\013FALS" +
       "E_CRAWL\020\005\",\n\005Image\022\021\n\tfile_name\030\001 \001(\t\022\020\n" +
-      "\010raw_data\030\002 \001(\014\"\207\016\n\rNestCondition\022\022\n\nvan" +
+      "\010raw_data\030\002 \001(\014\"\246\016\n\rNestCondition\022\022\n\nvan" +
       "dalized\030\001 \001(\010\022 \n\030describe_control_method" +
       "s\030\034 \001(\t\022\037\n\027vandalized_timestamp_ms\030\002 \001(\003" +
       "\022T\n\016vandalism_type\030\017 \001(\0162<.com.islandtur" +
@@ -19415,86 +19572,87 @@ public final class ReportProto {
       "ies\030\016 \001(\010\022\022\n\nno_digging\030\022 \001(\010\022\027\n\017nest_de" +
       "predated\030\027 \001(\010\022&\n\036eggs_damaged_by_anothe" +
       "r_turtle\030\030 \001(\010\0325\n\tWashEvent\022\024\n\014timestamp" +
-      "_ms\030\001 \001(\003\022\022\n\nstorm_name\030\002 \001(\t\032\270\002\n\020Predit" +
+      "_ms\030\001 \001(\003\022\022\n\nstorm_name\030\002 \001(\t\032\327\002\n\020Predit" +
       "ationEvent\022\024\n\014timestamp_ms\030\001 \001(\003\022\020\n\010pred" +
-      "ator\030\002 \001(\t\022\026\n\016number_of_eggs\030\003 \001(\005\"\343\001\n\014P" +
-      "redatorType\022\020\n\014ONLY_RACCOON\020\001\022\014\n\010ONLY_FO" +
-      "X\020\002\022\017\n\013ONLY_COYOTE\020\003\022\014\n\010ONLY_DOG\020\004\022\016\n\nCA",
-      "NINE_UNK\020\005\022\014\n\010ONLY_HOG\020\006\022\022\n\016ONLY_ARMADIL" +
-      "LO\020\007\022\016\n\nMAMMAL_UNK\020\010\022\023\n\017ONLY_GHOST_CRAB\020" +
-      "\t\022\r\n\tONLY_ANTS\020\n\022\021\n\rRACCOON_GHOST\020\013\022\020\n\014C" +
-      "OYOTE_GHOST\020\014\022\t\n\005OTHER\020\r\"U\n\rVandalismTyp" +
-      "e\022\n\n\006UNKOWN\020\001\022\022\n\016STAKES_REMOVED\020\002\022\021\n\rNES" +
-      "T_DUG_INTO\020\003\022\021\n\rEGGS_AFFECTED\020\004\"@\n\030Propo" +
-      "rtionEventsRecorded\022\007\n\003ALL\020\001\022\010\n\004MOST\020\002\022\010" +
-      "\n\004SOME\020\003\022\007\n\003FEW\020\004\"\350\010\n\014NestLocation\022\026\n\016st" +
-      "reet_address\030\001 \001(\t\022\017\n\007section\030\002 \001(\005\022\017\n\007d" +
-      "etails\030\003 \001(\t\022@\n\004city\030\004 \001(\01622.com.islandt",
-      "urtlewatch.nest.data.NestLocation.City\022(" +
-      "\n in_cortez_groin_replacement_area\030\016 \001(\010" +
-      "\022J\n\tplacement\030\005 \001(\01627.com.islandturtlewa" +
-      "tch.nest.data.NestLocation.Placement\022T\n\014" +
-      "obstructions\030\006 \001(\0132>.com.islandturtlewat" +
-      "ch.nest.data.NestLocation.NestObstructio" +
-      "ns\022\032\n\022apex_to_barrier_ft\030\007 \001(\005\022\032\n\022apex_t" +
-      "o_barrier_in\030\010 \001(\005\022\030\n\020water_to_apex_ft\030\t" +
-      " \001(\005\022\030\n\020water_to_apex_in\030\n \001(\005\022D\n\013coordi" +
-      "nates\030\013 \001(\0132/.com.islandturtlewatch.nest",
-      ".data.GpsCoordinates\022R\n\rtriangulation\030\014 " +
-      "\001(\0132;.com.islandturtlewatch.nest.data.Ne" +
-      "stLocation.Triangulation\022!\n\031escarpment_o" +
-      "ver_18_inches\030\r \001(\010\032_\n\020NestObstructions\022" +
-      "\025\n\rseawall_rocks\030\001 \001(\010\022\021\n\tfurniture\030\002 \001(" +
-      "\010\022\022\n\nescarpment\030\003 \001(\010\022\r\n\005other\030\004 \001(\t\032\327\001\n" +
-      "\rTriangulation\022>\n\005north\030\001 \001(\0132/.com.isla" +
-      "ndturtlewatch.nest.data.GpsCoordinates\022\020" +
-      "\n\010north_ft\030\003 \001(\005\022\020\n\010north_in\030\004 \001(\005\022>\n\005so" +
-      "uth\030\002 \001(\0132/.com.islandturtlewatch.nest.d",
-      "ata.GpsCoordinates\022\020\n\010south_ft\030\005 \001(\005\022\020\n\010" +
-      "south_in\030\006 \001(\005\".\n\004City\022\016\n\nUNSET_CITY\020\001\022\006" +
-      "\n\002AM\020\002\022\006\n\002BB\020\003\022\006\n\002HB\020\004\"|\n\tPlacement\022\023\n\017U" +
-      "NSET_PLACEMENT\020\001\022\016\n\nOPEN_BEACH\020\002\022\021\n\rIN_V" +
-      "EGITATION\020\003\022\021\n\rAT_VEGITATION\020\004\022\021\n\rAT_ESC" +
-      "ARPMENT\020\005\022\021\n\rON_ESCARPMENT\020\006\"\240\005\n\014Interve" +
-      "ntion\022W\n\020protection_event\030\001 \001(\0132=.com.is" +
-      "landturtlewatch.nest.data.Intervention.P" +
-      "rotectionEvent\022?\n\nrelocation\030\002 \001(\0132+.com" +
-      ".islandturtlewatch.nest.data.Relocation\022",
-      "?\n\nexcavation\030\003 \001(\0132+.com.islandturtlewa" +
-      "tch.nest.data.Excavation\022\017\n\007adopted\030\004 \001(" +
-      "\010\022\017\n\007adoptee\030\005 \001(\t\032\222\003\n\017ProtectionEvent\022\024" +
-      "\n\014timestamp_ms\030\001 \001(\003\022P\n\004type\030\002 \001(\0162B.com" +
-      ".islandturtlewatch.nest.data.Interventio" +
-      "n.ProtectionEvent.Type\022T\n\006reason\030\003 \001(\0162D" +
-      ".com.islandturtlewatch.nest.data.Interve" +
-      "ntion.ProtectionEvent.Reason\"^\n\004Type\022\016\n\n" +
-      "UNSET_TYPE\020\001\022\027\n\023SELF_RELEASING_CAGE\020\002\022\027\n" +
-      "\023SELF_RELEASING_FLAT\020\003\022\024\n\020RESTRAINING_CA",
-      "GE\020\004\"a\n\006Reason\022\020\n\014UNSET_REASON\020\001\022\026\n\022BEFO" +
-      "RE_PREDITATION\020\002\022\025\n\021AFTER_PREDITATION\020\003\022" +
-      "\026\n\022FOR_LIGHT_PROBLEMS\020\004\"\265\003\n\nExcavation\022\024" +
-      "\n\014timestamp_ms\030\001 \001(\003\022\021\n\texcavated\030\002 \001(\010\022" +
-      "[\n\016failure_reason\030\003 \001(\0162C.com.islandturt" +
-      "lewatch.nest.data.Excavation.ExcavationF" +
-      "ailureReason\022\025\n\rfailure_other\030\004 \001(\t\022\024\n\014d" +
-      "ead_in_nest\030\005 \001(\005\022\024\n\014live_in_nest\030\006 \001(\005\022" +
-      "\026\n\016hatched_shells\030\007 \001(\005\022\023\n\013dead_pipped\030\010" +
-      " \001(\005\022\023\n\013live_pipped\030\t \001(\005\022\027\n\017whole_unhat",
-      "ched\030\n \001(\005\022\026\n\016eggs_destroyed\030\013 \001(\005\"k\n\027Ex" +
-      "cavationFailureReason\022\020\n\014UNSET_REASON\020\001\022" +
-      "\022\n\016EGGS_NOT_FOUND\020\002\022\037\n\033EGGS_HATCHLINGS_T" +
-      "OO_DECAYED\020\003\022\t\n\005OTHER\020\004\"\364\002\n\nRelocation\022\025" +
-      "\n\rwas_relocated\030\001 \001(\010\022\024\n\014timestamp_ms\030\002 " +
-      "\001(\003\022\023\n\013new_address\030\003 \001(\t\022D\n\013coordinates\030" +
-      "\004 \001(\0132/.com.islandturtlewatch.nest.data." +
-      "GpsCoordinates\022\026\n\016eggs_relocated\030\005 \001(\005\022\026" +
-      "\n\016eggs_destroyed\030\006 \001(\005\022B\n\006reason\030\013 \001(\01622" +
-      ".com.islandturtlewatch.nest.data.Relocat",
-      "ion.Reason\"j\n\006Reason\022\020\n\014UNSET_REASON\020\001\022\016" +
-      "\n\nHIGH_WATER\020\002\022\r\n\tPREDATION\020\003\022\017\n\013WASHING" +
-      "_OUT\020\004\022\036\n\032CONSTRUCTION_RENOURISHMENT\020\005\"+" +
-      "\n\016GpsCoordinates\022\013\n\003lat\030\001 \001(\001\022\014\n\004long\030\002 " +
-      "\001(\001B\rB\013ReportProto"
+      "ator\030\002 \001(\t\022\026\n\016number_of_eggs\030\003 \001(\005\022\035\n\025pr" +
+      "edator_spinner_text\030\004 \001(\t\"\343\001\n\014PredatorTy" +
+      "pe\022\020\n\014ONLY_RACCOON\020\001\022\014\n\010ONLY_FOX\020\002\022\017\n\013ON",
+      "LY_COYOTE\020\003\022\014\n\010ONLY_DOG\020\004\022\016\n\nCANINE_UNK\020" +
+      "\005\022\014\n\010ONLY_HOG\020\006\022\022\n\016ONLY_ARMADILLO\020\007\022\016\n\nM" +
+      "AMMAL_UNK\020\010\022\023\n\017ONLY_GHOST_CRAB\020\t\022\r\n\tONLY" +
+      "_ANTS\020\n\022\021\n\rRACCOON_GHOST\020\013\022\020\n\014COYOTE_GHO" +
+      "ST\020\014\022\t\n\005OTHER\020\r\"U\n\rVandalismType\022\n\n\006UNKO" +
+      "WN\020\001\022\022\n\016STAKES_REMOVED\020\002\022\021\n\rNEST_DUG_INT" +
+      "O\020\003\022\021\n\rEGGS_AFFECTED\020\004\"@\n\030ProportionEven" +
+      "tsRecorded\022\007\n\003ALL\020\001\022\010\n\004MOST\020\002\022\010\n\004SOME\020\003\022" +
+      "\007\n\003FEW\020\004\"\350\010\n\014NestLocation\022\026\n\016street_addr" +
+      "ess\030\001 \001(\t\022\017\n\007section\030\002 \001(\005\022\017\n\007details\030\003 ",
+      "\001(\t\022@\n\004city\030\004 \001(\01622.com.islandturtlewatc" +
+      "h.nest.data.NestLocation.City\022(\n in_cort" +
+      "ez_groin_replacement_area\030\016 \001(\010\022J\n\tplace" +
+      "ment\030\005 \001(\01627.com.islandturtlewatch.nest." +
+      "data.NestLocation.Placement\022T\n\014obstructi" +
+      "ons\030\006 \001(\0132>.com.islandturtlewatch.nest.d" +
+      "ata.NestLocation.NestObstructions\022\032\n\022ape" +
+      "x_to_barrier_ft\030\007 \001(\005\022\032\n\022apex_to_barrier" +
+      "_in\030\010 \001(\005\022\030\n\020water_to_apex_ft\030\t \001(\005\022\030\n\020w" +
+      "ater_to_apex_in\030\n \001(\005\022D\n\013coordinates\030\013 \001",
+      "(\0132/.com.islandturtlewatch.nest.data.Gps" +
+      "Coordinates\022R\n\rtriangulation\030\014 \001(\0132;.com" +
+      ".islandturtlewatch.nest.data.NestLocatio" +
+      "n.Triangulation\022!\n\031escarpment_over_18_in" +
+      "ches\030\r \001(\010\032_\n\020NestObstructions\022\025\n\rseawal" +
+      "l_rocks\030\001 \001(\010\022\021\n\tfurniture\030\002 \001(\010\022\022\n\nesca" +
+      "rpment\030\003 \001(\010\022\r\n\005other\030\004 \001(\t\032\327\001\n\rTriangul" +
+      "ation\022>\n\005north\030\001 \001(\0132/.com.islandturtlew" +
+      "atch.nest.data.GpsCoordinates\022\020\n\010north_f" +
+      "t\030\003 \001(\005\022\020\n\010north_in\030\004 \001(\005\022>\n\005south\030\002 \001(\013",
+      "2/.com.islandturtlewatch.nest.data.GpsCo" +
+      "ordinates\022\020\n\010south_ft\030\005 \001(\005\022\020\n\010south_in\030" +
+      "\006 \001(\005\".\n\004City\022\016\n\nUNSET_CITY\020\001\022\006\n\002AM\020\002\022\006\n" +
+      "\002BB\020\003\022\006\n\002HB\020\004\"|\n\tPlacement\022\023\n\017UNSET_PLAC" +
+      "EMENT\020\001\022\016\n\nOPEN_BEACH\020\002\022\021\n\rIN_VEGITATION" +
+      "\020\003\022\021\n\rAT_VEGITATION\020\004\022\021\n\rAT_ESCARPMENT\020\005" +
+      "\022\021\n\rON_ESCARPMENT\020\006\"\240\005\n\014Intervention\022W\n\020" +
+      "protection_event\030\001 \001(\0132=.com.islandturtl" +
+      "ewatch.nest.data.Intervention.Protection" +
+      "Event\022?\n\nrelocation\030\002 \001(\0132+.com.islandtu",
+      "rtlewatch.nest.data.Relocation\022?\n\nexcava" +
+      "tion\030\003 \001(\0132+.com.islandturtlewatch.nest." +
+      "data.Excavation\022\017\n\007adopted\030\004 \001(\010\022\017\n\007adop" +
+      "tee\030\005 \001(\t\032\222\003\n\017ProtectionEvent\022\024\n\014timesta" +
+      "mp_ms\030\001 \001(\003\022P\n\004type\030\002 \001(\0162B.com.islandtu" +
+      "rtlewatch.nest.data.Intervention.Protect" +
+      "ionEvent.Type\022T\n\006reason\030\003 \001(\0162D.com.isla" +
+      "ndturtlewatch.nest.data.Intervention.Pro" +
+      "tectionEvent.Reason\"^\n\004Type\022\016\n\nUNSET_TYP" +
+      "E\020\001\022\027\n\023SELF_RELEASING_CAGE\020\002\022\027\n\023SELF_REL",
+      "EASING_FLAT\020\003\022\024\n\020RESTRAINING_CAGE\020\004\"a\n\006R" +
+      "eason\022\020\n\014UNSET_REASON\020\001\022\026\n\022BEFORE_PREDIT" +
+      "ATION\020\002\022\025\n\021AFTER_PREDITATION\020\003\022\026\n\022FOR_LI" +
+      "GHT_PROBLEMS\020\004\"\265\003\n\nExcavation\022\024\n\014timesta" +
+      "mp_ms\030\001 \001(\003\022\021\n\texcavated\030\002 \001(\010\022[\n\016failur" +
+      "e_reason\030\003 \001(\0162C.com.islandturtlewatch.n" +
+      "est.data.Excavation.ExcavationFailureRea" +
+      "son\022\025\n\rfailure_other\030\004 \001(\t\022\024\n\014dead_in_ne" +
+      "st\030\005 \001(\005\022\024\n\014live_in_nest\030\006 \001(\005\022\026\n\016hatche" +
+      "d_shells\030\007 \001(\005\022\023\n\013dead_pipped\030\010 \001(\005\022\023\n\013l",
+      "ive_pipped\030\t \001(\005\022\027\n\017whole_unhatched\030\n \001(" +
+      "\005\022\026\n\016eggs_destroyed\030\013 \001(\005\"k\n\027ExcavationF" +
+      "ailureReason\022\020\n\014UNSET_REASON\020\001\022\022\n\016EGGS_N" +
+      "OT_FOUND\020\002\022\037\n\033EGGS_HATCHLINGS_TOO_DECAYE" +
+      "D\020\003\022\t\n\005OTHER\020\004\"\364\002\n\nRelocation\022\025\n\rwas_rel" +
+      "ocated\030\001 \001(\010\022\024\n\014timestamp_ms\030\002 \001(\003\022\023\n\013ne" +
+      "w_address\030\003 \001(\t\022D\n\013coordinates\030\004 \001(\0132/.c" +
+      "om.islandturtlewatch.nest.data.GpsCoordi" +
+      "nates\022\026\n\016eggs_relocated\030\005 \001(\005\022\026\n\016eggs_de" +
+      "stroyed\030\006 \001(\005\022B\n\006reason\030\013 \001(\01622.com.isla",
+      "ndturtlewatch.nest.data.Relocation.Reaso" +
+      "n\"j\n\006Reason\022\020\n\014UNSET_REASON\020\001\022\016\n\nHIGH_WA" +
+      "TER\020\002\022\r\n\tPREDATION\020\003\022\017\n\013WASHING_OUT\020\004\022\036\n" +
+      "\032CONSTRUCTION_RENOURISHMENT\020\005\"+\n\016GpsCoor" +
+      "dinates\022\013\n\003lat\030\001 \001(\001\022\014\n\004long\030\002 \001(\001B\rB\013Re" +
+      "portProto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -19549,7 +19707,7 @@ public final class ReportProto {
     internal_static_com_islandturtlewatch_nest_data_NestCondition_PreditationEvent_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_com_islandturtlewatch_nest_data_NestCondition_PreditationEvent_descriptor,
-        new java.lang.String[] { "TimestampMs", "Predator", "NumberOfEggs", });
+        new java.lang.String[] { "TimestampMs", "Predator", "NumberOfEggs", "PredatorSpinnerText", });
     internal_static_com_islandturtlewatch_nest_data_NestLocation_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_com_islandturtlewatch_nest_data_NestLocation_fieldAccessorTable = new

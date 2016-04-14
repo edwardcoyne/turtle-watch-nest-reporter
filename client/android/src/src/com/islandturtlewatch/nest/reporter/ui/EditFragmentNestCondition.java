@@ -106,6 +106,7 @@ public class EditFragmentNestCondition extends EditFragment {
     return CLICK_HANDLERS;
   }
 
+
   @Override
   public View onCreateView(LayoutInflater inflater,
       ViewGroup container,
@@ -154,7 +155,9 @@ public class EditFragmentNestCondition extends EditFragment {
     setText(R.id.fieldWashOutStormName, condition.getWashOut().getStormName());
     setText(R.id.fieldPartialWashOutStormName, condition.getPartialWashout().getStormName());
     setText(R.id.fieldDescribeControlMethods,condition.getDescribeControlMethods());
-
+    Spinner pSpinner = (Spinner) getActivity().findViewById(R.id.fieldPredatorSelect);
+    boolean showFieldOther;
+    pSpinner.setSelection(0,false);
 if (condition.getPreditationCount()>0) {
   if (condition.getPreditation(0).hasTimestampMs()) {
     setDate(R.id.buttonPredatorDate, condition.getPreditation(0).getTimestampMs());
@@ -164,19 +167,18 @@ if (condition.getPreditationCount()>0) {
     setText(R.id.fieldNumberEggs, Integer.toString(condition.getPreditation(0).getNumberOfEggs()));
   } else setText(R.id.fieldNumberEggs, "");
 
-  Spinner pSpinner = (Spinner) getActivity().findViewById(R.id.fieldPredatorSelect);
-  boolean showFieldOther;
 
-  if (condition.getPreditation(0).hasPredator()) {
-    int predNum = getPredatorIndex(condition.getPreditation(0).getPredator());
+  if (condition.getPreditation(0).hasPredatorSpinnerText()) {
+    int predNum = getPredatorIndex(condition.getPreditation(0).getPredatorSpinnerText());
     showFieldOther = (predNum == NUM_PREDATORS);
-    pSpinner.setSelection(getPredatorIndex(condition.getPreditation(0).getPredator()));
+      pSpinner.setSelection(predNum);
   } else {
     showFieldOther = false;
-    pSpinner.setSelection(0);
+    pSpinner.setSelection(0,false);
   }
   setVisible(R.id.fieldPredatorOther, showFieldOther);
   setText(R.id.fieldPredatorOther, condition.getPreditation(0).getPredator());
+  setText(R.id.demoText,condition.getPreditation(0).getPredatorSpinnerText());
 }
 //    clearTable(R.id.tablePredatitation);
 //    for (int i = 0; i < condition.getPreditationCount(); i++) {
@@ -748,14 +750,16 @@ if (condition.getPreditationCount()>0) {
       updateHandler.applyMutation(new WashoutStormNameMutation(newText));
     }
   }
+
   private static class HandleSelectPredator extends OnItemSelectedHandler {
+    boolean firstCall = true;
 
     protected HandleSelectPredator() {
       super(R.id.fieldPredatorSelect);
     }
     @Override
     public void handleItemSelected(String selectedPredator, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(new ReportMutations.PredationPredatorMutation(0,selectedPredator));
+      updateHandler.applyMutation(new ReportMutations.PredatorSpinnerMutation(0, selectedPredator));
     }
   }
 
