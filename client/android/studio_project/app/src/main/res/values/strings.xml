@@ -86,7 +86,7 @@
     <string name="edit_nest_condition_damage_vandalized">Vandalized</string>
     <string name="edit_nest_condition_damage_vandalism_stakes_removed">Stakes Removed</string>
     <string name="edit_nest_condition_damage_vandalism_dug_into">Nest Dug Into</string>
-    <string name="edit_nest_condition_damage_vandalism_eggs_affected">Eggs Affected</string>
+    <string name="edit_nest_condition_damage_vandalism_eggs_affected">Eggs Removed</string>
     <string name="edit_nest_condition_damage_poached">Poached</string>
     <string name="edit_nest_condition_damage_poached_eggs_removed">Eggs Removed</string>
     <string name="edit_nest_condition_damage_roots_invaded">Roots invaded eggshells</string>
@@ -156,7 +156,9 @@
     <string name="edit_storm_name">Storm Name</string>
     <string name="edit_add_accretion_event"><u>+Add Accretion Event</u></string>
     <string name="edit_accretion_header">Accretion</string>
-    <string name="edit_damage_10_or_fewer">Did ghost crabs damage 10 or fewer eggs?</string>
+    <string name="edit_damage_10_or_fewer">Did ghost crabs damage fewer than 10 eggs?</string>
     <string name="title_other_storm_impact">Other Storm Impact (Be specific)</string>
     <string name="hint_other_details">Please enter details here</string>
+    <string name="add_wash_over_text"><u>+Add Wash over Event</u></string>
+    <string name="add_inundation_event_text"><u>+Add Inundation Event</u></string>
 </resources>

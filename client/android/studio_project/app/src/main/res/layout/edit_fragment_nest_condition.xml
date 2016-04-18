@@ -22,6 +22,18 @@
 
 	   </TableLayout>
 		<TableRow
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content">
+			<TextView
+				android:id="@+id/addWashOverRow"
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:textColor="#134aef"
+				android:text="@string/add_wash_over_text"
+				/>
+		</TableRow>
+
+		<TableRow
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content" >
 
@@ -36,6 +48,17 @@
 			<!-- Will be dynamically populated -->
 
 		</TableLayout>
+		<TableRow
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content">
+			<TextView
+				android:id="@+id/addInundationEventRow"
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:textColor="#134aef"
+				android:text="@string/add_inundation_event_text"
+				/>
+		</TableRow>
 
 
 		<TableRow
@@ -210,17 +233,7 @@
 			   android:layout_column="0" />
 	   </TableRow>
 
-		<TableRow
-			android:layout_width="match_parent"
-			android:layout_height="match_parent">
 
-			<TextView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="New Text"
-				android:id="@+id/demoText"
-				android:layout_column="0" />
-		</TableRow>
 
 		<TableRow
 			android:layout_height="wrap_content"
@@ -374,6 +387,27 @@
 		android:onClick="handleClick"/>
 
 </TableRow>
+		<TableRow>
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/edit_describe_control_methods"/>
+		</TableRow>
+		<TableRow
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+
+			<com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+				android:id="@+id/fieldDescribeControlMethods"
+				android:layout_width="0dp"
+				android:lines="3"
+				android:layout_height="match_parent"
+				android:inputType="textMultiLine"
+				android:gravity="top|left"
+				onTextChangeHandler="handleTextChange"
+				/>
+
+		</TableRow>
 
 		<TableRow
 	       android:layout_width="wrap_content"
@@ -402,22 +436,7 @@
 				/>
 
 		</TableRow>
-		<TableRow
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content">
 
-			<com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
-				android:id="@+id/fieldDescribeControlMethods"
-				android:layout_width="0dp"
-				android:lines="5"
-				android:layout_height="match_parent"
-				android:hint="@string/edit_describe_control_methods"
-				android:inputType="textMultiLine"
-				android:gravity="top|left"
-				onTextChangeHandler="handleTextChange"
-			 />
-
-		</TableRow>
 
        <TableRow
             android:id="@+id/rowVandalismType"

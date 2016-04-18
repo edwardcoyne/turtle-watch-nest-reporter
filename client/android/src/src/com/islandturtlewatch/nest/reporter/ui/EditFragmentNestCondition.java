@@ -129,14 +129,20 @@ public class EditFragmentNestCondition extends EditFragment {
     for (int i = 0; i < condition.getWashOverCount(); i++) {
       addWashOverRow(i, condition.getWashOver(i), true);
     }
-    // Add blank line.
-    addWashOverRow(condition.getWashOverCount(), WashEvent.getDefaultInstance(), false);
+    final TextView addWashOverRowText = (TextView) getView().findViewById(R.id.addWashOverRow);
+    addWashOverRowText.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        addWashOverRow(condition.getWashOverCount(), WashEvent.getDefaultInstance(), false);
+      }
+    });
 
 
     clearTable(R.id.tableAccretionEvent);
     for (int i = 0; i < condition.getAccretionCount(); i++) {
       addAccretionRow(i,condition.getAccretion(i),true);
     }
+
     final TextView addAccretionRow = (TextView) getView().findViewById(R.id.fieldAddAccretionRow);
     addAccretionRow.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -154,8 +160,17 @@ public class EditFragmentNestCondition extends EditFragment {
       //add each inundatedEvent already in the Report
       addInundatedEventRow(i,condition.getInundatedEvent(i),true);
     }
-    //add one blank line as well.
-    addInundatedEventRow(condition.getInundatedEventCount(),WashEvent.getDefaultInstance(),false);
+    final TextView addInundationRow = (TextView) getView().findViewById(R.id.addInundationEventRow);
+    addInundationRow.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+
+        addInundatedEventRow(condition.getInundatedEventCount(),WashEvent.getDefaultInstance(),false);
+
+      }
+    });
+
+
 
     if (condition.getWashOut().hasTimestampMs()) {
       setDate(R.id.buttonWashOutDate,
@@ -180,7 +195,7 @@ public class EditFragmentNestCondition extends EditFragment {
     setText(R.id.fieldPartialWashOutStormName, condition.getPartialWashout().getStormName());
     setText(R.id.fieldDescribeControlMethods,condition.getDescribeControlMethods());
     Spinner pSpinner = (Spinner) getActivity().findViewById(R.id.fieldPredatorSelect);
-    boolean showFieldOther;
+    boolean showFieldOther = false;
     pSpinner.setSelection(0,false);
 if (condition.getPreditationCount()>0) {
   if (condition.getPreditation(0).hasTimestampMs()) {
@@ -200,26 +215,16 @@ if (condition.getPreditationCount()>0) {
     showFieldOther = false;
     pSpinner.setSelection(0,false);
   }
+
+    setVisible(R.id.fieldGhostCrabsDamaged10OrLess,(pSpinner.getSelectedItemPosition() >= 10
+    && pSpinner.getSelectedItemPosition() < 13));
+
   setVisible(R.id.fieldPredatorOther, showFieldOther);
   setText(R.id.fieldPredatorOther, condition.getPreditation(0).getPredator());
-  setText(R.id.demoText,condition.getPreditation(0).getPredatorSpinnerText());
 }
-//    clearTable(R.id.tablePredatitation);
-//    for (int i = 0; i < condition.getPreditationCount(); i++) {
-//      addPredationRow(i, condition.getPreditation(i), true);
-//    }
-//    // Add blank line.
-//    addPredationRow(condition.getPreditationCount(), PreditationEvent.getDefaultInstance(), false);
-
     setChecked(R.id.fieldDamageEggsDamagedByAnotherTurtle,condition.getEggsDamagedByAnotherTurtle());
     setChecked(R.id.fieldDamageNestDepredated, condition.getNestDepredated());
-//    setChecked(R.id.fieldDamageNestInundated, condition.getNestInundated());
-//    setEnabled(R.id.buttonDamageNestInundatedDate,condition.getNestInundated());
-//    if (condition.hasNestInundatedTimestampMs()) {
-//      setDate(R.id.buttonDamageNestInundatedDate, condition.getNestInundatedTimestampMs());
-//    } else {
-//      clearDate(R.id.buttonDamageNestInundatedDate);
-//    }
+
 
     if (condition.getStormImpact().hasTimestampMs()) {
   setDate(R.id.buttonOtherStormImpactDate, condition.getStormImpact().getTimestampMs());
@@ -243,6 +248,9 @@ if (condition.getPreditationCount()>0) {
       clearDate(R.id.buttonDamageVandalizedDate);
     }
     setVisible(R.id.rowVandalismType, condition.getVandalized());
+
+    // "Stakes Removed" no longer being tracked in app
+    setVisible(R.id.fieldVandalismStakesRemoved,false);
     setChecked(R.id.fieldVandalismStakesRemoved,
             condition.getVandalismType() == NestCondition.VandalismType.STAKES_REMOVED);
     setChecked(R.id.fieldVandalismDugInto,
@@ -269,13 +277,6 @@ if (condition.getPreditationCount()>0) {
     setVisible(R.id.rowPoachedDetails, condition.getPoached());
     setChecked(R.id.fieldDamagePoachedEggsRemoved, condition.getPoachedEggsRemoved());
 
-//    setChecked(R.id.fieldDamageEggsScattered, condition.getEggsScatteredByAnother());
-//    setEnabled(R.id.buttonDamageEggsScatteredDate, condition.getEggsScatteredByAnother());
-//    if (condition.hasEggsScatteredByAnotherTimestampMs()) {
-//      setDate(R.id.buttonDamageEggsScatteredDate, condition.getEggsScatteredByAnotherTimestampMs());
-//    } else {
-//      clearDate(R.id.buttonDamageEggsScatteredDate);
-//    }
 
     setChecked(R.id.fieldDamageRootsInvaded, condition.getRootsInvadedEggshells());
     setChecked(R.id.fieldActivelyRecordEvents,condition.getActivelyRecordEvents());

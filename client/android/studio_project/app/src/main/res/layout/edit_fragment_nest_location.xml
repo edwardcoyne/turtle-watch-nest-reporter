@@ -245,13 +245,21 @@
 				android:onClick="handleClick"
 				/>
 		</TableRow>
+		<TableRow
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/edit_type_of_structure"/>
+		</TableRow>
+
 		<TableRow>
 			<com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
 				android:id="@+id/fieldTypeOfStructure"
 				android:layout_height="wrap_content"
 				android:layout_width="wrap_content"
 				android:layout_weight="1"
-				android:hint="@string/edit_type_of_structure"
 				onTextChangeHandler="handleTextChange"
 				/>
 		</TableRow>
