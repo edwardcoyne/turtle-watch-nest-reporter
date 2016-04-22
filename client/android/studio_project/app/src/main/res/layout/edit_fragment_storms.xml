@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:textSize="18sp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/edit_nest_condition_wash_over" />
+        </TableRow>
+        <TableLayout
+            android:id="@+id/tableWashOver">
+            <!-- Will be dynamically populated -->
+
+        </TableLayout>
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content">
+            <TextView
+                android:id="@+id/addWashOverRow"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textColor="#134aef"
+                android:text="@string/add_wash_over_text"
+                />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:textSize="18sp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/edit_nest_condition_inundated_event" />
+        </TableRow>
+        <TableLayout
+            android:id="@+id/tableInundatedEvent">
+            <!-- Will be dynamically populated -->
+
+        </TableLayout>
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content">
+            <TextView
+                android:id="@+id/addInundationEventRow"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textColor="#134aef"
+                android:text="@string/add_inundation_event_text"
+                />
+        </TableRow>
+
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" ></TableRow>
+
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+            <TextView
+                android:textSize="18sp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/edit_nest_condition_partial_washout" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/buttonPartialWashOutDate"
+                android:text="@string/date_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="handleClick"  />
+
+            <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+                android:id="@+id/fieldPartialWashOutStormName"
+                android:inputType="text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/edit_nest_condition_storm_name"/>
+            onTextChangeHandler="handleTextChange" />
+        </TableRow>
+
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+            <TextView
+                android:layout_width="0dp"
+                android:textSize="18sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/edit_nest_condition_washout" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/buttonWashOutDate"
+                android:text="@string/date_button"
+                android:onClick="handleClick"  />
+
+            <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+                android:id="@+id/fieldWashOutStormName"
+                android:inputType="text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/edit_nest_condition_storm_name"
+                onTextChangeHandler="handleTextChange" />
+        </TableRow>
+
+        <TableRow>
+
+            <CheckBox
+                android:id="@+id/fieldPostHatchWashout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/edit_nest_condition_post_hatch_washout"
+                android:onClick="handleClick" />
+        </TableRow>
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content">
+            <TextView
+                style="@style/Header"
+                android:text="@string/edit_accretion_header"
+                />
+        </TableRow>
+
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tableAccretionEvent">
+            <!--will be dynamically populated-->
+        </TableLayout>
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/fieldAddAccretionRow"
+                android:text="@string/edit_add_accretion_event"
+                android:clickable="true"
+                android:onClick="handleClick"
+                android:textColor="#134aef" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="@string/title_other_storm_impact"
+                style="@style/Header"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:measureWithLargestChild="false">
+
+            <Button
+                android:id="@+id/buttonOtherStormImpactDate"
+                android:text="@string/date_button"
+
+                android:onClick="handleClick"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+                android:id="@+id/fieldOtherStormImpactStormName"
+                android:inputType="text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:hint="@string/edit_nest_condition_storm_name"
+                onTextChangeHandler="handleTextChange"
+                android:layout_weight="0" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+                android:id="@+id/fieldOtherStormImpactOtherImpact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:lines="4"
+                onTextChangeHandler="handleTextChange"
+                android:hint="@string/hint_other_details"
+                android:gravity="left|top" />
+
+        </TableRow>
+
+    </TableLayout>
+
+</ScrollView>

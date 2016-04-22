@@ -13,22 +13,17 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.TextView;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.islandturtlewatch.nest.data.ReportProto.NestCondition;
 import com.islandturtlewatch.nest.data.ReportProto.NestCondition.PreditationEvent;
-import com.islandturtlewatch.nest.data.ReportProto.NestCondition.WashEvent;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.data.Date;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.DeletePredationMutation;
-import com.islandturtlewatch.nest.reporter.data.ReportMutations.DeleteWashOverMutation;
-import com.islandturtlewatch.nest.reporter.data.ReportMutations.PartialWashoutDateMutation;
-import com.islandturtlewatch.nest.reporter.data.ReportMutations.PartialWashoutStormNameMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.PoachedDateMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.PoachedEggsRemovedMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.PredationDateMutation;
@@ -39,10 +34,6 @@ import com.islandturtlewatch.nest.reporter.data.ReportMutations.VandalismTypeMut
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.VandalizedDateMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.WasPoachedMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.WasVandalizedMutation;
-import com.islandturtlewatch.nest.reporter.data.ReportMutations.WashoutDateMutation;
-import com.islandturtlewatch.nest.reporter.data.ReportMutations.WashoutStormNameMutation;
-import com.islandturtlewatch.nest.reporter.data.ReportMutations.WashoverDateMutation;
-import com.islandturtlewatch.nest.reporter.data.ReportMutations.WashoverStormNameMutation;
 import com.islandturtlewatch.nest.reporter.ui.ClearableDatePickerDialog.OnDateSetListener;
 import com.islandturtlewatch.nest.reporter.util.DateUtil;
 
@@ -55,7 +46,6 @@ public class EditFragmentNestCondition extends EditFragment {
       ClickHandler.toMap(
 //          new HandleSetEggsScattered(),
 //          new HandleSetEggsScatteredDate(),
-          new HandleSetPostHatchWashout(),
           new HandleSetPoached(),
           new HandleSetPoachedDate(),
           new HandleSetPoachedEggsRemoved(),
@@ -66,15 +56,11 @@ public class EditFragmentNestCondition extends EditFragment {
           new HandleSetVandalismStakesRemoved(),
           new HandleSetVandalismDugInto(),
           new HandleSetVandalismEggsAffected(),
-          new HandleSetWashoutDate(),
-          new HandleSetPartialWashoutDate(),
           new HandleSetProportionAll(),
           new HandleSetProportionMost(),
           new HandleSetProportionSome(),
           new HandleSetProportionFew(),
           new HandleSetPredatorDate(),
-          new HandleAddAccretionRow(),
-          new HandleSetStormImpactDate(),
           new HandleGhostCrabDamageAtMost10Eggs(),
           new HandleSetActivelyRecordPredationEvents(),
               //NestInundated is deprecated, use new inundatedEvent instead
@@ -91,13 +77,9 @@ public class EditFragmentNestCondition extends EditFragment {
 
   private static final Map<Integer, TextChangeHandler> TEXT_CHANGE_HANDLERS =
       TextChangeHandler.toMap(
-              new HandleUpdateWashoutStorm(),
-              new HandleUpdateStormImpactStormName(),
-              new HandleUpdateStormImpactOtherImpact(),
               new HandleDescribeControlMethods(),
               new HandleUpdateNumEggs(),
-              new HandleUpdatePredatorOther(),
-              new HandleUpdatePartialWashoutStorm());
+              new HandleUpdatePredatorOther());
 
   @Override
   public Map<Integer, TextChangeHandler> getTextChangeHandlers() {
@@ -125,67 +107,6 @@ public class EditFragmentNestCondition extends EditFragment {
   public void updateSection(Report report) {
     final NestCondition condition = report.getCondition();
 
-    clearTable(R.id.tableWashOver);
-    for (int i = 0; i < condition.getWashOverCount(); i++) {
-      addWashOverRow(i, condition.getWashOver(i), true);
-    }
-    final TextView addWashOverRowText = (TextView) getView().findViewById(R.id.addWashOverRow);
-    addWashOverRowText.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        addWashOverRow(condition.getWashOverCount(), WashEvent.getDefaultInstance(), false);
-      }
-    });
-
-
-    clearTable(R.id.tableAccretionEvent);
-    for (int i = 0; i < condition.getAccretionCount(); i++) {
-      addAccretionRow(i,condition.getAccretion(i),true);
-    }
-
-    final TextView addAccretionRow = (TextView) getView().findViewById(R.id.fieldAddAccretionRow);
-    addAccretionRow.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        WashEvent.Builder builder = WashEvent.newBuilder();
-        builder.setStormName("");
-
-        addAccretionRow(condition.getAccretionCount(),builder.build(),false);
-
-      }
-    });
-
-    clearTable(R.id.tableInundatedEvent);
-    for (int i = 0; i < condition.getInundatedEventCount();i++) {
-      //add each inundatedEvent already in the Report
-      addInundatedEventRow(i,condition.getInundatedEvent(i),true);
-    }
-    final TextView addInundationRow = (TextView) getView().findViewById(R.id.addInundationEventRow);
-    addInundationRow.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-
-        addInundatedEventRow(condition.getInundatedEventCount(),WashEvent.getDefaultInstance(),false);
-
-      }
-    });
-
-
-
-    if (condition.getWashOut().hasTimestampMs()) {
-      setDate(R.id.buttonWashOutDate,
-              condition.getWashOut().getTimestampMs());
-    } else {
-      clearDate(R.id.buttonWashOutDate);
-    }
-
-    if (condition.getPartialWashout().hasTimestampMs()) {
-      setDate(R.id.buttonPartialWashOutDate,
-              condition.getPartialWashout().getTimestampMs());
-    } else {
-      clearDate(R.id.buttonPartialWashOutDate);
-    }
-
     setVisible(R.id.rowProportionEventsRecorded,condition.getActivelyRecordEvents());
 
     setChecked(R.id.fieldRecordedAll,condition.getPropEventsRecorded() == NestCondition.ProportionEventsRecorded.ALL);
@@ -193,8 +114,7 @@ public class EditFragmentNestCondition extends EditFragment {
     setChecked(R.id.fieldRecordedSome,condition.getPropEventsRecorded() == NestCondition.ProportionEventsRecorded.SOME);
     setChecked(R.id.fieldRecordedFew, condition.getPropEventsRecorded() == NestCondition.ProportionEventsRecorded.FEW);
 
-    setText(R.id.fieldWashOutStormName, condition.getWashOut().getStormName());
-    setText(R.id.fieldPartialWashOutStormName, condition.getPartialWashout().getStormName());
+
     setText(R.id.fieldDescribeControlMethods,condition.getDescribeControlMethods());
     Spinner pSpinner = (Spinner) getActivity().findViewById(R.id.fieldPredatorSelect);
     boolean showFieldOther = false;
@@ -228,15 +148,6 @@ if (condition.getPreditationCount()>0) {
     setChecked(R.id.fieldDamageNestDepredated, condition.getNestDepredated());
 
 
-    if (condition.getStormImpact().hasTimestampMs()) {
-  setDate(R.id.buttonOtherStormImpactDate, condition.getStormImpact().getTimestampMs());
-} else {
-      clearDate(R.id.buttonOtherStormImpactDate);
-    }
-
-    setText(R.id.fieldOtherStormImpactStormName,condition.getStormImpact().getStormName());
-    setText(R.id.fieldOtherStormImpactOtherImpact, condition.getStormImpact().getOtherImpact());
-    setVisible(R.id.fieldOtherStormImpactOtherImpact,condition.getStormImpact().hasTimestampMs());
 
     setChecked(R.id.fieldGhostCrabsDamaged10OrLess,condition.getGhostDamage10OrLess());
 
@@ -260,14 +171,6 @@ if (condition.getPreditationCount()>0) {
     setChecked(R.id.fieldVandalismEggsAffected,
         condition.getVandalismType() == NestCondition.VandalismType.EGGS_AFFECTED);
 
-    setEnabled(R.id.fieldPostHatchWashout, (
-            condition.getPartialWashout().hasTimestampMs() ||
-                    condition.getWashOut().hasTimestampMs()));
-
-    setChecked(R.id.fieldPostHatchWashout, condition.getPostHatchWashout() &&
-            (condition.getWashOut().hasTimestampMs() ||
-                    condition.getPartialWashout().hasTimestampMs()));
-
     setChecked(R.id.fieldNestDugInto,condition.getNestDugInto());
     setChecked(R.id.fieldDamagePoached, condition.getPoached());
     setEnabled(R.id.buttonDamagePoachedDate, condition.getPoached());
@@ -285,159 +188,6 @@ if (condition.getPreditationCount()>0) {
   }
 
 
-  private void addAccretionRow(final int ordinal, WashEvent accretion, boolean showDelete) {
-    Button date_button = new Button(getActivity());
-    if (accretion.hasTimestampMs()) {
-      date_button.setText(DateUtil.getFormattedDate(accretion.getTimestampMs()));
-    } else {
-      date_button.setText(R.string.date_button);
-    }
-
-    SimpleDatePickerClickHandler clickHandler = new SimpleDatePickerClickHandler(){
-      @Override
-      public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
-        updateHandler.applyMutation(new ReportMutations.AccretionDateMutation(ordinal, maybeDate));
-      }};
-    if (accretion.hasTimestampMs()) {
-      clickHandler.setDate(accretion.getTimestampMs());
-    } else {
-      clickHandler.setDate(System.currentTimeMillis());
-    }
-    date_button.setOnClickListener(listenerProvider.getOnClickListener(clickHandler));
-
-    FocusMonitoredEditText storm_name = new FocusMonitoredEditText(getActivity());
-    storm_name.setHint(R.string.edit_nest_condition_storm_name);
-    storm_name.setText(accretion.getStormName());
-    listenerProvider.setFocusLossListener(storm_name, new TextChangeHandlerSimple() {
-      @Override
-      public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-        updateHandler.applyMutation(new ReportMutations.AccretionStormNameMutation(ordinal, newText));
-      }
-    });
-
-    Button delete = new Button(getActivity());
-    delete.setText("X");
-    delete.setOnClickListener(listenerProvider.getOnClickListener(new ClickHandlerSimple() {
-      @Override
-      public void handleClick(View view, DataUpdateHandler updateHandler) {
-        updateHandler.applyMutation(new ReportMutations.DeleteAccretionMutation(ordinal));
-      }
-    }));
-
-    TableRow row = new TableRow(getActivity());
-    row.setId(ordinal);
-    row.addView(date_button);
-    storm_name.setLayoutParams(
-            new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f));
-    row.addView(storm_name);
-    if (showDelete) {
-      row.addView(delete);
-    }
-    getTable(R.id.tableAccretionEvent).addView(row);
-
-  }
-
-  private void addWashOverRow(final int ordinal, WashEvent event, boolean showDelete) {
-    Button date_button = new Button(getActivity());
-    if (event.hasTimestampMs()) {
-      date_button.setText(DateUtil.getFormattedDate(event.getTimestampMs()));
-    } else {
-      date_button.setText(R.string.date_button);
-    }
-
-    SimpleDatePickerClickHandler clickHandler = new SimpleDatePickerClickHandler(){
-      @Override
-      public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
-        updateHandler.applyMutation(new WashoverDateMutation(ordinal, maybeDate));
-      }};
-    if (event.hasTimestampMs()) {
-      clickHandler.setDate(event.getTimestampMs());
-    } else {
-      clickHandler.setDate(System.currentTimeMillis());
-    }
-    date_button.setOnClickListener(listenerProvider.getOnClickListener(clickHandler));
-
-    FocusMonitoredEditText storm_name = new FocusMonitoredEditText(getActivity());
-    storm_name.setHint(R.string.edit_nest_condition_storm_name);
-    storm_name.setText(event.getStormName());
-    listenerProvider.setFocusLossListener(storm_name, new TextChangeHandlerSimple() {
-      @Override
-      public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-        updateHandler.applyMutation(new WashoverStormNameMutation(ordinal, newText));
-      }
-    });
-
-    Button delete = new Button(getActivity());
-    delete.setText("X");
-    delete.setOnClickListener(listenerProvider.getOnClickListener(new ClickHandlerSimple() {
-      @Override
-      public void handleClick(View view, DataUpdateHandler updateHandler) {
-        updateHandler.applyMutation(new DeleteWashOverMutation(ordinal));
-      }
-    }));
-
-    TableRow row = new TableRow(getActivity());
-    row.setId(ordinal);
-    row.addView(date_button);
-    storm_name.setLayoutParams(
-            new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f));
-    row.addView(storm_name);
-    if (showDelete) {
-      row.addView(delete);
-    }
-    getTable(R.id.tableWashOver).addView(row);
-  }
-
-  private void addInundatedEventRow (final int ordinal, WashEvent event,  boolean showDelete) {
-    Button date_button = new Button(getActivity());
-    if (event.hasTimestampMs()) {
-      date_button.setText(DateUtil.getFormattedDate(event.getTimestampMs()));
-    } else {
-      date_button.setText(R.string.date_button);
-    }
-
-    SimpleDatePickerClickHandler clickHandler = new SimpleDatePickerClickHandler() {
-      @Override
-      public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
-        updateHandler.applyMutation(new ReportMutations.InundatedEventDateMutation(ordinal, maybeDate));
-      }};
-    if (event.hasTimestampMs()) {
-      clickHandler.setDate(event.getTimestampMs());
-    } else {
-      clickHandler.setDate(System.currentTimeMillis());
-    }
-    date_button.setOnClickListener(listenerProvider.getOnClickListener(clickHandler));
-
-    FocusMonitoredEditText storm_name = new FocusMonitoredEditText(getActivity());
-    storm_name.setHint(R.string.edit_nest_condition_storm_name);
-    storm_name.setText(event.getStormName());
-    listenerProvider.setFocusLossListener(storm_name, new TextChangeHandlerSimple() {
-      @Override
-      public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-        updateHandler.applyMutation(new ReportMutations.InundatedEventStormNameMutation(ordinal, newText));
-      }
-    });
-
-    Button delete = new Button(getActivity());
-    delete.setText("X");
-    delete.setOnClickListener(listenerProvider.getOnClickListener(new ClickHandlerSimple() {
-      @Override
-      public void handleClick(View view, DataUpdateHandler updateHandler) {
-        updateHandler.applyMutation(new ReportMutations.DeleteInundatedEventMutation(ordinal));
-      }
-    }));
-
-    TableRow row = new TableRow(getActivity());
-    row.setId(ordinal);
-    row.addView(date_button);
-    storm_name.setLayoutParams(
-            new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT, 1f));
-    row.addView(storm_name);
-    if (showDelete) {
-      row.addView(delete);
-    }
-    getTable(R.id.tableInundatedEvent).addView(row);
-  }
 
   private void addPredationRow(final int ordinal, final PreditationEvent event, boolean showDelete) {
     Button date_button = new Button(getActivity());
@@ -580,16 +330,6 @@ if (condition.getPreditationCount()>0) {
     return (TableLayout)view;
   }
 
-  private static class HandleAddAccretionRow extends ClickHandler {
-    protected HandleAddAccretionRow () {
-      super(R.id.fieldAddAccretionRow);
-    }
-    @Override
-    public void handleClick(View view, DataUpdateHandler updateHandler) {
-
-    }
-  }
-
   private static class HandleSetProportionAll extends ClickHandler {
     protected HandleSetProportionAll () {
       super(R.id.fieldRecordedAll);
@@ -634,39 +374,6 @@ if (condition.getPreditationCount()>0) {
     }
   }
 
-  private static class HandleSetStormImpactDate extends DatePickerClickHandler {
-    protected HandleSetStormImpactDate() {
-      super(R.id.buttonOtherStormImpactDate);
-    }
-
-    @Override
-    public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
-      updateHandler.applyMutation(new ReportMutations.OtherImpactDateMutation(maybeDate));
-    }
-  }
-
-  private static class HandleUpdateStormImpactStormName extends TextChangeHandler {
-    protected HandleUpdateStormImpactStormName() {
-      super(R.id.fieldOtherStormImpactStormName);
-    }
-
-    @Override
-    public void handleTextChange(String newName, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(new ReportMutations.OtherImpactStormNameMutation(newName));
-    }
-  }
-
-  private static class HandleUpdateStormImpactOtherImpact extends TextChangeHandler {
-    protected HandleUpdateStormImpactOtherImpact() {
-      super(R.id.fieldOtherStormImpactOtherImpact);
-    }
-
-    @Override
-    public void handleTextChange(String newName, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(new ReportMutations.OtherImpactDetailsMutation(newName));
-    }
-  }
-
 
 
   private static class HandleSetPredatorDate extends DatePickerClickHandler {
@@ -677,28 +384,6 @@ if (condition.getPreditationCount()>0) {
     @Override
     public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
       updateHandler.applyMutation(new PredationDateMutation(0,maybeDate));
-    }
-  }
-
-  private static class HandleSetWashoutDate extends DatePickerClickHandler {
-    protected HandleSetWashoutDate() {
-      super(R.id.buttonWashOutDate);
-    }
-
-    @Override
-    public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
-      updateHandler.applyMutation(new WashoutDateMutation(maybeDate));
-    }
-  }
-
-  private static class HandleSetPartialWashoutDate extends DatePickerClickHandler {
-    protected HandleSetPartialWashoutDate() {
-      super(R.id.buttonPartialWashOutDate);
-    }
-
-    @Override
-    public void onDateSet (DatePicker view, Optional<Date> maybeDate) {
-      updateHandler.applyMutation(new PartialWashoutDateMutation(maybeDate));
     }
   }
 
@@ -723,36 +408,6 @@ if (condition.getPreditationCount()>0) {
     }
   }
 
-//  private static class HandleSetNestInundatedDate extends DatePickerClickHandler {
-//    protected HandleSetNestInundatedDate() {
-//      super(R.id.buttonDamageNestInundatedDate);
-//    }
-//
-//    @Override
-//    public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
-//      updateHandler.applyMutation(new ReportMutations.NestInundatedDateMutation(maybeDate));
-//    }
-//  }
-//  private static class HandleSetNestInundated extends ClickHandler {
-//    protected HandleSetNestInundated() {
-//      super(R.id.fieldDamageNestInundated);
-//    }
-//
-//    @Override
-//    public void handleClick(View view, DataUpdateHandler updateHandler) {
-//      updateHandler.applyMutation(new ReportMutations.NestInundatedMutation(isChecked(view)));
-//    }
-//  }
-
-//  private static class HandleSetEggsScatteredDate extends DatePickerClickHandler {
-//    protected HandleSetEggsScatteredDate() { super(R.id.buttonDamageEggsScatteredDate); }
-//
-//    @Override
-//    public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
-//      updateHandler.applyMutation(new EggsScatteredDateMutation(maybeDate));
-//    }
-//  }
-
   private static class HandleSetNestDugInto extends ClickHandler {
     protected HandleSetNestDugInto() {
       super(R.id.fieldNestDugInto);
@@ -771,16 +426,6 @@ if (condition.getPreditationCount()>0) {
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
       updateHandler.applyMutation(new WasVandalizedMutation(isChecked(view)));
-    }
-  }
-
-  private static class HandleSetPostHatchWashout extends ClickHandler {
-    protected HandleSetPostHatchWashout() {
-      super(R.id.fieldPostHatchWashout);
-    }
-    @Override
-    public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(new ReportMutations.WasPostHatchWashout(isChecked(view)));
     }
   }
 
@@ -878,17 +523,6 @@ if (condition.getPreditationCount()>0) {
     }
   }
 
-  private static class HandleUpdateWashoutStorm extends TextChangeHandler {
-    protected HandleUpdateWashoutStorm() {
-      super(R.id.fieldWashOutStormName);
-    }
-
-    @Override
-    public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(new WashoutStormNameMutation(newText));
-    }
-  }
-
   private static class HandleSelectPredator extends OnItemSelectedHandler {
     boolean firstCall = true;
 
@@ -951,17 +585,6 @@ if (condition.getPreditationCount()>0) {
     @Override
     public void handleTextChange(String newName, DataUpdateHandler updateHandler) {
       updateHandler.applyMutation(new ReportMutations.PredationPredatorMutation(0,newName));
-    }
-  }
-
-  private static class HandleUpdatePartialWashoutStorm extends TextChangeHandler {
-    protected HandleUpdatePartialWashoutStorm() {
-      super(R.id.fieldPartialWashOutStormName);
-    }
-
-    @Override
-    public void handleTextChange(String newName, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(new PartialWashoutStormNameMutation(newName));
     }
   }
 
