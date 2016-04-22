@@ -65,11 +65,13 @@ public class EditFragmentNestLocation extends EditFragment {
           new HandleSetRelocationDate(),
           new HandleSetSeawardOfArmoringStructure(),
           new HandleSetWithin3FeetofStructure(),
+          new HandleSetRelocationGPS(),
           new HandleSetGps());
 
   private static final Map<Integer, TextChangeHandler> TEXT_CHANGE_HANDLERS =
       TextChangeHandler.toMap(
           new HandleUpdateAddress(),
+          new HandleUpdateRelocationAddress(),
           new HandleUpdateDetails(),
           new HandleUpdateApexToBarrierFt(),
           new HandleUpdateApexToBarrierIn(),
@@ -147,6 +149,8 @@ public class EditFragmentNestLocation extends EditFragment {
 
     setChecked(R.id.fieldSeawardOfArmoringStructure,report.getNestSeawardOfArmoringStructure());
 
+    setVisible(R.id.fieldTypeOfStructure,isChecked(R.id.fieldSeawardOfArmoringStructure));
+    setVisible(R.id.textTypeOfStructure,isChecked(R.id.fieldSeawardOfArmoringStructure));
     setVisible(R.id.fieldWithin3FeetofStructure, isChecked(R.id.fieldSeawardOfArmoringStructure));
     setChecked(R.id.fieldWithin3FeetofStructure, report.getWithin3FeetOfStructure());
     setText(R.id.fieldTypeOfStructure, report.hasTypeOfStructure() ?
@@ -173,8 +177,9 @@ public class EditFragmentNestLocation extends EditFragment {
     } else {
       setText(R.id.buttonNewGps, getString(R.string.edit_nest_location_button_gps));
     }
-
-    setText(R.id.fieldNewAddress, relocation.getNewAddress());
+if (relocation.hasNewAddress()) {
+  setText(R.id.fieldNewAddress, relocation.getNewAddress());
+} else setText(R.id.fieldNewAddress,"");
     // TODO(edcoyne) Set gps coordinates
     setText(R.id.fieldEggsRelocated, relocation.hasEggsRelocated() ?
             Integer.toString(relocation.getEggsRelocated()) : "");
@@ -266,6 +271,19 @@ public class EditFragmentNestLocation extends EditFragment {
       updateHandler.applyMutation(new ReportMutations.EggsDestroyedMutation(getInteger(newText)));
     }
   }
+
+  private static class HandleUpdateRelocationAddress extends TextChangeHandler {
+    protected HandleUpdateRelocationAddress() {
+      super(R.id.fieldNewAddress);
+    }
+
+    @Override
+    public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.NewAddressMutation(newText));
+    }
+  }
+
+
 
   private static class HandleUpdateAddress extends TextChangeHandler {
     protected HandleUpdateAddress() {
@@ -543,6 +561,26 @@ public class EditFragmentNestLocation extends EditFragment {
         @Override
         public void location(GpsCoordinates coordinates) {
           updateHandler.applyMutation(new GpsMutation(coordinates));
+        }
+      });
+
+      dialog.show(((Activity)view.getContext()).getFragmentManager(), "GPS");
+
+    }
+  }
+  private static class HandleSetRelocationGPS extends ClickHandler {
+    protected HandleSetRelocationGPS() {
+      super(R.id.buttonNewGps);
+    }
+
+    @Override
+    public void handleClick(View view, final DataUpdateHandler updateHandler) {
+      GpsCoordinateDialog dialog = new GpsCoordinateDialog();
+      Preconditions.checkArgument(view.getContext() instanceof Activity);
+      dialog.setCallback(new GpsLocationCallback() {
+        @Override
+        public void location(GpsCoordinates coordinates) {
+          updateHandler.applyMutation(new ReportMutations.NewGpsMutation(coordinates));
         }
       });
 

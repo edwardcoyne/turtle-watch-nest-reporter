@@ -211,6 +211,8 @@ public class ReportMutations {
     }
   }
 
+
+
   public static class PropEventsRecordedMutation implements ReportMutation {
     private final NestCondition.ProportionEventsRecorded proportion;
     public PropEventsRecordedMutation(NestCondition.ProportionEventsRecorded proportion) {

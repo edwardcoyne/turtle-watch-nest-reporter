@@ -90,10 +90,10 @@ public class EditFragmentNestResolution extends EditFragment {
     Excavation excavation = report.getIntervention().getExcavation();
     setChecked(R.id.fieldExcavated, excavation.getExcavated());
 
-//    setVisible(!excavation.getExcavated(), ImmutableList.of(R.id.rowWhyNotExcavatedLabel,
-//            R.id.rowWhyNotExcavatedFields1, R.id.rowWhyNotExcavatedFields2, R.id.textPleaseSpecify));
 
-//    if (!excavation.getExcavated()) {
+    setVisible(R.id.rowWhyNotExcavatedFields1,!excavation.getExcavated());
+    setVisible(R.id.rowWhyNotExcavatedFields2,!excavation.getExcavated());
+
       setChecked(R.id.fieldEggsNotFound,
               excavation.getFailureReason() == ExcavationFailureReason.EGGS_NOT_FOUND);
       setChecked(R.id.fieldEggsTooDecayed,

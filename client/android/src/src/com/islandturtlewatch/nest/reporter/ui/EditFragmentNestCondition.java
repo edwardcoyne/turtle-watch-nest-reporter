@@ -186,6 +186,8 @@ public class EditFragmentNestCondition extends EditFragment {
       clearDate(R.id.buttonPartialWashOutDate);
     }
 
+    setVisible(R.id.rowProportionEventsRecorded,condition.getActivelyRecordEvents());
+
     setChecked(R.id.fieldRecordedAll,condition.getPropEventsRecorded() == NestCondition.ProportionEventsRecorded.ALL);
     setChecked(R.id.fieldRecordedMost, condition.getPropEventsRecorded() == NestCondition.ProportionEventsRecorded.MOST);
     setChecked(R.id.fieldRecordedSome,condition.getPropEventsRecorded() == NestCondition.ProportionEventsRecorded.SOME);
