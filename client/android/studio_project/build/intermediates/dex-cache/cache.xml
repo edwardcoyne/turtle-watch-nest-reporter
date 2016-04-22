@@ -1,2 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
+
+    <item
+        jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/joda-time/joda-time/2.3/56498efd17752898cfcc3868c1b6211a07b12b8f/joda-time-2.3.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="56498efd17752898cfcc3868c1b6211a07b12b8f">
+        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/joda-time-2.3_97373888c2523b3f0e44cf2a7180ed00283841cd/classes.dex" />
+    </item>
+    <item
+        jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/com.google.oauth-client/google-oauth-client/1.19.0/d473a8962e14a707a3716637e4898bb2dd9643f2/google-oauth-client-1.19.0.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="d473a8962e14a707a3716637e4898bb2dd9643f2">
+        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/google-oauth-client-1.19.0_b496ad08316b75b8fa9d61be3eb584b6aa09c618/classes.dex" />
+    </item>
+    <item
+        jar="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="44fc3236ead5d480b9d7ba241ef5ded38c3b0b40">
+        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_90f082256d63d5786438dc01910b2978ef5ed7f6/classes.dex" />
+    </item>
+    <item
+        jar="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.0/jars/libs/internal_impl-23.0.0.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="8bd336eeae661e8311330284897ee07f8ebaa297">
+        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.0.0_55e559d3833421071d3ddcf85d95e8d9f92ccbfc/classes.dex" />
+    </item>
+    <item
+        jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-gson/1.19.0/b3cdefb990d5212bb2a130525b20e2c44aeffc4c/google-http-client-gson-1.19.0.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="b3cdefb990d5212bb2a130525b20e2c44aeffc4c">
+        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/google-http-client-gson-1.19.0_a1c89272449d9460471d9bdeda3ea10a82db473e/classes.dex" />
+    </item>
+    <item
+        jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.1.3/f6c3aed1cdfa21b5c1737c915186ea93a95a58bd/jackson-core-2.1.3.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="f6c3aed1cdfa21b5c1737c915186ea93a95a58bd">
+        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/jackson-core-2.1.3_d8e5e73e911426e16b2a211839a47e8167d820f8/classes.dex" />
+    </item>
+    <item
+        jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client/1.19.0/6a21277d9bebe267b7ddee028b241eebc756c040/google-api-client-1.19.0.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="6a21277d9bebe267b7ddee028b241eebc756c040">
+        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/google-api-client-1.19.0_b0807f976f88004eb40739ceab94e97e0a1e71f1/classes.dex" />
+    </item>
+    <item
+        jar="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="ba03661218d4692382bc8f555363c79bcc8c9f73">
+        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_f348a5e2d48769727f063e897fd71962df3020db/classes.dex" />
+    </item>
+    <item
+        jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.1/2e66da15851f9f5b5079228f856c2f090ba98c38/gson-2.1.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="2e66da15851f9f5b5079228f856c2f090ba98c38">
+        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/gson-2.1_3c46c51e8dc3a8be3fed084319648624ab225d4f/classes.dex" />
+    </item>
+    <item
+        jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client-android/1.19.0/ba2aafb867f6af469f936ae76426cf0a280094bd/google-api-client-android-1.19.0.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="ba2aafb867f6af469f936ae76426cf0a280094bd">
+        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/google-api-client-android-1.19.0_ed7f744fd6a10a8b9cf6901211921e372ad65d59/classes.dex" />
+    </item>
+    <item
+        jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-jackson2/1.19.0/81dbf9795d387d5e80e55346582d5f2fb81a42eb/google-http-client-jackson2-1.19.0.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="81dbf9795d387d5e80e55346582d5f2fb81a42eb">
+        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/google-http-client-jackson2-1.19.0_46aa8a271e761a87ad0b59889f49624f1fe33fab/classes.dex" />
+    </item>
+    <item
+        jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-android/1.19.0/e3f11020c2c812112803d252d1392872d3f619c8/google-http-client-android-1.19.0.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="e3f11020c2c812112803d252d1392872d3f619c8">
+        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/google-http-client-android-1.19.0_ec156c63c9a42c3fe85124b491c814e5ed2121db/classes.dex" />
+    </item>
+    <item
+        jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient-android/4.3.5/82edcaec6c7b4599eaeaaf11167ceea41db42f33/httpclient-android-4.3.5.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="82edcaec6c7b4599eaeaaf11167ceea41db42f33">
+        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/httpclient-android-4.3.5_76b692bc7318ee020984c8f8d31dde1cb4442cf1/classes.dex" />
+    </item>
+    <item
+        jar="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="8e673cdfadd8f2d98fdb2fda2285c30f6e449782">
+        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-basement-8.4.0_3a726ebd71f024527df5d722ff0414db5aa208a3/classes.dex" />
+    </item>
+    <item
+        jar="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="b82b8e847173c28efffcd291b2a0b1ae9ad17fa4">
+        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-identity-8.4.0_7174aacfa498f4b822571753671a76bdbdac5f35/classes.dex" />
+    </item>
+    <item
+        jar="/Users/ReverendCode/EclipseDev/sdk/extras/android/m2repository/com/android/support/support-annotations/23.0.0/support-annotations-23.0.0.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="990e7f98a7bad86a40b1f0bcfeb039023afd0839">
+        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-23.0.0_cb936184eeeef1531292646af080a0a2b67b344c/classes.dex" />
+    </item>
+    <item
+        jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client/1.19.0/cdca49ad0977c040f603478aa2e16b2775c8fec6/google-http-client-1.19.0.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="cdca49ad0977c040f603478aa2e16b2775c8fec6">
+        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/google-http-client-1.19.0_6684c55a5cb3e322aec7b8fd5455b9a768e6f93b/classes.dex" />
+    </item>
+    <item
+        jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpmime/4.3.5/1dd0d38df9c6d21e893f2e52403f1cd99e91cd81/httpmime-4.3.5.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="1dd0d38df9c6d21e893f2e52403f1cd99e91cd81">
+        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/httpmime-4.3.5_41c7de00e92b97c3a8bf6932e98eb1ce9385d22b/classes.dex" />
+    </item>
+    <item
+        jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/com.google.protobuf/protobuf-java/2.5.0/a10732c76bfacdbd633a7eb0f7968b1059a65dfa/protobuf-java-2.5.0.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="a10732c76bfacdbd633a7eb0f7968b1059a65dfa">
+        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/protobuf-java-2.5.0_c44e8c5f49319cabbe80cc1d4c4a3a6fd3783b3d/classes.dex" />
+    </item>
+    <item
+        jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/18.0/cce0823396aa693798f8882e64213b1772032b09/guava-18.0.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="cce0823396aa693798f8882e64213b1772032b09">
+        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/guava-18.0_8fa298e734acf4b9272d28d881ff48c512ee6be4/classes.dex" />
+    </item>
+    <item
+        jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/1.3.9/40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf/jsr305-1.3.9.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf">
+        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/jsr305-1.3.9_fa724bac1a7356d744af6ab8bd65154b7a77c93a/classes.dex" />
+    </item>
+    <item
+        jar="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.0/jars/classes.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="8413c27b45b7fe61dca4a98159f65e2cee215f5a">
+        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-23.0.0_d1a3ceb2196af9064bb1110d6bc44a16766a274f/classes.dex" />
+    </item>
+    <item
+        jar="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="fef2b3e4b6b1b0e5fe7b69fa137a5fa55a3182ab">
+        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-base-8.4.0_eecb6c0030a5b77a9895880835357e3d3ec75aac/classes.dex" />
+    </item>
+
+</items>

@@ -48,6 +48,7 @@ import com.islandturtlewatch.nest.reporter.ui.EditFragmentNestCondition;
 import com.islandturtlewatch.nest.reporter.ui.EditFragmentNestLocation;
 import com.islandturtlewatch.nest.reporter.ui.EditFragmentNestResolution;
 import com.islandturtlewatch.nest.reporter.ui.EditFragmentNotes;
+import com.islandturtlewatch.nest.reporter.ui.EditFragmentStorms;
 import com.islandturtlewatch.nest.reporter.ui.EditView;
 import com.islandturtlewatch.nest.reporter.ui.FocusMonitoredEditText;
 import com.islandturtlewatch.nest.reporter.ui.ReportSection;
@@ -69,6 +70,7 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
       ImmutableMap.<ReportSection, EditFragment>builder()
           .put(ReportSection.INFO, new EditFragmentInfo())
           .put(ReportSection.NEST_LOCATION, new EditFragmentNestLocation())
+          .put(ReportSection.STORMS, new EditFragmentStorms())
           .put(ReportSection.NEST_CONDITION, new EditFragmentNestCondition())
           .put(ReportSection.NEST_CARE, new EditFragmentNestCare())
           .put(ReportSection.NEST_RESOLUTION, new EditFragmentNestResolution())

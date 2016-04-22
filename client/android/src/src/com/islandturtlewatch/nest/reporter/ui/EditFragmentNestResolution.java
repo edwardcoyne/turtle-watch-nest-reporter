@@ -91,8 +91,8 @@ public class EditFragmentNestResolution extends EditFragment {
     setChecked(R.id.fieldExcavated, excavation.getExcavated());
 
 
-    setVisible(R.id.rowWhyNotExcavatedFields1,!excavation.getExcavated());
-    setVisible(R.id.rowWhyNotExcavatedFields2,!excavation.getExcavated());
+    setVisible(R.id.whyNotExcavatedFields,!excavation.getExcavated());
+//    setVisible(R.id.rowWhyNotExcavatedFields2,!excavation.getExcavated());
 
       setChecked(R.id.fieldEggsNotFound,
               excavation.getFailureReason() == ExcavationFailureReason.EGGS_NOT_FOUND);
