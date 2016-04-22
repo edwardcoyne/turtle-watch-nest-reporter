@@ -11,6 +11,7 @@ import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.islandturtlewatch.nest.data.ReportProto;
 import com.islandturtlewatch.nest.data.ReportProto.GpsCoordinates;
+import com.islandturtlewatch.nest.data.ReportProto.Intervention;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation.City;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation.Placement;
@@ -34,7 +35,6 @@ import com.islandturtlewatch.nest.reporter.data.ReportMutations.WaterToApexFtMut
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.WaterToApexInMutation;
 import com.islandturtlewatch.nest.reporter.ui.GpsCoordinateDialog.GpsLocationCallback;
 import com.islandturtlewatch.nest.reporter.util.GpsUtil;
-import com.islandturtlewatch.nest.data.ReportProto.Intervention;
 
 import java.util.Map;
 

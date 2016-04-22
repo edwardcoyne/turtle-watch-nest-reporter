@@ -261,15 +261,20 @@
 				/>
 		</TableRow>
 
-		<TableRow>
-			<TextView
-				android:layout_height="wrap_content"
-				android:layout_width="wrap_content"
-				android:text="@string/edit_prop_recorded_events"
-				/>
-		</TableRow>
-		<TableRow
+
+		<TableLayout
 			android:id="@+id/rowProportionEventsRecorded"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content">
+			<TableRow>
+				<TextView
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:text="@string/edit_prop_recorded_events"
+					/>
+			</TableRow>
+		<TableRow
+
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content">
 			<CheckBox
@@ -305,6 +310,9 @@
 				android:onClick="handleClick"
 				/>
 		</TableRow>
+
+		</TableLayout>
+
 		<TableRow
 			android:layout_width="match_parent"
 			android:layout_height="match_parent">
