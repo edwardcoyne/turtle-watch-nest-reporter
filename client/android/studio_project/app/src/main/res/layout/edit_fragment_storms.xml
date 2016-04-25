@@ -10,12 +10,16 @@
             android:layout_height="wrap_content" >
 
             <TextView
-                android:textSize="18sp"
+                style="@style/Header"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/edit_nest_condition_wash_over" />
         </TableRow>
+        <Space
+            android:layout_height="10dp"
+            android:layout_width="match_parent"
+            />
         <TableLayout
             android:id="@+id/tableWashOver">
             <!-- Will be dynamically populated -->
@@ -32,13 +36,17 @@
                 android:text="@string/add_wash_over_text"
                 />
         </TableRow>
+        <Space
+            android:layout_height="20dp"
+            android:layout_width="match_parent"
+            />
 
         <TableRow
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
 
             <TextView
-                android:textSize="18sp"
+                style="@style/Header"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -49,6 +57,10 @@
             <!-- Will be dynamically populated -->
 
         </TableLayout>
+        <Space
+            android:layout_height="10dp"
+            android:layout_width="match_parent"
+            />
         <TableRow
             android:layout_height="wrap_content"
             android:layout_width="wrap_content">
@@ -60,8 +72,10 @@
                 android:text="@string/add_inundation_event_text"
                 />
         </TableRow>
-
-
+        <Space
+            android:layout_height="20dp"
+            android:layout_width="match_parent"
+            />
         <TableRow
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" ></TableRow>
@@ -71,7 +85,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
             <TextView
-                android:textSize="18sp"
+                style="@style/Header"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -95,7 +109,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="@string/edit_nest_condition_storm_name"/>
+                android:hint="@string/edit_nest_condition_storm_name"
             onTextChangeHandler="handleTextChange" />
         </TableRow>
 
@@ -105,7 +119,7 @@
             android:layout_height="wrap_content" >
             <TextView
                 android:layout_width="0dp"
-                android:textSize="18sp"
+                style="@style/Header"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/edit_nest_condition_washout" />
@@ -148,18 +162,23 @@
                 android:text="@string/edit_accretion_header"
                 />
         </TableRow>
-
+        <Space
+            android:layout_height="10dp"
+            android:layout_width="match_parent"
+            />
         <TableLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tableAccretionEvent">
             <!--will be dynamically populated-->
         </TableLayout>
+        <Space
+            android:layout_height="20dp"
+            android:layout_width="match_parent"
+            />
         <TableRow
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-
-
             <TextView
                 android:id="@+id/fieldAddAccretionRow"
                 android:text="@string/edit_add_accretion_event"

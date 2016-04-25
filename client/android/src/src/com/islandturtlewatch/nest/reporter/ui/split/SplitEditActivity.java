@@ -177,6 +177,7 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
         case R.id.action_new_report:
           model.startNewActiveReport();
           updateDisplay(model.getActiveReport());
+
           return true;
         case R.id.action_delete_report:
           DialogUtil.confirm(this, "Are you sure you want to delete this report?",
@@ -205,6 +206,7 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
   public void updateDisplay(Report report) {
     setTitle(ReportUtil.getShortName(report));
     sectionManager.updateSections(report);
+//    sectionManager.setSection(ReportSection.INFO);
   }
 
   @Override

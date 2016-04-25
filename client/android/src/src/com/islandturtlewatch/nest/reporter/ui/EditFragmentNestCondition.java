@@ -137,18 +137,18 @@ if (condition.getPreditationCount()>0) {
     showFieldOther = false;
     pSpinner.setSelection(0,false);
   }
-
-    setVisible(R.id.fieldGhostCrabsDamaged10OrLess,(pSpinner.getSelectedItemPosition() >= 10
-    && pSpinner.getSelectedItemPosition() < 13));
-
-  setVisible(R.id.fieldPredatorOther, showFieldOther);
   setText(R.id.fieldPredatorOther, condition.getPreditation(0).getPredator());
+} else {
+  setText(R.id.fieldNumberEggs, "");
+  showFieldOther = false;
+  pSpinner.setSelection(0,false);
 }
     setChecked(R.id.fieldDamageEggsDamagedByAnotherTurtle,condition.getEggsDamagedByAnotherTurtle());
     setChecked(R.id.fieldDamageNestDepredated, condition.getNestDepredated());
 
-
-
+    setVisible(R.id.fieldPredatorOther, showFieldOther);
+    setVisible(R.id.fieldGhostCrabsDamaged10OrLess,(pSpinner.getSelectedItemPosition() >= 10
+            && pSpinner.getSelectedItemPosition() < 13));
     setChecked(R.id.fieldGhostCrabsDamaged10OrLess,condition.getGhostDamage10OrLess());
 
     setChecked(R.id.fieldDamageVandalized, condition.getVandalized());

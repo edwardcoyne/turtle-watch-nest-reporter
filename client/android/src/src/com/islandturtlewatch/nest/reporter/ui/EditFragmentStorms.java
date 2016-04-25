@@ -64,15 +64,21 @@ public class EditFragmentStorms extends EditFragment {
     @Override
     public void updateSection(ReportProto.Report report) {
         final ReportProto.NestCondition condition = report.getCondition();
-        setText(R.id.fieldWashOutStormName, condition.getWashOut().getStormName());
-        setText(R.id.fieldPartialWashOutStormName, condition.getPartialWashout().getStormName());
+
+
+
+
+
+
+
         if (condition.getStormImpact().hasTimestampMs()) {
             setDate(R.id.buttonOtherStormImpactDate, condition.getStormImpact().getTimestampMs());
+            setText(R.id.fieldOtherStormImpactStormName, condition.getStormImpact().getStormName());
         } else {
             clearDate(R.id.buttonOtherStormImpactDate);
+            setText(R.id.fieldOtherStormImpactStormName,"");
         }
 
-        setText(R.id.fieldOtherStormImpactStormName,condition.getStormImpact().getStormName());
         setText(R.id.fieldOtherStormImpactOtherImpact, condition.getStormImpact().getOtherImpact());
         setVisible(R.id.fieldOtherStormImpactOtherImpact,condition.getStormImpact().hasTimestampMs());
 
@@ -135,15 +141,19 @@ public class EditFragmentStorms extends EditFragment {
         if (condition.getWashOut().hasTimestampMs()) {
             setDate(R.id.buttonWashOutDate,
                     condition.getWashOut().getTimestampMs());
+            setText(R.id.fieldWashOutStormName, condition.getWashOut().getStormName());
         } else {
+            setText(R.id.fieldWashOutStormName, "");
             clearDate(R.id.buttonWashOutDate);
         }
 
         if (condition.getPartialWashout().hasTimestampMs()) {
             setDate(R.id.buttonPartialWashOutDate,
                     condition.getPartialWashout().getTimestampMs());
+            setText(R.id.fieldPartialWashOutStormName, condition.getPartialWashout().getStormName());
         } else {
             clearDate(R.id.buttonPartialWashOutDate);
+            setText(R.id.fieldPartialWashOutStormName, "");
         }
     }
     private void clearTable(int viewId) {
