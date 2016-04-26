@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:textColor="#134aef"
                 android:text="@string/add_wash_over_text"
-                />
+                android:textSize="14dp" />
         </TableRow>
         <Space
             android:layout_height="20dp"
@@ -70,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:textColor="#134aef"
                 android:text="@string/add_inundation_event_text"
-                />
+                android:textSize="14dp" />
         </TableRow>
         <Space
             android:layout_height="20dp"
@@ -184,7 +184,8 @@
                 android:text="@string/edit_add_accretion_event"
                 android:clickable="true"
                 android:onClick="handleClick"
-                android:textColor="#134aef" />
+                android:textColor="#134aef"
+                android:textSize="14dp" />
         </TableRow>
 
         <TableRow

@@ -26,7 +26,8 @@
 	        android:layout_height="wrap_content" >
 	        <TextView
 	            android:text="@string/edit_nest_location_original_address" />
-	
+			</TableRow>
+	<TableRow>
 	        <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
 	            android:id="@+id/fieldAddress"
 	            android:inputType="textPostalAddress"
@@ -318,7 +319,8 @@
 	       
 	       <TextView
 	            android:text="@string/other" />
-	       
+	       </TableRow>
+		<TableRow>
 	       <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
 	            android:id="@+id/fieldObstructionsOther"
 	            android:inputType="textMultiLine"
