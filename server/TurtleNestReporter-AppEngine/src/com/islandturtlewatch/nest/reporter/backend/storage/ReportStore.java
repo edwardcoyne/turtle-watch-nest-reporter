@@ -19,6 +19,8 @@ import com.islandturtlewatch.nest.reporter.backend.storage.entities.StoredReport
 import com.islandturtlewatch.nest.reporter.backend.storage.entities.StoredReportVersion;
 import com.islandturtlewatch.nest.reporter.backend.storage.entities.User;
 
+import javax.mail.Store;
+
 // Needs to be thread safe.
 @Log
 public class ReportStore {
@@ -52,6 +54,7 @@ public class ReportStore {
       }});
   }
 
+
   public ReportWrapper updateReport(final ReportWrapper wrapper) {
     log.info("Updating ref: " + wrapper.getRef());
     return backend().transact(new Work<ReportWrapper>(){
@@ -61,8 +64,9 @@ public class ReportStore {
       }});
   }
 
+
   public void deleteReport(final ReportRef ref) {
-    log.info("deleteing ref: " + ref);
+    log.info("deleting ref: " + ref);
     backend().transact(new Work<Boolean>(){
       @Override
       public Boolean run() {
@@ -70,6 +74,16 @@ public class ReportStore {
         return true;
       }});
   }
+  public void setReportOld(final ReportRef ref) {
+    log.info("Setting ref to old: " + ref);
+    backend().transact(new Work<Boolean>(){
+      @Override
+      public Boolean run() {
+        doSetReportOld(ref);
+        return true;
+      }});
+  }
+
 
   public ReportWrapper getReportLatestVersion(String userId, final long reportId) {
     final User user = loadOrCreateUser(userId);
@@ -112,7 +126,8 @@ public class ReportStore {
 
   public void markAllActiveReportsInactive() {
     for (ReportWrapper wrapper : getActiveReports()) {
-      doSetReportOld(wrapper);
+      ReportRef ref = wrapper.getRef();
+      setReportOld(ref);
     }
   }
 
@@ -168,10 +183,10 @@ public class ReportStore {
     return reportVersion.toReportWrapper();
   }
 
-  private ReportWrapper doSetReportOld(ReportWrapper wrapper) {
-    ReportWrapper.Builder builder = wrapper.toBuilder();
-    builder.getRefBuilder().setState(ReportRef.State.OLD);
-    return builder.build();
+  private void doSetReportOld(ReportRef ref) {
+//    return builder.build();
+    ReportRef.Builder reportRef = ref.toBuilder();
+    reportRef.setState(ReportRef.State.OLD);
   }
 
   private void doDeleteReport(ReportRef ref) {
