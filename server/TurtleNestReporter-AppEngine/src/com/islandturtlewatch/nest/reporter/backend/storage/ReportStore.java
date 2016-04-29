@@ -187,6 +187,9 @@ public class ReportStore {
 //    return builder.build();
     ReportRef.Builder reportRef = ref.toBuilder();
     reportRef.setState(ReportRef.State.OLD);
+    User user = loadOrCreateUser(ref.getOwnerId());
+    StoredReport report = loadReport(user,ref.getReportId());
+    backend().save().entities(report).now();
   }
 
   private void doDeleteReport(ReportRef ref) {
