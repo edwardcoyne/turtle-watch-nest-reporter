@@ -23,7 +23,7 @@ public class ArchiveActiveReportsServlet extends HttpServlet {
             throws ServletException, IOException {
         ReportStore store = new ReportStore();
         store.init();
-        store.markAllReportsInactive();
+        store.markAllActiveReportsInactive();
 
     }
 }

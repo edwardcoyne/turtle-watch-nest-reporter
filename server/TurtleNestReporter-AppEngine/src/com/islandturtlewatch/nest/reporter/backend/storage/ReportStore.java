@@ -110,9 +110,9 @@ public class ReportStore {
     return ImmutableList.copyOf(versions);
   }
 
-  public void markAllReportsInactive() {
+  public void markAllActiveReportsInactive() {
     for (ReportWrapper wrapper : getActiveReports()) {
-      doUpdateReport(doSetReportOld(wrapper));
+      doSetReportOld(wrapper);
     }
   }
 
