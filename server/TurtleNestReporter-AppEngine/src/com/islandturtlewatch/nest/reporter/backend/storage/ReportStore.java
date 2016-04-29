@@ -110,6 +110,12 @@ public class ReportStore {
     return ImmutableList.copyOf(versions);
   }
 
+  public void markAllReportsInactive() {
+    for (ReportWrapper wrapper : getActiveReports()) {
+      doUpdateReport(doSetReportOld(wrapper));
+    }
+  }
+
   private ReportWrapper doAddReport(String userId, Report report) {
     User user = loadOrCreateUser(userId);
 
@@ -144,7 +150,7 @@ public class ReportStore {
       // TODO(edcoyne): plug in conflict handling here.
       //throw new UnsupportedOperationException(
       log.warning(
-          "Attempting to update with old version, We don't support conflict resultion yet..."
+          "Attempting to update with old version, We don't support conflict resolution yet..."
           + " Server version: " + report.getLatestVersion() + " Client version: "
               + ref.getVersion());
     }
@@ -160,6 +166,12 @@ public class ReportStore {
 
     backend().save().entities(reportVersion, report).now();
     return reportVersion.toReportWrapper();
+  }
+
+  private ReportWrapper doSetReportOld(ReportWrapper wrapper) {
+    ReportWrapper.Builder builder = wrapper.toBuilder();
+    builder.setActive(false);
+    return builder.build();
   }
 
   private void doDeleteReport(ReportRef ref) {
