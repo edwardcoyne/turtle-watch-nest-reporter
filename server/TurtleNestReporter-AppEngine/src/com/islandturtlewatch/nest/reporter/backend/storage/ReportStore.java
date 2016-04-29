@@ -184,11 +184,12 @@ public class ReportStore {
   }
 
   private void doSetReportOld(ReportRef ref) {
-//    return builder.build();
     ReportRef.Builder reportRef = ref.toBuilder();
     reportRef.setState(ReportRef.State.OLD);
     User user = loadOrCreateUser(ref.getOwnerId());
     StoredReport report = loadReport(user,ref.getReportId());
+    report.setState(ReportRef.State.OLD);
+
     backend().save().entities(report).now();
   }
 
@@ -205,6 +206,7 @@ public class ReportStore {
               + ref.getVersion());
     }
     report.setState(ReportRef.State.DELETED);
+
 
     backend().save().entities(report).now();
   }
