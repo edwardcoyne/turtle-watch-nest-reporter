@@ -170,7 +170,7 @@ public class ReportStore {
 
   private ReportWrapper doSetReportOld(ReportWrapper wrapper) {
     ReportWrapper.Builder builder = wrapper.toBuilder();
-    builder.setActive(false);
+    builder.getRefBuilder().setState(ReportRef.State.OLD);
     return builder.build();
   }
 
