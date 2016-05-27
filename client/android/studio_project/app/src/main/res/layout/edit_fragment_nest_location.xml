@@ -234,7 +234,15 @@
 				android:text="@string/edit_seaward_of_armoring_structure"
 				android:onClick="handleClick"
 				/>
-
+		</TableRow>
+		<TableRow
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+			<TextView
+				android:text="@string/examples_of_structure_text"
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				/>
 		</TableRow>
 		<TableRow>
 			<CheckBox

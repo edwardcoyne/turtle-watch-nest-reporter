@@ -139,8 +139,8 @@
     <string name="edit_info_label_possible_false_crawl">Possible False Crawl</string>
     <string name="OK">OK</string>
     <string name="confirmChangeReport">Are you sure you want to edit this report?</string>
-    <string name="edit_nest_location_coastal_armoring">Coastal Armoring</string>
-    <string name="edit_seaward_of_armoring_structure">Is the nest seaward of any man-made coastal armoring structure? (e.g. Seawalls)</string>
+    <string name="edit_nest_location_coastal_armoring">Man-made structure on the beach</string>
+    <string name="edit_seaward_of_armoring_structure">Is the nest seaward of a man-made structure on the beach?</string>
     <string name="edit_within_3_feet">Nest within 3 feet of structure</string>
     <string name="edit_type_of_structure">Type of Structure</string>
     <string name="edit_actively_record_predation_events">Do you actively look for\nand record predation events?</string>
@@ -161,4 +161,5 @@
     <string name="hint_other_details">Please enter details here</string>
     <string name="add_wash_over_text"><u>+Add Wash over Event</u></string>
     <string name="add_inundation_event_text"><u>+Add Inundation Event</u></string>
+    <string name="examples_of_structure_text">(Examples are seawalls, sand fencing, bulkheads and rock piles, but not buildings, lifeguard towers or individual posts.)</string>
 </resources>

@@ -189,7 +189,6 @@ public class ReportStore {
     User user = loadOrCreateUser(ref.getOwnerId());
     StoredReport report = loadReport(user,ref.getReportId());
     report.setState(ReportRef.State.OLD);
-
     backend().save().entities(report).now();
   }
 

@@ -138,7 +138,7 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
                   column.getValue(rowId).equals("UNSET_REASON")) {
             return "";
           } else if (column.getValue(rowId).equals("OTHER")) {
-            return "OTHER: " + other.getValue(rowId);
+            return other.getValue(rowId);
           }
 
 
@@ -166,6 +166,25 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
     }
   }
 
+  public static class MappedComboColumn extends ReportColumn {
+    public MappedComboColumn(String name, final String sPathA, final String sPathB) {
+      super(name, new ValueFetcher() {
+        private final Path pathA = new Path(sPathA);
+        private final Path pathB = new Path(sPathB);
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column columnA = columnMap.get(pathA);
+          Column columnB = columnMap.get(pathB);
+          Preconditions.checkNotNull(columnA, "Missing path: " + pathA );
+          Preconditions.checkNotNull(columnB, "Missing path: " + pathB );
+          String stringA = columnA.getValue(rowId);
+          String stringB = columnB.getValue(rowId);
+          return stringA + "/" + stringB;
+        }
+      });
+    }
+  }
+
   public static class MappedColumn extends ReportColumn {
     public MappedColumn(String name, final String stringPath) {
       super(name, new ValueFetcher() {
@@ -174,6 +193,25 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
           Column column = columnMap.get(path);
           Preconditions.checkNotNull(column, "Missing path: " + stringPath);
           return column.getValue(rowId);
+        }
+      });
+    }
+  }
+  public static class MappedNullIfNotInventoriedColumn extends ReportColumn {
+    public MappedNullIfNotInventoriedColumn(String name, final String countPath,
+                                            final String inventoryPath) {
+      super(name, new ValueFetcher() {
+        private final Path count = new Path(countPath);
+        private final Path inventory = new Path(inventoryPath);
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column countColumn = columnMap.get(count);
+          Column inventColumn = columnMap.get(inventory);
+          Preconditions.checkNotNull(countColumn,"Missing Path: " + count);
+          Preconditions.checkNotNull(inventColumn,"Missing Path: " + inventory);
+          if (inventColumn.getValue(rowId) == "NO") {
+            return "";
+          } else return countColumn.getValue(rowId);
         }
       });
     }

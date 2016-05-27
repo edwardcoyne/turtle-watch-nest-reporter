@@ -11,7 +11,7 @@ import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.
 import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedHasTimestampColumn;
 import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedBlankIfUnsetColumn;
 import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedSpeciesColumn;
-
+import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedNullIfNotInventoriedColumn;
 import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedSectionColumn;
 import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedColumnAbsoluteValueDouble;
 import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedColumnWithDefault;
@@ -51,6 +51,7 @@ public class StateNestReportServlet extends HttpServlet {
 
   // Keep this column separate so we can test against it.
   private static ReportColumn sectionColumn = new MappedSectionColumn("Beach Zone", "ref.owner_id");
+
 //    private static ReportColumn sectionColumn = new StaticValueColumn("**TEST**", "1");
 
 
@@ -62,8 +63,11 @@ public class StateNestReportServlet extends HttpServlet {
       new MappedSpeciesColumn("Species","report.species"),
       new MappedColumn("ID/Label", "report.nest_number"),
       sectionColumn,
+      new OrderedReportWriter.MappedComboColumn("Nest Label","ref.owner_id","report.nest_number"),
       new StaticValueColumn("Nest within Project Area","YES"),
       new MappedColumn("City","report.location.city"),
+      new MappedYesNoColumn("Within Cortez Groin Replacement Area",
+              "report.location.in_cortez_groin_replacement_area"),
       new MappedColumn("Address","report.location.street_address"),
       new MappedColumnWithDefault("Clutch Size Counted When Nest Was Made",
               "report.intervention.relocation.eggs_relocated",
@@ -110,6 +114,7 @@ public class StateNestReportServlet extends HttpServlet {
               "report.condition.wash_out.storm_name",
               "report.condition.partial_washout.storm_name",
               ""),
+
       new MappedColumn("Nest Completely Depredated",
               "report.condition.nest_depredated"),
       new MappedNotNullColumn("Predation", "report.condition.preditation.0.timestamp_ms"),
@@ -125,12 +130,14 @@ public class StateNestReportServlet extends HttpServlet {
               "report.condition.poached"),
           new MappedYesNoColumn("Poached (Eggs Removed)",
                   "report.condition.poached_eggs_removed"),
+      new MappedYesNoColumn("Nest Dug Into","report.condition.nest_dug_into"),
       new MappedYesNoColumn("Vandalized","report.condition.vandalized"),
       new ConditionallyMappedColumn("Type of Vandalism",
           "report.condition.vandalized",
               "report.condition.vandalism_type"),
           //ROW 30
-
+      new MappedYesNoColumn("Adopted","report.intervention.adopted"),
+      new MappedIfExistsColumn("Adoptee","report.intervention.adoptee"),
       new MappedTimestampColumn("First Hatchling Emergence Date",
           "report.condition.hatch_timestamp_ms",
               "UNK"),
@@ -144,18 +151,26 @@ public class StateNestReportServlet extends HttpServlet {
               "report.intervention.excavation.failure_other"),
       new MappedTimestampColumn("Date Nest Inventoried",
           "report.intervention.excavation.timestamp_ms"),
-      new MappedColumn("# of Dead Hatchlings", "report.intervention.excavation.dead_in_nest"),
-      new MappedColumn("# of Live Hatchlings", "report.intervention.excavation.live_in_nest"),
+      new MappedNullIfNotInventoriedColumn("# of Dead Hatchlings",
+              "report.intervention.excavation.dead_in_nest","report.intervention.excavation.excavated"),
+      new MappedNullIfNotInventoriedColumn("# of Live Hatchlings", "report.intervention.excavation.live_in_nest"
+              ,"report.intervention.excavation.excavated"),
           //ROW 40
-      new MappedColumn("# of Empty Shells", "report.intervention.excavation.hatched_shells"),
-      new MappedColumn("# of Dead Pipped", "report.intervention.excavation.dead_pipped"),
-      new MappedColumn("# of Live Pipped", "report.intervention.excavation.live_pipped"),
-      new MappedColumn("# of Whole Eggs", "report.intervention.excavation.whole_unhatched"),
-      new MappedColumn("# of Damaged Eggs", "report.intervention.excavation.eggs_destroyed"),
+      new MappedNullIfNotInventoriedColumn("# of Empty Shells", "report.intervention.excavation.hatched_shells"
+              ,"report.intervention.excavation.excavated"),
+      new MappedNullIfNotInventoriedColumn("# of Dead Pipped", "report.intervention.excavation.dead_pipped"
+              ,"report.intervention.excavation.excavated"),
+      new MappedNullIfNotInventoriedColumn("# of Live Pipped", "report.intervention.excavation.live_pipped"
+              ,"report.intervention.excavation.excavated"),
+      new MappedNullIfNotInventoriedColumn("# of Whole Eggs", "report.intervention.excavation.whole_unhatched"
+              ,"report.intervention.excavation.excavated"),
+      new MappedNullIfNotInventoriedColumn("# of Damaged Eggs", "report.intervention.excavation.eggs_destroyed"
+              ,"report.intervention.excavation.excavated"),
       new MappedColumnWithDefault("Initial Clutch Size",
           "report.intervention.relocation.eggs_relocated",
           "UNK"),
           new MappedColumn("Additional Notes","report.additional_notes"),
+          new MappedNotNullColumn("Photo","report.image"),
 
           new MappedColumnAbsoluteValueDouble("Latitude", "report.location.coordinates.lat"),
       new MappedColumnAbsoluteValueDouble("Longitude", "report.location.coordinates.long"));

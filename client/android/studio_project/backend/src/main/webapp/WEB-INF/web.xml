@@ -24,6 +24,16 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>ArchiveActiveReportsServlet</servlet-name>
+        <servlet-class>com.islandturtlewatch.nest.reporter.web.servlets.ArchiveActiveReportsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ArchiveActiveReportsServlet</servlet-name>
+        <url-pattern>/web/reporting/archive</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
         <servlet-name>ImageServlet</servlet-name>
         <servlet-class>com.islandturtlewatch.nest.reporter.web.servlets.ImageServlet</servlet-class>
     </servlet>
