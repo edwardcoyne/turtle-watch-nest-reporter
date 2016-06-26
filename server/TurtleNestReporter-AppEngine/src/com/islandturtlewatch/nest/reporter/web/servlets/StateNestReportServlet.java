@@ -60,6 +60,8 @@ public class StateNestReportServlet extends HttpServlet {
   private static List<ReportColumn> reportColumns = ImmutableList.of(
       new MappedTimestampColumn("Date Nest Recorded", "report.timestamp_found_ms"),
       new MappedColumn("Escarpment >= 18 Encountered", "report.location.escarpment_over_18_inches"),
+      new MappedYesNoColumn("Nest seaward of armoring structure","report.nest_seaward_of_armoring_structure"),
+      new MappedYesNoColumn("Nest within 3 feet of armoring structure","report.within_3_feet_of_structure"),
       new MappedSpeciesColumn("Species","report.species"),
       new MappedColumn("ID/Label", "report.nest_number"),
       sectionColumn,
@@ -114,14 +116,35 @@ public class StateNestReportServlet extends HttpServlet {
               "report.condition.wash_out.storm_name",
               "report.condition.partial_washout.storm_name",
               ""),
-
+      //first accretion timestamp and storm name (if present)
+      new MappedNotNullTimestampColumn("Accretion Date","report.condition.accretion.0.timestamp_ms"),
+      new MappedIfExistsColumn("Accretion Storm Name","report.condition.accretion.0.storm_name"),
+          //should be date, storm name, details
+      new MappedTimestampColumn("Other Storm impact Date","report.condition.storm_impact.timestamp_ms"),
+      new MappedColumn("Other storm impact storm name","report.condition.storm_impact.storm_name"),
+      new MappedColumn("Details","report.condition.storm_impact.other_impact"),
       new MappedColumn("Nest Completely Depredated",
               "report.condition.nest_depredated"),
       new MappedNotNullColumn("Predation", "report.condition.preditation.0.timestamp_ms"),
 
           new MappedNotNullTimestampColumn("Date(s) Predation Occurred",
               "report.condition.preditation.0.timestamp_ms"),
-    new MappedIfExistsColumn("If Predated by What Predator(s)","report.condition.preditation.0.predator"),
+      new MappedIfExistsColumn("If Predated by What Predator(s)","report.condition.preditation.0.predator"),
+      //TODO(dwenzel): insert new predator columns here.
+          //These names are being compared against the values in arrays.xml under predator_array
+          new OrderedReportWriter.MappedPredatorColumn("Raccoon Only","report.condition.preditation.0.predator_spinner_text"),
+          new OrderedReportWriter.MappedPredatorColumn("Fox Only","report.condition.preditation.0.predator_spinner_text"),
+          new OrderedReportWriter.MappedPredatorColumn("Coyote Only","report.condition.preditation.0.predator_spinner_text"),
+          new OrderedReportWriter.MappedPredatorColumn("Dog Only","report.condition.preditation.0.predator_spinner_text"),
+          new OrderedReportWriter.MappedPredatorColumn("Canine (Unsure if Coyote or Dog)","report.condition.preditation.0.predator_spinner_text"),
+          new OrderedReportWriter.MappedPredatorColumn("Feral Hog Only","report.condition.preditation.0.predator_spinner_text"),
+          new OrderedReportWriter.MappedPredatorColumn("Armadillo Only","report.condition.preditation.0.predator_spinner_text"),
+          new OrderedReportWriter.MappedPredatorColumn("Mammal - Unk","report.condition.preditation.0.predator_spinner_text"),
+          new OrderedReportWriter.MappedPredatorColumn("Ants Only","report.condition.preditation.0.predator_spinner_text"),
+          new OrderedReportWriter.MappedPredatorColumn("Ghost Crab Only","report.condition.preditation.0.predator_spinner_text"),
+          new OrderedReportWriter.MappedPredatorColumn("Raccoon and Ghost Crab","report.condition.preditation.0.predator_spinner_text"),
+          new OrderedReportWriter.MappedPredatorColumn("Coyote and Ghost Crab","report.condition.preditation.0.predator_spinner_text"),
+          new OrderedReportWriter.MappedPredatorColumn("Other","report.condition.preditation.0.predator_spinner_text"),
       new MappedYesNoColumn("Roots Invade Eggshells",
               "report.condition.roots_invaded_eggshells"),
       new MappedYesNoColumn("Eggs Damaged by Another Turtle",

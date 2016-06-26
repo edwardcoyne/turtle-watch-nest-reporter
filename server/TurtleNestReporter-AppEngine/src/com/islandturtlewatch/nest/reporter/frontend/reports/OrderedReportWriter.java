@@ -24,7 +24,6 @@ import com.islandturtlewatch.nest.reporter.frontend.reports.ReportCsvGenerator.P
 public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
   private final Iterable<ReportColumn> reportColumns;
   private final RowFilter rowFilter;
-
   // Section column should be part of reportColumns too.
   public OrderedReportWriter(Iterable<ReportColumn> reportColumns, RowFilter rowFilter) {
     this.reportColumns = reportColumns;
@@ -197,6 +196,23 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
       });
     }
   }
+//WARNING: this function does string comparison.
+  public static class MappedPredatorColumn extends ReportColumn {
+    public MappedPredatorColumn(final String name, final String stringPath) {
+      super(name, new ValueFetcher() {
+        private final Path path = new Path(stringPath);
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column column = columnMap.get(path);
+          Preconditions.checkNotNull(column, "Missing path: " + stringPath);
+          if (column.getValue(rowId).equals(name)) {
+            return column.getValue(rowId);
+          } else return "";
+        }
+      });
+    }
+  }
+
   public static class MappedNullIfNotInventoriedColumn extends ReportColumn {
     public MappedNullIfNotInventoriedColumn(String name, final String countPath,
                                             final String inventoryPath) {
