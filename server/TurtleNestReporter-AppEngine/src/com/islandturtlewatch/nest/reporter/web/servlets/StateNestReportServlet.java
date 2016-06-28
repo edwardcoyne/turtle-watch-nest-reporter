@@ -80,7 +80,6 @@ public class StateNestReportServlet extends HttpServlet {
           "report.timestamp_found_ms",
           "report.intervention.protection_event.timestamp_ms",
           "report.intervention.protection_event.type"),
-          // ROW 10
       new FinalTreatmentColumn("Final Treatment ",
           "report.intervention.relocation.was_relocated",
           "report.timestamp_found_ms",
@@ -96,16 +95,9 @@ public class StateNestReportServlet extends HttpServlet {
           "report.location.water_to_apex_ft", "report.location.water_to_apex_in"),
       new MappedColumn("Nest Relocated", "report.intervention.relocation.was_relocated"),
       new MappedTimestampColumn("Date Relocated","report.intervention.relocation.timestamp_ms"),
-          //not required for Nest report, only for False Crawl Report
-//      new FinalActivityColumn("Final Activity",
-//          "report.condition.abandoned_body_pits", "report.condition.abandoned_egg_cavities"),
 
       new MappedNotNullColumn("Nest Washed Over", "report.condition.wash_over.0.timestamp_ms"),
       new MappedNotNullColumn("Inundated","report.condition.inundated_event.0.timestamp_ms"),
-
-          //This column deprecated, has been split into distinct complete/partial columns
-//      new MappedIsPresentColumn("Nest Completely or Partially Washed Out",
-//          "report.condition.wash_out.timestamp_ms"),
 
       new MappedHasTimestampColumn("Complete Wash out","report.condition.wash_out.timestamp_ms"),
       new MappedHasTimestampColumn("Partial Wash out","report.condition.partial_washout.timestamp_ms"),
@@ -114,17 +106,13 @@ public class StateNestReportServlet extends HttpServlet {
               "report.condition.partial_washout.timestamp_ms"),
       new MappedYesNoColumn("Did Washout Occur Post-Hatch but Pre-Inventory",
               "report.condition.post_hatch_washout"),
-          //ROW 20
       new MappedPriorityColumn("If Washed Out By A Major Storm Give Name",
               "report.condition.wash_out.storm_name",
               "report.condition.partial_washout.storm_name",
               ""),
-      //first accretion timestamp and storm name (if present)
       new MappedNotNullTimestampColumn("Accretion Date","report.condition.accretion.0.timestamp_ms"),
-      new OrderedReportWriter.MappedIsPresentYNColumn("Accretion",
-              "report.condition.accretion.0.timestamp_ms"),
+      new MappedNotNullColumn("Accretion","report.condition.accretion.0.timestamp_ms"),
       new MappedIfExistsColumn("Accretion Storm Name","report.condition.accretion.0.storm_name"),
-          //should be date, storm name, details
       new MappedTimestampColumn("Other Storm impact Date","report.condition.storm_impact.timestamp_ms"),
       new MappedColumn("Other storm impact storm name","report.condition.storm_impact.storm_name"),
       new MappedColumn("Details","report.condition.storm_impact.other_impact"),
@@ -140,7 +128,6 @@ public class StateNestReportServlet extends HttpServlet {
           new MappedNotNullTimestampColumn("Date(s) Predation Occurred",
               "report.condition.preditation.0.timestamp_ms"),
       new MappedIfExistsColumn("If Predated by What Predator(s)","report.condition.preditation.0.predator"),
-      //TODO(dwenzel): insert new predator columns here.
           //These names are being compared against the values in arrays.xml under predator_array
           new OrderedReportWriter.MappedPredatorColumn("Raccoon Only","report.condition.preditation.0.predator_spinner_text"),
           new OrderedReportWriter.MappedPredatorColumn("Fox Only","report.condition.preditation.0.predator_spinner_text"),
@@ -169,7 +156,6 @@ public class StateNestReportServlet extends HttpServlet {
       new ConditionallyMappedColumn("Type of Vandalism",
           "report.condition.vandalized",
               "report.condition.vandalism_type"),
-          //ROW 30
       new MappedYesNoColumn("Adopted","report.intervention.adopted"),
       new MappedIfExistsColumn("Adoptee","report.intervention.adoptee"),
       new MappedTimestampColumn("First Hatchling Emergence Date",
@@ -189,7 +175,6 @@ public class StateNestReportServlet extends HttpServlet {
               "report.intervention.excavation.dead_in_nest","report.intervention.excavation.excavated"),
       new MappedNullIfNotInventoriedColumn("# of Live Hatchlings", "report.intervention.excavation.live_in_nest"
               ,"report.intervention.excavation.excavated"),
-          //ROW 40
       new MappedNullIfNotInventoriedColumn("# of Empty Shells", "report.intervention.excavation.hatched_shells"
               ,"report.intervention.excavation.excavated"),
       new MappedNullIfNotInventoriedColumn("# of Dead Pipped", "report.intervention.excavation.dead_pipped"
