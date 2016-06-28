@@ -62,6 +62,7 @@ public class StateNestReportServlet extends HttpServlet {
       new MappedColumn("Escarpment >= 18 Encountered", "report.location.escarpment_over_18_inches"),
       new MappedYesNoColumn("Nest seaward of armoring structure","report.nest_seaward_of_armoring_structure"),
       new MappedYesNoColumn("Nest within 3 feet of armoring structure","report.within_3_feet_of_structure"),
+      new MappedColumn("Type of Structure","report.type_of_structure"),
       new MappedSpeciesColumn("Species","report.species"),
       new MappedColumn("ID/Label", "report.nest_number"),
       sectionColumn,
@@ -87,6 +88,8 @@ public class StateNestReportServlet extends HttpServlet {
           "report.intervention.protection_event.type"),
       new MappedBlankIfUnsetColumn("Protection Event", "report.intervention.protection_event.type"),
       new MappedTimestampColumn("Date Protected","report.intervention.protection_event.timestamp_ms"),
+          new MappedColumn("If predator control methods other than screening/caging were employed, " +
+                  "please describe","report.condition.describe_control_methods"),
       new MappedDistanceColumn("Distance From Dune",
           "report.location.apex_to_barrier_ft", "report.location.apex_to_barrier_in"),
       new MappedDistanceColumn("Distance From MHW",
@@ -118,6 +121,8 @@ public class StateNestReportServlet extends HttpServlet {
               ""),
       //first accretion timestamp and storm name (if present)
       new MappedNotNullTimestampColumn("Accretion Date","report.condition.accretion.0.timestamp_ms"),
+      new OrderedReportWriter.MappedIsPresentYNColumn("Accretion",
+              "report.condition.accretion.0.timestamp_ms"),
       new MappedIfExistsColumn("Accretion Storm Name","report.condition.accretion.0.storm_name"),
           //should be date, storm name, details
       new MappedTimestampColumn("Other Storm impact Date","report.condition.storm_impact.timestamp_ms"),
@@ -125,6 +130,11 @@ public class StateNestReportServlet extends HttpServlet {
       new MappedColumn("Details","report.condition.storm_impact.other_impact"),
       new MappedColumn("Nest Completely Depredated",
               "report.condition.nest_depredated"),
+      new MappedColumn("Do you actively look for and record predation events?",
+              "report.condition.actively_record_events"),
+      new MappedColumn("Regarding mammalian predation events, what proportion " +
+              "of the events do you likely record?","report.condition.prop_events_recorded"),
+
       new MappedNotNullColumn("Predation", "report.condition.preditation.0.timestamp_ms"),
 
           new MappedNotNullTimestampColumn("Date(s) Predation Occurred",
@@ -145,6 +155,7 @@ public class StateNestReportServlet extends HttpServlet {
           new OrderedReportWriter.MappedPredatorColumn("Raccoon and Ghost Crab","report.condition.preditation.0.predator_spinner_text"),
           new OrderedReportWriter.MappedPredatorColumn("Coyote and Ghost Crab","report.condition.preditation.0.predator_spinner_text"),
           new OrderedReportWriter.MappedPredatorColumn("Other","report.condition.preditation.0.predator_spinner_text"),
+      new MappedYesNoColumn("Did ghost crab(s) damage fewer than 10 eggs?","report.condition.ghost_damage_10_or_less"),
       new MappedYesNoColumn("Roots Invade Eggshells",
               "report.condition.roots_invaded_eggshells"),
       new MappedYesNoColumn("Eggs Damaged by Another Turtle",

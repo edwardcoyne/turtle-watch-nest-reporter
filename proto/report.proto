@@ -110,7 +110,7 @@ message NestCondition {
   repeated WashEvent inundated_event = 25;
 
   message PreditationEvent {
-    enum PredatorType {//THIS SHOULD BE THE OTHER WAY ROUND
+    enum PredatorType {//NOTE: this is currently unused. (26JUN16)
       ONLY_RACCOON = 1;
       ONLY_FOX = 2;
       ONLY_COYOTE = 3;

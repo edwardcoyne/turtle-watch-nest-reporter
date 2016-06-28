@@ -465,6 +465,21 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
 
   }
 
+
+  public static class MappedIsPresentYNColumn extends ReportColumn {
+    public MappedIsPresentYNColumn(String name, final String stringPath) {
+      super(name, new ValueFetcher() {
+        private final Path path = new Path(stringPath);
+        @Override public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column column = columnMap.get(path);
+          Preconditions.checkNotNull(column, "Missing path: " + stringPath);
+          return column.hasValue(rowId) ? "Y" : "N";
+        }
+      });
+    }
+  }
+
+
   public static class MappedIsPresentYesNoColumn extends ReportColumn {
     public MappedIsPresentYesNoColumn(String name, final String stringPath) {
       super(name, new ValueFetcher() {
