@@ -56,6 +56,7 @@ public class EditFragmentInfo extends EditFragment {
           new HandleUpdateNestNumber(),
           new HandleUpdateFalseCrawlNumber(),
           new HandleUpdateObservers(),
+          new HandleUpdatePossibleFalseCrawlNumber(),
           new HandleUpdateSpeciesOther());
 
   // Determined from user name.
@@ -102,7 +103,8 @@ public class EditFragmentInfo extends EditFragment {
     setText(R.id.fieldFalseCrawlNumber, report.hasFalseCrawlNumber() ?
             Integer.toString(report.getFalseCrawlNumber()) : "");
     setVisible(R.id.rowFalseCrawlNumber, report.hasFalseCrawlNumber());
-
+    setText(R.id.fieldPossibleFalseCrawlNumber,report.hasPossibleFalseCrawlNumber() ?
+    Integer.toString(report.getPossibleFalseCrawlNumber()) : "");
     if (report.hasTimestampFoundMs()) {
       setDate(R.id.buttonDateFound, report.getTimestampFoundMs());
       setText(R.id.labelIncubationDate,
@@ -142,6 +144,18 @@ public class EditFragmentInfo extends EditFragment {
       updateHandler.applyMutation(new NestNumberMutation(getInteger(newText)));
     }
   }
+
+  private static class HandleUpdatePossibleFalseCrawlNumber extends TextChangeHandler {
+    protected HandleUpdatePossibleFalseCrawlNumber() {
+      super(R.id.fieldPossibleFalseCrawlNumber);
+    }
+
+    @Override
+    public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.PossibleFalseCrawlNumberMutation(getInteger(newText)));
+    }
+  }
+
   private static class HandleUpdateFalseCrawlNumber extends TextChangeHandler {
     protected HandleUpdateFalseCrawlNumber() {
       super(R.id.fieldFalseCrawlNumber);

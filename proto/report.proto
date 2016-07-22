@@ -6,7 +6,7 @@ message ReportWrapper {
   optional Report report = 1;
   optional ReportRef ref = 2;
   optional bool active = 3;
-}
+  }
 
 // Uniquely identifies this version of the report.
 message ReportRef {
@@ -27,6 +27,7 @@ message Report {
   optional int64 timestamp_found_ms = 1;
   optional int32 nest_number = 2;
   optional int32 false_crawl_number = 3;
+  optional int32 possible_false_crawl_number = 17;
 
   enum Species {
     NOT_REPORTED = 4;
@@ -57,7 +58,7 @@ message Report {
   optional string additional_notes = 11;
 
   repeated Image image = 12;
-  //NEXT ID = 17
+  //NEXT ID = 18
 }
 
 message Image {

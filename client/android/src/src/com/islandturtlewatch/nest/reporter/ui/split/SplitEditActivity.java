@@ -103,7 +103,7 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
     //TODO(edcoyne): Messy, cleanup.
     drawerList.setAdapter(model.getReportsListAdapter(new ReportsListItemViewFactory(){
       @Override
-      public View getView(Report report,
+      public View getView(LocalDataStore.CachedReportWrapper report,
           Optional<View> possibleConvertableView, ViewGroup parent) {
         LayoutInflater inflator =
             (LayoutInflater)parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -113,6 +113,7 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
 
         return view;
       }}));
+
     drawerList.setOnItemClickListener(new OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> parent,
@@ -122,16 +123,11 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
         long oldId = model.getActiveReportId();
         model.switchActiveReport(id);
         Report newReport = model.getActiveReport();
-
         confirmSwitchReport(newReport, oldId);
         DrawerLayout drawer = ((DrawerLayout) findViewById(R.id.drawer_layout));
         drawer.closeDrawers();
       }
     });
-
-
-
-
 
   }
 
@@ -204,9 +200,10 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
 
   @Override
   public void updateDisplay(Report report) {
-    setTitle(ReportUtil.getShortName(report));
+    LocalDataStore.CachedReportWrapper wrapper = new LocalDataStore.CachedReportWrapper();
+    wrapper.setReport(report);
+    setTitle(ReportUtil.getShortName(wrapper));
     sectionManager.updateSections(report);
-//    sectionManager.setSection(ReportSection.INFO);
   }
 
   @Override

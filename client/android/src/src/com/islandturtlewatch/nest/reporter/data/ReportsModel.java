@@ -93,7 +93,7 @@ public class ReportsModel {
     activeReport.delete();
 
     // Set next active report, if non we create new otherwise first on list.
-    ImmutableList<CachedReportWrapper> activeReports = dataStore.listActiveReports();
+    ImmutableList<CachedReportWrapper> activeReports = dataStore.listActiveReportsWithDuplicates();
     if (activeReports.isEmpty()) {
       createReport();
     } else {
@@ -107,7 +107,12 @@ public class ReportsModel {
     return dataStore.getHighestNestNumber();
   }
 
+  public int getHighestPossibleFalseCrawlNumber() {
+    return dataStore.getHighestPossibleFalseCrawlNumber();
+  }
+
   public int getHighestFalseCrawlNumber() {
+
     return dataStore.getHighestFalseCrawlNumber();
   }
 
@@ -223,7 +228,7 @@ public class ReportsModel {
   }
 
   public interface ReportsListItemViewFactory {
-    View getView(Report report, Optional<View> oldView, ViewGroup parent);
+    View getView(CachedReportWrapper report, Optional<View> oldView, ViewGroup parent);
   }
 
   private class ReportsListAdapter extends BaseAdapter {
@@ -239,6 +244,7 @@ public class ReportsModel {
 
     @Override
     public int getCount() {
+
       return dataStore.activeReportCount();
     }
 
@@ -246,19 +252,21 @@ public class ReportsModel {
     // position.
     @Override
     public Object getItem(int position) {
-      return dataStore.listActiveReports().get(position).getReport();
+      return dataStore.listActiveReportsWithDuplicates().get(position);
     }
 
     @Override
     public long getItemId(int position) {
-      return dataStore.listActiveReports().get(position).getLocalId();
+      return dataStore.listActiveReportsWithDuplicates().get(position).getLocalId();
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
       Preconditions.checkArgument(viewFactory.isPresent(),
           "Should not call getView on adapter without view factory.");
-      return viewFactory.get().getView((Report)getItem(position),
+      CachedReportWrapper wrapper = (CachedReportWrapper) getItem(position);
+      Report report = wrapper.getReport();
+      return viewFactory.get().getView(wrapper,
           Optional.fromNullable(convertView),
           parent);
     }

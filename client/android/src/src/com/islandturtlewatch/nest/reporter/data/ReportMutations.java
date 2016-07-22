@@ -37,6 +37,20 @@ public class ReportMutations {
     }
   }
 
+  public static class PossibleFalseCrawlNumberMutation implements ReportMutation {
+    private final Optional<Integer> number;
+
+    public PossibleFalseCrawlNumberMutation(Optional<Integer> number) {
+      this.number = number;
+    }
+
+    @Override
+    public Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      updatedReport.setPossibleFalseCrawlNumber(number.or(0));
+      return updatedReport.build();
+    }
+  }
 
   public static class FalseCrawlNumberMutation implements ReportMutation {
     private final Optional<Integer> number;
@@ -123,6 +137,7 @@ public class ReportMutations {
                 .setFalseCrawlNumber(model.getHighestFalseCrawlNumber() + 1);
       } else if (status != NestStatus.FALSE_CRAWL
               && updatedReport.getStatus() == NestStatus.FALSE_CRAWL) {
+
         updatedReport.clearFalseCrawlNumber();
         updatedReport.setNestNumber(model.getHighestNestNumber() + 1);
       }
@@ -132,8 +147,16 @@ public class ReportMutations {
     }
   }
 
-  public static class PossibleFalseCrawlMutation implements ReportMutation {
+  public static class PossibleFalseCrawlMutation implements ReportMutation,
+          ReportMutation.RequiresReportsModel {
     private final boolean isTrue;
+    private ReportsModel model;
+
+    @Override
+    public void setModel(ReportsModel model) {
+      this.model = model;
+    }
+
 
     public PossibleFalseCrawlMutation(boolean isTrue) {
       this.isTrue = isTrue;
@@ -143,6 +166,11 @@ public class ReportMutations {
     public Report apply(Report oldReport) {
       Report.Builder updatedReport = oldReport.toBuilder();
       updatedReport.setPossibleFalseCrawl(isTrue);
+      if (isTrue) {
+        updatedReport.setPossibleFalseCrawlNumber(model.getHighestPossibleFalseCrawlNumber() + 1);
+      } else {
+        updatedReport.clearPossibleFalseCrawlNumber();
+      }
       return updatedReport.build();
     }
   }

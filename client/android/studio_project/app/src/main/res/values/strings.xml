@@ -162,4 +162,5 @@
     <string name="add_wash_over_text"><u>+Add Wash over Event</u></string>
     <string name="add_inundation_event_text"><u>+Add Inundation Event</u></string>
     <string name="examples_of_structure_text">(Examples are seawalls, sand fencing, bulkheads and rock piles, but not buildings, lifeguard towers or individual posts.)</string>
+    <string name="possible_false_crawl_number">Possible False Crawl Number</string>
 </resources>
