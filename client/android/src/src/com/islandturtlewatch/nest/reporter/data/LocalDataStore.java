@@ -69,25 +69,33 @@ public class LocalDataStore {
     Collections.sort(output, new Comparator<CachedReportWrapper>() {
       @Override public int compare(CachedReportWrapper lhs, CachedReportWrapper rhs) {
 
-        if (lhs.getPossibleFalseCrawlDuplicate() && !rhs.getPossibleFalseCrawlDuplicate()) {
-          return 1; //maybe this will work?
-        } else if (!lhs.getPossibleFalseCrawlDuplicate() && rhs.getPossibleFalseCrawlDuplicate()) {
+
+        if (lhs.getReport().hasNestNumber() && !rhs.getReport().hasNestNumber()) {
           return -1;
-        } else {
+        } else if (!lhs.getReport().hasNestNumber() && rhs.getReport().hasNestNumber()) {
+          return 1;
+        }
+        if (lhs.getPossibleFalseCrawlDuplicate() && !rhs.getPossibleFalseCrawlDuplicate()) {
+          return -1;
+        } else if (!lhs.getPossibleFalseCrawlDuplicate() && rhs.getPossibleFalseCrawlDuplicate()) {
+          return 1;
+        }
           int fcDiff = lhs.getReport().getFalseCrawlNumber() - rhs.getReport().getFalseCrawlNumber();
           if (fcDiff != 0) {
             return fcDiff;
           }
-          int pfcDiff = lhs.getReport().getPossibleFalseCrawlNumber() - rhs.getReport().getPossibleFalseCrawlNumber();
-          if (pfcDiff != 0) {
-            return pfcDiff;
-          }
+
+        int pfcDiff = lhs.getReport().getPossibleFalseCrawlNumber() - rhs.getReport().getPossibleFalseCrawlNumber();
+        if (pfcDiff != 0) {
+          return pfcDiff;
+        }
           int diff = lhs.getReport().getNestNumber() - rhs.getReport().getNestNumber();
           if (diff != 0) {
             return diff;
           }
+
             return 0;
-      }}});
+      }});
 
     return ImmutableList.copyOf(output);
   }

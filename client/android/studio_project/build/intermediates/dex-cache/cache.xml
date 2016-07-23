@@ -19,7 +19,7 @@
         jar="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         revision="21.1.2"
-        sha1="aa272b43958a72e0ea65f4cbd3a439612c3b55d5">
+        sha1="972eec3be8f33e409a1ec620a7f117c402805ba3">
         <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_90f082256d63d5786438dc01910b2978ef5ed7f6/classes.dex" />
     </item>
     <item
@@ -54,7 +54,7 @@
         jar="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
         jumboMode="true"
         revision="21.1.2"
-        sha1="c8dd403ed0fd3c0664be8b869ee226c4fbcca7b8">
+        sha1="6e33b2a74d8138e81e58b69512e30a002c956018">
         <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_f348a5e2d48769727f063e897fd71962df3020db/classes.dex" />
     </item>
     <item

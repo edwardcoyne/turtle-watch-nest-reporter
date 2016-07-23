@@ -33,7 +33,7 @@
 	</LinearLayout>
     
   <ListView android:id="@+id/reports_drawer"
-      android:layout_width="320dp"
+      android:layout_width="360dp"
       android:layout_height="match_parent"
       android:layout_gravity="start"
       android:choiceMode="singleChoice"
