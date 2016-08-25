@@ -119,6 +119,7 @@ public class EditFragmentNestCondition extends EditFragment {
     Spinner pSpinner = (Spinner) getActivity().findViewById(R.id.fieldPredatorSelect);
     boolean showFieldOther = false;
     pSpinner.setSelection(0,false);
+
 if (condition.getPreditationCount()>0) {
   if (condition.getPreditation(0).hasTimestampMs()) {
     setDate(R.id.buttonPredatorDate, condition.getPreditation(0).getTimestampMs());
@@ -139,6 +140,7 @@ if (condition.getPreditationCount()>0) {
   }
   setText(R.id.fieldPredatorOther, condition.getPreditation(0).getPredator());
 } else {
+  clearDate(R.id.buttonPredatorDate);
   setText(R.id.fieldNumberEggs, "");
   showFieldOther = false;
   pSpinner.setSelection(0,false);

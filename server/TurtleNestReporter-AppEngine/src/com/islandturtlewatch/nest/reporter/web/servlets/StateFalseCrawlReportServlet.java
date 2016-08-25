@@ -46,6 +46,7 @@ public class StateFalseCrawlReportServlet extends HttpServlet {
       new MappedTimestampColumn("Date Crawl Recorded", "report.timestamp_found_ms"),
       new OrderedReportWriter.MappedYesNoColumn("Possible False Crawl",
               "report.possible_false_crawl"),
+      new OrderedReportWriter.MappedBlankIfZeroColumn("Possible False Crawl Number","report.possible_false_crawl_number"),
       new MappedSpeciesColumn("Species","report.species"),
       new StaticValueColumn("Crawl within Project Area? ", "YES"),
       new MappedColumn("City","report.location.city"),

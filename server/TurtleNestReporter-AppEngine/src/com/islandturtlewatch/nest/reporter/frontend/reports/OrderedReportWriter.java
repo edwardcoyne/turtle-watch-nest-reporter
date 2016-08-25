@@ -184,6 +184,21 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
     }
   }
 
+  public static class MappedYesOrBlankColumn extends ReportColumn {
+    public MappedYesOrBlankColumn(String name, final String stringPath) {
+      super(name, new ValueFetcher() {
+        private final Path path = new Path(stringPath);
+        @Override public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column column = columnMap.get(path);
+          Preconditions.checkNotNull(column, "Missing path: " + stringPath);
+          if (column.getValue(rowId) == "YES") {
+            return column.getValue(rowId);
+          } else return "";
+        }
+      });
+    }
+  }
+
   public static class MappedColumn extends ReportColumn {
     public MappedColumn(String name, final String stringPath) {
       super(name, new ValueFetcher() {
@@ -196,6 +211,22 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
       });
     }
   }
+
+  public static class MappedBlankIfZeroColumn extends ReportColumn {
+    public MappedBlankIfZeroColumn(String name, final String stringPath) {
+      super (name, new ValueFetcher() {
+        private final Path path = new Path(stringPath);
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column column = columnMap.get(path);
+          Preconditions.checkNotNull(column, "Missing path: " + stringPath);
+          if (column.getValue(rowId).equals("0")) return "";
+          return column.getValue(rowId);
+        }
+      });
+    }
+  }
+
 //WARNING: this function does string comparison.
   public static class MappedPredatorColumn extends ReportColumn {
     public MappedPredatorColumn(final String name, final String stringPath) {
