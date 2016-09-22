@@ -1818,6 +1818,7 @@ public class ReportMutations {
 
       @Override
       public Report apply(Report oldReport) {
+
         Report.Builder updatedReport = oldReport.toBuilder();
         updatedReport.getLocationBuilder().setCoordinates(coordinates);
         return updatedReport.build();

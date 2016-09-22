@@ -163,4 +163,7 @@
     <string name="add_inundation_event_text"><u>+Add Inundation Event</u></string>
     <string name="examples_of_structure_text">(Examples are seawalls, sand fencing, bulkheads and rock piles, but not buildings, lifeguard towers or individual posts.)</string>
     <string name="possible_false_crawl_number">Possible False Crawl Number</string>
+    <string name="edit_nest_location_label_latitude">Latitude</string>
+    <string name="edit_nest_location_label_longitude">Longitude</string>
+    <string name="set_gps_manually">Set Gps Manually</string>
 </resources>

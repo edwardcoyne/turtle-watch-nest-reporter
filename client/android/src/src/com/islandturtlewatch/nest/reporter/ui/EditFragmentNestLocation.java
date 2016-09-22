@@ -41,8 +41,9 @@ import java.util.Map;
 public class EditFragmentNestLocation extends EditFragment {
   //private static final String TAG = EditFragmentNestLocation.class.getSimpleName();
 
-  private static final Map<Integer, ClickHandler> CLICK_HANDLERS =
+  private  final Map<Integer, ClickHandler> CLICK_HANDLERS =
       ClickHandler.toMap(
+          new HandleManualSetGps(),
           new HandleSetOpenBeach(),
           new HandleSetInVegitation(),
           new HandleSetAtVegitation(),
@@ -109,6 +110,10 @@ public class EditFragmentNestLocation extends EditFragment {
     } else {
       setText(R.id.buttonGps, getString(R.string.edit_nest_location_button_gps));
     }
+
+    //this might work??
+    setText(R.id.fieldGpsLon, String.valueOf(location.getCoordinates().getLong()));
+    setText(R.id.fieldGpsLat, String.valueOf(location.getCoordinates().getLat()));
 
     setText(R.id.fieldAddress, location.hasStreetAddress() ?
             location.getStreetAddress() : "");
@@ -548,6 +553,27 @@ if (relocation.hasNewAddress()) {
     }
   }
 
+  private class HandleManualSetGps extends ClickHandler{
+    protected HandleManualSetGps() {
+      super(R.id.buttonManualGps);
+    }
+
+    @Override
+    public void handleClick(final View view, final DataUpdateHandler updateHandler) {
+      GpsManualSetDialog dialog = new GpsManualSetDialog();
+      Preconditions.checkArgument(view.getContext() instanceof Activity);
+      dialog.setCallback(new GpsManualSetDialog.GpsLocationCallback() {
+        @Override
+        public void location(GpsCoordinates coordinates) {
+          updateHandler.applyMutation(new GpsMutation(coordinates));
+        }
+      });
+
+      dialog.show(((Activity)view.getContext()).getFragmentManager(), "GPS");
+
+    }
+  }
+
   private static class HandleSetGps extends ClickHandler {
     protected HandleSetGps() {
       super(R.id.buttonGps);
@@ -555,6 +581,7 @@ if (relocation.hasNewAddress()) {
 
     @Override
     public void handleClick(View view, final DataUpdateHandler updateHandler) {
+
       GpsCoordinateDialog dialog = new GpsCoordinateDialog();
       Preconditions.checkArgument(view.getContext() instanceof Activity);
       dialog.setCallback(new GpsLocationCallback() {

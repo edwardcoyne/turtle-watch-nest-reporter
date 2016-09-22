@@ -21,6 +21,45 @@
 	            android:text="@string/edit_nest_location_button_gps" 
 	           android:onClick="handleClick" />
 	    </TableRow>
+		<TableRow>
+			<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/edit_nest_location_label_latitude"/>
+		<EditText
+			android:id="@+id/fieldGpsLat"
+			android:inputType="textMultiLine"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:ems="10"
+			 />
+		</TableRow>
+		<TableRow>
+			<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/edit_nest_location_label_longitude"/>
+			<EditText
+				android:id="@+id/fieldGpsLon"
+				android:inputType="textMultiLine"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:ems="10"
+				 />
+
+		</TableRow>
+		<TableRow>
+			<Button
+				android:id="@+id/buttonManualGps"
+				android:text="@string/set_gps_manually"
+				android:onClick="handleClick"
+				/>
+
+		</TableRow>
 	    <TableRow
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content" >
