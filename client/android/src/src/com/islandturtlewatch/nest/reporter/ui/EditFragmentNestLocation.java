@@ -44,6 +44,7 @@ public class EditFragmentNestLocation extends EditFragment {
   private  final Map<Integer, ClickHandler> CLICK_HANDLERS =
       ClickHandler.toMap(
           new HandleManualSetGps(),
+          new HandleManualSetRelocationGps(),
           new HandleSetOpenBeach(),
           new HandleSetInVegitation(),
           new HandleSetAtVegitation(),
@@ -595,6 +596,29 @@ if (relocation.hasNewAddress()) {
 
     }
   }
+
+  private class HandleManualSetRelocationGps extends ClickHandler{
+    protected HandleManualSetRelocationGps() {
+      super(R.id.buttonManualRelocatedGps);
+    }
+
+    @Override
+    public void handleClick(final View view, final DataUpdateHandler updateHandler) {
+
+      GpsManualSetRelocationDialog dialog = new GpsManualSetRelocationDialog();
+      Preconditions.checkArgument(view.getContext() instanceof Activity);
+      dialog.setCallback(new GpsManualSetRelocationDialog.GpsLocationCallback() {
+        @Override
+        public void location(GpsCoordinates coordinates) {
+          updateHandler.applyMutation(new ReportMutations.NewGpsMutation(coordinates));
+        }
+      });
+
+      dialog.show(((Activity)view.getContext()).getFragmentManager(), "GPS");
+
+    }
+  }
+
   private static class HandleSetRelocationGPS extends ClickHandler {
     protected HandleSetRelocationGPS() {
       super(R.id.buttonNewGps);
