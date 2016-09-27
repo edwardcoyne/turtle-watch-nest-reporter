@@ -52,7 +52,7 @@ public class GpsManualSetRelocationDialog extends DialogFragment {
       currentDialog = Optional.of(new AlertDialog.Builder(getActivity())
               .setIcon(R.drawable.ic_launcher)
               .setTitle("Manually Set GPS Location")
-              .setMessage("Tap Accept to set the current gps location for this report \n" +
+              .setMessage("Tap Accept to set the relocation GPS location for this report \n" +
                       "Latitude: " + lat + "\nLongitude: " + lon +
                       "\nOtherwise select Cancel to return.")
               .setPositiveButton(R.string.accept, acceptListener)

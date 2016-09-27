@@ -113,8 +113,27 @@ public class EditFragmentNestLocation extends EditFragment {
     }
 
     //this might work??
-    setText(R.id.fieldGpsLon, String.valueOf(location.getCoordinates().getLong()));
-    setText(R.id.fieldGpsLat, String.valueOf(location.getCoordinates().getLat()));
+
+    if (location.getCoordinates().hasLong()) {
+      setText(R.id.fieldGpsLon, String.valueOf(location.getCoordinates().getLong()));
+    } else {
+      setText(R.id.fieldGpsLon, "");
+    }
+    if (location.getCoordinates().hasLat()) {
+      setText(R.id.fieldGpsLat, String.valueOf(location.getCoordinates().getLat()));
+    } else {
+      setText(R.id.fieldGpsLat,"");
+    }
+
+    if (intervention.getRelocation().getCoordinates().hasLat()) {
+      setText(R.id.fieldRelocatedGpsLat,String.valueOf(intervention.getRelocation().getCoordinates().getLat()));
+    } else
+    setText(R.id.fieldRelocatedGpsLat,"");
+
+    if (intervention.getRelocation().getCoordinates().hasLong()) {
+      setText(R.id.fieldRelocatedGpsLon,String.valueOf(intervention.getRelocation().getCoordinates().getLong()));
+    } else
+    setText(R.id.fieldRelocatedGpsLon,"");
 
     setText(R.id.fieldAddress, location.hasStreetAddress() ?
             location.getStreetAddress() : "");
@@ -610,7 +629,7 @@ if (relocation.hasNewAddress()) {
       dialog.setCallback(new GpsManualSetRelocationDialog.GpsLocationCallback() {
         @Override
         public void location(GpsCoordinates coordinates) {
-          updateHandler.applyMutation(new ReportMutations.NewGpsMutation(coordinates));
+          updateHandler.applyMutation(new ReportMutations.RelocationGpsMutation(coordinates));
         }
       });
 
@@ -631,7 +650,7 @@ if (relocation.hasNewAddress()) {
       dialog.setCallback(new GpsLocationCallback() {
         @Override
         public void location(GpsCoordinates coordinates) {
-          updateHandler.applyMutation(new ReportMutations.NewGpsMutation(coordinates));
+          updateHandler.applyMutation(new ReportMutations.RelocationGpsMutation(coordinates));
         }
       });
 

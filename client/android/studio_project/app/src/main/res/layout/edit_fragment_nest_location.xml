@@ -491,12 +491,14 @@
 					/>
 
 			</TableRow>
-			<TableRow>
+			<TableRow
+				android:layout_width="fill_parent">
+
 				<Button
 					android:id="@+id/buttonManualRelocatedGps"
 					android:text="@string/set_gps_manually"
 					android:onClick="handleClick"
-					/>
+					android:layout_width="match_parent" />
 
 			</TableRow>
 

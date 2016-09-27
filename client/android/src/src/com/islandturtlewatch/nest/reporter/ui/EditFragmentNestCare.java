@@ -22,7 +22,7 @@ import com.islandturtlewatch.nest.reporter.data.ReportMutations;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.DateProtectedMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.EggsDestroyedMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.NewAddressMutation;
-import com.islandturtlewatch.nest.reporter.data.ReportMutations.NewGpsMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.RelocationGpsMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.ProtectionTypeMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.WasAdoptedMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.WhyProtectedMutation;
@@ -325,7 +325,7 @@ public class EditFragmentNestCare extends EditFragment {
       dialog.setCallback(new GpsLocationCallback() {
         @Override
         public void location(GpsCoordinates coordinates) {
-          updateHandler.applyMutation(new NewGpsMutation(coordinates));
+          updateHandler.applyMutation(new RelocationGpsMutation(coordinates));
         }
       });
 

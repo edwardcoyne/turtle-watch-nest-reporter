@@ -1825,10 +1825,10 @@ public class ReportMutations {
       }
     }
 
-    public static class NewGpsMutation implements ReportMutation {
+    public static class RelocationGpsMutation implements ReportMutation {
       private final GpsCoordinates coordinates;
 
-      public NewGpsMutation(GpsCoordinates coordinates) {
+      public RelocationGpsMutation(GpsCoordinates coordinates) {
         this.coordinates = coordinates;
       }
 

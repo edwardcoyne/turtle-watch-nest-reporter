@@ -165,5 +165,5 @@
     <string name="possible_false_crawl_number">Possible False Crawl Number</string>
     <string name="edit_nest_location_label_latitude">Latitude</string>
     <string name="edit_nest_location_label_longitude">Longitude</string>
-    <string name="set_gps_manually">Set Gps Manually</string>
+    <string name="set_gps_manually">Set GPS Manually</string>
 </resources>
