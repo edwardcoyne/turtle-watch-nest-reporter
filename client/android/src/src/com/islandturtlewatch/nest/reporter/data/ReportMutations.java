@@ -592,7 +592,6 @@ public class ReportMutations {
     }
   }
 
-
   public static class RelocatedMutation implements ReportMutation {
     private final boolean isTrue;
 
@@ -1086,6 +1085,26 @@ public class ReportMutations {
     public Report apply(Report oldReport) {
       Report.Builder updatedReport = oldReport.toBuilder();
       updatedReport.getConditionBuilder().setVandalized(isTrue);
+      return updatedReport.build();
+    }
+  }
+  public static class PredatedPriorToHatchingMutation implements ReportMutation {
+    private final Integer ordinal;
+    private final boolean isTrue;
+
+    public PredatedPriorToHatchingMutation(Integer ordinal, boolean isTrue) {
+      this.isTrue = isTrue;
+      this.ordinal = ordinal;
+    }
+    @Override
+    public Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      NestCondition.Builder condition = updatedReport.getConditionBuilder();
+
+      PreditationEvent.Builder predation = (condition.getPreditationCount() <= ordinal) ?
+              condition.addPreditationBuilder() : condition.getPreditationBuilder(ordinal);
+      predation.setPredatedPriorToHatching(isTrue);
+
       return updatedReport.build();
     }
   }
