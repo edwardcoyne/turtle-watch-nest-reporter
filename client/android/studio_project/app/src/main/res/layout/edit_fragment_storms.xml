@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TableLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TableRow
             android:layout_width="wrap_content"
@@ -209,6 +209,7 @@
                 android:textColor="#134aef"
                 android:textSize="14dp" />
         </TableRow>
+
         <!--Begin Erosion Section-->
         <TableRow
             android:layout_height="wrap_content"

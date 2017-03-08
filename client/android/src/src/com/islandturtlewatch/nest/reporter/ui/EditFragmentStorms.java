@@ -32,7 +32,8 @@ public class EditFragmentStorms extends EditFragment {
                     new HandleSetPostHatchWashout(),
                     new HandleSetPartialWashoutDate(),
                     new HandleSetPartialWashoutPriorToHatching(),
-                    new HandleAddAccretionRow(),
+//                    new HandleAddAccretionRow(),
+//                    new HandleAddErosionRow(),
                     new HandleSetStormImpactDate(),
                     new HandleSetWashoutPriorToHatching(),
                     new HandleSetWashoutDate());
@@ -111,6 +112,21 @@ public class EditFragmentStorms extends EditFragment {
                 ReportProto.NestCondition.WashEvent.Builder builder = ReportProto.NestCondition.WashEvent.newBuilder();
                 builder.setStormName("");
                 addAccretionRow(condition.getAccretionCount(),builder.build(),false);
+            }
+        });
+
+        clearTable(R.id.tableErosionEvent);
+        for (int i = 0; i < condition.getErosionCount(); i++) {
+            addErosionRow(i,condition.getErosion(i),true);
+        }
+
+        final TextView addErosionRow = (TextView) getView().findViewById(R.id.fieldAddErosionRow);
+        addErosionRow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ReportProto.NestCondition.WashEvent.Builder builder = ReportProto.NestCondition.WashEvent.newBuilder();
+                builder.setStormName("");
+                addErosionRow(condition.getAccretionCount(),builder.build(),false);
             }
         });
 
@@ -223,16 +239,16 @@ public class EditFragmentStorms extends EditFragment {
         }
     }
 
-
-    private static class HandleAddAccretionRow extends ClickHandler {
-        protected HandleAddAccretionRow () {
-            super(R.id.fieldAddAccretionRow);
-        }
-        @Override
-        public void handleClick(View view, EditPresenter.DataUpdateHandler updateHandler) {
-
-        }
-    }
+//
+//    private static class HandleAddAccretionRow extends ClickHandler {
+//        protected HandleAddAccretionRow () {
+//            super(R.id.fieldAddAccretionRow);
+//        }
+//        @Override
+//        public void handleClick(View view, EditPresenter.DataUpdateHandler updateHandler) {
+//
+//        }
+//    }
 
 
     private static class HandleSetStormImpactDate extends DatePickerClickHandler {
@@ -279,7 +295,6 @@ public class EditFragmentStorms extends EditFragment {
             updateHandler.applyMutation(new ReportMutations.WashoutStormNameMutation(newText));
         }
     }
-
 
     private void addAccretionRow(final int ordinal, ReportProto.NestCondition.WashEvent accretion, boolean showDelete) {
         Button date_button = new Button(getActivity());
@@ -345,6 +360,74 @@ public class EditFragmentStorms extends EditFragment {
         row2.addView(priorToHatch);
         getTable(R.id.tableAccretionEvent).addView(row);
         getTable(R.id.tableAccretionEvent).addView(row2);
+
+    }
+
+
+    private void addErosionRow(final int ordinal, ReportProto.NestCondition.WashEvent erosion, boolean showDelete) {
+        Button date_button = new Button(getActivity());
+        if (erosion.hasTimestampMs()) {
+            date_button.setText(DateUtil.getFormattedDate(erosion.getTimestampMs()));
+        } else {
+            date_button.setText(R.string.date_button);
+        }
+
+        SimpleDatePickerClickHandler clickHandler = new SimpleDatePickerClickHandler(){
+            @Override
+            public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
+                updateHandler.applyMutation(new ReportMutations.ErosionDateMutation(ordinal, maybeDate));
+            }};
+        if (erosion.hasTimestampMs()) {
+            clickHandler.setDate(erosion.getTimestampMs());
+        } else {
+            clickHandler.setDate(System.currentTimeMillis());
+        }
+        date_button.setOnClickListener(listenerProvider.getOnClickListener(clickHandler));
+
+        FocusMonitoredEditText storm_name = new FocusMonitoredEditText(getActivity());
+        storm_name.setHint(R.string.edit_nest_condition_storm_name);
+        storm_name.setText(erosion.getStormName());
+        listenerProvider.setFocusLossListener(storm_name, new TextChangeHandlerSimple() {
+            @Override
+            public void handleTextChange(String newText, EditPresenter.DataUpdateHandler updateHandler) {
+                updateHandler.applyMutation(new ReportMutations.ErosionStormNameMutation(ordinal, newText));
+            }
+        });
+        Button delete = new Button(getActivity());
+        delete.setText("X");
+        delete.setOnClickListener(listenerProvider.getOnClickListener(new ClickHandlerSimple() {
+            @Override
+            public void handleClick(View view, EditPresenter.DataUpdateHandler updateHandler) {
+                updateHandler.applyMutation(new ReportMutations.DeleteErosionMutation(ordinal));
+            }
+        }));
+
+        TableRow row = new TableRow(getActivity());
+        row.setId(ordinal);
+        date_button.setLayoutParams(
+                new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
+        row.addView(date_button);
+        row.addView(storm_name);
+        if (showDelete) {
+            row.addView(delete);
+        }
+
+        CheckBox priorToHatch = new CheckBox(getActivity());
+        priorToHatch.setText("Did Erosion Occur Prior to Hatching?");
+        priorToHatch.setOnClickListener(listenerProvider.getOnClickListener(new ClickHandlerSimple() {
+            @Override
+            public void handleClick(View view, EditPresenter.DataUpdateHandler updateHandler) {
+                updateHandler.applyMutation(new ReportMutations.ErosionOccurredPriorToHatchingMutation(ordinal,isChecked(view)));
+            }
+        }));
+        if (erosion.hasEventPriorToHatching()) {
+            priorToHatch.setChecked(erosion.getEventPriorToHatching());
+        } else priorToHatch.setChecked(false);
+        TableRow row2 = new TableRow(getActivity());
+        priorToHatch.setLayoutParams(new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
+        row2.addView(priorToHatch);
+        getTable(R.id.tableErosionEvent).addView(row);
+        getTable(R.id.tableErosionEvent).addView(row2);
 
     }
 

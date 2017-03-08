@@ -89,6 +89,7 @@ message NestCondition {
   optional bool nest_dug_into = 26;
   optional bool post_hatch_washout = 20;
   repeated WashEvent accretion = 30;
+  repeated WashEvent erosion = 33;
   optional StormImpact storm_impact = 32;
   optional bool poached = 3;
   optional int64 poached_timestamp_ms = 4;
@@ -156,7 +157,7 @@ enum ProportionEventsRecorded {
   optional bool eggs_damaged_by_another_turtle = 24;
 
 
-  // Next ID=33
+  // Next ID=34
 }
 
 message NestLocation {
@@ -232,13 +233,14 @@ message Intervention {
     optional Reason reason = 3;
   }
   optional ProtectionEvent protection_event = 1;
+  optional ProtectionEvent protection_changed_event = 6;
 
   optional Relocation relocation = 2;
   optional Excavation excavation = 3;
 
   optional bool adopted = 4;
   optional string adoptee = 5;
-  //NEXT ID = 6
+  //NEXT ID = 7
 }
 
 message Excavation {
