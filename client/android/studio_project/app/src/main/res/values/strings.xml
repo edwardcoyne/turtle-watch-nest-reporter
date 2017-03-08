@@ -166,4 +166,6 @@
     <string name="edit_nest_location_label_latitude">Latitude</string>
     <string name="edit_nest_location_label_longitude">Longitude</string>
     <string name="set_gps_manually">Set GPS Manually</string>
+    <string name="text_predated_prior_to_hatching">Predated Prior to Hatching</string>
+    <string name="predated_post_hatch_but_prior_to_inventory">Predated Post Hatch but Prior to Inventory</string>
 </resources>

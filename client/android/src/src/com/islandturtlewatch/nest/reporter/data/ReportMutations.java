@@ -1109,6 +1109,27 @@ public class ReportMutations {
     }
   }
 
+  public static class PredationPostHatchPriorToInventoryMutation implements ReportMutation {
+    private Integer ordinal;
+    private boolean isTrue;
+
+    public PredationPostHatchPriorToInventoryMutation(Integer ordinal, boolean isTrue) {
+      this.isTrue = isTrue;
+      this.ordinal = ordinal;
+    }
+
+    @Override
+    public Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      NestCondition.Builder condition = updatedReport.getConditionBuilder();
+
+      PreditationEvent.Builder predation = (condition.getPreditationCount() <= ordinal)
+              ? condition.addPreditationBuilder() : condition.getPreditationBuilder(ordinal);
+      predation.setPredationPostHatchPriorToInventory(isTrue);
+      return updatedReport.build();
+    }
+  }
+
   public static class PredatorSpinnerMutation implements ReportMutation {
     private final Integer ordinal;
     private final String predator;
@@ -1265,40 +1286,40 @@ public class ReportMutations {
       return updatedReport.build();
     }
   }
-
-  public static class NestInundatedDateMutation implements ReportMutation {
-    private final Optional<Date> maybeDate;
-
-    public NestInundatedDateMutation(Optional<Date> maybeDate) {
-      this.maybeDate = maybeDate;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      NestCondition.Builder conditionBuilder = updatedReport.getConditionBuilder();
-      if (maybeDate.isPresent()) {
-        conditionBuilder.setNestInundatedTimestampMs(maybeDate.get().getTimestampMs());
-      } else {
-        conditionBuilder.clearNestInundatedTimestampMs();
-      }
-      return updatedReport.build();
-    }
-  }
-    public static class NestInundatedMutation implements ReportMutation {
-      private final boolean isTrue;
-
-      public NestInundatedMutation(boolean isTrue) {
-        this.isTrue = isTrue;
-      }
-
-      @Override
-      public Report apply(Report oldReport) {
-        Report.Builder updatedReport = oldReport.toBuilder();
-        updatedReport.getConditionBuilder().setNestInundated(isTrue);
-        return updatedReport.build();
-      }
-    }
+//
+//  public static class NestInundatedDateMutation implements ReportMutation {
+//    private final Optional<Date> maybeDate;
+//
+//    public NestInundatedDateMutation(Optional<Date> maybeDate) {
+//      this.maybeDate = maybeDate;
+//    }
+//
+//    @Override
+//    public Report apply(Report oldReport) {
+//      Report.Builder updatedReport = oldReport.toBuilder();
+//      NestCondition.Builder conditionBuilder = updatedReport.getConditionBuilder();
+//      if (maybeDate.isPresent()) {
+//        conditionBuilder.setNestInundatedTimestampMs(maybeDate.get().getTimestampMs());
+//      } else {
+//        conditionBuilder.clearNestInundatedTimestampMs();
+//      }
+//      return updatedReport.build();
+//    }
+//  }
+//    public static class NestInundatedMutation implements ReportMutation {
+//      private final boolean isTrue;
+//
+//      public NestInundatedMutation(boolean isTrue) {
+//        this.isTrue = isTrue;
+//      }
+//
+//      @Override
+//      public Report apply(Report oldReport) {
+//        Report.Builder updatedReport = oldReport.toBuilder();
+//        updatedReport.getConditionBuilder().setNestInundated(isTrue);
+//        return updatedReport.build();
+//      }
+//    }
 
   public static class NestDepredatedMutation implements ReportMutation {
     private final boolean isTrue;
@@ -1422,6 +1443,20 @@ public class ReportMutations {
       }
     }
 
+    public static class PartialWashoutPriorToHatchingMutation implements ReportMutation {
+      private final boolean isTrue;
+
+      public PartialWashoutPriorToHatchingMutation(boolean isTrue) {
+        this.isTrue = isTrue;
+      }
+      @Override
+      public Report apply(Report oldReport) {
+        Report.Builder updatedReport = oldReport.toBuilder();
+        updatedReport.getConditionBuilder().getPartialWashoutBuilder().setEventPriorToHatching(isTrue);
+        return updatedReport.build();
+      }
+    }
+
   public static class OtherImpactDateMutation implements ReportMutation {
     private final Optional<Date> maybeDate;
 
@@ -1509,7 +1544,39 @@ public class ReportMutations {
         return updatedReport.build();
       }
     }
+  public static class WashoutPriorToHatchingMutation implements ReportMutation {
+    private final boolean isTrue;
 
+    public WashoutPriorToHatchingMutation(boolean isTrue) {
+      this.isTrue = isTrue;
+    }
+    @Override
+    public Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      updatedReport.getConditionBuilder().getWashOutBuilder().setEventPriorToHatching(isTrue);
+      return updatedReport.build();
+    }
+  }
+
+  public static class AccretionOccurredPriorToHatchingMutation implements ReportMutation {
+    private final Integer ordinal;
+    private final boolean isTrue;
+
+    public AccretionOccurredPriorToHatchingMutation(Integer ordinal, boolean isTrue) {
+      this.ordinal = ordinal;
+      this.isTrue = isTrue;
+    }
+
+    @Override
+    public Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      NestCondition.Builder condition = updatedReport.getConditionBuilder();
+      WashEvent.Builder accretion = (condition.getAccretionCount() <= ordinal)
+              ? condition.addAccretionBuilder() : condition.getAccretionBuilder(ordinal);
+      accretion.setEventPriorToHatching(isTrue);
+      return updatedReport.build();
+    }
+  }
 
   public static class AccretionDateMutation implements ReportMutation {
     private final Integer ordinal;
@@ -1694,6 +1761,27 @@ public class ReportMutations {
               condition.addInundatedEventBuilder() : condition.getInundatedEventBuilder(ordinal);
       inundatedEvent.setStormName(name);
 
+      return updatedReport.build();
+    }
+  }
+
+  public static class InundatedEventOccuredPriorToHatchingMutation implements ReportMutation {
+    private final Integer ordinal;
+    private final boolean isTrue;
+
+    public InundatedEventOccuredPriorToHatchingMutation(Integer ordinal, boolean isTrue) {
+      this.ordinal = ordinal;
+      this.isTrue = isTrue;
+    }
+
+    @Override
+    public Report apply(Report oldReport) {
+      Preconditions.checkNotNull(ordinal);
+      Report.Builder updatedReport = oldReport.toBuilder();
+      NestCondition.Builder condition = updatedReport.getConditionBuilder();
+      WashEvent.Builder inundatedEvent = (condition.getInundatedEventCount() <= ordinal)
+              ? condition.addInundatedEventBuilder() : condition.getInundatedEventBuilder(ordinal);
+      inundatedEvent.setEventPriorToHatching(isTrue);
       return updatedReport.build();
     }
   }

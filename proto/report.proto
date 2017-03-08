@@ -100,6 +100,7 @@ message NestCondition {
   message WashEvent {
     optional int64 timestamp_ms = 1;
     optional string storm_name = 2;
+    optional bool event_prior_to_hatching = 3;
   }
 
   repeated WashEvent wash_over = 7;
@@ -131,6 +132,7 @@ message NestCondition {
     optional int32 number_of_eggs = 3;
     optional string predator_spinner_text = 4;
     optional bool predated_prior_to_hatching = 5;
+    optional bool predation_post_hatch_prior_to_inventory = 6;
 
   }
   repeated PreditationEvent preditation = 9;

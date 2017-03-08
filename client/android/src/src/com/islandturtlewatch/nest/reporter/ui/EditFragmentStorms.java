@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -22,7 +23,7 @@ import com.islandturtlewatch.nest.reporter.util.DateUtil;
 import java.util.Map;
 
 /**
- * Created by ReverendCode on 4/21/16.
+ * Created by David Wenzel on 4/21/16.
  */
 public class EditFragmentStorms extends EditFragment {
 
@@ -30,8 +31,10 @@ public class EditFragmentStorms extends EditFragment {
             ClickHandler.toMap(
                     new HandleSetPostHatchWashout(),
                     new HandleSetPartialWashoutDate(),
+                    new HandleSetPartialWashoutPriorToHatching(),
                     new HandleAddAccretionRow(),
                     new HandleSetStormImpactDate(),
+                    new HandleSetWashoutPriorToHatching(),
                     new HandleSetWashoutDate());
 
     private static final Map<Integer, TextChangeHandler> TEXT_CHANGE_HANDLERS =
@@ -65,12 +68,6 @@ public class EditFragmentStorms extends EditFragment {
     public void updateSection(ReportProto.Report report) {
         final ReportProto.NestCondition condition = report.getCondition();
 
-
-
-
-
-
-
         if (condition.getStormImpact().hasTimestampMs()) {
             setDate(R.id.buttonOtherStormImpactDate, condition.getStormImpact().getTimestampMs());
             setText(R.id.fieldOtherStormImpactStormName, condition.getStormImpact().getStormName());
@@ -90,9 +87,6 @@ public class EditFragmentStorms extends EditFragment {
                 (condition.getWashOut().hasTimestampMs() ||
                         condition.getPartialWashout().hasTimestampMs()));
 
-
-
-
         clearTable(R.id.tableWashOver);
         for (int i = 0; i < condition.getWashOverCount(); i++) {
             addWashOverRow(i, condition.getWashOver(i), true);
@@ -104,7 +98,6 @@ public class EditFragmentStorms extends EditFragment {
                 addWashOverRow(condition.getWashOverCount(), ReportProto.NestCondition.WashEvent.getDefaultInstance(), false);
             }
         });
-
 
         clearTable(R.id.tableAccretionEvent);
         for (int i = 0; i < condition.getAccretionCount(); i++) {
@@ -130,9 +123,8 @@ public class EditFragmentStorms extends EditFragment {
         addInundationRow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                addInundatedEventRow(condition.getInundatedEventCount(), ReportProto.NestCondition.WashEvent.getDefaultInstance(),false);
-
+                addInundatedEventRow(condition.getInundatedEventCount(),
+                        ReportProto.NestCondition.WashEvent.getDefaultInstance(),false);
             }
         });
 
@@ -155,6 +147,14 @@ public class EditFragmentStorms extends EditFragment {
             clearDate(R.id.buttonPartialWashOutDate);
             setText(R.id.fieldPartialWashOutStormName, "");
         }
+
+        if (condition.getPartialWashout().hasEventPriorToHatching()) {
+            setChecked(R.id.fieldPartialWashoutPriorToHatching, condition.getPartialWashout().getEventPriorToHatching());
+        } else setChecked(R.id.fieldPartialWashoutPriorToHatching,false);
+
+        if (condition.getWashOut().hasEventPriorToHatching()) {
+            setChecked(R.id.fieldCompleteWashoutPriorToHatching,condition.getWashOut().getEventPriorToHatching());
+        } else setChecked(R.id.fieldCompleteWashoutPriorToHatching,false);
     }
     private void clearTable(int viewId) {
         TableLayout table = getTable(viewId);
@@ -174,12 +174,28 @@ public class EditFragmentStorms extends EditFragment {
         }
     }
 
+    private static class HandleSetPartialWashoutPriorToHatching extends ClickHandler {
+        protected HandleSetPartialWashoutPriorToHatching() {super(R.id.fieldPartialWashoutPriorToHatching);}
+        @Override
+        public void handleClick(View view, EditPresenter.DataUpdateHandler updateHandler) {
+            updateHandler.applyMutation(new ReportMutations.PartialWashoutPriorToHatchingMutation(isChecked(view)));
+        }
+    }
+
+
+    private static class HandleSetWashoutPriorToHatching extends ClickHandler {
+        protected HandleSetWashoutPriorToHatching() {super(R.id.fieldCompleteWashoutPriorToHatching);}
+
+        @Override
+        public void handleClick(View view, EditPresenter.DataUpdateHandler updateHandler) {
+            updateHandler.applyMutation(new ReportMutations.WashoutPriorToHatchingMutation(isChecked(view)));
+        }
+    }
 
     private static class HandleUpdatePartialWashoutStorm extends TextChangeHandler {
         protected HandleUpdatePartialWashoutStorm() {
             super(R.id.fieldPartialWashOutStormName);
         }
-
         @Override
         public void handleTextChange(String newName, EditPresenter.DataUpdateHandler updateHandler) {
             updateHandler.applyMutation(new ReportMutations.PartialWashoutStormNameMutation(newName));
@@ -191,7 +207,6 @@ public class EditFragmentStorms extends EditFragment {
         protected HandleSetWashoutDate() {
             super(R.id.buttonWashOutDate);
         }
-
         @Override
         public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
             updateHandler.applyMutation(new ReportMutations.WashoutDateMutation(maybeDate));
@@ -202,7 +217,6 @@ public class EditFragmentStorms extends EditFragment {
         protected HandleSetPartialWashoutDate() {
             super(R.id.buttonPartialWashOutDate);
         }
-
         @Override
         public void onDateSet (DatePicker view, Optional<Date> maybeDate) {
             updateHandler.applyMutation(new ReportMutations.PartialWashoutDateMutation(maybeDate));
@@ -296,7 +310,6 @@ public class EditFragmentStorms extends EditFragment {
                 updateHandler.applyMutation(new ReportMutations.AccretionStormNameMutation(ordinal, newText));
             }
         });
-
         Button delete = new Button(getActivity());
         delete.setText("X");
         delete.setOnClickListener(listenerProvider.getOnClickListener(new ClickHandlerSimple() {
@@ -308,14 +321,30 @@ public class EditFragmentStorms extends EditFragment {
 
         TableRow row = new TableRow(getActivity());
         row.setId(ordinal);
-        row.addView(date_button);
-        storm_name.setLayoutParams(
+        date_button.setLayoutParams(
                 new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
+        row.addView(date_button);
         row.addView(storm_name);
         if (showDelete) {
             row.addView(delete);
         }
+
+        CheckBox priorToHatch = new CheckBox(getActivity());
+        priorToHatch.setText("Did Accretion Occur Prior to Hatching?");
+        priorToHatch.setOnClickListener(listenerProvider.getOnClickListener(new ClickHandlerSimple() {
+            @Override
+            public void handleClick(View view, EditPresenter.DataUpdateHandler updateHandler) {
+                updateHandler.applyMutation(new ReportMutations.AccretionOccurredPriorToHatchingMutation(ordinal,isChecked(view)));
+            }
+        }));
+        if (accretion.hasEventPriorToHatching()) {
+            priorToHatch.setChecked(accretion.getEventPriorToHatching());
+        } else priorToHatch.setChecked(false);
+        TableRow row2 = new TableRow(getActivity());
+        priorToHatch.setLayoutParams(new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
+        row2.addView(priorToHatch);
         getTable(R.id.tableAccretionEvent).addView(row);
+        getTable(R.id.tableAccretionEvent).addView(row2);
 
     }
 
@@ -377,7 +406,6 @@ public class EditFragmentStorms extends EditFragment {
         } else {
             date_button.setText(R.string.date_button);
         }
-
         SimpleDatePickerClickHandler clickHandler = new SimpleDatePickerClickHandler() {
             @Override
             public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
@@ -389,7 +417,6 @@ public class EditFragmentStorms extends EditFragment {
             clickHandler.setDate(System.currentTimeMillis());
         }
         date_button.setOnClickListener(listenerProvider.getOnClickListener(clickHandler));
-
         FocusMonitoredEditText storm_name = new FocusMonitoredEditText(getActivity());
         storm_name.setHint(R.string.edit_nest_condition_storm_name);
         storm_name.setText(event.getStormName());
@@ -399,7 +426,6 @@ public class EditFragmentStorms extends EditFragment {
                 updateHandler.applyMutation(new ReportMutations.InundatedEventStormNameMutation(ordinal, newText));
             }
         });
-
         Button delete = new Button(getActivity());
         delete.setText("X");
         delete.setOnClickListener(listenerProvider.getOnClickListener(new ClickHandlerSimple() {
@@ -408,18 +434,34 @@ public class EditFragmentStorms extends EditFragment {
                 updateHandler.applyMutation(new ReportMutations.DeleteInundatedEventMutation(ordinal));
             }
         }));
-
         TableRow row = new TableRow(getActivity());
         row.setId(ordinal);
+        TableRow.LayoutParams pars = new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
+        date_button.setLayoutParams(pars);
         row.addView(date_button);
-        storm_name.setLayoutParams(
-                new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
         row.addView(storm_name);
         if (showDelete) {
             row.addView(delete);
         }
+
+        CheckBox priorToHatch = new CheckBox(getActivity());
+        priorToHatch.setText("Did Inundation Occur Prior to Hatching?");
+        priorToHatch.setOnClickListener(listenerProvider.getOnClickListener(new ClickHandlerSimple() {
+            @Override
+            public void handleClick(View view, EditPresenter.DataUpdateHandler updateHandler) {
+                updateHandler.applyMutation(new ReportMutations.InundatedEventOccuredPriorToHatchingMutation(ordinal,isChecked(view)));
+            }
+        }));
+        if (event.hasEventPriorToHatching()) {
+            priorToHatch.setChecked(event.getEventPriorToHatching());
+        } else priorToHatch.setChecked(false);
+        TableRow row2 = new TableRow(getActivity());
+        priorToHatch.setLayoutParams(pars);
+        row2.addView(priorToHatch);
         getTable(R.id.tableInundatedEvent).addView(row);
+        getTable(R.id.tableInundatedEvent).addView(row2);
     }
+
     private TableLayout getTable(int viewId) {
         View view = getActivity().findViewById(viewId);
         Preconditions.checkArgument(view instanceof TableLayout);

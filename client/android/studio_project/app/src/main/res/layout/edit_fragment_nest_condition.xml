@@ -138,13 +138,25 @@
 			android:layout_width="wrap_content">
 			<CheckBox
 				android:id="@+id/field_predated_prior_to_hatching"
-				android:text="Predated Prior to Hatching"
+				android:text="@string/text_predated_prior_to_hatching"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_weight="1"
 				android:onClick="handleClick"
 				/>
 
+		</TableRow>
+
+		<TableRow
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content">
+			<CheckBox
+				android:id="@+id/field_predated_post_hatch_prior_to_inventory"
+				android:text="@string/predated_post_hatch_but_prior_to_inventory"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:onClick="handleClick"/>
 		</TableRow>
 		<TableRow
 			android:layout_width="wrap_content"
@@ -172,25 +184,7 @@
 			android:id="@+id/tablePredatitation">
 			<!-- Will be dynamically populated -->
 		</TableLayout>
-		<!-- NestInundated checkbox is deprecated, use new InundatedEvent instead-->
-		<!--<TableRow-->
-			<!--android:layout_width="wrap_content"-->
-			<!--android:layout_height="wrap_content" >-->
-			<!--<CheckBox-->
-				<!--android:id="@+id/fieldDamageNestInundated"-->
-				<!--android:layout_width="0dp"-->
-				<!--android:layout_height="wrap_content"-->
-				<!--android:layout_weight="1"-->
-				<!--android:layout_marginBottom="5dp"-->
-				<!--android:text="@string/edit_nest_condition_nest_inundated"-->
-				<!--android:onClick="handleClick" />-->
 
-			<!--<Button-->
-				<!--android:id="@+id/buttonDamageNestInundatedDate"-->
-				<!--android:text="@string/date_button"-->
-				<!--android:enabled="false"-->
-				<!--android:onClick="handleClick" />-->
-		<!--</TableRow>-->
 <TableRow
 	android:layout_width="wrap_content"
 	android:layout_height="wrap_content">
@@ -322,24 +316,7 @@
                 android:text="@string/edit_nest_condition_damage_poached_eggs_removed"
                 android:onClick="handleClick" />
         </TableRow>
-        <!--<TableRow-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content" >-->
-            <!--<CheckBox-->
-                <!--android:id="@+id/fieldDamageEggsScattered"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_weight="1"-->
-                <!--android:layout_marginBottom="5dp"-->
-                <!--android:text="@string/edit_nest_condition_damage_eggs_scattered"-->
-                <!--android:onClick="handleClick" />-->
 
-            <!--<Button-->
-                <!--android:id="@+id/buttonDamageEggsScatteredDate"-->
-                <!--android:text="@string/date_button"-->
-                <!--android:enabled="false"-->
-                <!--android:onClick="handleClick" />-->
-        <!--</TableRow>-->
 	   <TableRow
 	       android:layout_width="wrap_content"
 	       android:layout_height="wrap_content" >
