@@ -590,6 +590,24 @@ public class ReportMutations {
     }
   }
 
+  public static class ReasonOtherValueMutation implements ReportMutation {
+    private final String other;
+
+    public ReasonOtherValueMutation(String other) {
+      this.other = other;
+    }
+
+    @Override
+    public Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      ProtectionEvent.Builder protectionEventBuilder =
+              updatedReport.getInterventionBuilder().getProtectionEventBuilder();
+      protectionEventBuilder.setReasonOther(other);
+
+      return updatedReport.build();
+    }
+  }
+
   public static class DateProtectedMutation implements ReportMutation {
     private final Optional<Date> maybeDate;
 
@@ -656,6 +674,23 @@ public static class ProtectionChangeTypeMutation implements ReportMutation {
       return updatedReport.build();
     }
   }
+  public static class ReasonOtherValueChangeMutation implements ReportMutation {
+    private final String other;
+
+    public ReasonOtherValueChangeMutation(String other) {
+      this.other = other;
+    }
+
+    @Override
+    public Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      ProtectionEvent.Builder protectionEventBuilder =
+              updatedReport.getInterventionBuilder().getProtectionChangedEventBuilder();
+      protectionEventBuilder.setReasonOther(other);
+
+      return updatedReport.build();
+    }
+  }
 
   public static class DateProtectedChangeMutation implements ReportMutation {
     private final Optional<Date> maybeDate;
@@ -677,6 +712,20 @@ public static class ProtectionChangeTypeMutation implements ReportMutation {
       return updatedReport.build();
     }
   }
+
+  public static class ChangeNestProtectionReasonMutation implements ReportMutation {
+    private final String reason;
+    public ChangeNestProtectionReasonMutation(String reason) {
+      this.reason = reason;
+    }
+    @Override
+    public Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      updatedReport.getInterventionBuilder().setProtectionChangedReason(reason);
+      return updatedReport.build();
+    }
+  }
+
 //end section
 
   public static class RelocatedMutation implements ReportMutation {
@@ -1352,40 +1401,6 @@ public static class ProtectionChangeTypeMutation implements ReportMutation {
       return updatedReport.build();
     }
   }
-//
-//  public static class NestInundatedDateMutation implements ReportMutation {
-//    private final Optional<Date> maybeDate;
-//
-//    public NestInundatedDateMutation(Optional<Date> maybeDate) {
-//      this.maybeDate = maybeDate;
-//    }
-//
-//    @Override
-//    public Report apply(Report oldReport) {
-//      Report.Builder updatedReport = oldReport.toBuilder();
-//      NestCondition.Builder conditionBuilder = updatedReport.getConditionBuilder();
-//      if (maybeDate.isPresent()) {
-//        conditionBuilder.setNestInundatedTimestampMs(maybeDate.get().getTimestampMs());
-//      } else {
-//        conditionBuilder.clearNestInundatedTimestampMs();
-//      }
-//      return updatedReport.build();
-//    }
-//  }
-//    public static class NestInundatedMutation implements ReportMutation {
-//      private final boolean isTrue;
-//
-//      public NestInundatedMutation(boolean isTrue) {
-//        this.isTrue = isTrue;
-//      }
-//
-//      @Override
-//      public Report apply(Report oldReport) {
-//        Report.Builder updatedReport = oldReport.toBuilder();
-//        updatedReport.getConditionBuilder().setNestInundated(isTrue);
-//        return updatedReport.build();
-//      }
-//    }
 
   public static class NestDepredatedMutation implements ReportMutation {
     private final boolean isTrue;

@@ -229,18 +229,21 @@ message Intervention {
       BEFORE_PREDITATION = 2;
       AFTER_PREDITATION = 3;
       FOR_LIGHT_PROBLEMS = 4;
+      OTHER = 5;
     }
     optional Reason reason = 3;
+    optional string reason_other = 4;
   }
   optional ProtectionEvent protection_event = 1;
   optional ProtectionEvent protection_changed_event = 6;
+  optional string protection_changed_reason = 7;
 
   optional Relocation relocation = 2;
   optional Excavation excavation = 3;
 
   optional bool adopted = 4;
   optional string adoptee = 5;
-  //NEXT ID = 7
+  //NEXT ID = 8
 }
 
 message Excavation {

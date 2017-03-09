@@ -37,6 +37,7 @@ public class EditFragmentNestCare extends EditFragment {
           new HandleSetAfterPredation(),
           new HandleSetBeforePredation(),
           new HandleSetLightProblem(),
+          new HandleSetReasonOther(),
           new HandleSetRestrainingCage(),
           new HandleSetSelfRealeasingCage(),
           new HandleSetSelfRealeasingFlat(),
@@ -48,12 +49,16 @@ public class EditFragmentNestCare extends EditFragment {
               new HandleSetChangeSelfRealeasingCage(),
               new HandleSetChangeSelfRealeasingFlat(),
               new HandleSetChangeProtectedDate(),
+              new HandleSetReasonChangeOther(),
           new HandleSetNewGps());
 
   private static final Map<Integer, TextChangeHandler> TEXT_CHANGE_HANDLERS =
       TextChangeHandler.toMap(
           new HandleUpdateNewAddress(),
           new HandleUpdateAdoptee(),
+          new HandleUpdateReasonOther(),
+          new HandleUpdateReasonChangeOther(),
+          new HandleUpdateProtectionChange(),
           new HandleUpdateEggsDestroyed());
 
   @Override
@@ -99,7 +104,13 @@ public class EditFragmentNestCare extends EditFragment {
         intervention.getProtectionEvent().getReason() == Reason.AFTER_PREDITATION);
     setChecked(R.id.fieldForLightProblem,
         intervention.getProtectionEvent().getReason() == Reason.FOR_LIGHT_PROBLEMS);
-
+    setChecked(R.id.fieldReasonOther,
+            intervention.getProtectionEvent().getReason() == Reason.OTHER);
+    setEnabled(R.id.fieldReasonOtherValue,
+            intervention.getProtectionEvent().getReason() == Reason.OTHER);
+    setText(R.id.fieldReasonOtherValue,
+            intervention.getProtectionEvent().getReasonOther());
+    setText(R.id.fieldChangeProtectionReason,intervention.getProtectionChangedReason());
 //    pete and repeat
 
     if (intervention.getProtectionChangedEvent().hasTimestampMs()) {
@@ -121,6 +132,13 @@ public class EditFragmentNestCare extends EditFragment {
             intervention.getProtectionChangedEvent().getReason() == Reason.AFTER_PREDITATION);
     setChecked(R.id.fieldForLightProblemChange,
             intervention.getProtectionChangedEvent().getReason() == Reason.FOR_LIGHT_PROBLEMS);
+
+    setChecked(R.id.fieldChangeReasonOther,
+            intervention.getProtectionChangedEvent().getReason() == Reason.OTHER);
+    setEnabled(R.id.fieldChangeReasonOtherValue,
+            intervention.getProtectionChangedEvent().getReason() == Reason.OTHER);
+    setText(R.id.fieldChangeReasonOtherValue,
+            intervention.getProtectionChangedEvent().getReasonOther());
   }
 
   private static class HandleSetProtectedDate extends DatePickerClickHandler {
@@ -195,6 +213,27 @@ public class EditFragmentNestCare extends EditFragment {
     }
   }
 
+  private static class HandleSetReasonOther extends ClickHandler {
+    protected HandleSetReasonOther() {
+      super(R.id.fieldReasonOther);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(
+              new WhyProtectedMutation(Reason.OTHER));
+    }
+  }
+
+  private static class HandleUpdateReasonOther extends TextChangeHandler {
+    protected HandleUpdateReasonOther() {
+      super(R.id.fieldReasonOtherValue);
+    }
+    @Override
+    public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.ReasonOtherValueMutation(newText));
+    }
+  }
+
 //  TODO: copy paste is inferior to building a proper function
 private static class HandleSetChangeProtectedDate extends DatePickerClickHandler {
   protected HandleSetChangeProtectedDate() {
@@ -266,7 +305,40 @@ private static class HandleSetChangeProtectedDate extends DatePickerClickHandler
       updateHandler.applyMutation(
               new ReportMutations.WhyProtectedChangeMutation(ProtectionEvent.Reason.FOR_LIGHT_PROBLEMS));
     }
-  } //End badwrong
+
+
+  }
+  private static class HandleSetReasonChangeOther extends ClickHandler {
+    protected HandleSetReasonChangeOther() {
+      super(R.id.fieldChangeReasonOther);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(
+              new ReportMutations.WhyProtectedChangeMutation(Reason.OTHER));
+    }
+  }
+
+  private static class HandleUpdateReasonChangeOther extends TextChangeHandler {
+    protected HandleUpdateReasonChangeOther() {
+      super(R.id.fieldChangeReasonOtherValue);
+    }
+    @Override
+    public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.ReasonOtherValueChangeMutation(newText));
+    }
+  }
+
+  private static class HandleUpdateProtectionChange extends TextChangeHandler {
+    protected HandleUpdateProtectionChange() {
+      super(R.id.fieldChangeProtectionReason);
+    }
+    @Override
+    public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.ChangeNestProtectionReasonMutation(newText));
+    }
+  }
+  //End badwrong
 
   private static class HandleSetAdopted extends ClickHandler {
     protected HandleSetAdopted() {

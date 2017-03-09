@@ -128,6 +128,22 @@
 	           android:text="@string/edit_nest_care_for_light_problem"
 	           android:onClick="handleClick"  />
 	   </TableRow>
+		<TableRow>
+			<CheckBox
+				android:id="@+id/fieldReasonOther"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:layout_marginBottom="5dp"
+				android:text="Other"
+				android:onClick="handleClick"/>
+			<com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+				android:id="@+id/fieldReasonOtherValue"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="2"
+				onTextChangeHandler="handleTextChange" />
+		</TableRow>
 
 		<!--TODO(dwenzel): refactor these checkboxes-->
 		<TableRow
@@ -226,6 +242,45 @@
 				android:layout_marginBottom="5dp"
 				android:text="@string/edit_nest_care_for_light_problem"
 				android:onClick="handleClick"  />
+		</TableRow>
+
+		<TableRow>
+			<CheckBox
+				android:id="@+id/fieldChangeReasonOther"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:layout_marginBottom="5dp"
+				android:text="Other"
+				android:onClick="handleClick"/>
+
+			<com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+				android:id="@+id/fieldChangeReasonOtherValue"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="2"
+				onTextChangeHandler="handleTextChange" />
+		</TableRow>
+
+		<TableRow
+			android:layout_height="wrap_content">
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+
+				android:text="Reason for Change in Nest Protection"/>
+			</TableRow>
+		<TableRow>
+			<com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+				android:id="@+id/fieldChangeProtectionReason"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="2"
+				android:inputType="textMultiLine"
+				android:lines="4"
+				onTextChangeHandler="handleTextChange" />
+
 		</TableRow>
 		<!--End protection changed section-->
 
