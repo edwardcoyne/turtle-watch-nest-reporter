@@ -70,7 +70,7 @@
     <orderEntry type="library" exported="" name="jdo2-api-2.3-eb" level="project" />
     <orderEntry type="library" exported="" name="google-http-client-jdo-1.22.0" level="project" />
     <orderEntry type="library" exported="" name="transaction-api-1.1" level="project" />
-    <orderEntry type="library" exported="" name="appengine-api-1.0-sdk-1.9.49" level="project" />
+    <orderEntry type="library" exported="" name="appengine-api-1.0-sdk-1.9.50" level="project" />
     <orderEntry type="library" exported="" name="guava-20.0" level="project" />
     <orderEntry type="library" exported="" name="google-api-client-1.22.0" level="project" />
     <orderEntry type="library" exported="" name="google-http-client-appengine-1.22.0" level="project" />

@@ -132,8 +132,11 @@ message NestCondition {
     optional string predator = 2;
     optional int32 number_of_eggs = 3;
     optional string predator_spinner_text = 4;
-    optional bool predated_prior_to_hatching = 5;
-    optional bool predation_post_hatch_prior_to_inventory = 6;
+    enum PredationTimeOption {
+      PRIOR_TO_HATCH = 1;
+      PRIOR_TO_INV = 2;
+    }
+    optional PredationTimeOption predated_prior = 5;
 
   }
   repeated PreditationEvent preditation = 9;

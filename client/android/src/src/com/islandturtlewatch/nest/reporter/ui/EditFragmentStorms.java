@@ -239,18 +239,6 @@ public class EditFragmentStorms extends EditFragment {
         }
     }
 
-//
-//    private static class HandleAddAccretionRow extends ClickHandler {
-//        protected HandleAddAccretionRow () {
-//            super(R.id.fieldAddAccretionRow);
-//        }
-//        @Override
-//        public void handleClick(View view, EditPresenter.DataUpdateHandler updateHandler) {
-//
-//        }
-//    }
-
-
     private static class HandleSetStormImpactDate extends DatePickerClickHandler {
         protected HandleSetStormImpactDate() {
             super(R.id.buttonOtherStormImpactDate);
@@ -345,7 +333,7 @@ public class EditFragmentStorms extends EditFragment {
         }
 
         CheckBox priorToHatch = new CheckBox(getActivity());
-        priorToHatch.setText("Did Accretion Occur Prior to Hatching?");
+        priorToHatch.setText("Accretion Occured Prior to Hatching");
         priorToHatch.setOnClickListener(listenerProvider.getOnClickListener(new ClickHandlerSimple() {
             @Override
             public void handleClick(View view, EditPresenter.DataUpdateHandler updateHandler) {
@@ -413,7 +401,7 @@ public class EditFragmentStorms extends EditFragment {
         }
 
         CheckBox priorToHatch = new CheckBox(getActivity());
-        priorToHatch.setText("Did Erosion Occur Prior to Hatching?");
+        priorToHatch.setText("Erosion Occured Prior to Hatching");
         priorToHatch.setOnClickListener(listenerProvider.getOnClickListener(new ClickHandlerSimple() {
             @Override
             public void handleClick(View view, EditPresenter.DataUpdateHandler updateHandler) {
@@ -528,7 +516,7 @@ public class EditFragmentStorms extends EditFragment {
         }
 
         CheckBox priorToHatch = new CheckBox(getActivity());
-        priorToHatch.setText("Did Inundation Occur Prior to Hatching?");
+        priorToHatch.setText("Inundation Occured Prior to Hatching");
         priorToHatch.setOnClickListener(listenerProvider.getOnClickListener(new ClickHandlerSimple() {
             @Override
             public void handleClick(View view, EditPresenter.DataUpdateHandler updateHandler) {

@@ -65,9 +65,6 @@ public class EditFragmentNestCondition extends EditFragment {
           new HandleSetPredationPostHatchPriorToInventory(),
           new HandleGhostCrabDamageAtMost10Eggs(),
           new HandleSetActivelyRecordPredationEvents(),
-              //NestInundated is deprecated, use new inundatedEvent instead
-//          new HandleSetNestInundated(),
-//          new HandleSetNestInundatedDate(),
           new HandleSetNestDepredation(),
           new HandleUpdateEggsDamagedByAnotherTurtle());
 
@@ -124,13 +121,16 @@ public class EditFragmentNestCondition extends EditFragment {
 
 //    We are currently only concerned about a single predation event.
 if (condition.getPreditationCount()>0) {
-  if (condition.getPreditation(0).hasPredatedPriorToHatching()) {
-    setChecked(R.id.field_predated_prior_to_hatching,condition.getPreditation(0).getPredatedPriorToHatching());
-  } else setChecked(R.id.field_predated_prior_to_hatching, false);
+  if (condition.getPreditation(0).hasPredatedPrior()) {
+    setChecked(R.id.field_predated_prior_to_hatching,
+            condition.getPreditation(0).getPredatedPrior() == PreditationEvent.PredationTimeOption.PRIOR_TO_HATCH);
+    setChecked(R.id.field_predated_post_hatch_prior_to_inventory,
+            condition.getPreditation(0).getPredatedPrior() == PreditationEvent.PredationTimeOption.PRIOR_TO_INV);
+  } else {
+    setChecked(R.id.field_predated_post_hatch_prior_to_inventory, false);
+    setChecked(R.id.field_predated_prior_to_hatching, false);
+  }
 
-  if (condition.getPreditationCount() > 0) {
-    setChecked(R.id.field_predated_post_hatch_prior_to_inventory, condition.getPreditation(0).getPredationPostHatchPriorToInventory());
-  } else setChecked(R.id.field_predated_post_hatch_prior_to_inventory, false);
 
   if (condition.getPreditation(0).hasTimestampMs()) {
     setDate(R.id.buttonPredatorDate, condition.getPreditation(0).getTimestampMs());
@@ -157,6 +157,7 @@ if (condition.getPreditationCount()>0) {
   pSpinner.setSelection(0,false);
   setChecked(R.id.field_predated_prior_to_hatching, false);
   setChecked(R.id.field_predated_post_hatch_prior_to_inventory, false);
+
 }
     setChecked(R.id.fieldDamageEggsDamagedByAnotherTurtle,condition.getEggsDamagedByAnotherTurtle());
     setChecked(R.id.fieldDamageNestDepredated, condition.getNestDepredated());
@@ -345,6 +346,30 @@ if (condition.getPreditationCount()>0) {
     return (TableLayout)view;
   }
 
+  private static class HandleSetPredatedPriorToHatching extends ClickHandler {
+    protected HandleSetPredatedPriorToHatching() {
+      super(R.id.field_predated_prior_to_hatching);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.PredatedPriorMutation(0,
+                PreditationEvent.PredationTimeOption.PRIOR_TO_HATCH));
+    }
+  }
+
+  private static class HandleSetPredationPostHatchPriorToInventory extends ClickHandler {
+    protected HandleSetPredationPostHatchPriorToInventory() {
+      super(R.id.field_predated_post_hatch_prior_to_inventory);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.PredatedPriorMutation(0,
+              PreditationEvent.PredationTimeOption.PRIOR_TO_INV));
+    }
+  }
+
+
+
   private static class HandleSetProportionAll extends ClickHandler {
     protected HandleSetProportionAll () {
       super(R.id.fieldRecordedAll);
@@ -398,26 +423,6 @@ if (condition.getPreditationCount()>0) {
     @Override
     public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
       updateHandler.applyMutation(new PredationDateMutation(0,maybeDate));
-    }
-  }
-
-
-
-  private static class HandleSetPredationPostHatchPriorToInventory extends ClickHandler {
-    protected  HandleSetPredationPostHatchPriorToInventory() {super(R.id.field_predated_post_hatch_prior_to_inventory);}
-    @Override
-    public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(new ReportMutations.PredationPostHatchPriorToInventoryMutation(0,isChecked(view)));
-    }
-  }
-
-  private static class HandleSetPredatedPriorToHatching extends ClickHandler {
-    protected HandleSetPredatedPriorToHatching() {
-      super(R.id.field_predated_prior_to_hatching);
-    }
-    @Override
-    public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(new ReportMutations.PredatedPriorToHatchingMutation(0,isChecked(view)));
     }
   }
 
