@@ -135,6 +135,7 @@ message NestCondition {
     enum PredationTimeOption {
       PRIOR_TO_HATCH = 1;
       PRIOR_TO_INV = 2;
+      NONE = 3;
     }
     optional PredationTimeOption predated_prior = 5;
 

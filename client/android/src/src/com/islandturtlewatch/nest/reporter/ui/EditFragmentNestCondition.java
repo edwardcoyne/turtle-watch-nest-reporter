@@ -9,10 +9,12 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.Toast;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
@@ -352,8 +354,14 @@ if (condition.getPreditationCount()>0) {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(new ReportMutations.PredatedPriorMutation(0,
+      CheckBox box = (CheckBox) view;
+      if (!box.isChecked()) {
+        updateHandler.applyMutation(new ReportMutations.PredatedPriorMutation(0,
+                PreditationEvent.PredationTimeOption.NONE));
+      } else {
+        updateHandler.applyMutation(new ReportMutations.PredatedPriorMutation(0,
                 PreditationEvent.PredationTimeOption.PRIOR_TO_HATCH));
+      }
     }
   }
 
@@ -363,8 +371,14 @@ if (condition.getPreditationCount()>0) {
     }
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(new ReportMutations.PredatedPriorMutation(0,
-              PreditationEvent.PredationTimeOption.PRIOR_TO_INV));
+      CheckBox box = (CheckBox) view;
+      if (!box.isChecked()) {
+        updateHandler.applyMutation(new ReportMutations.PredatedPriorMutation(0,
+                PreditationEvent.PredationTimeOption.NONE));
+      } else {
+        updateHandler.applyMutation(new ReportMutations.PredatedPriorMutation(0,
+                PreditationEvent.PredationTimeOption.PRIOR_TO_INV));
+      }
     }
   }
 
