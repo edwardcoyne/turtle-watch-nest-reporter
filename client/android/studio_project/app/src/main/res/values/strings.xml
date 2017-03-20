@@ -124,7 +124,7 @@
     <string name="excavation_data_total_eggs">Total eggs</string>
    
     <string name="edit_pictures_capture_image">Capture Image</string>
-    <string name="edit_nest_condition_post_hatch_washout">Washout Occured Post-Hatch, but Pre-Inventory</string>
+    <string name="edit_nest_condition_post_hatch_washout">Complete Washout Occured Post-Hatch,\n but Pre-Inventory</string>
     <string name="edit_nest_condition_nest_inundated">Nest Inundated</string>
     <string name="edit_nest_condition_damage_nest_depredated">Nest Completely Depredated</string>
     <string name="edit_nest_condition_damage_another_turtle">Eggs Damaged by Another Turtle</string>

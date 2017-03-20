@@ -80,9 +80,9 @@ public class EditFragmentStorms extends EditFragment {
         setText(R.id.fieldOtherStormImpactOtherImpact, condition.getStormImpact().getOtherImpact());
         setVisible(R.id.fieldOtherStormImpactOtherImpact,condition.getStormImpact().hasTimestampMs());
 
-        setEnabled(R.id.fieldPostHatchWashout, (
-                condition.getPartialWashout().hasTimestampMs() ||
-                        condition.getWashOut().hasTimestampMs()));
+//        setEnabled(R.id.fieldPostHatchWashout, (
+//                condition.getPartialWashout().hasTimestampMs() ||
+//                        condition.getWashOut().hasTimestampMs()));
 
         setChecked(R.id.fieldPostHatchWashout, condition.getPostHatchWashout() &&
                 (condition.getWashOut().hasTimestampMs() ||
