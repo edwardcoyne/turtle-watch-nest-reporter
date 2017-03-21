@@ -2,6 +2,7 @@ package com.islandturtlewatch.nest.reporter.web.servlets;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.net.MediaType;
+import com.islandturtlewatch.nest.data.ReportProto;
 import com.islandturtlewatch.nest.reporter.backend.storage.ReportStore;
 import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter;
 import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.ConditionallyMappedColumn;
@@ -16,7 +17,6 @@ import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.
 import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedColumnAbsoluteValueDouble;
 import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedColumnWithDefault;
 import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedDistanceColumn;
-import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedIsPresentColumn;
 import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedPriorityColumn;
 import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedIfExistsColumn;
 import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.MappedNotNullColumn;
@@ -99,12 +99,17 @@ public class StateNestReportServlet extends HttpServlet {
           "report.location.water_to_apex_ft", "report.location.water_to_apex_in"),
       new MappedColumn("Nest Relocated", "report.intervention.relocation.was_relocated"),
       new MappedTimestampColumn("Date Relocated","report.intervention.relocation.timestamp_ms"),
-
       new MappedNotNullColumn("Nest Washed Over", "report.condition.wash_over.0.timestamp_ms"),
       new MappedNotNullColumn("Inundated","report.condition.inundated_event.0.timestamp_ms"),
+      new MappedYesNoColumn("Did Inundation Occur Prior to Hatching?",
+              "report.condition.inundated_event.0.event_prior_to_hatching"),
 
       new MappedHasTimestampColumn("Complete Wash out","report.condition.wash_out.timestamp_ms"),
+      new MappedYesNoColumn("Did Complete Washout Occur Prior to Hatching?",
+              "report.condition.wash_out.event_prior_to_hatching"),
       new MappedHasTimestampColumn("Partial Wash out","report.condition.partial_washout.timestamp_ms"),
+      new MappedIfExistsColumn("Did Partial Washout Occur Prior to Hatching?",
+              "report.condition.partial_washout.event_prior_to_hatching"),
       new OrderedReportWriter.MappedEitherOrColumn("Nest Completely or Partially Washed Out",
               "report.condition.wash_out.timestamp_ms",
               "report.condition.partial_washout.timestamp_ms"),
@@ -115,6 +120,8 @@ public class StateNestReportServlet extends HttpServlet {
               "report.condition.partial_washout.storm_name",
               ""),
           new MappedNotNullColumn("Accretion","report.condition.accretion.0.timestamp_ms"),
+      new MappedYesNoColumn("Did Accretion Occur Prior to Hatching?",
+              "report.condition.accretion.0.event_prior_to_hatching"),
       new MappedNotNullTimestampColumn("Accretion Date","report.condition.accretion.0.timestamp_ms"),
       new MappedIfExistsColumn("Accretion Storm Name","report.condition.accretion.0.storm_name"),
       new MappedTimestampColumn("Other Storm impact Date","report.condition.storm_impact.timestamp_ms"),
@@ -131,7 +138,13 @@ public class StateNestReportServlet extends HttpServlet {
 
           new MappedNotNullTimestampColumn("Date(s) Predation Occurred",
               "report.condition.preditation.0.timestamp_ms"),
-      new MappedIfExistsColumn("If Predated by What Predator(s)","report.condition.preditation.0.predator"),
+      new OrderedReportWriter.MappedYesOrBlankRadioColumn("Predated Prior to Hatching",
+              "report.condition.preditation.0.predated_prior",
+              ReportProto.NestCondition.PreditationEvent.PredationTimeOption.PRIOR_TO_HATCH),
+      new OrderedReportWriter.MappedYesOrBlankRadioColumn("Predation Occurred Post Hatch but Prior to Inventory",
+              "report.condition.preditation.0.predated_prior",
+              ReportProto.NestCondition.PreditationEvent.PredationTimeOption.PRIOR_TO_INV),
+      new MappedIfExistsColumn("If Predated by What Predator(s)","report.condition.preditation.0.predator_spinner_text"),
           //These names are being compared against the values in arrays.xml under predator_array
           new OrderedReportWriter.MappedPredatorColumn("Raccoon Only","report.condition.preditation.0.predator_spinner_text"),
           new OrderedReportWriter.MappedPredatorColumn("Fox Only","report.condition.preditation.0.predator_spinner_text"),

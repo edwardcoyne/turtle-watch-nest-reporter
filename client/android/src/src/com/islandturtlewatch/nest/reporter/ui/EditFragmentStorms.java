@@ -29,13 +29,13 @@ public class EditFragmentStorms extends EditFragment {
 
     private static final Map<Integer, ClickHandler> CLICK_HANDLERS =
             ClickHandler.toMap(
-                    new HandleSetPostHatchWashout(),
+//                    new HandleSetPostHatchWashout(),
+//                    new HandleSetWashoutPriorToHatching(),
+                    new HandleSetCompleteWashoutPreHatch(),
+                    new HandleSetCompleteWashoutPostHatch(),
                     new HandleSetPartialWashoutDate(),
                     new HandleSetPartialWashoutPriorToHatching(),
-//                    new HandleAddAccretionRow(),
-//                    new HandleAddErosionRow(),
                     new HandleSetStormImpactDate(),
-                    new HandleSetWashoutPriorToHatching(),
                     new HandleSetWashoutDate());
 
     private static final Map<Integer, TextChangeHandler> TEXT_CHANGE_HANDLERS =
@@ -76,18 +76,8 @@ public class EditFragmentStorms extends EditFragment {
             clearDate(R.id.buttonOtherStormImpactDate);
             setText(R.id.fieldOtherStormImpactStormName,"");
         }
-
         setText(R.id.fieldOtherStormImpactOtherImpact, condition.getStormImpact().getOtherImpact());
         setVisible(R.id.fieldOtherStormImpactOtherImpact,condition.getStormImpact().hasTimestampMs());
-
-//        setEnabled(R.id.fieldPostHatchWashout, (
-//                condition.getPartialWashout().hasTimestampMs() ||
-//                        condition.getWashOut().hasTimestampMs()));
-
-        setChecked(R.id.fieldPostHatchWashout, condition.getPostHatchWashout() &&
-                (condition.getWashOut().hasTimestampMs() ||
-                        condition.getPartialWashout().hasTimestampMs()));
-
         clearTable(R.id.tableWashOver);
         for (int i = 0; i < condition.getWashOverCount(); i++) {
             addWashOverRow(i, condition.getWashOver(i), true);
@@ -168,10 +158,18 @@ public class EditFragmentStorms extends EditFragment {
             setChecked(R.id.fieldPartialWashoutPriorToHatching, condition.getPartialWashout().getEventPriorToHatching());
         } else setChecked(R.id.fieldPartialWashoutPriorToHatching,false);
 
-        if (condition.getWashOut().hasEventPriorToHatching()) {
-            setChecked(R.id.fieldCompleteWashoutPriorToHatching,condition.getWashOut().getEventPriorToHatching());
-        } else setChecked(R.id.fieldCompleteWashoutPriorToHatching,false);
+
+        setChecked(R.id.fieldCompleteWashoutPostHatch,
+                condition.getCompleteWashoutTiming()== ReportProto.NestCondition.WashoutTimeOption.POST_HATCH);
+        setChecked(R.id.fieldCompleteWashoutPreHatch,
+                condition.getCompleteWashoutTiming() == ReportProto.NestCondition.WashoutTimeOption.PRE_HATCH);
+//        if (condition.getCompleteWashoutTiming() == ReportProto.NestCondition.WashoutTimeOption.PRE_HATCH) {
+//            setChecked(R.id.fieldCompleteWashoutPreHatch,condition.getWashOut().getEventPriorToHatching());
+//        } else setChecked(R.id.fieldCompleteWashoutPreHatch,false);
+
+
     }
+
     private void clearTable(int viewId) {
         TableLayout table = getTable(viewId);
         // since we use focus listeners, MUST ensure no focus before deletion.
@@ -179,14 +177,56 @@ public class EditFragmentStorms extends EditFragment {
         table.removeAllViews();
     }
 
+    private static class HandleSetCompleteWashoutPreHatch extends ClickHandler {
+        protected HandleSetCompleteWashoutPreHatch() {
+            super(R.id.fieldCompleteWashoutPreHatch);
+        }
+        @Override
+        public void handleClick(View view, EditPresenter.DataUpdateHandler updateHandler) {
+            CheckBox box = (CheckBox) view;
+            if (!box.isChecked()) {
+                updateHandler.applyMutation(new ReportMutations.CompleteWashoutTimingMutation(
+                        ReportProto.NestCondition.WashoutTimeOption.NONE));
+            } else {
+                updateHandler.applyMutation(new ReportMutations.CompleteWashoutTimingMutation(
+                        ReportProto.NestCondition.WashoutTimeOption.PRE_HATCH));
+            }
+
+        }
+    }
+    private static class HandleSetCompleteWashoutPostHatch extends ClickHandler {
+        protected HandleSetCompleteWashoutPostHatch() {
+            super(R.id.fieldCompleteWashoutPostHatch);
+        }
+        @Override
+        public void handleClick(View view, EditPresenter.DataUpdateHandler updateHandler) {
+            CheckBox box = (CheckBox) view;
+            if (!box.isChecked()) {
+                updateHandler.applyMutation(new ReportMutations.CompleteWashoutTimingMutation(
+                        ReportProto.NestCondition.WashoutTimeOption.NONE));
+            } else {
+                updateHandler.applyMutation(new ReportMutations.CompleteWashoutTimingMutation(
+                        ReportProto.NestCondition.WashoutTimeOption.POST_HATCH));
+            }
+        }
+    }
 
     private static class HandleSetPostHatchWashout extends ClickHandler {
         protected HandleSetPostHatchWashout() {
-            super(R.id.fieldPostHatchWashout);
+            super(R.id.fieldCompleteWashoutPostHatch);
         }
         @Override
         public void handleClick(View view, EditPresenter.DataUpdateHandler updateHandler) {
             updateHandler.applyMutation(new ReportMutations.WasPostHatchWashout(isChecked(view)));
+        }
+    }
+
+    private static class HandleSetWashoutPriorToHatching extends ClickHandler {
+        protected HandleSetWashoutPriorToHatching() {super(R.id.fieldCompleteWashoutPreHatch);}
+
+        @Override
+        public void handleClick(View view, EditPresenter.DataUpdateHandler updateHandler) {
+            updateHandler.applyMutation(new ReportMutations.WashoutPriorToHatchingMutation(isChecked(view)));
         }
     }
 
@@ -195,16 +235,6 @@ public class EditFragmentStorms extends EditFragment {
         @Override
         public void handleClick(View view, EditPresenter.DataUpdateHandler updateHandler) {
             updateHandler.applyMutation(new ReportMutations.PartialWashoutPriorToHatchingMutation(isChecked(view)));
-        }
-    }
-
-
-    private static class HandleSetWashoutPriorToHatching extends ClickHandler {
-        protected HandleSetWashoutPriorToHatching() {super(R.id.fieldCompleteWashoutPriorToHatching);}
-
-        @Override
-        public void handleClick(View view, EditPresenter.DataUpdateHandler updateHandler) {
-            updateHandler.applyMutation(new ReportMutations.WashoutPriorToHatchingMutation(isChecked(view)));
         }
     }
 

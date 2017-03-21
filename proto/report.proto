@@ -87,7 +87,16 @@ message NestCondition {
   }
   optional VandalismType vandalism_type = 15;
   optional bool nest_dug_into = 26;
+
+  // post_hatch_washout is deprecated, we are now using complete_washout_timing instead
   optional bool post_hatch_washout = 20;
+  enum WashoutTimeOption {
+    PRE_HATCH = 1;
+    POST_HATCH = 2;
+    NONE = 3;
+  }
+  optional WashoutTimeOption complete_washout_timing = 34;
+
   repeated WashEvent accretion = 30;
   repeated WashEvent erosion = 33;
   optional StormImpact storm_impact = 32;
@@ -161,7 +170,7 @@ enum ProportionEventsRecorded {
   optional bool eggs_damaged_by_another_turtle = 24;
 
 
-  // Next ID=34
+  // Next ID=35
 }
 
 message NestLocation {

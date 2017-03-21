@@ -184,6 +184,23 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
     }
   }
 
+  public static class MappedYesOrBlankRadioColumn extends ReportColumn {
+    public MappedYesOrBlankRadioColumn(String name, final String stringPath, final ReportProto.NestCondition.PreditationEvent.PredationTimeOption option) {
+      super(name, new ValueFetcher() {
+        private final Path path = new Path(stringPath);
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column column = columnMap.get(path);
+          Preconditions.checkNotNull(column, "Missing path: " + stringPath);
+          if (column.getValue(rowId) == option.toString()) {
+            return "YES";
+          }
+          else return "";
+        }
+      });
+    }
+  }
+
   public static class MappedYesOrBlankColumn extends ReportColumn {
     public MappedYesOrBlankColumn(String name, final String stringPath) {
       super(name, new ValueFetcher() {
@@ -404,6 +421,7 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
         public String fetch(Map<Path, Column> columnMap, int rowId) {
           Column column = columnMap.get(path);
           Preconditions.checkNotNull(column, "Missing path: " + stringPath);
+          if (column == null) return "N";
           if (column.getValue(rowId) == "YES") {
             return "Y";
           }else return "N";

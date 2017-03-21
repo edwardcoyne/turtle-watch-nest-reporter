@@ -239,14 +239,11 @@ public class ReportMutations {
     }
   }
 
-
-
   public static class PropEventsRecordedMutation implements ReportMutation {
     private final NestCondition.ProportionEventsRecorded proportion;
     public PropEventsRecordedMutation(NestCondition.ProportionEventsRecorded proportion) {
       this.proportion = proportion;
     }
-
     @Override
     public Report apply(Report oldReport) {
       Report.Builder updatedReport = oldReport.toBuilder();
@@ -257,11 +254,9 @@ public class ReportMutations {
 
   public static class CityMutation implements ReportMutation {
     private final City city;
-
     public CityMutation(City city) {
       this.city = city;
     }
-
     @Override
     public Report apply(Report oldReport) {
       Report.Builder updatedReport = oldReport.toBuilder();
@@ -270,14 +265,11 @@ public class ReportMutations {
     }
   }
 
-
   public static class DetailsMutation implements ReportMutation {
     private final String details;
-
     public DetailsMutation(String details) {
       this.details = details;
     }
-
     @Override
     public Report apply(Report oldReport) {
       Report.Builder updatedReport = oldReport.toBuilder();
@@ -289,7 +281,6 @@ public class ReportMutations {
       return updatedReport.build();
     }
   }
-
 
   public static class ApexToBarrierFtMutation implements ReportMutation {
     private final Optional<Integer> ft;
@@ -313,7 +304,6 @@ public class ReportMutations {
     }
   }
 
-
   public static class ApexToBarrierInMutation implements ReportMutation {
     private final Optional<Integer> in;
 
@@ -336,7 +326,6 @@ public class ReportMutations {
     }
   }
 
-
   public static class WaterToApexFtMutation implements ReportMutation {
     private final Optional<Integer> ft;
 
@@ -348,40 +337,32 @@ public class ReportMutations {
     public Report apply(Report oldReport) {
       Report.Builder updatedReport = oldReport.toBuilder();
       NestLocation.Builder location = updatedReport.getLocationBuilder();
-
       if (ft.isPresent()) {
         location.setWaterToApexFt(ft.get());
       } else {
         location.clearWaterToApexFt();
       }
-
       return updatedReport.build();
     }
   }
 
-
   public static class WaterToApexInMutation implements ReportMutation {
     private final Optional<Integer> in;
-
     public WaterToApexInMutation(Optional<Integer> in) {
       this.in = in;
     }
-
     @Override
     public Report apply(Report oldReport) {
       Report.Builder updatedReport = oldReport.toBuilder();
       NestLocation.Builder location = updatedReport.getLocationBuilder();
-
       if (in.isPresent()) {
         location.setWaterToApexIn(in.get());
       } else {
         location.clearWaterToApexIn();
       }
-
       return updatedReport.build();
     }
   }
-
 
   public static class PlacementMutation implements ReportMutation {
     private final Placement placement;
@@ -1322,6 +1303,34 @@ public static class ProtectionChangeTypeMutation implements ReportMutation {
     }
   }
 
+
+  public static class CompleteWashoutTimingMutation implements ReportMutation {
+    private final NestCondition.WashoutTimeOption timing;
+    public CompleteWashoutTimingMutation(NestCondition.WashoutTimeOption timing) {
+      this.timing = timing;
+    }
+    @Override
+    public Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      updatedReport.getConditionBuilder().setCompleteWashoutTiming(timing);
+      return updatedReport.build();
+    }
+  }
+
+  public static class WashoutPriorToHatchingMutation implements ReportMutation {
+    private final boolean isTrue;
+
+    public WashoutPriorToHatchingMutation(boolean isTrue) {
+      this.isTrue = isTrue;
+    }
+    @Override
+    public Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      updatedReport.getConditionBuilder().getWashOutBuilder().setEventPriorToHatching(isTrue);
+      return updatedReport.build();
+    }
+  }
+
   public static class WasPostHatchWashout implements ReportMutation {
     private final boolean isTrue;
 
@@ -1605,19 +1614,7 @@ public static class ProtectionChangeTypeMutation implements ReportMutation {
         return updatedReport.build();
       }
     }
-  public static class WashoutPriorToHatchingMutation implements ReportMutation {
-    private final boolean isTrue;
 
-    public WashoutPriorToHatchingMutation(boolean isTrue) {
-      this.isTrue = isTrue;
-    }
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getConditionBuilder().getWashOutBuilder().setEventPriorToHatching(isTrue);
-      return updatedReport.build();
-    }
-  }
 //Accretion Section
   public static class AccretionOccurredPriorToHatchingMutation implements ReportMutation {
     private final Integer ordinal;

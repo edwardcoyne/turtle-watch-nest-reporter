@@ -159,7 +159,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <CheckBox
-                android:id="@+id/fieldCompleteWashoutPriorToHatching"
+                android:id="@+id/fieldCompleteWashoutPreHatch"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -169,7 +169,7 @@
         <TableRow>
 
             <CheckBox
-                android:id="@+id/fieldPostHatchWashout"
+                android:id="@+id/fieldCompleteWashoutPostHatch"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

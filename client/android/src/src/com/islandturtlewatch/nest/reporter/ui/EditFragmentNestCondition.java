@@ -46,8 +46,7 @@ public class EditFragmentNestCondition extends EditFragment {
   private final int NUM_PREDATORS = 13;
   private static final Map<Integer, ClickHandler> CLICK_HANDLERS =
       ClickHandler.toMap(
-//          new HandleSetEggsScattered(),
-//          new HandleSetEggsScatteredDate(),
+
           new HandleSetPoached(),
           new HandleSetPoachedDate(),
           new HandleSetPoachedEggsRemoved(),
