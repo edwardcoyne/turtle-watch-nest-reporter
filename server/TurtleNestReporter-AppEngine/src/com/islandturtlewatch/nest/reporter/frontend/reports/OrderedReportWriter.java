@@ -164,21 +164,21 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
       });
     }
   }
+//MappedIsRadioOptionColumn
 
-  public static class MappedComboColumn extends ReportColumn {
-    public MappedComboColumn(String name, final String sPathA, final String sPathB) {
+  public static class MappedIsRadioOptionColumn extends ReportColumn {
+    public MappedIsRadioOptionColumn(String name, final String stringPath,
+                                     final ReportProto.NestCondition.WashoutTimeOption option) {
       super(name, new ValueFetcher() {
-        private final Path pathA = new Path(sPathA);
-        private final Path pathB = new Path(sPathB);
+        private final Path path = new Path(stringPath);
         @Override
         public String fetch(Map<Path, Column> columnMap, int rowId) {
-          Column columnA = columnMap.get(pathA);
-          Column columnB = columnMap.get(pathB);
-          Preconditions.checkNotNull(columnA, "Missing path: " + pathA );
-          Preconditions.checkNotNull(columnB, "Missing path: " + pathB );
-          String stringA = columnA.getValue(rowId);
-          String stringB = columnB.getValue(rowId);
-          return stringA + "/" + stringB;
+          Column column = columnMap.get(path);
+          Preconditions.checkNotNull(column, "Missing path: " + stringPath);
+          if (column.getValue(rowId) == option.toString()) {
+            return "Y";
+          }
+          else return "N";
         }
       });
     }
@@ -191,6 +191,7 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
         @Override
         public String fetch(Map<Path, Column> columnMap, int rowId) {
           Column column = columnMap.get(path);
+//          if (column.getValue(rowId) == null) return "";
           Preconditions.checkNotNull(column, "Missing path: " + stringPath);
           if (column.getValue(rowId) == option.toString()) {
             return "YES";
@@ -207,6 +208,7 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
         private final Path path = new Path(stringPath);
         @Override public String fetch(Map<Path, Column> columnMap, int rowId) {
           Column column = columnMap.get(path);
+//          if (column.getValue(rowId) == null) return "";
           Preconditions.checkNotNull(column, "Missing path: " + stringPath);
           if (column.getValue(rowId) == "YES") {
             return column.getValue(rowId);
@@ -413,8 +415,8 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
     }
   }
     //converts Yes and No to Y and N
-  public static class MappedYesNoColumn extends ReportColumn {
-    public MappedYesNoColumn(String name, final String stringPath) {
+  public static class MappedYNColumn extends ReportColumn {
+    public MappedYNColumn(String name, final String stringPath) {
       super(name, new ValueFetcher() {
         private final Path path = new Path(stringPath);
         @Override
@@ -529,20 +531,44 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
   }
 
 
-  public static class MappedIsPresentYesNoColumn extends ReportColumn {
-    public MappedIsPresentYesNoColumn(String name, final String stringPath) {
+  public static class MappedIsPresentYesOrBlankColumn extends ReportColumn {
+    public MappedIsPresentYesOrBlankColumn(String name, final String stringPath) {
       super(name, new ValueFetcher() {
         private final Path path = new Path(stringPath);
         @Override public String fetch(Map<Path, Column> columnMap, int rowId) {
           Column column = columnMap.get(path);
           Preconditions.checkNotNull(column, "Missing path: " + stringPath);
-          //Leave this version as YES/NO
-          return column.hasValue(rowId) ? "YES" : "NO";
+          return column.hasValue(rowId) ? "YES" : "";
         }
       });
     }
   }
 
+
+  public static class MappedComboColumn extends ReportColumn {
+    private static Pattern USER_PATTERN = Pattern.compile("section([0-9]+)@islandturtlewatch.com");
+    public MappedComboColumn(String name, final String sPathA, final String sPathB) {
+      super(name, new ValueFetcher() {
+        private final Path pathA = new Path(sPathA);
+        private final Path pathB = new Path(sPathB);
+
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column columnA = columnMap.get(pathA);
+          Column columnB = columnMap.get(pathB);
+          Preconditions.checkNotNull(columnA, "Missing path: " + pathA );
+          Preconditions.checkNotNull(columnB, "Missing path: " + pathB );
+          String stringA = columnA.getValue(rowId);
+          Matcher matcher = USER_PATTERN.matcher(stringA);
+          String stringB = columnB.getValue(rowId);
+          if (!matcher.matches()) {
+            return " / " + stringB;
+          }
+          return matcher.group(1) + " / " + stringB;
+        }
+      });
+    }
+  }
 
 
   // Column will read section number out of submitting user.
@@ -673,6 +699,28 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
     }
   }
 
+  public static class FinalTreatmentCompareColumn extends ReportColumn {
+    public FinalTreatmentCompareColumn(
+            final String name,
+            final String relocatedPathStr,
+            final String dateFoundPathStr,
+            final String dateProtectedPathStr,
+            final String protectionEventPathStr) {
+      super(name, new ValueFetcher() {
+        private final InitialTreatmentColumn initialColumn = new InitialTreatmentColumn(name,
+                relocatedPathStr, dateFoundPathStr, dateProtectedPathStr, protectionEventPathStr);
+        private final FinalTreatmentColumn finalColumn = new FinalTreatmentColumn(name,
+                relocatedPathStr, dateFoundPathStr, dateProtectedPathStr, protectionEventPathStr);
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+
+          return initialColumn.getFetcher().fetch(columnMap, rowId) ==
+                  finalColumn.getFetcher().fetch(columnMap, rowId) ? "" : finalColumn.getFetcher().fetch(columnMap, rowId);
+        }
+      });
+    }
+  }
+
   // Determines final treatment.
   public static class FinalTreatmentColumn extends ReportColumn {
     private static final long dayInMs = 86400000l;
@@ -682,6 +730,7 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
         final String dateFoundPathStr,
         final String dateProtectedPathStr,
         final String protectionEventPathStr) {
+
       super(name, new ValueFetcher() {
         private final Path relocatedPath = new Path(relocatedPathStr);
         private final Path dateFoundPath = new Path(dateFoundPathStr);
@@ -689,7 +738,9 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
         private final Path protectionEventPath = new Path(protectionEventPathStr);
         private final InitialTreatmentColumn initialColumn = new InitialTreatmentColumn(name,
             relocatedPathStr, dateFoundPathStr, dateProtectedPathStr, protectionEventPathStr);
-        @Override public String fetch(Map<Path, Column> columnMap, int rowId) {
+
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
           Column relocated = Preconditions.checkNotNull(columnMap.get(relocatedPath),
               "Missing path: " + relocatedPathStr);
           boolean wasRelocated = (relocated.getValue(rowId) == "YES");
@@ -707,20 +758,21 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
               Long.parseLong(dateFound.getValue(rowId));
           String protectionType = protectionEvent.getValue(rowId);
           if (dateDiff > dayInMs) {
-          if (protectionType.equals("UNSET_TYPE")) {
-            return wasRelocated ? "E" : "A";
+            if (protectionType.equals("UNSET_TYPE")) {
+              return wasRelocated ? "E" : "A";
+            }
+            if (protectionType.equals("SELF_RELEASING_FLAT")) {
+              return  wasRelocated ? "F" : "B";
+            }
+            if (protectionType.equals("SELF_RELEASING_CAGE")) {
+              return wasRelocated ? "G" : "C";
+            }
+            if (protectionType.equals("RESTRAINING_CAGE")) {
+              return wasRelocated ? "H" : "D";
+            }
           }
-          if (protectionType.equals("SELF_RELEASING_FLAT")) {
-            return  wasRelocated ? "F" : "B";
-          }
-          if (protectionType.equals("SELF_RELEASING_CAGE")) {
-            return wasRelocated ? "G" : "C";
-          }
-          if (protectionType.equals("RESTRAINING_CAGE")) {
-            return wasRelocated ? "H" : "D";
-          }
-          }
-          return initialColumn.getFetcher().fetch(columnMap, rowId);
+          return "";
+//          return initialColumn.getFetcher().fetch(columnMap, rowId);
         }
       });
     }

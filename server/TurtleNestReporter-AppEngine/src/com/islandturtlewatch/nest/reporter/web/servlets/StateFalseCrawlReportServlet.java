@@ -44,13 +44,13 @@ public class StateFalseCrawlReportServlet extends HttpServlet {
   // This is the list of columns in the report, they will appear in this order.
   private static List<ReportColumn> reportColumns = ImmutableList.of(
       new MappedTimestampColumn("Date Crawl Recorded", "report.timestamp_found_ms"),
-      new OrderedReportWriter.MappedYesNoColumn("Possible False Crawl",
+      new OrderedReportWriter.MappedYNColumn("Possible False Crawl",
               "report.possible_false_crawl"),
       new OrderedReportWriter.MappedBlankIfZeroColumn("Possible False Crawl Number","report.possible_false_crawl_number"),
       new MappedSpeciesColumn("Species","report.species"),
       new StaticValueColumn("Crawl within Project Area? ", "YES"),
       new MappedColumn("City","report.location.city"),
-      new OrderedReportWriter.MappedYesNoColumn("Within Cortez Groin Replacement Area",
+      new OrderedReportWriter.MappedYNColumn("Within Cortez Groin Replacement Area",
               "report.location.in_cortez_groin_replacement_area"),
       new MappedColumn("Address","report.location.street_address"),
       new MappedColumn("Escarpment >= 18 Encountered", "report.location.escarpment_over_18_inches"),
