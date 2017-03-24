@@ -225,6 +225,7 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
         @Override public String fetch(Map<Path, Column> columnMap, int rowId) {
           Column column = columnMap.get(path);
           Preconditions.checkNotNull(column, "Missing path: " + stringPath);
+          if (column.getValue(rowId) == null) return "";
           return column.getValue(rowId);
         }
       });
