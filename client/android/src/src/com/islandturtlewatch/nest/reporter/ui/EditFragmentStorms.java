@@ -10,6 +10,7 @@ import android.widget.DatePicker;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
@@ -158,16 +159,15 @@ public class EditFragmentStorms extends EditFragment {
             setChecked(R.id.fieldPartialWashoutPriorToHatching, condition.getPartialWashout().getEventPriorToHatching());
         } else setChecked(R.id.fieldPartialWashoutPriorToHatching,false);
 
-
-        setChecked(R.id.fieldCompleteWashoutPostHatch,
-                condition.getCompleteWashoutTiming()== ReportProto.NestCondition.WashoutTimeOption.POST_HATCH);
-        setChecked(R.id.fieldCompleteWashoutPreHatch,
-                condition.getCompleteWashoutTiming() == ReportProto.NestCondition.WashoutTimeOption.PRE_HATCH);
-//        if (condition.getCompleteWashoutTiming() == ReportProto.NestCondition.WashoutTimeOption.PRE_HATCH) {
-//            setChecked(R.id.fieldCompleteWashoutPreHatch,condition.getWashOut().getEventPriorToHatching());
-//        } else setChecked(R.id.fieldCompleteWashoutPreHatch,false);
-
-
+        if (condition.hasCompleteWashoutTiming()) {
+            setChecked(R.id.fieldCompleteWashoutPreHatch,
+                    condition.getCompleteWashoutTiming() == ReportProto.NestCondition.WashoutTimeOption.PRE_HATCH);
+            setChecked(R.id.fieldCompleteWashoutPostHatch,
+                    condition.getCompleteWashoutTiming() == ReportProto.NestCondition.WashoutTimeOption.POST_HATCH);
+        } else {
+            setChecked(R.id.fieldCompleteWashoutPreHatch,false);
+            setChecked(R.id.fieldCompleteWashoutPostHatch,false);
+        }
     }
 
     private void clearTable(int viewId) {
@@ -191,7 +191,6 @@ public class EditFragmentStorms extends EditFragment {
                 updateHandler.applyMutation(new ReportMutations.CompleteWashoutTimingMutation(
                         ReportProto.NestCondition.WashoutTimeOption.PRE_HATCH));
             }
-
         }
     }
     private static class HandleSetCompleteWashoutPostHatch extends ClickHandler {

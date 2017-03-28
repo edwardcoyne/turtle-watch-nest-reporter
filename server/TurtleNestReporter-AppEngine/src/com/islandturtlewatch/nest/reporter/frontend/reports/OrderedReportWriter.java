@@ -548,10 +548,11 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
 
   public static class MappedComboColumn extends ReportColumn {
     private static Pattern USER_PATTERN = Pattern.compile("section([0-9]+)@islandturtlewatch.com");
-    public MappedComboColumn(String name, final String sPathA, final String sPathB) {
+    public MappedComboColumn(final String name, final String sPathA, final String sPathB) {
       super(name, new ValueFetcher() {
         private final Path pathA = new Path(sPathA);
         private final Path pathB = new Path(sPathB);
+        private final MappedSectionColumn foo = new MappedSectionColumn(name,sPathA);
 
         @Override
         public String fetch(Map<Path, Column> columnMap, int rowId) {
@@ -559,13 +560,8 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
           Column columnB = columnMap.get(pathB);
           Preconditions.checkNotNull(columnA, "Missing path: " + pathA );
           Preconditions.checkNotNull(columnB, "Missing path: " + pathB );
-          String stringA = columnA.getValue(rowId);
-          Matcher matcher = USER_PATTERN.matcher(stringA);
           String stringB = columnB.getValue(rowId);
-          if (!matcher.matches()) {
-            return " / " + stringB;
-          }
-          return matcher.group(1) + " / " + stringB;
+          return foo.getFetcher().fetch(columnMap, rowId) + " / " + stringB;
         }
       });
     }
