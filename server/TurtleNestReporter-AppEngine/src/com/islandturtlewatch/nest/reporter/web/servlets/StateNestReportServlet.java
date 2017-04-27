@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.net.MediaType;
 import com.islandturtlewatch.nest.data.ReportProto;
 import com.islandturtlewatch.nest.reporter.backend.storage.ReportStore;
+import com.islandturtlewatch.nest.reporter.frontend.reports.ColumnGenerator;
 import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter;
 import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.ConditionallyMappedColumn;
 import com.islandturtlewatch.nest.reporter.frontend.reports.OrderedReportWriter.InitialTreatmentColumn;
@@ -53,28 +54,46 @@ public class StateNestReportServlet extends HttpServlet {
 
 //    private static ReportColumn sectionColumn = new StaticValueColumn("**TEST**", "1");
 
-
+  static ColumnGenerator columnGenerator = new ColumnGenerator();
 
   // This is the list of columns in the report, they will appear in this order.
   private static List<ReportColumn> reportColumns = ImmutableList.of(
+//          columnGenerator.generateTimestampColumn("Date Nest Recorded", "report.timestamp_found_ms"),
       new MappedTimestampColumn("Date Nest Recorded", "report.timestamp_found_ms"),
+//          columnGenerator.generateDefaultColumn("Escarpment >= 18 Encountered", "report.location.escarpment_over_18_inches"),
       new MappedColumn("Escarpment >= 18 Encountered", "report.location.escarpment_over_18_inches"),
+//          columnGenerator.generateYNColumn("Nest seaward of armoring structure","report.nest_seaward_of_armoring_structure"),
       new MappedYNColumn("Nest seaward of armoring structure","report.nest_seaward_of_armoring_structure"),
+//          columnGenerator.generateYNColumn("Nest within 3 feet of armoring structure","report.within_3_feet_of_structure"),
       new OrderedReportWriter.MappedYNColumn("Nest within 3 feet of armoring structure","report.within_3_feet_of_structure"),
+//          columnGenerator.generateDefaultColumn("Type of Structure","report.type_of_structure"),
       new MappedColumn("Type of Structure","report.type_of_structure"),
+//          columnGenerator.generateSpeciesColumn("Species","report.species"),
       new MappedSpeciesColumn("Species","report.species"),
+//          columnGenerator.generateDefaultColumn("ID/Label", "report.nest_number"),
       new MappedColumn("ID/Label", "report.nest_number"),
       sectionColumn,
       new OrderedReportWriter.MappedComboColumn("Nest Label","ref.owner_id","report.nest_number"),
+//          columnGenerator.generateStaticColumn("Nest within Project Area","YES"),
       new StaticValueColumn("Nest within Project Area","YES"),
+//          columnGenerator.generateDefaultColumn("City","report.location.city"),
       new MappedColumn("City","report.location.city"),
+//          columnGenerator.generateYNColumn("Within Cortez Groin Replacement Area",
+//            "report.location.in_cortez_groin_replacement_area"),
       new MappedYNColumn("Within Cortez Groin Replacement Area",
               "report.location.in_cortez_groin_replacement_area"),
+//          columnGenerator.generateDefaultColumn("Address","report.location.street_address"),
       new MappedColumn("Address","report.location.street_address"),
+//            columnGenerator.generateYesOrBlankColumn("Body Pits",
+//                    "report.condition.abandoned_body_pits"),
       new OrderedReportWriter.MappedYesOrBlankColumn("Body Pits",
               "report.condition.abandoned_body_pits"),
+//          columnGenerator.generateYesOrBlankColumn("Egg Chambers",
+//                  "report.condition.abandoned_egg_cavities"),
       new OrderedReportWriter.MappedYesOrBlankColumn("Egg Chambers",
               "report.condition.abandoned_egg_cavities"),
+//          columnGenerator.generate0AsBlankColumn("Clutch Size Counted When Nest Was Made",
+//                  "report.intervention.relocation.eggs_relocated"),
       new MappedColumnWithDefault("Clutch Size Counted When Nest Was Made",
               "report.intervention.relocation.eggs_relocated",
               ""),
@@ -92,7 +111,7 @@ public class StateNestReportServlet extends HttpServlet {
       new MappedTimestampColumn("Initial Date Protected","report.intervention.protection_event.timestamp_ms"),
       new OrderedReportWriter.MappedBlankIfUnsetWithOtherColumn("Reason for Protection",
               "report.intervention.protection_event.reason","report.intervention.protection_event.reason_other"),
-      new OrderedReportWriter.MappedIsPresentYesOrBlankColumn("Nest Protection Change",
+      new OrderedReportWriter.MappedHasTimestampYOrBlankColumn("Nest Protection Change",
               "report.intervention.protection_changed_event.timestamp_ms"),
       new MappedTimestampColumn("Date Nest Protection Changed","report.intervention.protection_changed_event.timestamp_ms"),
       new MappedBlankIfUnsetColumn("New Protection Event","report.intervention.protection_changed_event.type"),
@@ -108,14 +127,17 @@ public class StateNestReportServlet extends HttpServlet {
       new MappedBlankIfUnsetColumn("Reason for Relocation","report.intervention.relocation.reason"),
       new MappedNotNullColumn("Nest Washed Over", "report.condition.wash_over.0.timestamp_ms"),
       new MappedNotNullColumn("Inundated","report.condition.inundated_event.0.timestamp_ms"),
+
+
+//          This is the problem VV
       new OrderedReportWriter.MappedYNColumn("Did Inundation Occur Prior to Hatching?",
               "report.condition.inundated_event.0.event_prior_to_hatching"),
       new MappedHasTimestampColumn("Complete Wash out","report.condition.wash_out.timestamp_ms"),
-      new OrderedReportWriter.MappedIsRadioOptionColumn(
+      new OrderedReportWriter.MappedWashoutTimeOptionColumn(
               "Did Complete Washout Occur Prior to Hatching?",
               "report.condition.complete_washout_timing",
               ReportProto.NestCondition.WashoutTimeOption.PRE_HATCH),
-      new OrderedReportWriter.MappedIsRadioOptionColumn(
+      new OrderedReportWriter.MappedWashoutTimeOptionColumn(
                   "Did Washout Occur Post-Hatch but Pre-Inventory",
                   "report.condition.complete_washout_timing",
                   ReportProto.NestCondition.WashoutTimeOption.POST_HATCH),
@@ -128,6 +150,8 @@ public class StateNestReportServlet extends HttpServlet {
 //          report.condition.post_hatch_washout is deprecated in favor of complete_washout_timing (DWenzel 22Mar17)
 //      new MappedYNColumn("Did Washout Occur Post-Hatch but Pre-Inventory",
 //              "report.condition.post_hatch_washout"),
+
+
       new MappedPriorityColumn("If Washed Out By A Major Storm Give Name",
               "report.condition.wash_out.storm_name",
               "report.condition.partial_washout.storm_name",
@@ -138,6 +162,8 @@ public class StateNestReportServlet extends HttpServlet {
       new MappedNotNullTimestampColumn("Accretion Date","report.condition.accretion.0.timestamp_ms"),
       new MappedIfExistsColumn("Accretion Storm Name","report.condition.accretion.0.storm_name"),
       new MappedNotNullColumn("Erosion","report.condition.erosion.0.timestamp_ms"),
+          new OrderedReportWriter.MappedIfExistsColumn("Did Erosion Occur Prior to Hatching?",
+                  "report.condition.erosion.0.event_prior_to_hatching"),
       new MappedNotNullTimestampColumn("Erosion Date", "report.condition.erosion.0.timestamp_ms"),
       new MappedIfExistsColumn("Erosion Storm Name", "report.condition.erosion.0.storm_name"),
       new MappedTimestampColumn("Other Storm impact Date","report.condition.storm_impact.timestamp_ms"),
@@ -225,7 +251,8 @@ public class StateNestReportServlet extends HttpServlet {
           new MappedColumn("Additional Notes","report.additional_notes"),
           new MappedNotNullColumn("Photo","report.image"),
           new MappedColumnAbsoluteValueDouble("Latitude", "report.location.coordinates.lat"),
-      new MappedColumnAbsoluteValueDouble("Longitude", "report.location.coordinates.long"));
+      new MappedColumnAbsoluteValueDouble("Longitude", "report.location.coordinates.long")
+ );
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)

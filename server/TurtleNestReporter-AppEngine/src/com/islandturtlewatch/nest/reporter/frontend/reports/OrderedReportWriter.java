@@ -81,6 +81,12 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
       });
     }
   }
+//Lets maybe build the fetcher somewhere else.
+  public static class MappedColumnWithFetcher extends ReportColumn{
+    public MappedColumnWithFetcher(String name, ValueFetcher fetcher) {
+      super(name, fetcher);
+    }
+  }
 
   public static class MappedSpeciesColumn extends ReportColumn {
     public MappedSpeciesColumn(String name, final String stringPath) {
@@ -164,11 +170,11 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
       });
     }
   }
-//MappedIsRadioOptionColumn
+//MappedWashoutTimeOptionColumn
 
-  public static class MappedIsRadioOptionColumn extends ReportColumn {
-    public MappedIsRadioOptionColumn(String name, final String stringPath,
-                                     final ReportProto.NestCondition.WashoutTimeOption option) {
+  public static class MappedWashoutTimeOptionColumn extends ReportColumn {
+    public MappedWashoutTimeOptionColumn(String name, final String stringPath,
+                                         final ReportProto.NestCondition.WashoutTimeOption option) {
       super(name, new ValueFetcher() {
         private final Path path = new Path(stringPath);
         @Override
@@ -185,7 +191,8 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
   }
 
   public static class MappedYesOrBlankRadioColumn extends ReportColumn {
-    public MappedYesOrBlankRadioColumn(String name, final String stringPath, final ReportProto.NestCondition.PreditationEvent.PredationTimeOption option) {
+    public MappedYesOrBlankRadioColumn(String name, final String stringPath,
+                                       final ReportProto.NestCondition.PreditationEvent.PredationTimeOption option) {
       super(name, new ValueFetcher() {
         private final Path path = new Path(stringPath);
         @Override
@@ -423,8 +430,9 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
         @Override
         public String fetch(Map<Path, Column> columnMap, int rowId) {
           Column column = columnMap.get(path);
-          Preconditions.checkNotNull(column, "Missing path: " + stringPath);
           if (column == null) return "N";
+          Preconditions.checkNotNull(column, "Missing path: " + stringPath);
+          if (column.getValue(rowId) == null) return "N";
           if (column.getValue(rowId) == "YES") {
             return "Y";
           }else return "N";
@@ -440,9 +448,28 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
         @Override
         public String fetch(Map<Path, Column> columnMap, int rowId) {
           Column column = columnMap.get(path);
+          if (column == null) return "N";
+          if (column.getValue(rowId) == null) return "N";
           Preconditions.checkNotNull(column, "Missing Path: " + stringPath);
           if (column.getValue(rowId).equals("") || column.getValue(rowId).equals("0")) return "N";
           else return column.hasValue(rowId) ? "Y" : "N";
+        }
+      });
+    }
+  }
+
+
+  public static class MappedHasTimestampYOrBlankColumn extends ReportColumn {
+    public MappedHasTimestampYOrBlankColumn(String name, final String stringPath) {
+      super(name, new ValueFetcher() {
+        private final Path path = new Path(stringPath);
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column column = columnMap.get(path);
+          if (column.getValue(rowId) == null) return "";
+          Preconditions.checkNotNull(column, "Missing Path: " + stringPath);
+          if (column.getValue(rowId).equals("") || column.getValue(rowId).equals("0")) return "";
+          else return column.hasValue(rowId) ? "Y" : "";
         }
       });
     }
@@ -538,6 +565,7 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
         private final Path path = new Path(stringPath);
         @Override public String fetch(Map<Path, Column> columnMap, int rowId) {
           Column column = columnMap.get(path);
+          if (column.getValue(rowId) == null) return "";
           Preconditions.checkNotNull(column, "Missing path: " + stringPath);
           return column.hasValue(rowId) ? "YES" : "";
         }
@@ -561,12 +589,11 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
           Preconditions.checkNotNull(columnA, "Missing path: " + pathA );
           Preconditions.checkNotNull(columnB, "Missing path: " + pathB );
           String stringB = columnB.getValue(rowId);
-          return foo.getFetcher().fetch(columnMap, rowId) + " / " + stringB;
+          return foo.getFetcher().fetch(columnMap, rowId) + " / " + stringB + ".";
         }
       });
     }
   }
-
 
   // Column will read section number out of submitting user.
   public static class MappedSectionColumn extends ReportColumn {
@@ -632,9 +659,9 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
 
 
           if (abandonedEggCavities.getValue(rowId).equals("YES")) {
-            return "Abandoned Egg Chamber";
+            return "Egg Chamber";
           } else if (abandonedBodyPit.getValue(rowId).equals("YES")) {
-            return "Abandoned Body Pit";
+            return "Body Pit";
           } else
           return "No Digging";
         }
