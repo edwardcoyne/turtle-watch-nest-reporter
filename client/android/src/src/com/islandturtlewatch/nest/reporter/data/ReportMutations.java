@@ -1317,6 +1317,19 @@ public static class ProtectionChangeTypeMutation implements ReportMutation {
     }
   }
 
+  public static class PartialWashoutTimingMutation implements ReportMutation {
+    private final NestCondition.WashoutTimeOption timing;
+    public PartialWashoutTimingMutation (NestCondition.WashoutTimeOption timing) {
+      this.timing = timing;
+    }
+    @Override
+    public Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      updatedReport.getConditionBuilder().setPartialWashoutTiming(timing);
+      return updatedReport.build();
+    }
+  }
+
   public static class WashoutPriorToHatchingMutation implements ReportMutation {
     private final boolean isTrue;
 

@@ -3,21 +3,12 @@
 
     <item
         is-multidex="true"
-        jar="/Users/ReverendCode/.android/build-cache/3be16bfaeebc2e59f43883d08d0a46e8b0a14140/output/jars/classes.jar"
+        jar="/Users/ReverendCode/.android/build-cache/c4602aadf4d30bc9e224af4b32bfe875f8824dff/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
         sha1="b82b8e847173c28efffcd291b2a0b1ae9ad17fa4">
-        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_e007bbf5464ff0b05ccb81dce409d5ece2ab6331/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/ReverendCode/.android/build-cache/3608f30e9863c7f07ca814bf0877ad939247711f/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="8413c27b45b7fe61dca4a98159f65e2cee215f5a">
-        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_8c45de00e7813dbc5c2439cc0822588b1cf88199/classes.dex" />
+        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_b28cd37767859b3c1e09f188ca5384efe870c4dd/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -25,17 +16,8 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="497354d54d471f9badb66ab180347a321cc00a4f">
+        sha1="affa2259f4358da03d99434dc9180bafe9cf6649">
         <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_90f082256d63d5786438dc01910b2978ef5ed7f6/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/ReverendCode/.android/build-cache/cafcd5eed4bd69482bb3f3c67cd7678a436e01ea/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="8e673cdfadd8f2d98fdb2fda2285c30f6e449782">
-        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_5e387b6a62c96f7bf32da4a5db35ba5f689df6ce/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -61,7 +43,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
+        sha1="caff8e51a24901cfc9cd7e1cf83d84f4cb0c103b">
         <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_f348a5e2d48769727f063e897fd71962df3020db/classes.dex" />
     </item>
     <item
@@ -92,15 +74,6 @@
         <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/httpmime-4.3.5_41c7de00e92b97c3a8bf6932e98eb1ce9385d22b/classes.dex" />
     </item>
     <item
-        is-multidex="false"
-        jar="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/libs/jsr305-1.3.9.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.0"
-        sha1="40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf">
-        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/pre-dexed/release/jsr305-1.3.9_9195d4c4954c2fe88cd55051c0ca93e37f3e7c72.jar" />
-    </item>
-    <item
         is-multidex="true"
         jar="/Applications/Android Studio.app/Contents/gradle/m2repository/com/google/guava/guava/18.0/guava-18.0.jar"
         jumboMode="true"
@@ -110,13 +83,13 @@
         <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/guava-18.0_e11ced1631feb7c9800790c98fd765d3bed1b86c/classes.dex" />
     </item>
     <item
-        is-multidex="false"
-        jar="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/backend/build/libs/backend-android-endpoints.jar"
-        jumboMode="false"
+        is-multidex="true"
+        jar="/Users/ReverendCode/.android/build-cache/4b03fe83fc61bc5f40f74576ad294bdfe86faadd/output/jars/classes.jar"
+        jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="7c46e7c5a284cf86e5d91db57dc9c82269b603ab">
-        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/pre-dexed/release/backend-android-endpoints_f01c0dee61b041a9a5527d1a94e3d3e93efd8df7.jar" />
+        sha1="8413c27b45b7fe61dca4a98159f65e2cee215f5a">
+        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_fcacef322ec3c7747e83e94602233ad537c4ebe7/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -129,12 +102,12 @@
     </item>
     <item
         is-multidex="true"
-        jar="/Users/ReverendCode/.android/build-cache/3608f30e9863c7f07ca814bf0877ad939247711f/output/jars/libs/internal_impl-23.0.0.jar"
+        jar="/Users/ReverendCode/.android/build-cache/22d2c8f29fd6e571a21912568248d845e6b03a21/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="8bd336eeae661e8311330284897ee07f8ebaa297">
-        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.0.0_99a9012576c18cc50fd9df96506a87a79bac17de/classes.dex" />
+        sha1="8e673cdfadd8f2d98fdb2fda2285c30f6e449782">
+        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_56da1341cd7e2d9aeaf4af0ba486abbf829c9bcb/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -147,12 +120,12 @@
     </item>
     <item
         is-multidex="true"
-        jar="/Users/ReverendCode/.android/build-cache/4a3360006b9163cc6bff26bf993122d1424aabd8/output/jars/classes.jar"
+        jar="/Users/ReverendCode/.android/build-cache/4b03fe83fc61bc5f40f74576ad294bdfe86faadd/output/jars/libs/internal_impl-23.0.0.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="fef2b3e4b6b1b0e5fe7b69fa137a5fa55a3182ab">
-        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_329d941e83ea36a777391d72e9b711ed84f7cf08/classes.dex" />
+        sha1="8bd336eeae661e8311330284897ee07f8ebaa297">
+        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.0.0_232c52eba152813677447ccab4b87c6f62015b6e/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -225,6 +198,15 @@
         revision="25.0.0"
         sha1="d473a8962e14a707a3716637e4898bb2dd9643f2">
         <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/google-oauth-client-1.19.0_b496ad08316b75b8fa9d61be3eb584b6aa09c618/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/ReverendCode/.android/build-cache/1d93e6b6e13dd9b77beb880e254c678fc1b54f70/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="fef2b3e4b6b1b0e5fe7b69fa137a5fa55a3182ab">
+        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_9a0e90fc5702fdac1a3de04eda44d7f922078d08/classes.dex" />
     </item>
 
 </items>

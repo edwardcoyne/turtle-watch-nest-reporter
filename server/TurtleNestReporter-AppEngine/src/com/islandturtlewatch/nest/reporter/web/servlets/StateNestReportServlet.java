@@ -61,6 +61,8 @@ public class StateNestReportServlet extends HttpServlet {
 //          columnGenerator.generateTimestampColumn("Date Nest Recorded", "report.timestamp_found_ms"),
       new MappedTimestampColumn("Date Nest Recorded", "report.timestamp_found_ms"),
 //          columnGenerator.generateDefaultColumn("Escarpment >= 18 Encountered", "report.location.escarpment_over_18_inches"),
+          new MappedColumn("ID/Label", "report.nest_number"),
+          sectionColumn,
       new MappedColumn("Escarpment >= 18 Encountered", "report.location.escarpment_over_18_inches"),
 //          columnGenerator.generateYNColumn("Nest seaward of armoring structure","report.nest_seaward_of_armoring_structure"),
       new MappedYNColumn("Nest seaward of armoring structure","report.nest_seaward_of_armoring_structure"),
@@ -71,8 +73,7 @@ public class StateNestReportServlet extends HttpServlet {
 //          columnGenerator.generateSpeciesColumn("Species","report.species"),
       new MappedSpeciesColumn("Species","report.species"),
 //          columnGenerator.generateDefaultColumn("ID/Label", "report.nest_number"),
-      new MappedColumn("ID/Label", "report.nest_number"),
-      sectionColumn,
+
       new OrderedReportWriter.MappedComboColumn("Nest Label","ref.owner_id","report.nest_number"),
 //          columnGenerator.generateStaticColumn("Nest within Project Area","YES"),
       new StaticValueColumn("Nest within Project Area","YES"),
@@ -127,9 +128,6 @@ public class StateNestReportServlet extends HttpServlet {
       new MappedBlankIfUnsetColumn("Reason for Relocation","report.intervention.relocation.reason"),
       new MappedNotNullColumn("Nest Washed Over", "report.condition.wash_over.0.timestamp_ms"),
       new MappedNotNullColumn("Inundated","report.condition.inundated_event.0.timestamp_ms"),
-
-
-//          This is the problem VV
       new OrderedReportWriter.MappedYNColumn("Did Inundation Occur Prior to Hatching?",
               "report.condition.inundated_event.0.event_prior_to_hatching"),
       new MappedHasTimestampColumn("Complete Wash out","report.condition.wash_out.timestamp_ms"),
@@ -138,25 +136,40 @@ public class StateNestReportServlet extends HttpServlet {
               "report.condition.complete_washout_timing",
               ReportProto.NestCondition.WashoutTimeOption.PRE_HATCH),
       new OrderedReportWriter.MappedWashoutTimeOptionColumn(
-                  "Did Washout Occur Post-Hatch but Pre-Inventory",
+                  "Did Complete Washout Occur Post-Hatch but Pre-Inventory",
                   "report.condition.complete_washout_timing",
                   ReportProto.NestCondition.WashoutTimeOption.POST_HATCH),
       new MappedHasTimestampColumn("Partial Wash out","report.condition.partial_washout.timestamp_ms"),
-      new MappedIfExistsColumn("Did Partial Washout Occur Prior to Hatching?",
-              "report.condition.partial_washout.event_prior_to_hatching"),
+
+//          TODO: This should be removed after this years reports are completed (Jul2017)
+      new OrderedReportWriter.MappedExistsOrWashoutTimeColumn("Did Partial Washout Occur Prior to Hatching?",
+              "report.condition.partial_washout.event_prior_to_hatching",
+              "report.condition.partial_washout_timing",
+              ReportProto.NestCondition.WashoutTimeOption.PRE_HATCH),
+
+//      new MappedIfExistsColumn("Did Partial Washout Occur Prior to Hatching?",
+//              "report.condition.partial_washout.event_prior_to_hatching"),
+      new OrderedReportWriter.MappedWashoutTimeOptionColumn(
+              "Did Partial Washout Occur Post-Hatch, but Pre-Inventory",
+              "report.condition.partial_washout_timing",
+              ReportProto.NestCondition.WashoutTimeOption.POST_HATCH),
+
+//          TODO: This should be altered at the end of the season (Jul2017)
+      new OrderedReportWriter.MappedAnyMatchColumn(
+              "Did Washout Occur Post-Hatch but Pre-Inventory",
+              "report.condition.partial_washout.event_prior_to_hatching",
+              "report.condition.partial_washout_timing",
+              "report.condition.complete_washout_timing",
+              ReportProto.NestCondition.WashoutTimeOption.POST_HATCH),
+
       new OrderedReportWriter.MappedEitherOrColumn("Nest Completely or Partially Washed Out",
               "report.condition.wash_out.timestamp_ms",
               "report.condition.partial_washout.timestamp_ms"),
-//          report.condition.post_hatch_washout is deprecated in favor of complete_washout_timing (DWenzel 22Mar17)
-//      new MappedYNColumn("Did Washout Occur Post-Hatch but Pre-Inventory",
-//              "report.condition.post_hatch_washout"),
-
-
       new MappedPriorityColumn("If Washed Out By A Major Storm Give Name",
               "report.condition.wash_out.storm_name",
               "report.condition.partial_washout.storm_name",
               ""),
-          new MappedNotNullColumn("Accretion","report.condition.accretion.0.timestamp_ms"),
+      new MappedNotNullColumn("Accretion","report.condition.accretion.0.timestamp_ms"),
       new OrderedReportWriter.MappedYNColumn("Did Accretion Occur Prior to Hatching?",
               "report.condition.accretion.0.event_prior_to_hatching"),
       new MappedNotNullTimestampColumn("Accretion Date","report.condition.accretion.0.timestamp_ms"),
@@ -171,6 +184,10 @@ public class StateNestReportServlet extends HttpServlet {
       new MappedColumn("Details","report.condition.storm_impact.other_impact"),
       new MappedColumn("Nest Completely Depredated",
               "report.condition.nest_depredated"),
+
+      new OrderedReportWriter.MappedPartialPredationColumn("Partial Predation",
+              "report.condition.nest_depredated",
+              "report.condition.preditation.0.timestamp_ms"),
       new MappedColumn("Do you actively look for and record predation events?",
               "report.condition.actively_record_events"),
       new MappedColumn("Regarding mammalian predation events, what proportion " +
@@ -249,7 +266,7 @@ public class StateNestReportServlet extends HttpServlet {
           "report.intervention.relocation.eggs_relocated",
           "UNK"),
           new MappedColumn("Additional Notes","report.additional_notes"),
-          new MappedNotNullColumn("Photo","report.image"),
+          new MappedNotNullColumn("Photo","report.image.1"),
           new MappedColumnAbsoluteValueDouble("Latitude", "report.location.coordinates.lat"),
       new MappedColumnAbsoluteValueDouble("Longitude", "report.location.coordinates.long")
  );

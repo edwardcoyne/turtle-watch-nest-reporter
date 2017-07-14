@@ -96,6 +96,7 @@ message NestCondition {
     NONE = 3;
   }
   optional WashoutTimeOption complete_washout_timing = 34;
+  optional WashoutTimeOption partial_washout_timing = 35;
 
   repeated WashEvent accretion = 30;
   repeated WashEvent erosion = 33;

@@ -30,12 +30,12 @@ public class EditFragmentStorms extends EditFragment {
 
     private static final Map<Integer, ClickHandler> CLICK_HANDLERS =
             ClickHandler.toMap(
-//                    new HandleSetPostHatchWashout(),
-//                    new HandleSetWashoutPriorToHatching(),
+                    new HandleSetPartialWashoutPostHatch(),
+                    new HandleSetPartialWashoutPreHatch(),
                     new HandleSetCompleteWashoutPreHatch(),
                     new HandleSetCompleteWashoutPostHatch(),
                     new HandleSetPartialWashoutDate(),
-                    new HandleSetPartialWashoutPriorToHatching(),
+//                    new HandleSetPartialWashoutPriorToHatching(),
                     new HandleSetStormImpactDate(),
                     new HandleSetWashoutDate());
 
@@ -155,9 +155,25 @@ public class EditFragmentStorms extends EditFragment {
             setText(R.id.fieldPartialWashOutStormName, "");
         }
 
+
+//        TODO(Dwenzel): remove .hasEventPriorToHatching() check at the end of 2017 season
         if (condition.getPartialWashout().hasEventPriorToHatching()) {
-            setChecked(R.id.fieldPartialWashoutPriorToHatching, condition.getPartialWashout().getEventPriorToHatching());
-        } else setChecked(R.id.fieldPartialWashoutPriorToHatching,false);
+            setChecked(R.id.fieldPartialWashoutPreHatch,
+                    condition.getPartialWashout().getEventPriorToHatching());
+            setChecked(R.id.fieldPartialWashoutPostHatch,
+                    false);
+
+        } //partial washout timing should override eventPriorToHatching
+        if (condition.hasPartialWashoutTiming()) {
+            setChecked(R.id.fieldPartialWashoutPreHatch,
+                    condition.getPartialWashoutTiming() == ReportProto.NestCondition.WashoutTimeOption.PRE_HATCH);
+            setChecked(R.id.fieldPartialWashoutPostHatch,
+                    condition.getPartialWashoutTiming() == ReportProto.NestCondition.WashoutTimeOption.POST_HATCH);
+        }
+        if (!condition.hasPartialWashoutTiming() && !condition.getPartialWashout().hasEventPriorToHatching()) {
+            setChecked(R.id.fieldPartialWashoutPreHatch, false);
+            setChecked(R.id.fieldPartialWashoutPostHatch, false);
+        }
 
         if (condition.hasCompleteWashoutTiming()) {
             setChecked(R.id.fieldCompleteWashoutPreHatch,
@@ -177,6 +193,39 @@ public class EditFragmentStorms extends EditFragment {
         table.removeAllViews();
     }
 
+    private static class HandleSetPartialWashoutPreHatch extends ClickHandler {
+        protected HandleSetPartialWashoutPreHatch() {
+            super(R.id.fieldPartialWashoutPreHatch);
+        }
+        @Override
+        public void handleClick(View view, EditPresenter.DataUpdateHandler updateHandler) {
+            CheckBox box = (CheckBox) view;
+            if (!box.isChecked()) {
+                updateHandler.applyMutation(new ReportMutations.PartialWashoutTimingMutation(
+                        ReportProto.NestCondition.WashoutTimeOption.NONE));
+            } else {
+                updateHandler.applyMutation(new ReportMutations.PartialWashoutTimingMutation(
+                        ReportProto.NestCondition.WashoutTimeOption.PRE_HATCH));
+            }
+        }
+    }
+    private static class HandleSetPartialWashoutPostHatch extends ClickHandler {
+        protected HandleSetPartialWashoutPostHatch() {
+            super(R.id.fieldPartialWashoutPostHatch);
+        }
+        @Override
+        public void handleClick(View view, EditPresenter.DataUpdateHandler updateHandler) {
+            CheckBox box = (CheckBox) view;
+            if (!box.isChecked()) {
+                updateHandler.applyMutation(new ReportMutations.PartialWashoutTimingMutation(
+                        ReportProto.NestCondition.WashoutTimeOption.NONE));
+            } else {
+                updateHandler.applyMutation(new ReportMutations.PartialWashoutTimingMutation(
+                        ReportProto.NestCondition.WashoutTimeOption.POST_HATCH));
+            }
+        }
+    }
+
     private static class HandleSetCompleteWashoutPreHatch extends ClickHandler {
         protected HandleSetCompleteWashoutPreHatch() {
             super(R.id.fieldCompleteWashoutPreHatch);
@@ -193,6 +242,7 @@ public class EditFragmentStorms extends EditFragment {
             }
         }
     }
+
     private static class HandleSetCompleteWashoutPostHatch extends ClickHandler {
         protected HandleSetCompleteWashoutPostHatch() {
             super(R.id.fieldCompleteWashoutPostHatch);
@@ -207,33 +257,6 @@ public class EditFragmentStorms extends EditFragment {
                 updateHandler.applyMutation(new ReportMutations.CompleteWashoutTimingMutation(
                         ReportProto.NestCondition.WashoutTimeOption.POST_HATCH));
             }
-        }
-    }
-
-    private static class HandleSetPostHatchWashout extends ClickHandler {
-        protected HandleSetPostHatchWashout() {
-            super(R.id.fieldCompleteWashoutPostHatch);
-        }
-        @Override
-        public void handleClick(View view, EditPresenter.DataUpdateHandler updateHandler) {
-            updateHandler.applyMutation(new ReportMutations.WasPostHatchWashout(isChecked(view)));
-        }
-    }
-
-    private static class HandleSetWashoutPriorToHatching extends ClickHandler {
-        protected HandleSetWashoutPriorToHatching() {super(R.id.fieldCompleteWashoutPreHatch);}
-
-        @Override
-        public void handleClick(View view, EditPresenter.DataUpdateHandler updateHandler) {
-            updateHandler.applyMutation(new ReportMutations.WashoutPriorToHatchingMutation(isChecked(view)));
-        }
-    }
-
-    private static class HandleSetPartialWashoutPriorToHatching extends ClickHandler {
-        protected HandleSetPartialWashoutPriorToHatching() {super(R.id.fieldPartialWashoutPriorToHatching);}
-        @Override
-        public void handleClick(View view, EditPresenter.DataUpdateHandler updateHandler) {
-            updateHandler.applyMutation(new ReportMutations.PartialWashoutPriorToHatchingMutation(isChecked(view)));
         }
     }
 

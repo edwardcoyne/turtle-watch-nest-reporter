@@ -44,6 +44,8 @@ public class StateFalseCrawlReportServlet extends HttpServlet {
   // This is the list of columns in the report, they will appear in this order.
   private static List<ReportColumn> reportColumns = ImmutableList.of(
       new MappedTimestampColumn("Date Crawl Recorded", "report.timestamp_found_ms"),
+      new MappedColumn("ID/Label", "report.false_crawl_number"),
+      sectionColumn,
       new OrderedReportWriter.MappedYNColumn("Possible False Crawl",
               "report.possible_false_crawl"),
       new OrderedReportWriter.MappedBlankIfZeroColumn("Possible False Crawl Number","report.possible_false_crawl_number"),
@@ -61,10 +63,8 @@ public class StateFalseCrawlReportServlet extends HttpServlet {
           "report.location.apex_to_barrier_ft", "report.location.apex_to_barrier_in"),
       new MappedDistanceColumn("Distance From MHW",
           "report.location.water_to_apex_ft", "report.location.water_to_apex_in"),
-      new MappedColumn("ID/Label", "report.false_crawl_number"),
-      sectionColumn,
       new MappedColumn("Additional Notes","report.additional_notes"),
-          new OrderedReportWriter.MappedNotNullColumn("Photo","report.image"),
+          new OrderedReportWriter.MappedNotNullColumn("Photo","report.image.1"),
       new MappedColumn("Latitude", "report.location.coordinates.lat"),
       new OrderedReportWriter.MappedColumnAbsoluteValueDouble("Longitude",
               "report.location.coordinates.long"));

@@ -153,6 +153,38 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
     }
   }
 
+  public static class MappedAnyMatchColumn extends ReportColumn {
+    public MappedAnyMatchColumn(String name,
+                                final String boolStringPath,
+                                final String optionStringPathA,
+                                final String optionStringPathB,
+                                final ReportProto.NestCondition.WashoutTimeOption optionMatch) {
+      super(name, new ValueFetcher() {
+        private final Path boolPath = new Path(boolStringPath);
+        private final Path optionPathA = new Path(optionStringPathA);
+        private final Path optionPathB = new Path(optionStringPathB);
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column boolColumn = Preconditions.checkNotNull(
+                  columnMap.get(boolPath),
+                  "Missing Path: " + boolStringPath);
+          Column optionAColumn = Preconditions.checkNotNull(
+                  columnMap.get(optionPathA),
+                  "Missing Path: " + optionStringPathA);
+          Column optionBColumn = Preconditions.checkNotNull(
+                  columnMap.get(optionPathB),
+                  "Missing Path: " + optionStringPathB);
+          if (boolColumn.getValue(rowId).equals("YES") ||
+                  optionAColumn.getValue(rowId).equals(optionMatch.toString()) ||
+                  optionBColumn.getValue(rowId).equals(optionMatch.toString())) {
+            return "YES";
+          }
+
+          return "NO";
+        }
+      });
+    }
+  }
   public static class MappedEitherOrColumn extends ReportColumn {
     public MappedEitherOrColumn(String name, final String stringPathA, final String stringPathB) {
       super(name, new ValueFetcher() {
@@ -170,7 +202,6 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
       });
     }
   }
-//MappedWashoutTimeOptionColumn
 
   public static class MappedWashoutTimeOptionColumn extends ReportColumn {
     public MappedWashoutTimeOptionColumn(String name, final String stringPath,
@@ -180,12 +211,44 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
         @Override
         public String fetch(Map<Path, Column> columnMap, int rowId) {
           Column column = columnMap.get(path);
+
           Preconditions.checkNotNull(column, "Missing path: " + stringPath);
-          if (column.getValue(rowId) == option.toString()) {
+          if (column.getValue(rowId).equals(option.toString())) {
             return "Y";
           }
           else return "N";
         }
+      });
+    }
+  }
+
+//  optionColumn should take precedence
+  public static class MappedExistsOrWashoutTimeColumn extends ReportColumn {
+    public MappedExistsOrWashoutTimeColumn(String name, final String eventStringPath,
+                                           final String optionStringPath,
+                                         final ReportProto.NestCondition.WashoutTimeOption option) {
+      super(name, new ValueFetcher() {
+        private final Path optionPath = new Path(optionStringPath);
+        private final Path eventPath = new Path(eventStringPath);
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column optionColumn = columnMap.get(optionPath);
+          Column eventColumn = columnMap.get(eventPath);
+          String retVal = "NO";
+
+          Preconditions.checkNotNull(eventColumn,"Missing path: " + eventStringPath);
+          Preconditions.checkNotNull(optionColumn, "Missing path: " + optionStringPath);
+
+          if (eventColumn.hasValue(rowId) && !optionColumn.hasValue(rowId)) {
+            retVal = eventColumn.getValue(rowId);
+          }
+
+          if (optionColumn.getValue(rowId).equals(option.toString())) {
+            retVal = "YES";
+          }
+        return retVal;
+        }
+
       });
     }
   }
@@ -238,6 +301,33 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
       });
     }
   }
+
+  public static class MappedPartialPredationColumn extends ReportColumn {
+    public MappedPartialPredationColumn(
+            String name,
+            final String stringPathA,
+            final String stringPathB) {
+      super(name, new ValueFetcher() {
+        private final Path pathA = new Path(stringPathA);
+        private final Path pathB = new Path(stringPathB);
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column completePredation = Preconditions.checkNotNull(columnMap.get(pathA),"Missing Path: " + stringPathA);
+
+          Column predationTimestamp = columnMap.get(pathB); // I wish you were kotlin.
+          boolean predated = false;
+
+//          Take care not to look directly at a null object,
+//          for when you gaze too long into the null,
+//          The null also gazes into you?
+          if ( predationTimestamp != null) predated = predationTimestamp.hasValue(rowId);
+          if (predated && !(completePredation.getValue(rowId).equals("YES")) ) return "YES";
+          return "NO";
+        }
+      });
+    }
+  }
+
 
   public static class MappedBlankIfZeroColumn extends ReportColumn {
     public MappedBlankIfZeroColumn(String name, final String stringPath) {
