@@ -84,6 +84,7 @@ message NestCondition {
     optional int64 timestamp_ms = 1;
     optional string storm_name = 2;
     optional string other_impact = 3;
+    optional bool event_prior_to_hatching = 4;
   }
   optional VandalismType vandalism_type = 15;
   optional bool nest_dug_into = 26;
@@ -186,6 +187,7 @@ message NestLocation {
     HB = 4;    
   }
   optional City city = 4;
+  optional bool nest_within_project_area = 15 [default = true];
   optional bool in_cortez_groin_replacement_area = 14;
 
   enum Placement {
@@ -223,7 +225,7 @@ message NestLocation {
   }
   optional Triangulation triangulation = 12;
   optional bool escarpment_over_18_inches = 13;
-// Next ID=15
+// Next ID=16
 }
 
 message Intervention {
@@ -269,6 +271,7 @@ message Excavation {
     EGGS_NOT_FOUND = 2;
     EGGS_HATCHLINGS_TOO_DECAYED = 3;
     OTHER = 4;
+    COMPLETE_WASHOUT = 5;
   }
   optional ExcavationFailureReason failure_reason = 3;
   optional string failure_other = 4;

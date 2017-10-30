@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.islandturtlewatch.nest.reporter"
-    android:versionCode="1256"
-    android:versionName="1.25.6" >
+    android:versionCode="1257"
+    android:versionName="1.25.7" >
 
     <uses-sdk
         android:minSdkVersion="16"

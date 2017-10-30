@@ -35,8 +35,8 @@ public class EditFragmentStorms extends EditFragment {
                     new HandleSetCompleteWashoutPreHatch(),
                     new HandleSetCompleteWashoutPostHatch(),
                     new HandleSetPartialWashoutDate(),
-//                    new HandleSetPartialWashoutPriorToHatching(),
                     new HandleSetStormImpactDate(),
+                    new HandleSetStormImpactPriorToHatch(),
                     new HandleSetWashoutDate());
 
     private static final Map<Integer, TextChangeHandler> TEXT_CHANGE_HANDLERS =
@@ -77,6 +77,7 @@ public class EditFragmentStorms extends EditFragment {
             clearDate(R.id.buttonOtherStormImpactDate);
             setText(R.id.fieldOtherStormImpactStormName,"");
         }
+        setChecked(R.id.fieldOtherStormImpactPriorToHatch, condition.getStormImpact().getEventPriorToHatching());
         setText(R.id.fieldOtherStormImpactOtherImpact, condition.getStormImpact().getOtherImpact());
         setVisible(R.id.fieldOtherStormImpactOtherImpact,condition.getStormImpact().hasTimestampMs());
         clearTable(R.id.tableWashOver);
@@ -191,6 +192,16 @@ public class EditFragmentStorms extends EditFragment {
         // since we use focus listeners, MUST ensure no focus before deletion.
         removeFocus(table);
         table.removeAllViews();
+    }
+
+    private static class HandleSetStormImpactPriorToHatch extends ClickHandler {
+        protected HandleSetStormImpactPriorToHatch() {
+            super(R.id.fieldOtherStormImpactPriorToHatch);
+        }
+        @Override
+        public void handleClick(View view, EditPresenter.DataUpdateHandler updateHandler) {
+            updateHandler.applyMutation(new ReportMutations.WasStormImpactPriorToHatch(isChecked(view)));
+        }
     }
 
     private static class HandleSetPartialWashoutPreHatch extends ClickHandler {

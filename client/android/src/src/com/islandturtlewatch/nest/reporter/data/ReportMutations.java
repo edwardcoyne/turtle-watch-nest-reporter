@@ -474,6 +474,19 @@ public class ReportMutations {
     }
   }
 
+  public static class WithinProjectArea implements ReportMutation {
+    private final boolean isTrue;
+    public WithinProjectArea(boolean isTrue) {
+      this.isTrue = isTrue;
+    }
+    @Override
+    public Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      updatedReport.getLocationBuilder().setNestWithinProjectArea(isTrue);
+      return updatedReport.build();
+    }
+  }
+
   public static class WithinReplacementArea implements ReportMutation {
     private final boolean isTrue;
 
@@ -1264,6 +1277,20 @@ public static class ProtectionChangeTypeMutation implements ReportMutation {
     public Report apply(Report oldReport) {
       Report.Builder updatedReport = oldReport.toBuilder();
       updatedReport.getConditionBuilder().setGhostDamage10OrLess(isTrue);
+      return updatedReport.build();
+    }
+  }
+
+  public static class WasStormImpactPriorToHatch implements ReportMutation {
+    private final boolean isTrue;
+
+    public WasStormImpactPriorToHatch(boolean isTrue) {
+      this.isTrue = isTrue;
+    }
+    @Override
+    public  Report apply(Report oldReport) {
+      Report.Builder updatedReport = oldReport.toBuilder();
+      updatedReport.getConditionBuilder().getStormImpactBuilder().setEventPriorToHatching(isTrue);
       return updatedReport.build();
     }
   }

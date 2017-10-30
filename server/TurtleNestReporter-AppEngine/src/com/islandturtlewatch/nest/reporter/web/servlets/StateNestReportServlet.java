@@ -75,9 +75,10 @@ public class StateNestReportServlet extends HttpServlet {
 //          columnGenerator.generateDefaultColumn("ID/Label", "report.nest_number"),
 
       new OrderedReportWriter.MappedComboColumn("Nest Label","ref.owner_id","report.nest_number"),
-//          columnGenerator.generateStaticColumn("Nest within Project Area","YES"),
-      new StaticValueColumn("Nest within Project Area","YES"),
-//          columnGenerator.generateDefaultColumn("City","report.location.city"),
+      new MappedColumn("Nest within Project Area","report.location.nest_within_project_area"),
+
+//      columnGenerator.generateDefaultColumn("Nest within Project Area","report.location.nest_wihin_project_area"),
+
       new MappedColumn("City","report.location.city"),
 //          columnGenerator.generateYNColumn("Within Cortez Groin Replacement Area",
 //            "report.location.in_cortez_groin_replacement_area"),
@@ -103,11 +104,17 @@ public class StateNestReportServlet extends HttpServlet {
           "report.timestamp_found_ms",
           "report.intervention.protection_event.timestamp_ms",
           "report.intervention.protection_event.type"),
-          new OrderedReportWriter.FinalTreatmentColumn("Final Treatment ",
-                  "report.intervention.relocation.was_relocated",
-                  "report.timestamp_found_ms",
-                  "report.intervention.protection_event.timestamp_ms",
-                  "report.intervention.protection_event.type"),
+
+      new OrderedReportWriter.FinalTreatmentColumn(
+              "Final Treatment",
+              "report.intervention.protection_changed_event.timestamp_ms",
+              "report.intervention.relocation.was_relocated",
+              "report.intervention.protection_changed_event.type"),
+//          new OrderedReportWriter.FinalTreatmentColumn("Final Treatment ",
+//                  "report.intervention.relocation.was_relocated",
+//                  "report.timestamp_found_ms",
+//                  "report.intervention.protection_event.timestamp_ms",
+//                  "report.intervention.protection_event.type"),
       new MappedBlankIfUnsetColumn("Protection Event", "report.intervention.protection_event.type"),
       new MappedTimestampColumn("Initial Date Protected","report.intervention.protection_event.timestamp_ms"),
       new OrderedReportWriter.MappedBlankIfUnsetWithOtherColumn("Reason for Protection",
@@ -125,7 +132,7 @@ public class StateNestReportServlet extends HttpServlet {
           "report.location.water_to_apex_ft", "report.location.water_to_apex_in"),
       new MappedColumn("Nest Relocated", "report.intervention.relocation.was_relocated"),
       new MappedTimestampColumn("Date Relocated","report.intervention.relocation.timestamp_ms"),
-      new MappedBlankIfUnsetColumn("Reason for Relocation","report.intervention.relocation.reason"),
+      new MappedColumn("Reason for Relocation","report.intervention.relocation.reason"),
       new MappedNotNullColumn("Nest Washed Over", "report.condition.wash_over.0.timestamp_ms"),
       new MappedNotNullColumn("Inundated","report.condition.inundated_event.0.timestamp_ms"),
       new OrderedReportWriter.MappedYNColumn("Did Inundation Occur Prior to Hatching?",
@@ -134,25 +141,29 @@ public class StateNestReportServlet extends HttpServlet {
       new OrderedReportWriter.MappedWashoutTimeOptionColumn(
               "Did Complete Washout Occur Prior to Hatching?",
               "report.condition.complete_washout_timing",
-              ReportProto.NestCondition.WashoutTimeOption.PRE_HATCH),
+              ReportProto.NestCondition.WashoutTimeOption.PRE_HATCH,
+              "report.condition.wash_out.timestamp_ms"),
       new OrderedReportWriter.MappedWashoutTimeOptionColumn(
                   "Did Complete Washout Occur Post-Hatch but Pre-Inventory",
                   "report.condition.complete_washout_timing",
-                  ReportProto.NestCondition.WashoutTimeOption.POST_HATCH),
+                  ReportProto.NestCondition.WashoutTimeOption.POST_HATCH,
+              "report.condition.wash_out.timestamp_ms"),
       new MappedHasTimestampColumn("Partial Wash out","report.condition.partial_washout.timestamp_ms"),
 
 //          TODO: This should be removed after this years reports are completed (Jul2017)
       new OrderedReportWriter.MappedExistsOrWashoutTimeColumn("Did Partial Washout Occur Prior to Hatching?",
               "report.condition.partial_washout.event_prior_to_hatching",
               "report.condition.partial_washout_timing",
-              ReportProto.NestCondition.WashoutTimeOption.PRE_HATCH),
+              ReportProto.NestCondition.WashoutTimeOption.PRE_HATCH,
+              "report.condition.partial_washout.timestamp_ms"),
 
 //      new MappedIfExistsColumn("Did Partial Washout Occur Prior to Hatching?",
 //              "report.condition.partial_washout.event_prior_to_hatching"),
       new OrderedReportWriter.MappedWashoutTimeOptionColumn(
               "Did Partial Washout Occur Post-Hatch, but Pre-Inventory",
               "report.condition.partial_washout_timing",
-              ReportProto.NestCondition.WashoutTimeOption.POST_HATCH),
+              ReportProto.NestCondition.WashoutTimeOption.POST_HATCH,
+              "report.condition.partial_washout.timestamp_ms"),
 
 //          TODO: This should be altered at the end of the season (Jul2017)
       new OrderedReportWriter.MappedAnyMatchColumn(
@@ -175,7 +186,8 @@ public class StateNestReportServlet extends HttpServlet {
       new MappedNotNullTimestampColumn("Accretion Date","report.condition.accretion.0.timestamp_ms"),
       new MappedIfExistsColumn("Accretion Storm Name","report.condition.accretion.0.storm_name"),
       new MappedNotNullColumn("Erosion","report.condition.erosion.0.timestamp_ms"),
-          new OrderedReportWriter.MappedIfExistsColumn("Did Erosion Occur Prior to Hatching?",
+
+          new MappedNotNullColumn("Did Erosion Occur Prior to Hatching?",
                   "report.condition.erosion.0.event_prior_to_hatching"),
       new MappedNotNullTimestampColumn("Erosion Date", "report.condition.erosion.0.timestamp_ms"),
       new MappedIfExistsColumn("Erosion Storm Name", "report.condition.erosion.0.storm_name"),
@@ -190,7 +202,7 @@ public class StateNestReportServlet extends HttpServlet {
               "report.condition.preditation.0.timestamp_ms"),
       new MappedColumn("Do you actively look for and record predation events?",
               "report.condition.actively_record_events"),
-      new MappedColumn("Regarding mammalian predation events, what proportion " +
+      new OrderedReportWriter.MappedProportionColumn("Regarding mammalian predation events, what proportion " +
               "of the events do you likely record?","report.condition.prop_events_recorded"),
 
       new MappedNotNullColumn("Predation", "report.condition.preditation.0.timestamp_ms"),

@@ -140,6 +140,16 @@
 	           android:text="@string/excavation_data_eggs_too_decayed"
 	           android:onClick="handleClick" />
 	   </TableRow>
+		<TableRow>
+			<CheckBox
+				android:id="@+id/fieldCompleteWashout"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="Complete Washout"
+				android:onClick="handleClick"
+				/>
+		</TableRow>
 	   <TableRow
 	       android:layout_width="wrap_content"
 	       android:layout_height="wrap_content"

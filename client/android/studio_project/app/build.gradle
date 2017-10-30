@@ -30,7 +30,6 @@ android {
         main.java.srcDirs = ['../../src/src/', '../../../../proto/generated/']
     }
 }
-
 dependencies {
     compile files('libs/jackson-core-2.1.3.jar')
     compile files('libs/jsr305-1.3.9.jar')

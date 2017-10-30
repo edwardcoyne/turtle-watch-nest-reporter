@@ -292,6 +292,16 @@
                 onTextChangeHandler="handleTextChange"
                 android:layout_weight="0" />
         </TableRow>
+        <TableRow>
+            <CheckBox
+                android:id="@+id/fieldOtherStormImpactPriorToHatch"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:text="Impact Occurred Prior to Hatching"
+                android:onClick="handleClick"
+                />
+        </TableRow>
 
         <TableRow
             android:layout_width="wrap_content"

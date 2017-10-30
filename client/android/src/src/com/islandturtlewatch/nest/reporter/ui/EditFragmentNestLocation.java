@@ -57,6 +57,7 @@ public class EditFragmentNestLocation extends EditFragment {
           new HandleSetCityHB(),
           new HandleSetCityBB(),
           new HandleSetWithinReplacementArea(),
+          new HandleSetWithinProjectArea(),
           new HandleSetEscarpmentOver18Inches(),
           new HandleSetEscarpmentOver18Inches2(),
           new HandleSetRelocated(),
@@ -141,6 +142,7 @@ public class EditFragmentNestLocation extends EditFragment {
     setChecked(R.id.fieldLocationHB, location.getCity() == City.HB);
     setChecked(R.id.fieldLocationBB, location.getCity() == City.BB);
     setChecked(R.id.fieldLocationCortezReplacementArea, location.getInCortezGroinReplacementArea());
+    setChecked(R.id.fieldWithinProjectArea, location.getNestWithinProjectArea());
 
     setText(R.id.fieldDetails, location.hasDetails() ?
             location.getDetails() : "");
@@ -461,6 +463,15 @@ if (relocation.hasNewAddress()) {
     public void handleClick(View view, DataUpdateHandler updateHandler) {
       updateHandler.applyMutation(
               new ReportMutations.EscarpmentOver18InchesMutation(isChecked(view)));
+    }
+  }
+
+  private static class HandleSetWithinProjectArea extends ClickHandler {
+    protected HandleSetWithinProjectArea() {super(R.id.fieldWithinProjectArea);}
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(
+              new ReportMutations.WithinProjectArea(isChecked(view)));
     }
   }
 

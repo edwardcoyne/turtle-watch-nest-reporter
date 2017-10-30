@@ -100,8 +100,11 @@ public class ReportCsvGenerator {
     }
     String value = "";
     if (field.getType() == FieldDescriptor.Type.ENUM) {
-      EnumValueDescriptor enumValue = (EnumValueDescriptor)message.getField(field);
-      value = enumValue.getName();
+      if (message.hasField(field))  {
+
+        EnumValueDescriptor enumValue = (EnumValueDescriptor)message.getField(field);
+        value = enumValue.getName();
+      } else value = "NO ENUM";
     } else if (field.getType() == FieldDescriptor.Type.BOOL) {
       value = ((Boolean)message.getField(field)) ? "YES" : "NO";
     } else {

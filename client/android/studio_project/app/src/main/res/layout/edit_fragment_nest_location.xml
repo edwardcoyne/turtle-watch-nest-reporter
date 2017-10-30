@@ -111,6 +111,15 @@
 	           android:onClick="handleClick" />
 	       
 	   </TableRow>
+
+		<CheckBox
+			android:id="@+id/fieldWithinProjectArea"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="Nest Within Project Area"
+			android:checked="true"
+			android:onClick="handleClick"/>
 		<CheckBox
 			android:id="@+id/fieldLocationCortezReplacementArea"
 			android:layout_width="0dp"
