@@ -51,7 +51,7 @@ public class StateFalseCrawlReportServlet extends HttpServlet {
               "report.possible_false_crawl"),
       new OrderedReportWriter.MappedBlankIfZeroColumn("Possible False Crawl Number","report.possible_false_crawl_number"),
       new MappedSpeciesColumn("Species","report.species"),
-      new StaticValueColumn("Crawl within Project Area? ", "YES"),
+      new MappedColumn("Crawl within Project Area?", "report.location.nest_within_project_area"),
       new MappedColumn("City","report.location.city"),
       new OrderedReportWriter.MappedYNColumn("Within Cortez Groin Replacement Area",
               "report.location.in_cortez_groin_replacement_area"),

@@ -173,4 +173,5 @@
     <string name="complete_washout_occured_prior_to_hatching">Complete Washout Occured Prior to Hatching</string>
     <string name="erosion">Erosion</string>
     <string name="add_erosion_event">+Add Erosion Event</string>
+    <string name="complete_washout">Complete washout</string>
 </resources>

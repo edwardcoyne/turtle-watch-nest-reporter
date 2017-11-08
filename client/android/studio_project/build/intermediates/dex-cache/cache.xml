@@ -20,6 +20,15 @@
         <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_b28cd37767859b3c1e09f188ca5384efe870c4dd/classes.dex" />
     </item>
     <item
+        is-multidex="true"
+        jar="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="b16f67fbc6b8d1e89145af49ef730aef93decbf3">
+        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_90f082256d63d5786438dc01910b2978ef5ed7f6/classes.dex" />
+    </item>
+    <item
         is-multidex="false"
         jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client/1.23.0/522ea860eb48dee71dfe2c61a1fd09663539f556/google-api-client-1.23.0.jar"
         jumboMode="false"
@@ -27,15 +36,6 @@
         revision="25.0.0"
         sha1="522ea860eb48dee71dfe2c61a1fd09663539f556">
         <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/pre-dexed/release/google-api-client-1.23.0_c79f08cccfeba7e8a7b8b38efc6aed9c0a0acc6e.jar" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="75615ab209727f717ecffccfa83b122401ebcbe7">
-        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_90f082256d63d5786438dc01910b2978ef5ed7f6/classes.dex" />
     </item>
     <item
         is-multidex="true"

@@ -101,7 +101,6 @@ public class ReportCsvGenerator {
     String value = "";
     if (field.getType() == FieldDescriptor.Type.ENUM) {
       if (message.hasField(field))  {
-
         EnumValueDescriptor enumValue = (EnumValueDescriptor)message.getField(field);
         value = enumValue.getName();
       } else value = "NO ENUM";

@@ -121,7 +121,12 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
                   column.getValue(rowId).equals("UNSET_REASON") ||
                   column.getValue(rowId).equals("NO ENUM")) {
             return "";
-          } else return column.getValue(rowId);
+          } else {
+            String value = column.getValue(rowId);
+            value = value.toLowerCase();
+            value = value.replaceAll("_", " ");
+            return value.substring(0,1).toUpperCase() + value.substring(1);
+          }
         }
       });
     }
@@ -146,10 +151,13 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
             return "";
           } else if (column.getValue(rowId).equals("OTHER")) {
             return other.getValue(rowId);
+          } else {
+            String value = column.getValue(rowId);
+            value = value.toLowerCase();
+            value = value.replaceAll("_", " ");
+            return value.substring(0,1).toUpperCase() + value.substring(1);
+
           }
-
-
-          else return column.getValue(rowId);
         }
       });
     }
