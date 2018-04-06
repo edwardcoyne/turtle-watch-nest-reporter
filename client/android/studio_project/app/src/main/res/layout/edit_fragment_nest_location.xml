@@ -21,12 +21,52 @@
 	            android:text="@string/edit_nest_location_button_gps" 
 	           android:onClick="handleClick" />
 	    </TableRow>
+		<TableRow>
+			<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/edit_nest_location_label_latitude"/>
+		<EditText
+			android:id="@+id/fieldGpsLat"
+			android:inputType="textMultiLine"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:ems="10"
+			 />
+		</TableRow>
+		<TableRow>
+			<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/edit_nest_location_label_longitude"/>
+			<EditText
+				android:id="@+id/fieldGpsLon"
+				android:inputType="textMultiLine"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:ems="10"
+				 />
+
+		</TableRow>
+		<TableRow>
+			<Button
+				android:id="@+id/buttonManualGps"
+				android:text="@string/set_gps_manually"
+				android:onClick="handleClick"
+				/>
+
+		</TableRow>
 	    <TableRow
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content" >
 	        <TextView
 	            android:text="@string/edit_nest_location_original_address" />
-	
+			</TableRow>
+	<TableRow>
 	        <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
 	            android:id="@+id/fieldAddress"
 	            android:inputType="textPostalAddress"
@@ -71,6 +111,23 @@
 	           android:onClick="handleClick" />
 	       
 	   </TableRow>
+
+		<CheckBox
+			android:id="@+id/fieldWithinProjectArea"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="Nest Within Project Area"
+			android:checked="true"
+			android:onClick="handleClick"/>
+		<CheckBox
+			android:id="@+id/fieldLocationCortezReplacementArea"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="@string/edit_nest_location_within_replacement_area"
+			android:onClick="handleClick"
+			/>
 	   <TableRow
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content" >
@@ -206,6 +263,64 @@
 			android:text="@string/edit_nest_location_escarpment_over_18_inches"
 			android:onClick="handleClick" />
 		</TableRow>
+		<TableRow
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" >
+
+		<TextView
+			style="@style/Header"
+			android:text="@string/edit_nest_location_coastal_armoring" />
+	</TableRow>
+		<TableRow
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+			<CheckBox
+				android:id="@+id/fieldSeawardOfArmoringStructure"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/edit_seaward_of_armoring_structure"
+				android:onClick="handleClick"
+				/>
+		</TableRow>
+		<TableRow
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+			<TextView
+				android:text="@string/examples_of_structure_text"
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				/>
+		</TableRow>
+		<TableRow>
+			<CheckBox
+				android:id="@+id/fieldWithin3FeetofStructure"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/edit_within_3_feet"
+				android:onClick="handleClick"
+				/>
+		</TableRow>
+		<TableRow
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+			<TextView
+				android:id="@+id/textTypeOfStructure"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/edit_type_of_structure"/>
+		</TableRow>
+
+		<TableRow>
+			<com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+				android:id="@+id/fieldTypeOfStructure"
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:layout_weight="1"
+				onTextChangeHandler="handleTextChange"
+				/>
+		</TableRow>
 	   
 	   <TableRow
 	       android:layout_width="wrap_content"
@@ -260,7 +375,8 @@
 	       
 	       <TextView
 	            android:text="@string/other" />
-	       
+	       </TableRow>
+		<TableRow>
 	       <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
 	            android:id="@+id/fieldObstructionsOther"
 	            android:inputType="textMultiLine"
@@ -352,6 +468,49 @@
 					android:text="@string/edit_nest_location_button_gps"
 					android:onClick="handleClick"  />
 			</TableRow>
+
+			<TableRow>
+				<TextView
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:text="@string/edit_nest_location_label_latitude"/>
+				<EditText
+					android:id="@+id/fieldRelocatedGpsLat"
+					android:inputType="textMultiLine"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:ems="10"
+					/>
+			</TableRow>
+			<TableRow>
+				<TextView
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:text="@string/edit_nest_location_label_longitude"/>
+				<EditText
+					android:id="@+id/fieldRelocatedGpsLon"
+					android:inputType="textMultiLine"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:ems="10"
+					/>
+
+			</TableRow>
+			<TableRow
+				android:layout_width="fill_parent">
+
+				<Button
+					android:id="@+id/buttonManualRelocatedGps"
+					android:text="@string/set_gps_manually"
+					android:onClick="handleClick"
+					android:layout_width="match_parent" />
+
+			</TableRow>
+
 			<TableRow
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content" >

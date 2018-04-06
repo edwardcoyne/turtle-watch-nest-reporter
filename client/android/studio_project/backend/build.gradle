@@ -51,6 +51,7 @@ appengine {
     endpoints {
         getClientLibsOnBuild = true
         getDiscoveryDocsOnBuild = true
+        googleClientVersion = '1.23.0'
     }
 
 }

@@ -1,19 +1,5 @@
 package com.islandturtlewatch.nest.reporter.data;
 
-import static com.islandturtlewatch.nest.reporter.util.Sql.and;
-import static com.islandturtlewatch.nest.reporter.util.Sql.isFalse;
-import static com.islandturtlewatch.nest.reporter.util.Sql.isTrue;
-import static com.islandturtlewatch.nest.reporter.util.Sql.whereEquals;
-import static com.islandturtlewatch.nest.reporter.util.Sql.whereStringEquals;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
-
-import lombok.Cleanup;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -26,7 +12,6 @@ import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import com.islandturtlewatch.nest.data.ReportProto;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
 import com.islandturtlewatch.nest.data.ReportProto.ReportWrapper;
@@ -35,6 +20,21 @@ import com.islandturtlewatch.nest.reporter.data.LocalDataStore.StorageDefinition
 import com.islandturtlewatch.nest.reporter.util.Sql;
 import com.islandturtlewatch.nest.reporter.util.Sql.Column;
 import com.islandturtlewatch.nest.reporter.util.Sql.Column.Type;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Set;
+
+import lombok.Cleanup;
+
+import static com.islandturtlewatch.nest.reporter.util.Sql.and;
+import static com.islandturtlewatch.nest.reporter.util.Sql.isFalse;
+import static com.islandturtlewatch.nest.reporter.util.Sql.isTrue;
+import static com.islandturtlewatch.nest.reporter.util.Sql.whereEquals;
+import static com.islandturtlewatch.nest.reporter.util.Sql.whereStringEquals;
 
 /**
  * Responsible for managing local version of data on all reports and images.
@@ -50,30 +50,69 @@ public class LocalDataStore {
     storageHelper = new StorageDefinition.DbHelper(context);
   }
 
+  //TODO(Dwenzel): This could also be a good target for optimization
   public int activeReportCount() {
-    @Cleanup SQLiteDatabase db = storageHelper.getReadableDatabase();
-    @Cleanup Cursor cursor = getActiveReportsCursor(db);
-    return cursor.getCount();
+    return listActiveReportsWithDuplicates().size();
   }
 
-  public ImmutableList<CachedReportWrapper> listActiveReports() {
+  public ImmutableList<CachedReportWrapper> listActiveReportsWithDuplicates() {
     @Cleanup SQLiteDatabase db = storageHelper.getReadableDatabase();
     @Cleanup Cursor cursor = getActiveReportsCursor(db);
 
     ArrayList<CachedReportWrapper> output = new ArrayList<>();
+
     while (cursor.moveToNext()) {
       output.add(CachedReportWrapper.from(cursor));
     }
+    output = duplicatePFCs(output);
 
     Collections.sort(output, new Comparator<CachedReportWrapper>() {
       @Override public int compare(CachedReportWrapper lhs, CachedReportWrapper rhs) {
-        int diff = lhs.getReport().getNestNumber() - rhs.getReport().getNestNumber();
-        if (diff != 0) {
-          return diff;
+
+
+        if (lhs.getReport().hasNestNumber() && !rhs.getReport().hasNestNumber()) {
+          return -1;
+        } else if (!lhs.getReport().hasNestNumber() && rhs.getReport().hasNestNumber()) {
+          return 1;
         }
-        return lhs.getReport().getFalseCrawlNumber() - rhs.getReport().getFalseCrawlNumber();
+        if (lhs.getPossibleFalseCrawlDuplicate() && !rhs.getPossibleFalseCrawlDuplicate()) {
+          return -1;
+        } else if (!lhs.getPossibleFalseCrawlDuplicate() && rhs.getPossibleFalseCrawlDuplicate()) {
+          return 1;
+        }
+          int fcDiff = lhs.getReport().getFalseCrawlNumber() - rhs.getReport().getFalseCrawlNumber();
+          if (fcDiff != 0) {
+            return fcDiff;
+          }
+
+        int pfcDiff = lhs.getReport().getPossibleFalseCrawlNumber() - rhs.getReport().getPossibleFalseCrawlNumber();
+        if (pfcDiff != 0) {
+          return pfcDiff;
+        }
+          int diff = lhs.getReport().getNestNumber() - rhs.getReport().getNestNumber();
+          if (diff != 0) {
+            return diff;
+          }
+
+            return 0;
       }});
+
     return ImmutableList.copyOf(output);
+  }
+  public ArrayList<CachedReportWrapper> duplicatePFCs(ArrayList<CachedReportWrapper> arr) {
+    ArrayList<CachedReportWrapper> tempArray = new ArrayList<>();
+    for (CachedReportWrapper report: arr) {
+
+      if (report.getReport().getPossibleFalseCrawl()) {
+        CachedReportWrapper temp = new CachedReportWrapper();
+        temp.setReport(report.getReport());
+        temp.setLocalId(report.getLocalId());
+        temp.setPossibleFalseCrawlDuplicate(true);
+        tempArray.add(temp);
+      }
+    }
+    tempArray.addAll(arr);
+    return tempArray;
   }
 
   /**
@@ -89,12 +128,11 @@ public class LocalDataStore {
         null, // don't group
         null, // don't filter
         null); // don't sort
-
-    ImmutableList.Builder<CachedReportWrapper> output = ImmutableList.builder();
+      ArrayList<CachedReportWrapper> output = new ArrayList<>();
     while (cursor.moveToNext()) {
       output.add(CachedReportWrapper.from(cursor));
     }
-    return output.build();
+    return ImmutableList.copyOf(output);
   }
 
   /**
@@ -392,11 +430,20 @@ public class LocalDataStore {
    */
   public int getHighestNestNumber() {
     int highestNestNumber = 0;
-    ImmutableList<CachedReportWrapper> activeReports = listActiveReports();
+    ImmutableList<CachedReportWrapper> activeReports = listActiveReportsWithDuplicates();
     for (CachedReportWrapper wrapper : activeReports) {
       highestNestNumber = Math.max(highestNestNumber, wrapper.getReport().getNestNumber());
     }
     return highestNestNumber;
+  }
+
+  public int getHighestPossibleFalseCrawlNumber() {
+    int highestPFCNumber = 0;
+    ImmutableList<CachedReportWrapper> activeReports = listActiveReportsWithDuplicates();
+    for (CachedReportWrapper wrapper : activeReports) {
+      highestPFCNumber = Math.max(highestPFCNumber, wrapper.getReport().getPossibleFalseCrawlNumber());
+    }
+    return highestPFCNumber;
   }
 
   /**
@@ -404,7 +451,7 @@ public class LocalDataStore {
    */
   public int getHighestFalseCrawlNumber() {
     int highestFCNumber = 0;
-    ImmutableList<CachedReportWrapper> activeReports = listActiveReports();
+    ImmutableList<CachedReportWrapper> activeReports = listActiveReportsWithDuplicates();
     for (CachedReportWrapper wrapper : activeReports) {
       highestFCNumber = Math.max(highestFCNumber, wrapper.getReport().getFalseCrawlNumber());
     }
@@ -432,6 +479,7 @@ public class LocalDataStore {
     private boolean deleted;
     private long lastUpdatedTimestamp;
     private Report report;
+    private boolean possible_false_crawl_duplicate;
     private List<String> unsynchedImageFileNames;
 
     static final String [] requiredColumns = {
@@ -461,6 +509,13 @@ public class LocalDataStore {
         report.report = proto.get();
       }
       return report;
+    }
+
+    public boolean getPossibleFalseCrawlDuplicate() {
+      return possible_false_crawl_duplicate;
+    }
+    public void setPossibleFalseCrawlDuplicate(boolean isDupe) {
+      this.possible_false_crawl_duplicate = isDupe;
     }
 
     public int getLocalId() {

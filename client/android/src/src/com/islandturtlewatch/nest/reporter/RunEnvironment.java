@@ -14,8 +14,9 @@ public class RunEnvironment {
     DEVELOPMENT,
     PROD
   };
+
   private static final Environment environment = Environment.PROD;
-  private static final String localAddress = "10.0.2.2";
+  private static final String localAddress = "10.0.0.134";
   private static final String localAddressWPort = localAddress + ":8080";
   private static final int backendVersion = 3;
 
@@ -25,7 +26,7 @@ public class RunEnvironment {
       case LOCAL:
         return "http://" + localAddressWPort + "/_ah/api";
       case DEVELOPMENT:
-        return  "https://" + "turtlenestapp.appspot.com" + "/_ah/api";
+        return  "https://" + "backendtest-1325.appspot.com" + "/_ah/api";
       case PROD:
         return getVersionedRootUrl(ReportEndpoint.DEFAULT_ROOT_URL);
       default:

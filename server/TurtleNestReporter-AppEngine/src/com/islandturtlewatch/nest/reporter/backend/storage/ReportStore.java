@@ -19,6 +19,8 @@ import com.islandturtlewatch.nest.reporter.backend.storage.entities.StoredReport
 import com.islandturtlewatch.nest.reporter.backend.storage.entities.StoredReportVersion;
 import com.islandturtlewatch.nest.reporter.backend.storage.entities.User;
 
+import javax.mail.Store;
+
 // Needs to be thread safe.
 @Log
 public class ReportStore {
@@ -52,6 +54,7 @@ public class ReportStore {
       }});
   }
 
+
   public ReportWrapper updateReport(final ReportWrapper wrapper) {
     log.info("Updating ref: " + wrapper.getRef());
     return backend().transact(new Work<ReportWrapper>(){
@@ -61,8 +64,9 @@ public class ReportStore {
       }});
   }
 
+
   public void deleteReport(final ReportRef ref) {
-    log.info("deleteing ref: " + ref);
+    log.info("deleting ref: " + ref);
     backend().transact(new Work<Boolean>(){
       @Override
       public Boolean run() {
@@ -70,6 +74,16 @@ public class ReportStore {
         return true;
       }});
   }
+  public void setReportOld(final ReportRef ref) {
+    log.info("Setting ref to old: " + ref);
+    backend().transact(new Work<Boolean>(){
+      @Override
+      public Boolean run() {
+        doSetReportOld(ref);
+        return true;
+      }});
+  }
+
 
   public ReportWrapper getReportLatestVersion(String userId, final long reportId) {
     final User user = loadOrCreateUser(userId);
@@ -110,6 +124,13 @@ public class ReportStore {
     return ImmutableList.copyOf(versions);
   }
 
+  public void markAllActiveReportsInactive() {
+    for (ReportWrapper wrapper : getActiveReports()) {
+      ReportRef ref = wrapper.getRef();
+      setReportOld(ref);
+    }
+  }
+
   private ReportWrapper doAddReport(String userId, Report report) {
     User user = loadOrCreateUser(userId);
 
@@ -144,7 +165,7 @@ public class ReportStore {
       // TODO(edcoyne): plug in conflict handling here.
       //throw new UnsupportedOperationException(
       log.warning(
-          "Attempting to update with old version, We don't support conflict resultion yet..."
+          "Attempting to update with old version, We don't support conflict resolution yet..."
           + " Server version: " + report.getLatestVersion() + " Client version: "
               + ref.getVersion());
     }
@@ -162,6 +183,15 @@ public class ReportStore {
     return reportVersion.toReportWrapper();
   }
 
+  private void doSetReportOld(ReportRef ref) {
+    ReportRef.Builder reportRef = ref.toBuilder();
+    reportRef.setState(ReportRef.State.OLD);
+    User user = loadOrCreateUser(ref.getOwnerId());
+    StoredReport report = loadReport(user,ref.getReportId());
+    report.setState(ReportRef.State.OLD);
+    backend().save().entities(report).now();
+  }
+
   private void doDeleteReport(ReportRef ref) {
     User user = loadOrCreateUser(ref.getOwnerId());
     StoredReport report = loadReport(user, ref.getReportId());
@@ -175,6 +205,7 @@ public class ReportStore {
               + ref.getVersion());
     }
     report.setState(ReportRef.State.DELETED);
+
 
     backend().save().entities(report).now();
   }

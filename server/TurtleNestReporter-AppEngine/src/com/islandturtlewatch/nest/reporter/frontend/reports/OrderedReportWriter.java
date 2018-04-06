@@ -24,7 +24,6 @@ import com.islandturtlewatch.nest.reporter.frontend.reports.ReportCsvGenerator.P
 public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
   private final Iterable<ReportColumn> reportColumns;
   private final RowFilter rowFilter;
-
   // Section column should be part of reportColumns too.
   public OrderedReportWriter(Iterable<ReportColumn> reportColumns, RowFilter rowFilter) {
     this.reportColumns = reportColumns;
@@ -82,6 +81,12 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
       });
     }
   }
+//Lets maybe build the fetcher somewhere else.
+  public static class MappedColumnWithFetcher extends ReportColumn{
+    public MappedColumnWithFetcher(String name, ValueFetcher fetcher) {
+      super(name, fetcher);
+    }
+  }
 
   public static class MappedSpeciesColumn extends ReportColumn {
     public MappedSpeciesColumn(String name, final String stringPath) {
@@ -113,9 +118,15 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
 
           //Check for "UNSET_TYPE or UNSET_REASON"
           if (column.getValue(rowId).equals("UNSET_TYPE") ||
-                  column.getValue(rowId).equals("UNSET_REASON")) {
+                  column.getValue(rowId).equals("UNSET_REASON") ||
+                  column.getValue(rowId).equals("NO ENUM")) {
             return "";
-          } else return column.getValue(rowId);
+          } else {
+            String value = column.getValue(rowId);
+            value = value.toLowerCase();
+            value = value.replaceAll("_", " ");
+            return value.substring(0,1).toUpperCase() + value.substring(1);
+          }
         }
       });
     }
@@ -135,19 +146,55 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
 
           //Check for "UNSET_TYPE or UNSET_REASON"
           if (column.getValue(rowId).equals("UNSET_TYPE") ||
-                  column.getValue(rowId).equals("UNSET_REASON")) {
+                  column.getValue(rowId).equals("UNSET_REASON") ||
+                  column.getValue(rowId).equals("NO ENUM")) {
             return "";
           } else if (column.getValue(rowId).equals("OTHER")) {
-            return "OTHER: " + other.getValue(rowId);
+            return other.getValue(rowId);
+          } else {
+            String value = column.getValue(rowId);
+            value = value.toLowerCase();
+            value = value.replaceAll("_", " ");
+            return value.substring(0,1).toUpperCase() + value.substring(1);
+
           }
-
-
-          else return column.getValue(rowId);
         }
       });
     }
   }
 
+  public static class MappedAnyMatchColumn extends ReportColumn {
+    public MappedAnyMatchColumn(String name,
+                                final String boolStringPath,
+                                final String optionStringPathA,
+                                final String optionStringPathB,
+                                final ReportProto.NestCondition.WashoutTimeOption optionMatch) {
+      super(name, new ValueFetcher() {
+        private final Path boolPath = new Path(boolStringPath);
+        private final Path optionPathA = new Path(optionStringPathA);
+        private final Path optionPathB = new Path(optionStringPathB);
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column boolColumn = Preconditions.checkNotNull(
+                  columnMap.get(boolPath),
+                  "Missing Path: " + boolStringPath);
+          Column optionAColumn = Preconditions.checkNotNull(
+                  columnMap.get(optionPathA),
+                  "Missing Path: " + optionStringPathA);
+          Column optionBColumn = Preconditions.checkNotNull(
+                  columnMap.get(optionPathB),
+                  "Missing Path: " + optionStringPathB);
+          if (boolColumn.getValue(rowId).equals("YES") ||
+                  optionAColumn.getValue(rowId).equals(optionMatch.toString()) ||
+                  optionBColumn.getValue(rowId).equals(optionMatch.toString())) {
+            return "Yes";
+          }
+
+          return "No";
+        }
+      });
+    }
+  }
   public static class MappedEitherOrColumn extends ReportColumn {
     public MappedEitherOrColumn(String name, final String stringPathA, final String stringPathB) {
       super(name, new ValueFetcher() {
@@ -158,9 +205,102 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
           Column columnA = Preconditions.checkNotNull(columnMap.get(pathA), "Missing Path: " + stringPathA);
           Column columnB = Preconditions.checkNotNull(columnMap.get(pathB), "Missing Path: " + stringPathB);
           if (!columnA.getValue(rowId).equals("0") || !columnB.getValue(rowId).equals("0")) {
-            return "YES";
+            return "Yes";
           }
-          return "NO";
+          return "No";
+        }
+      });
+    }
+  }
+
+  public static class MappedWashoutTimeOptionColumn extends ReportColumn {
+    public MappedWashoutTimeOptionColumn(String name, final String stringPath,
+                                         final ReportProto.NestCondition.WashoutTimeOption option,
+                                         final String timestampPath) {
+      super(name, new ValueFetcher() {
+        private final Path path = new Path(stringPath);
+        private final Path tPath = new Path(timestampPath);
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column pathColumn = columnMap.get(path);
+//          Column timeStampColumn = columnMap.get(tPath);
+//          if (timeStampColumn == null) return "No";
+//          if (timeStampColumn.getValue(rowId) == null) return "No";
+//          if (timeStampColumn.getValue(rowId).equals("") || timeStampColumn.getValue(rowId).equals("0")) return "No";
+
+
+          if (!pathColumn.hasValue(rowId)) return "No";
+          if (pathColumn.getValue(rowId).equals(option.toString())) {
+            return "Yes";
+          }
+          else return "No";
+        }
+      });
+    }
+  }
+
+//  optionColumn should take precedence
+  public static class MappedExistsOrWashoutTimeColumn extends ReportColumn {
+    public MappedExistsOrWashoutTimeColumn(String name, final String eventStringPath,
+                                           final String optionStringPath,
+                                         final ReportProto.NestCondition.WashoutTimeOption option,
+                                           final String timestampPath) {
+      super(name, new ValueFetcher() {
+        private final Path optionPath = new Path(optionStringPath);
+        private final Path eventPath = new Path(eventStringPath);
+        private final Path timepath = new Path(timestampPath);
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column optionColumn = columnMap.get(optionPath);
+          Column eventColumn = columnMap.get(eventPath);
+          Column timeStampColumn = columnMap.get(timepath);
+//          if (timeStampColumn == null) return "No";
+//          if (timeStampColumn.getValue(rowId) == null) return "No";
+//          if (timeStampColumn.getValue(rowId).equals("") || timeStampColumn.getValue(rowId).equals("0")) return "No";
+          String retVal = "No";
+          if (eventColumn.hasValue(rowId) && !optionColumn.hasValue(rowId)) {
+            retVal = "Yes";
+          } else if (optionColumn.getValue(rowId).equals(option.toString())) {
+            retVal = "Yes";
+          }
+        return retVal;
+        }
+
+      });
+    }
+  }
+
+  public static class MappedYesOrBlankRadioColumn extends ReportColumn {
+    public MappedYesOrBlankRadioColumn(String name, final String stringPath,
+                                       final ReportProto.NestCondition.PreditationEvent.PredationTimeOption option) {
+      super(name, new ValueFetcher() {
+        private final Path path = new Path(stringPath);
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column column = columnMap.get(path);
+//          if (column.getValue(rowId) == null) return "";
+          Preconditions.checkNotNull(column, "Missing path: " + stringPath);
+          if (column.getValue(rowId) == option.toString()) {
+            return "Yes";
+          }
+          else return "";
+        }
+      });
+    }
+  }
+
+  public static class MappedYesOrBlankColumn extends ReportColumn {
+    public MappedYesOrBlankColumn(String name, final String stringPath) {
+      super(name, new ValueFetcher() {
+        private final Path path = new Path(stringPath);
+        @Override public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column column = columnMap.get(path);
+//          if (column.getValue(rowId) == null) return "";
+          Preconditions.checkNotNull(column, "Missing path: " + stringPath);
+//          if (column.getValue(rowId) == "YES") {
+//            return column.getValue(rowId);
+//          } else return "";
+          return column.getValue(rowId) == "YES" ? "Yes" : "";
         }
       });
     }
@@ -173,7 +313,104 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
         @Override public String fetch(Map<Path, Column> columnMap, int rowId) {
           Column column = columnMap.get(path);
           Preconditions.checkNotNull(column, "Missing path: " + stringPath);
+          if (column.getValue(rowId) == null || column.getValue(rowId) == "NO ENUM") return "";
+          if (column.getValue(rowId) == "YES") return "Yes";
+          if (column.getValue(rowId) == "NO") return "No";
           return column.getValue(rowId);
+        }
+      });
+    }
+  }
+
+  public static class MappedProportionColumn extends ReportColumn {
+    public MappedProportionColumn(String name, final String stringPath) {
+      super(name, new ValueFetcher() {
+        private final Path path = new Path(stringPath);
+        @Override public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column column = columnMap.get(path);
+          Preconditions.checkNotNull(column, "Missing path: " + stringPath);
+          if (column.getValue(rowId) == null) return "";
+          if (column.getValue(rowId) == "NO ENUM") return "ALL";
+          return column.getValue(rowId);
+        }
+      });
+    }
+  }
+
+  public static class MappedPartialPredationColumn extends ReportColumn {
+    public MappedPartialPredationColumn(
+            String name,
+            final String stringPathA,
+            final String stringPathB) {
+      super(name, new ValueFetcher() {
+        private final Path pathA = new Path(stringPathA);
+        private final Path pathB = new Path(stringPathB);
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column completePredation = Preconditions.checkNotNull(columnMap.get(pathA),"Missing Path: " + stringPathA);
+
+          Column predationTimestamp = columnMap.get(pathB); // I wish you were kotlin.
+          boolean predated = false;
+
+//          Take care not to look directly at a null object,
+//          for when you gaze too long into the null,
+//          The null also gazes into you?
+          if ( predationTimestamp != null) predated = predationTimestamp.hasValue(rowId);
+          if (predated && !(completePredation.getValue(rowId).equals("YES")) ) return "Yes";
+          return "No";
+        }
+      });
+    }
+  }
+
+
+  public static class MappedBlankIfZeroColumn extends ReportColumn {
+    public MappedBlankIfZeroColumn(String name, final String stringPath) {
+      super (name, new ValueFetcher() {
+        private final Path path = new Path(stringPath);
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column column = columnMap.get(path);
+          Preconditions.checkNotNull(column, "Missing path: " + stringPath);
+          if (column.getValue(rowId).equals("0")) return "";
+          return column.getValue(rowId);
+        }
+      });
+    }
+  }
+
+//WARNING: this function does string comparison.
+  public static class MappedPredatorColumn extends ReportColumn {
+    public MappedPredatorColumn(final String name, final String stringPath) {
+      super(name, new ValueFetcher() {
+        private final Path path = new Path(stringPath);
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column column = columnMap.get(path);
+          Preconditions.checkNotNull(column, "Missing path: " + stringPath);
+          if (column.getValue(rowId).equals(name)) {
+            return column.getValue(rowId);
+          } else return "";
+        }
+      });
+    }
+  }
+
+  public static class MappedNullIfNotInventoriedColumn extends ReportColumn {
+    public MappedNullIfNotInventoriedColumn(String name, final String countPath,
+                                            final String inventoryPath) {
+      super(name, new ValueFetcher() {
+        private final Path count = new Path(countPath);
+        private final Path inventory = new Path(inventoryPath);
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column countColumn = columnMap.get(count);
+          Column inventColumn = columnMap.get(inventory);
+          Preconditions.checkNotNull(countColumn,"Missing Path: " + count);
+          Preconditions.checkNotNull(inventColumn,"Missing Path: " + inventory);
+          if (inventColumn.getValue(rowId) == "NO") {
+            return "";
+          } else return countColumn.getValue(rowId);
         }
       });
     }
@@ -303,25 +540,26 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
           Column value = Preconditions.checkNotNull(columnMap.get(valuePath),
                   "Missing path: " + controlPathStr);
           if (control.getValue(rowId).equals("YES")) {
-            return value.getValue(rowId);
+            return value.getValue(rowId).equals("NO ENUM") ? "" : value.getValue(rowId);
           }
           return "";
         }
       });
     }
   }
-    //converts Yes and No to Y and N
-  public static class MappedYesNoColumn extends ReportColumn {
-    public MappedYesNoColumn(String name, final String stringPath) {
+  public static class MappedYNColumn extends ReportColumn {
+    public MappedYNColumn(String name, final String stringPath) {
       super(name, new ValueFetcher() {
         private final Path path = new Path(stringPath);
         @Override
         public String fetch(Map<Path, Column> columnMap, int rowId) {
           Column column = columnMap.get(path);
+          if (column == null) return "No";
           Preconditions.checkNotNull(column, "Missing path: " + stringPath);
+          if (column.getValue(rowId) == null) return "No";
           if (column.getValue(rowId) == "YES") {
-            return "Y";
-          }else return "N";
+            return "Yes";
+          }else return "No";
         }
       });
     }
@@ -334,9 +572,28 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
         @Override
         public String fetch(Map<Path, Column> columnMap, int rowId) {
           Column column = columnMap.get(path);
+          if (column == null) return "No";
+          if (column.getValue(rowId) == null) return "No";
           Preconditions.checkNotNull(column, "Missing Path: " + stringPath);
-          if (column.getValue(rowId).equals("") || column.getValue(rowId).equals("0")) return "N";
-          else return column.hasValue(rowId) ? "Y" : "N";
+          if (column.getValue(rowId).equals("") || column.getValue(rowId).equals("0")) return "No";
+          else return column.hasValue(rowId) ? "Yes" : "No";
+        }
+      });
+    }
+  }
+
+
+  public static class MappedHasTimestampYOrBlankColumn extends ReportColumn {
+    public MappedHasTimestampYOrBlankColumn(String name, final String stringPath) {
+      super(name, new ValueFetcher() {
+        private final Path path = new Path(stringPath);
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column column = columnMap.get(path);
+          if (column.getValue(rowId) == null) return "";
+          Preconditions.checkNotNull(column, "Missing Path: " + stringPath);
+          if (column.getValue(rowId).equals("") || column.getValue(rowId).equals("0")) return "";
+          else return column.hasValue(rowId) ? "Yes" : "";
         }
       });
     }
@@ -351,7 +608,7 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
           Column column = columnMap.get(path);
           Preconditions.checkNotNull(column, "Missing path: " + stringPath);
           //changed from YES : NO to coincide with FWC Reporting requirements
-          return column.hasValue(rowId) ? "Y" : "N";
+          return column.hasValue(rowId) ? "Yes" : "No";
         }
       });
     }
@@ -365,8 +622,8 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
         @Override
         public String fetch(Map<Path, Column> columnMap, int rowId) {
           Column column = columnMap.get(path);
-          if (column == null) return "N";
-          else return column.hasValue(rowId) ? "Y" : "N";
+          if (column == null) return "No";
+          else return column.hasValue(rowId) ? "Yes" : "No";
         }
       });
     }
@@ -411,21 +668,56 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
 
   }
 
-  public static class MappedIsPresentYesNoColumn extends ReportColumn {
-    public MappedIsPresentYesNoColumn(String name, final String stringPath) {
+
+  public static class MappedIsPresentYNColumn extends ReportColumn {
+    public MappedIsPresentYNColumn(String name, final String stringPath) {
       super(name, new ValueFetcher() {
         private final Path path = new Path(stringPath);
         @Override public String fetch(Map<Path, Column> columnMap, int rowId) {
           Column column = columnMap.get(path);
           Preconditions.checkNotNull(column, "Missing path: " + stringPath);
-          //Leave this version as YES/NO
-          return column.hasValue(rowId) ? "YES" : "NO";
+          return column.hasValue(rowId) ? "Yes" : "No";
         }
       });
     }
   }
 
 
+  public static class MappedIsPresentYesOrBlankColumn extends ReportColumn {
+    public MappedIsPresentYesOrBlankColumn(String name, final String stringPath) {
+      super(name, new ValueFetcher() {
+        private final Path path = new Path(stringPath);
+        @Override public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column column = columnMap.get(path);
+          if (column.getValue(rowId) == null) return "";
+          Preconditions.checkNotNull(column, "Missing path: " + stringPath);
+          return column.hasValue(rowId) ? "Yes" : "";
+        }
+      });
+    }
+  }
+
+
+  public static class MappedComboColumn extends ReportColumn {
+    private static Pattern USER_PATTERN = Pattern.compile("section([0-9]+)@islandturtlewatch.com");
+    public MappedComboColumn(final String name, final String sPathA, final String sPathB) {
+      super(name, new ValueFetcher() {
+        private final Path pathA = new Path(sPathA);
+        private final Path pathB = new Path(sPathB);
+        private final MappedSectionColumn foo = new MappedSectionColumn(name,sPathA);
+
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column columnA = columnMap.get(pathA);
+          Column columnB = columnMap.get(pathB);
+          Preconditions.checkNotNull(columnA, "Missing path: " + pathA );
+          Preconditions.checkNotNull(columnB, "Missing path: " + pathB );
+          String stringB = columnB.getValue(rowId);
+          return foo.getFetcher().fetch(columnMap, rowId) + " / " + stringB + ".";
+        }
+      });
+    }
+  }
 
   // Column will read section number out of submitting user.
   public static class MappedSectionColumn extends ReportColumn {
@@ -491,9 +783,9 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
 
 
           if (abandonedEggCavities.getValue(rowId).equals("YES")) {
-            return "Abandoned Egg Chamber";
+            return "Egg Chamber";
           } else if (abandonedBodyPit.getValue(rowId).equals("YES")) {
-            return "Abandoned Body Pit";
+            return "Body Pit";
           } else
           return "No Digging";
         }
@@ -555,56 +847,124 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
     }
   }
 
-  // Determines final treatment.
+//  public static class FinalTreatmentCompareColumn extends ReportColumn {
+//    public FinalTreatmentCompareColumn(
+//            final String name,
+//            final String relocatedPathStr,
+//            final String dateFoundPathStr,
+//            final String dateProtectedPathStr,
+//            final String protectionEventPathStr) {
+//      super(name, new ValueFetcher() {
+//        private final InitialTreatmentColumn initialColumn = new InitialTreatmentColumn(name,
+//                relocatedPathStr, dateFoundPathStr, dateProtectedPathStr, protectionEventPathStr);
+//        private final FinalTreatmentColumn finalColumn = new FinalTreatmentColumn(name,
+//                relocatedPathStr, dateFoundPathStr, dateProtectedPathStr, protectionEventPathStr);
+//        @Override
+//        public String fetch(Map<Path, Column> columnMap, int rowId) {
+//
+//          return initialColumn.getFetcher().fetch(columnMap, rowId) ==
+//                  finalColumn.getFetcher().fetch(columnMap, rowId) ? "" : finalColumn.getFetcher().fetch(columnMap, rowId);
+//        }
+//      });
+//    }
+//  }
+
   public static class FinalTreatmentColumn extends ReportColumn {
-    private static final long dayInMs = 86400000l;
     public FinalTreatmentColumn(
-        final String name,
-        final String relocatedPathStr,
-        final String dateFoundPathStr,
-        final String dateProtectedPathStr,
-        final String protectionEventPathStr) {
+            final String name,
+            final String protectionChangeStr,
+            final String relocatedPathStr,
+            final String protectionEventStr) {
+
       super(name, new ValueFetcher() {
         private final Path relocatedPath = new Path(relocatedPathStr);
-        private final Path dateFoundPath = new Path(dateFoundPathStr);
-        private final Path dateProtectedPath = new Path(dateProtectedPathStr);
-        private final Path protectionEventPath = new Path(protectionEventPathStr);
-        private final InitialTreatmentColumn initialColumn = new InitialTreatmentColumn(name,
-            relocatedPathStr, dateFoundPathStr, dateProtectedPathStr, protectionEventPathStr);
-        @Override public String fetch(Map<Path, Column> columnMap, int rowId) {
-          Column relocated = Preconditions.checkNotNull(columnMap.get(relocatedPath),
-              "Missing path: " + relocatedPathStr);
-          boolean wasRelocated = (relocated.getValue(rowId) == "YES");
+        private final Path protectionChangePath = new Path(protectionChangeStr);
+        private final Path protectionEventPath = new Path(protectionEventStr);
+        @Override
+        public String fetch(Map<Path, Column> columnMap, int rowId) {
+          Column protectionChangeColumn = Preconditions.checkNotNull(columnMap.get(protectionChangePath));
+          Column protectionType = Preconditions.checkNotNull(columnMap.get(protectionEventPath));
+          Column relocatedColumn = Preconditions.checkNotNull(columnMap.get(relocatedPath));
 
+          boolean wasRelocated = relocatedColumn.getValue(rowId) == "YES";
+          boolean protectionChanged = protectionChangeColumn.hasValue(rowId) &&
+                  !protectionChangeColumn.getValue(rowId).equals("0");
 
-          Column dateFound = Preconditions.checkNotNull(columnMap.get(dateFoundPath),
-              "Missing path: " + dateFoundPathStr);
-          Column dateProtected = Preconditions.checkNotNull(columnMap.get(dateProtectedPath),
-              "Missing path: " + dateProtectedPathStr);
-          Column protectionEvent = Preconditions.checkNotNull(columnMap.get(protectionEventPath),
-              "Missing path: " + protectionEventPathStr);
-
-          // If dates are within one day of each other this doesn't apply.
-          Long dateDiff = Long.parseLong(dateProtected.getValue(rowId)) -
-              Long.parseLong(dateFound.getValue(rowId));
-          String protectionType = protectionEvent.getValue(rowId);
-          if (dateDiff > dayInMs) {
-          if (protectionType.equals("UNSET_TYPE")) {
-            return wasRelocated ? "E" : "A";
+          if (protectionChanged) {
+            String protectionEvent = protectionType.getValue(rowId);
+            if (protectionEvent.equals("UNSET_TYPE")) {
+              return wasRelocated ? "E" : "A";
+            }
+            if (protectionEvent.equals("SELF_RELEASING_FLAT")) {
+              return  wasRelocated ? "F" : "B";
+            }
+            if (protectionEvent.equals("SELF_RELEASING_CAGE")) {
+              return wasRelocated ? "G" : "C";
+            }
+            if (protectionEvent.equals("RESTRAINING_CAGE")) {
+              return wasRelocated ? "H" : "D";
+            }
           }
-          if (protectionType.equals("SELF_RELEASING_FLAT")) {
-            return  wasRelocated ? "F" : "B";
-          }
-          if (protectionType.equals("SELF_RELEASING_CAGE")) {
-            return wasRelocated ? "G" : "C";
-          }
-          if (protectionType.equals("RESTRAINING_CAGE")) {
-            return wasRelocated ? "H" : "D";
-          }
-          }
-          return initialColumn.getFetcher().fetch(columnMap, rowId);
+          return "";
         }
       });
     }
   }
+
+  // Determines final treatment.
+//  public static class nFinalTreatmentColumn extends ReportColumn {
+//    private static final long dayInMs = 86400000L;
+//    public nFinalTreatmentColumn(
+//        final String name,
+//        final String relocatedPathStr,
+//        final String dateFoundPathStr,
+//        final String dateProtectedPathStr,
+//        final String protectionEventPathStr) {
+//
+//      super(name, new ValueFetcher() {
+//        private final Path relocatedPath = new Path(relocatedPathStr);
+//        private final Path dateFoundPath = new Path(dateFoundPathStr);
+//        private final Path dateProtectedPath = new Path(dateProtectedPathStr);
+//        private final Path protectionEventPath = new Path(protectionEventPathStr);
+//        private final InitialTreatmentColumn initialColumn = new InitialTreatmentColumn(name,
+//            relocatedPathStr, dateFoundPathStr, dateProtectedPathStr, protectionEventPathStr);
+//
+//        @Override
+//        public String fetch(Map<Path, Column> columnMap, int rowId) {
+//          Column relocated = Preconditions.checkNotNull(columnMap.get(relocatedPath),
+//              "Missing path: " + relocatedPathStr);
+//          boolean wasRelocated = (relocated.getValue(rowId) == "YES");
+//
+//
+//          Column dateFound = Preconditions.checkNotNull(columnMap.get(dateFoundPath),
+//              "Missing path: " + dateFoundPathStr);
+//          Column dateProtected = Preconditions.checkNotNull(columnMap.get(dateProtectedPath),
+//              "Missing path: " + dateProtectedPathStr);
+//          Column protectionEvent = Preconditions.checkNotNull(columnMap.get(protectionEventPath),
+//              "Missing path: " + protectionEventPathStr);
+//
+//          // If dates are within one day of each other this doesn't apply.
+//          Long dateDiff = Long.parseLong(dateProtected.getValue(rowId)) -
+//              Long.parseLong(dateFound.getValue(rowId));
+//          String protectionType = protectionEvent.getValue(rowId);
+//          if (dateDiff > dayInMs) {
+//            if (protectionType.equals("UNSET_TYPE")) {
+//              return wasRelocated ? "E" : "A";
+//            }
+//            if (protectionType.equals("SELF_RELEASING_FLAT")) {
+//              return  wasRelocated ? "F" : "B";
+//            }
+//            if (protectionType.equals("SELF_RELEASING_CAGE")) {
+//              return wasRelocated ? "G" : "C";
+//            }
+//            if (protectionType.equals("RESTRAINING_CAGE")) {
+//              return wasRelocated ? "H" : "D";
+//            }
+//          }
+//          return "";
+////          return initialColumn.getFetcher().fetch(columnMap, rowId);
+//        }
+//      });
+//    }
+//  }
 }

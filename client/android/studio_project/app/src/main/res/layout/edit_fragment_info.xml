@@ -42,6 +42,21 @@
               android:layout_height="wrap_content"
               onTextChangeHandler="handleTextChange"/>
      </TableRow>
+		<TableRow
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content">
+
+			<TextView
+				android:layout_weight="1"
+				android:text="@string/possible_false_crawl_number" />
+
+			<com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+				android:id="@+id/fieldPossibleFalseCrawlNumber"
+				android:inputType="number"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				onTextChangeHandler="handleTextChange"/>
+		</TableRow>
 	    <TableRow
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content" >
@@ -132,7 +147,17 @@
 	           android:text="@string/edit_info_label_false_crawl"
 	           android:onClick="handleClick"/>
 	   </TableRow>
-	
+		<TableRow>
+		<CheckBox
+			android:id="@+id/fieldPossibleFalseCrawl"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="@string/edit_info_label_possible_false_crawl"
+			android:onClick="handleClick"
+			/>
+
+		</TableRow>
 	   <TableRow
 	       android:layout_marginTop="20dp"
 	       android:layout_width="wrap_content"

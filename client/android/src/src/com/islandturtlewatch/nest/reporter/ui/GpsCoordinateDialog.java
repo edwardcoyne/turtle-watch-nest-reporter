@@ -71,6 +71,7 @@ public class GpsCoordinateDialog extends DialogFragment {
             new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int which) {
+
             callback.get().location(GpsCoordinates.newBuilder()
               .setLat(bestLocation.getLatitude())
               .setLong(bestLocation.getLongitude())

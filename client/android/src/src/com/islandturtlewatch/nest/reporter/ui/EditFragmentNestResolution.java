@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.Toast;
 
 import com.google.common.base.Optional;
 import com.islandturtlewatch.nest.data.ReportProto.Excavation;
@@ -38,6 +39,7 @@ public class EditFragmentNestResolution extends EditFragment {
           new HandleSetDisorientation(),
           new HandleSetEggsNotFound(),
           new HandleSetEggsTooDecayed(),
+          new HandleSetCompleteWashout(),
           new HandleSetExcavated(),
           new HandleSetExcavationDate(),
           new HandleSetHatchDate(),
@@ -90,20 +92,20 @@ public class EditFragmentNestResolution extends EditFragment {
     Excavation excavation = report.getIntervention().getExcavation();
     setChecked(R.id.fieldExcavated, excavation.getExcavated());
 
-//    setVisible(!excavation.getExcavated(), ImmutableList.of(R.id.rowWhyNotExcavatedLabel,
-//            R.id.rowWhyNotExcavatedFields1, R.id.rowWhyNotExcavatedFields2, R.id.textPleaseSpecify));
 
-//    if (!excavation.getExcavated()) {
+    setVisible(R.id.whyNotExcavatedFields,!excavation.getExcavated());
+
       setChecked(R.id.fieldEggsNotFound,
               excavation.getFailureReason() == ExcavationFailureReason.EGGS_NOT_FOUND);
       setChecked(R.id.fieldEggsTooDecayed,
               excavation.getFailureReason() == ExcavationFailureReason.EGGS_HATCHLINGS_TOO_DECAYED);
+      setChecked(R.id.fieldCompleteWashout,
+              excavation.getFailureReason() == ExcavationFailureReason.COMPLETE_WASHOUT);
       setChecked(R.id.fieldNoExcavationOther,
               excavation.getFailureReason() == ExcavationFailureReason.OTHER);
       setEnabled(R.id.fieldNoExcavationOtherValue,
               excavation.getFailureReason() == ExcavationFailureReason.OTHER);
       setText(R.id.fieldNoExcavationOtherValue, excavation.getFailureOther());
-//    }
     if (excavation.hasTimestampMs()) {
       setDate(R.id.buttonExcavationDate, excavation.getTimestampMs());
     } else {
@@ -206,10 +208,25 @@ public class EditFragmentNestResolution extends EditFragment {
         updateHandler.applyMutation(
                 new ExcavationFailureMutation(ExcavationFailureReason.EGGS_NOT_FOUND));
       } else {
-        new ExcavationFailureMutation(ExcavationFailureReason.UNSET_REASON);
+        updateHandler.applyMutation(new ExcavationFailureMutation(ExcavationFailureReason.UNSET_REASON));
       }
     }
   }
+
+  private static class HandleSetCompleteWashout extends ClickHandler {
+    protected HandleSetCompleteWashout() {
+      super(R.id.fieldCompleteWashout);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      if (isChecked(view)) {
+        updateHandler.applyMutation(new ExcavationFailureMutation(ExcavationFailureReason.COMPLETE_WASHOUT));
+      } else {
+        updateHandler.applyMutation(new ExcavationFailureMutation(ExcavationFailureReason.UNSET_REASON));
+      }
+    }
+  }
+
   private static class HandleSetEggsTooDecayed extends ClickHandler {
     protected HandleSetEggsTooDecayed() {
       super(R.id.fieldEggsTooDecayed);
@@ -220,7 +237,7 @@ public class EditFragmentNestResolution extends EditFragment {
         updateHandler.applyMutation(
                 new ExcavationFailureMutation(ExcavationFailureReason.EGGS_HATCHLINGS_TOO_DECAYED));
       } else {
-        new ExcavationFailureMutation(ExcavationFailureReason.UNSET_REASON);
+        updateHandler.applyMutation(new ExcavationFailureMutation(ExcavationFailureReason.UNSET_REASON));
       }
     }
   }
@@ -233,7 +250,7 @@ public class EditFragmentNestResolution extends EditFragment {
       if (isChecked(view)) {//checkbox should be in it's final state by this point.
         updateHandler.applyMutation(new ExcavationFailureMutation(ExcavationFailureReason.OTHER));
       }  else {
-        new ExcavationFailureMutation(ExcavationFailureReason.UNSET_REASON);
+        updateHandler.applyMutation(new ExcavationFailureMutation(ExcavationFailureReason.UNSET_REASON));
       }
     }
   }

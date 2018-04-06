@@ -1,7 +1,5 @@
 package com.islandturtlewatch.nest.reporter.data;
 
-import java.util.List;
-
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,6 +17,8 @@ import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.ReportRestorer;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore.CachedReportWrapper;
 import com.islandturtlewatch.nest.reporter.util.ImageUtil;
+
+import java.util.List;
 
 public class ReportsModel {
   private static final String TAG = ReportsModel.class.getSimpleName();
@@ -84,6 +84,8 @@ public class ReportsModel {
     return activeReport.get();
   }
 
+  public long getActiveReportId() { return activeReport.getId();}
+
   /**
    * Get report we are currently working on.
    */
@@ -91,7 +93,7 @@ public class ReportsModel {
     activeReport.delete();
 
     // Set next active report, if non we create new otherwise first on list.
-    ImmutableList<CachedReportWrapper> activeReports = dataStore.listActiveReports();
+    ImmutableList<CachedReportWrapper> activeReports = dataStore.listActiveReportsWithDuplicates();
     if (activeReports.isEmpty()) {
       createReport();
     } else {
@@ -105,7 +107,12 @@ public class ReportsModel {
     return dataStore.getHighestNestNumber();
   }
 
+  public int getHighestPossibleFalseCrawlNumber() {
+    return dataStore.getHighestPossibleFalseCrawlNumber();
+  }
+
   public int getHighestFalseCrawlNumber() {
+
     return dataStore.getHighestFalseCrawlNumber();
   }
 
@@ -221,7 +228,7 @@ public class ReportsModel {
   }
 
   public interface ReportsListItemViewFactory {
-    View getView(Report report, Optional<View> oldView, ViewGroup parent);
+    View getView(CachedReportWrapper report, Optional<View> oldView, ViewGroup parent);
   }
 
   private class ReportsListAdapter extends BaseAdapter {
@@ -237,6 +244,7 @@ public class ReportsModel {
 
     @Override
     public int getCount() {
+
       return dataStore.activeReportCount();
     }
 
@@ -244,19 +252,21 @@ public class ReportsModel {
     // position.
     @Override
     public Object getItem(int position) {
-      return dataStore.listActiveReports().get(position).getReport();
+      return dataStore.listActiveReportsWithDuplicates().get(position);
     }
 
     @Override
     public long getItemId(int position) {
-      return dataStore.listActiveReports().get(position).getLocalId();
+      return dataStore.listActiveReportsWithDuplicates().get(position).getLocalId();
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
       Preconditions.checkArgument(viewFactory.isPresent(),
           "Should not call getView on adapter without view factory.");
-      return viewFactory.get().getView((Report)getItem(position),
+      CachedReportWrapper wrapper = (CachedReportWrapper) getItem(position);
+      Report report = wrapper.getReport();
+      return viewFactory.get().getView(wrapper,
           Optional.fromNullable(convertView),
           parent);
     }

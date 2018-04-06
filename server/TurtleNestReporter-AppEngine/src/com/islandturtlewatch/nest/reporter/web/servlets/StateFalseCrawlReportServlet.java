@@ -44,9 +44,17 @@ public class StateFalseCrawlReportServlet extends HttpServlet {
   // This is the list of columns in the report, they will appear in this order.
   private static List<ReportColumn> reportColumns = ImmutableList.of(
       new MappedTimestampColumn("Date Crawl Recorded", "report.timestamp_found_ms"),
+      new MappedColumn("ID/Label", "report.false_crawl_number"),
+      sectionColumn,
+      new OrderedReportWriter.MappedComboColumn("Crawl ID","ref.owner_id","report.false_crawl_number"),
+      new OrderedReportWriter.MappedYNColumn("Possible False Crawl",
+              "report.possible_false_crawl"),
+      new OrderedReportWriter.MappedBlankIfZeroColumn("Possible False Crawl Number","report.possible_false_crawl_number"),
       new MappedSpeciesColumn("Species","report.species"),
-      new StaticValueColumn("Crawl within Project Area? ", "YES"),
+      new MappedColumn("Crawl within Project Area?", "report.location.nest_within_project_area"),
       new MappedColumn("City","report.location.city"),
+      new OrderedReportWriter.MappedYNColumn("Within Cortez Groin Replacement Area",
+              "report.location.in_cortez_groin_replacement_area"),
       new MappedColumn("Address","report.location.street_address"),
       new MappedColumn("Escarpment >= 18 Encountered", "report.location.escarpment_over_18_inches"),
       new OrderedReportWriter.FinalActivityColumn("Final Activity",
@@ -56,11 +64,11 @@ public class StateFalseCrawlReportServlet extends HttpServlet {
           "report.location.apex_to_barrier_ft", "report.location.apex_to_barrier_in"),
       new MappedDistanceColumn("Distance From MHW",
           "report.location.water_to_apex_ft", "report.location.water_to_apex_in"),
-      new MappedColumn("ID/Label", "report.false_crawl_number"),
-      sectionColumn,
       new MappedColumn("Additional Notes","report.additional_notes"),
+          new OrderedReportWriter.MappedNotNullColumn("Photo","report.image.1"),
       new MappedColumn("Latitude", "report.location.coordinates.lat"),
-      new OrderedReportWriter.MappedColumnAbsoluteValueDouble("Longitude", "report.location.coordinates.long"));
+      new OrderedReportWriter.MappedColumnAbsoluteValueDouble("Longitude",
+              "report.location.coordinates.long"));
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)

@@ -6,7 +6,7 @@ message ReportWrapper {
   optional Report report = 1;
   optional ReportRef ref = 2;
   optional bool active = 3;
-}
+  }
 
 // Uniquely identifies this version of the report.
 message ReportRef {
@@ -27,6 +27,7 @@ message Report {
   optional int64 timestamp_found_ms = 1;
   optional int32 nest_number = 2;
   optional int32 false_crawl_number = 3;
+  optional int32 possible_false_crawl_number = 17;
 
   enum Species {
     NOT_REPORTED = 4;
@@ -45,8 +46,11 @@ message Report {
     FALSE_CRAWL = 5;
   }
   optional NestStatus status = 6;
-
+  optional bool possible_false_crawl = 13;
   optional NestLocation location = 7;
+  optional bool nest_seaward_of_armoring_structure = 14;
+  optional bool within_3_feet_of_structure = 15;
+  optional string type_of_structure = 16;
   optional string observers = 8;
   optional NestCondition condition = 9;
   optional Intervention intervention = 10;
@@ -54,6 +58,7 @@ message Report {
   optional string additional_notes = 11;
 
   repeated Image image = 12;
+  //NEXT ID = 18
 }
 
 message Image {
@@ -64,7 +69,9 @@ message Image {
 }
 
 message NestCondition {
+  optional bool ghost_damage_10_or_less = 31 [default = true];
   optional bool vandalized = 1;
+  optional string describe_control_methods = 28;
   optional int64 vandalized_timestamp_ms = 2;
 
   enum VandalismType {
@@ -73,9 +80,28 @@ message NestCondition {
     NEST_DUG_INTO = 3;
     EGGS_AFFECTED = 4;
   }
+  message StormImpact {
+    optional int64 timestamp_ms = 1;
+    optional string storm_name = 2;
+    optional string other_impact = 3;
+    optional bool event_prior_to_hatching = 4;
+  }
   optional VandalismType vandalism_type = 15;
+  optional bool nest_dug_into = 26;
 
+  // post_hatch_washout is deprecated, we are now using complete_washout_timing instead
   optional bool post_hatch_washout = 20;
+  enum WashoutTimeOption {
+    PRE_HATCH = 1;
+    POST_HATCH = 2;
+    NONE = 3;
+  }
+  optional WashoutTimeOption complete_washout_timing = 34;
+  optional WashoutTimeOption partial_washout_timing = 35;
+
+  repeated WashEvent accretion = 30;
+  repeated WashEvent erosion = 33;
+  optional StormImpact storm_impact = 32;
   optional bool poached = 3;
   optional int64 poached_timestamp_ms = 4;
   optional bool poached_eggs_removed = 17;
@@ -86,6 +112,7 @@ message NestCondition {
   message WashEvent {
     optional int64 timestamp_ms = 1;
     optional string storm_name = 2;
+    optional bool event_prior_to_hatching = 3;
   }
 
   repeated WashEvent wash_over = 7;
@@ -97,12 +124,43 @@ message NestCondition {
   repeated WashEvent inundated_event = 25;
 
   message PreditationEvent {
+    enum PredatorType {//NOTE: this is currently unused. (26JUN16)
+      ONLY_RACCOON = 1;
+      ONLY_FOX = 2;
+      ONLY_COYOTE = 3;
+      ONLY_DOG = 4;
+      CANINE_UNK = 5;
+      ONLY_HOG = 6;
+      ONLY_ARMADILLO = 7;
+      MAMMAL_UNK = 8;
+      ONLY_GHOST_CRAB = 9;
+      ONLY_ANTS = 10;
+      RACCOON_GHOST = 11;
+      COYOTE_GHOST = 12;
+      OTHER = 13;
+    }
     optional int64 timestamp_ms = 1;
     optional string predator = 2;
     optional int32 number_of_eggs = 3;
+    optional string predator_spinner_text = 4;
+    enum PredationTimeOption {
+      PRIOR_TO_HATCH = 1;
+      PRIOR_TO_INV = 2;
+      NONE = 3;
+    }
+    optional PredationTimeOption predated_prior = 5;
+
   }
   repeated PreditationEvent preditation = 9;
+  optional bool actively_record_events = 27 [default = true];
 
+enum ProportionEventsRecorded {
+  ALL = 1;
+  MOST = 2;
+  SOME = 3;
+  FEW = 4;
+}
+  optional ProportionEventsRecorded prop_events_recorded = 29;
   optional int64 hatch_timestamp_ms = 10;
   optional int64 additional_hatch_timestamp_ms = 11;
   optional bool disorientation = 12;
@@ -114,7 +172,7 @@ message NestCondition {
   optional bool eggs_damaged_by_another_turtle = 24;
 
 
-  // Next ID=26
+  // Next ID=35
 }
 
 message NestLocation {
@@ -129,6 +187,8 @@ message NestLocation {
     HB = 4;    
   }
   optional City city = 4;
+  optional bool nest_within_project_area = 15 [default = true];
+  optional bool in_cortez_groin_replacement_area = 14;
 
   enum Placement {
     UNSET_PLACEMENT = 1;
@@ -165,7 +225,7 @@ message NestLocation {
   }
   optional Triangulation triangulation = 12;
   optional bool escarpment_over_18_inches = 13;
-// Next ID=14
+// Next ID=16
 }
 
 message Intervention {
@@ -185,15 +245,21 @@ message Intervention {
       BEFORE_PREDITATION = 2;
       AFTER_PREDITATION = 3;
       FOR_LIGHT_PROBLEMS = 4;
+      OTHER = 5;
     }
     optional Reason reason = 3;
+    optional string reason_other = 4;
   }
   optional ProtectionEvent protection_event = 1;
+  optional ProtectionEvent protection_changed_event = 6;
+  optional string protection_changed_reason = 7;
 
   optional Relocation relocation = 2;
   optional Excavation excavation = 3;
 
   optional bool adopted = 4;
+  optional string adoptee = 5;
+  //NEXT ID = 8
 }
 
 message Excavation {
@@ -205,6 +271,7 @@ message Excavation {
     EGGS_NOT_FOUND = 2;
     EGGS_HATCHLINGS_TOO_DECAYED = 3;
     OTHER = 4;
+    COMPLETE_WASHOUT = 5;
   }
   optional ExcavationFailureReason failure_reason = 3;
   optional string failure_other = 4;

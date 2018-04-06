@@ -18,10 +18,11 @@ import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.data.Date;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.DateProtectedMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.EggsDestroyedMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.NewAddressMutation;
-import com.islandturtlewatch.nest.reporter.data.ReportMutations.NewGpsMutation;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations.RelocationGpsMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.ProtectionTypeMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.WasAdoptedMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.WhyProtectedMutation;
@@ -36,22 +37,28 @@ public class EditFragmentNestCare extends EditFragment {
           new HandleSetAfterPredation(),
           new HandleSetBeforePredation(),
           new HandleSetLightProblem(),
+          new HandleSetReasonOther(),
           new HandleSetRestrainingCage(),
           new HandleSetSelfRealeasingCage(),
           new HandleSetSelfRealeasingFlat(),
-          //          new HandleSetRelocated(),
-//          new HandleSetHighWater(),
-//          new HandleSetPredation(),
-//          new HandleSetWashingOut(),
-//          new HandleSetConstruction(),
           new HandleSetProtectedDate(),
-//          new HandleSetRelocationDate(),
+              new HandleSetChangeAfterPredation(),
+              new HandleSetChangeBeforePredation(),
+              new HandleSetChangeLightProblem(),
+              new HandleSetChangeRestrainingCage(),
+              new HandleSetChangeSelfRealeasingCage(),
+              new HandleSetChangeSelfRealeasingFlat(),
+              new HandleSetChangeProtectedDate(),
+              new HandleSetReasonChangeOther(),
           new HandleSetNewGps());
 
   private static final Map<Integer, TextChangeHandler> TEXT_CHANGE_HANDLERS =
       TextChangeHandler.toMap(
           new HandleUpdateNewAddress(),
-//          new HandleUpdateEggsRelocated(),
+          new HandleUpdateAdoptee(),
+          new HandleUpdateReasonOther(),
+          new HandleUpdateReasonChangeOther(),
+          new HandleUpdateProtectionChange(),
           new HandleUpdateEggsDestroyed());
 
   @Override
@@ -75,6 +82,8 @@ public class EditFragmentNestCare extends EditFragment {
   public void updateSection(Report report) {
     Intervention intervention = report.getIntervention();
     setChecked(R.id.fieldNestAdopted, intervention.getAdopted());
+    setVisible(R.id.fieldAdoptee,intervention.getAdopted());
+    setText(R.id.fieldAdoptee,intervention.getAdoptee());
 
     if (intervention.getProtectionEvent().hasTimestampMs()) {
       setDate(R.id.buttonProtectedDate, intervention.getProtectionEvent().getTimestampMs());
@@ -95,35 +104,41 @@ public class EditFragmentNestCare extends EditFragment {
         intervention.getProtectionEvent().getReason() == Reason.AFTER_PREDITATION);
     setChecked(R.id.fieldForLightProblem,
         intervention.getProtectionEvent().getReason() == Reason.FOR_LIGHT_PROBLEMS);
+    setChecked(R.id.fieldReasonOther,
+            intervention.getProtectionEvent().getReason() == Reason.OTHER);
+    setEnabled(R.id.fieldReasonOtherValue,
+            intervention.getProtectionEvent().getReason() == Reason.OTHER);
+    setText(R.id.fieldReasonOtherValue,
+            intervention.getProtectionEvent().getReasonOther());
+    setText(R.id.fieldChangeProtectionReason,intervention.getProtectionChangedReason());
+//    pete and repeat
 
-//    Relocation relocation = intervention.getRelocation();
-//    setChecked(R.id.fieldNestRelocated, relocation.getWasRelocated());
-//    setVisible(R.id.tableRelocated, isChecked(R.id.fieldNestRelocated));
-//
-//    if (relocation.hasTimestampMs()) {
-//      setDate(R.id.buttonRelocatedDate, relocation.getTimestampMs());
-//    } else {
-//      clearDate(R.id.buttonRelocatedDate);
-//    }
-//
-//    if (report.getIntervention().getRelocation().hasCoordinates()) {
-//      setText(R.id.buttonNewGps,
-//          GpsUtil.format(report.getIntervention().getRelocation().getCoordinates()));
-//    } else {
-//      setText(R.id.buttonNewGps, getString(R.string.edit_nest_location_button_gps));
-//    }
-//
-//    setText(R.id.fieldNewAddress, relocation.getNewAddress());
-//    // TODO(edcoyne) Set gps coordinates
-//    setText(R.id.fieldEggsRelocated, relocation.hasEggsRelocated() ?
-//        Integer.toString(relocation.getEggsRelocated()) : "");
-//    setText(R.id.fieldEggsDestroyed, relocation.hasEggsDestroyed() ?
-//        Integer.toString(relocation.getEggsDestroyed()) : "");
-//    setChecked(R.id.fieldHighWater, relocation.getReason() == Relocation.Reason.HIGH_WATER);
-//    setChecked(R.id.fieldPredation, relocation.getReason() == Relocation.Reason.PREDATION);
-//    setChecked(R.id.fieldWashingOut, relocation.getReason() == Relocation.Reason.WASHING_OUT);
-//    setChecked(R.id.fieldConstruction,
-//        relocation.getReason() == Relocation.Reason.CONSTRUCTION_RENOURISHMENT);
+    if (intervention.getProtectionChangedEvent().hasTimestampMs()) {
+      setDate(R.id.buttonProtectedChangeDate, intervention.getProtectionChangedEvent().getTimestampMs());
+    } else {
+      clearDate(R.id.buttonProtectedChangeDate);
+    }
+
+    setChecked(R.id.fieldSelfReleasingCageChange,
+            intervention.getProtectionChangedEvent().getType() == Type.SELF_RELEASING_CAGE);
+    setChecked(R.id.fieldSelfReleasingFlatChange,
+            intervention.getProtectionChangedEvent().getType() == Type.SELF_RELEASING_FLAT);
+    setChecked(R.id.fieldRestrainingCageChange,
+            intervention.getProtectionChangedEvent().getType() == Type.RESTRAINING_CAGE);
+
+    setChecked(R.id.fieldBeforePredationChange,
+            intervention.getProtectionChangedEvent().getReason() == Reason.BEFORE_PREDITATION);
+    setChecked(R.id.fieldAfterPredationChange,
+            intervention.getProtectionChangedEvent().getReason() == Reason.AFTER_PREDITATION);
+    setChecked(R.id.fieldForLightProblemChange,
+            intervention.getProtectionChangedEvent().getReason() == Reason.FOR_LIGHT_PROBLEMS);
+
+    setChecked(R.id.fieldChangeReasonOther,
+            intervention.getProtectionChangedEvent().getReason() == Reason.OTHER);
+    setEnabled(R.id.fieldChangeReasonOtherValue,
+            intervention.getProtectionChangedEvent().getReason() == Reason.OTHER);
+    setText(R.id.fieldChangeReasonOtherValue,
+            intervention.getProtectionChangedEvent().getReasonOther());
   }
 
   private static class HandleSetProtectedDate extends DatePickerClickHandler {
@@ -136,16 +151,7 @@ public class EditFragmentNestCare extends EditFragment {
       updateHandler.applyMutation(new DateProtectedMutation(maybeDate));
     }
   }
-//  private static class HandleSetRelocationDate extends DatePickerClickHandler {
-//    protected HandleSetRelocationDate() {
-//      super(R.id.buttonRelocatedDate);
-//    }
-//
-//    @Override
-//    public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
-//      updateHandler.applyMutation(new DateRelocatedMutation(maybeDate));
-//    }
-//  }
+
   private static class HandleSetSelfRealeasingCage extends ClickHandler {
     protected HandleSetSelfRealeasingCage() {
       super(R.id.fieldSelfReleasingCage);
@@ -206,15 +212,134 @@ public class EditFragmentNestCare extends EditFragment {
           new WhyProtectedMutation(ProtectionEvent.Reason.FOR_LIGHT_PROBLEMS));
     }
   }
-//  private static class HandleSetRelocated extends ClickHandler {
-//    protected HandleSetRelocated() {
-//      super(R.id.fieldNestRelocated);
-//    }
-//    @Override
-//    public void handleClick(View view, DataUpdateHandler updateHandler) {
-//      updateHandler.applyMutation(new RelocatedMutation(isChecked(view)));
-//    }
-//  }
+
+  private static class HandleSetReasonOther extends ClickHandler {
+    protected HandleSetReasonOther() {
+      super(R.id.fieldReasonOther);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(
+              new WhyProtectedMutation(Reason.OTHER));
+    }
+  }
+
+  private static class HandleUpdateReasonOther extends TextChangeHandler {
+    protected HandleUpdateReasonOther() {
+      super(R.id.fieldReasonOtherValue);
+    }
+    @Override
+    public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.ReasonOtherValueMutation(newText));
+    }
+  }
+
+//  TODO: copy paste is inferior to building a proper function
+private static class HandleSetChangeProtectedDate extends DatePickerClickHandler {
+  protected HandleSetChangeProtectedDate() {
+    super(R.id.buttonProtectedChangeDate);
+  }
+
+  @Override
+  public void onDateSet(DatePicker view, Optional<Date> maybeDate) {
+    updateHandler.applyMutation(new ReportMutations.DateProtectedChangeMutation(maybeDate));
+  }
+}
+
+  private static class HandleSetChangeSelfRealeasingCage extends ClickHandler {
+    protected HandleSetChangeSelfRealeasingCage() {
+      super(R.id.fieldSelfReleasingCageChange);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(
+              new ReportMutations.ProtectionChangeTypeMutation(ProtectionEvent.Type.SELF_RELEASING_CAGE));
+    }
+  }
+  private static class HandleSetChangeSelfRealeasingFlat extends ClickHandler {
+    protected HandleSetChangeSelfRealeasingFlat() {
+      super(R.id.fieldSelfReleasingFlatChange);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(
+              new ReportMutations.ProtectionChangeTypeMutation(ProtectionEvent.Type.SELF_RELEASING_FLAT));
+    }
+  }
+  private static class HandleSetChangeRestrainingCage extends ClickHandler {
+    protected HandleSetChangeRestrainingCage() {
+      super(R.id.fieldRestrainingCageChange);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(
+              new ReportMutations.ProtectionChangeTypeMutation(ProtectionEvent.Type.RESTRAINING_CAGE));
+    }
+  }
+  private static class HandleSetChangeBeforePredation extends ClickHandler {
+    protected HandleSetChangeBeforePredation() {
+      super(R.id.fieldBeforePredationChange);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(
+              new ReportMutations.WhyProtectedChangeMutation(ProtectionEvent.Reason.BEFORE_PREDITATION));
+    }
+  }
+  private static class HandleSetChangeAfterPredation extends ClickHandler {
+    protected HandleSetChangeAfterPredation() {
+      super(R.id.fieldAfterPredationChange);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(
+              new ReportMutations.WhyProtectedChangeMutation(ProtectionEvent.Reason.AFTER_PREDITATION));
+    }
+  }
+  private static class HandleSetChangeLightProblem extends ClickHandler {
+    protected HandleSetChangeLightProblem() {
+      super(R.id.fieldForLightProblemChange);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(
+              new ReportMutations.WhyProtectedChangeMutation(ProtectionEvent.Reason.FOR_LIGHT_PROBLEMS));
+    }
+
+
+  }
+  private static class HandleSetReasonChangeOther extends ClickHandler {
+    protected HandleSetReasonChangeOther() {
+      super(R.id.fieldChangeReasonOther);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(
+              new ReportMutations.WhyProtectedChangeMutation(Reason.OTHER));
+    }
+  }
+
+  private static class HandleUpdateReasonChangeOther extends TextChangeHandler {
+    protected HandleUpdateReasonChangeOther() {
+      super(R.id.fieldChangeReasonOtherValue);
+    }
+    @Override
+    public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.ReasonOtherValueChangeMutation(newText));
+    }
+  }
+
+  private static class HandleUpdateProtectionChange extends TextChangeHandler {
+    protected HandleUpdateProtectionChange() {
+      super(R.id.fieldChangeProtectionReason);
+    }
+    @Override
+    public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.ChangeNestProtectionReasonMutation(newText));
+    }
+  }
+  //End badwrong
+
   private static class HandleSetAdopted extends ClickHandler {
     protected HandleSetAdopted() {
       super(R.id.fieldNestAdopted);
@@ -224,49 +349,6 @@ public class EditFragmentNestCare extends EditFragment {
       updateHandler.applyMutation(new WasAdoptedMutation(isChecked(view)));
     }
   }
-  //  These have all been moved to EditFragmentNestLocation.java
-//
-
-//  private static class HandleSetHighWater extends ClickHandler {
-//    protected HandleSetHighWater() {
-//      super(R.id.fieldHighWater);
-//    }
-//    @Override
-//    public void handleClick(View view, DataUpdateHandler updateHandler) {
-//      updateHandler.applyMutation(
-//          new RelocatedReasonMutation(Relocation.Reason.HIGH_WATER));
-//    }
-//  }
-//  private static class HandleSetPredation extends ClickHandler {
-//    protected HandleSetPredation() {
-//      super(R.id.fieldPredation);
-//    }
-//    @Override
-//    public void handleClick(View view, DataUpdateHandler updateHandler) {
-//      updateHandler.applyMutation(
-//          new RelocatedReasonMutation(Relocation.Reason.PREDATION));
-//    }
-//  }
-//  private static class HandleSetWashingOut extends ClickHandler {
-//    protected HandleSetWashingOut() {
-//      super(R.id.fieldWashingOut);
-//    }
-//    @Override
-//    public void handleClick(View view, DataUpdateHandler updateHandler) {
-//      updateHandler.applyMutation(
-//          new RelocatedReasonMutation(Relocation.Reason.WASHING_OUT));
-//    }
-//  }
-//  private static class HandleSetConstruction extends ClickHandler {
-//    protected HandleSetConstruction() {
-//      super(R.id.fieldConstruction);
-//    }
-//    @Override
-//    public void handleClick(View view, DataUpdateHandler updateHandler) {
-//      updateHandler.applyMutation(
-//          new RelocatedReasonMutation(Relocation.Reason.CONSTRUCTION_RENOURISHMENT));
-//    }
-//  }
 
   private static class HandleUpdateNewAddress extends TextChangeHandler {
     protected HandleUpdateNewAddress() {
@@ -278,16 +360,17 @@ public class EditFragmentNestCare extends EditFragment {
       updateHandler.applyMutation(new NewAddressMutation(newText));
     }
   }
-//  private static class HandleUpdateEggsRelocated extends TextChangeHandler {
-//    protected HandleUpdateEggsRelocated() {
-//      super(R.id.fieldEggsRelocated);
-//    }
-//
-//    @Override
-//    public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-//      updateHandler.applyMutation(new EggsRelocatedMutation(getInteger(newText)));
-//    }
-//  }
+
+  private static class HandleUpdateAdoptee extends TextChangeHandler {
+  protected HandleUpdateAdoptee() {
+    super(R.id.fieldAdoptee);
+  }
+  @Override
+  public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
+    updateHandler.applyMutation(new ReportMutations.AdopteeNameMutation(newText));
+  }
+}
+
   private static class HandleUpdateEggsDestroyed extends TextChangeHandler {
     protected HandleUpdateEggsDestroyed() {
       super(R.id.fieldEggsDestroyed);
@@ -311,7 +394,7 @@ public class EditFragmentNestCare extends EditFragment {
       dialog.setCallback(new GpsLocationCallback() {
         @Override
         public void location(GpsCoordinates coordinates) {
-          updateHandler.applyMutation(new NewGpsMutation(coordinates));
+          updateHandler.applyMutation(new RelocationGpsMutation(coordinates));
         }
       });
 

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Changing these WILL break the Predator Spinner, Handle with care-->
+    <string-array name="predator_array" >
+        <item>[Please Select Predator Type]</item>
+        <item>Raccoon Only</item>
+        <item>Fox Only</item>
+        <item>Coyote Only</item>
+        <item>Dog Only</item>
+        <item>Canine (Unsure if Coyote or Dog)</item>
+        <item>Feral Hog Only</item>
+        <item>Armadillo Only</item>
+        <item>Mammal - Unk</item>
+        <item>Ants Only</item>
+        <item>Ghost Crab Only</item>
+        <item>Raccoon and Ghost Crab</item>
+        <item>Coyote and Ghost Crab</item>
+        <item>Other</item>
+
+        </string-array>
+
+
+</resources>

@@ -105,14 +105,20 @@
 	           android:layout_height="wrap_content" 
 	           android:onClick="handleClick"/>
 	   </TableRow>
-	   <TableRow
-	       android:layout_width="wrap_content"
-	       android:layout_height="wrap_content"
-	       android:id="@+id/rowWhyNotExcavatedLabel" >
-	       <TextView
-             style="@style/CheckboxHeader"
-	           android:text="@string/excavation_data_reason_no_excavation" />
-	   </TableRow>
+
+
+		<TableLayout
+			android:id="@+id/whyNotExcavatedFields"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content">
+			<TableRow
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/rowWhyNotExcavatedLabel" >
+				<TextView
+					style="@style/CheckboxHeader"
+					android:text="@string/excavation_data_reason_no_excavation" />
+			</TableRow>
 	   <TableRow
 	       android:layout_width="wrap_content"
 	       android:layout_height="wrap_content"
@@ -134,19 +140,28 @@
 	           android:text="@string/excavation_data_eggs_too_decayed"
 	           android:onClick="handleClick" />
 	   </TableRow>
+
 	   <TableRow
 	       android:layout_width="wrap_content"
 	       android:layout_height="wrap_content"
 	       android:id="@+id/rowWhyNotExcavatedFields2" >
-	
-	       <CheckBox
+
+		   <CheckBox
+			   android:id="@+id/fieldCompleteWashout"
+			   android:layout_width="0dp"
+			   android:layout_height="match_parent"
+			   android:layout_weight="1"
+			   android:onClick="handleClick"
+			   android:text="@string/complete_washout" />
+
+		   <CheckBox
 	           android:id="@+id/fieldNoExcavationOther"
 	           android:layout_width="0dp"
 	           android:layout_height="wrap_content"
 	           android:layout_weight="1"
 	           android:text="@string/other"
 	           android:onClick="handleClick" />
-	       
+
 	       <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
 	            android:id="@+id/fieldNoExcavationOtherValue"
 	            android:inputType="textMultiLine"
@@ -158,12 +173,15 @@
 
 		<TableRow>
 			<TextView
-				android:layout_width="0dp"
+				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_weight="1"
 				android:text="@string/give_reason_text"
 				android:id="@+id/textPleaseSpecify" />
 		</TableRow>
+
+		</TableLayout>
+
 	   <TableLayout 
 	            android:id="@+id/tableExcavationCounts">
 		   

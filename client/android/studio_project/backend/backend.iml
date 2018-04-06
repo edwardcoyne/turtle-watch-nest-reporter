@@ -32,8 +32,8 @@
       <sourceFolder url="file://$MODULE_DIR$/src/endpointsSrc/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/functionalTest/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/functionalTest/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/functionalTest/resources" type="java-test-resource" />
       <excludeFolder url="file://$MODULE_DIR$/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/build" />
     </content>
@@ -45,39 +45,39 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="appengine-endpoints-1.9.14" level="project" />
-    <orderEntry type="library" exported="" name="appengine-endpoints-deps-1.9.14" level="project" />
-    <orderEntry type="library" exported="" name="servlet-api-2.5" level="project" />
-    <orderEntry type="library" exported="" name="protobuf-java-2.5.0" level="project" />
-    <orderEntry type="library" exported="" name="lombok-1.16.2" level="project" />
-    <orderEntry type="library" exported="" name="objectify-5.1.5" level="project" />
-    <orderEntry type="library" exported="" name="persistence-api-1.0" level="project" />
-    <orderEntry type="library" exported="" name="appengine-gcs-client-0.4.4" level="project" />
+    <orderEntry type="library" exported="" name="_Users_ReverendCode__gradle_caches_modules_2_files_2_1_com_google_appengine_appengine_endpoints_1_9_14_88165833f92b391e73b8749c51121e5e2b0d74f1_appengine_endpoints_1_9_14_jar" level="project" />
+    <orderEntry type="library" exported="" name="_Users_ReverendCode__gradle_caches_modules_2_files_2_1_com_google_appengine_appengine_endpoints_deps_1_9_14_d2b9693e388f5c2d028d593cf1996c135d1e06cd_appengine_endpoints_deps_1_9_14_jar" level="project" />
+    <orderEntry type="library" exported="" name="_Users_ReverendCode__gradle_caches_modules_2_files_2_1_javax_servlet_servlet_api_2_5_5959582d97d8b61f4d154ca9e495aafd16726e34_servlet_api_2_5_jar" level="project" />
+    <orderEntry type="library" exported="" name="_Applications_Android_Studio_app_Contents_gradle_m2repository_com_google_protobuf_protobuf_java_2_5_0_protobuf_java_2_5_0_jar" level="project" />
+    <orderEntry type="library" exported="" name="_Users_ReverendCode__gradle_caches_modules_2_files_2_1_org_projectlombok_lombok_1_16_2_abcc131bb227dcdd30437ee1cc164579767b03b4_lombok_1_16_2_jar" level="project" />
+    <orderEntry type="library" exported="" name="_Users_ReverendCode__gradle_caches_modules_2_files_2_1_com_googlecode_objectify_objectify_5_1_5_130172729ac411a5288a3668d5aa2699a01ea1e7_objectify_5_1_5_jar" level="project" />
+    <orderEntry type="library" exported="" name="_Users_ReverendCode__gradle_caches_modules_2_files_2_1_javax_persistence_persistence_api_1_0_5725f57873e05e068803e2bf9d5a8ea3740ffec5_persistence_api_1_0_jar" level="project" />
+    <orderEntry type="library" exported="" name="_Users_ReverendCode__gradle_caches_modules_2_files_2_1_com_google_appengine_tools_appengine_gcs_client_0_4_4_df4bc84bedfe603fd5c45d62b2cc8bb6ab9a960d_appengine_gcs_client_0_4_4_jar" level="project" />
     <orderEntry type="library" exported="" name="junit-4.12" level="project" />
-    <orderEntry type="library" exported="" name="appengine-testing-1.9.18" level="project" />
-    <orderEntry type="library" exported="" name="joda-time-2.3" level="project" />
-    <orderEntry type="library" exported="" name="google-api-services-storage-v1-rev15-1.19.0" level="project" />
-    <orderEntry type="library" exported="" name="google-api-client-appengine-1.20.0" level="project" />
-    <orderEntry type="library" exported="" name="google-http-client-jackson2-1.20.0" level="project" />
+    <orderEntry type="library" exported="" name="_Users_ReverendCode__gradle_caches_modules_2_files_2_1_com_google_appengine_appengine_testing_1_9_18_13522d5eccf77248808fa6d7242a59b95aad24c7_appengine_testing_1_9_18_jar" level="project" />
+    <orderEntry type="library" exported="" name="_Users_ReverendCode__gradle_caches_modules_2_files_2_1_joda_time_joda_time_2_3_56498efd17752898cfcc3868c1b6211a07b12b8f_joda_time_2_3_jar" level="project" />
+    <orderEntry type="library" exported="" name="_Users_ReverendCode__gradle_caches_modules_2_files_2_1_com_google_apis_google_api_services_storage_v1_rev15_1_19_0_91f40f13ab4c24ac33d505695433ba842690bf40_google_api_services_storage_v1_rev15_1_19_0_jar" level="project" />
+    <orderEntry type="library" exported="" name="_Users_ReverendCode__gradle_caches_modules_2_files_2_1_com_google_api_client_google_api_client_appengine_1_23_0_76c36f33a035b19a6beb0ac273e0b4f3c03330eb_google_api_client_appengine_1_23_0_jar" level="project" />
+    <orderEntry type="library" exported="" name="_Users_ReverendCode__gradle_caches_modules_2_files_2_1_com_google_http_client_google_http_client_jackson2_1_23_0_fd6761f4046a8cb0455e6fa5f58e12b061e9826e_google_http_client_jackson2_1_23_0_jar" level="project" />
     <orderEntry type="library" exported="" name="hamcrest-core-1.3" level="project" />
-    <orderEntry type="library" exported="" name="google-oauth-client-appengine-1.20.0" level="project" />
-    <orderEntry type="library" exported="" name="google-api-client-servlet-1.20.0" level="project" />
+    <orderEntry type="library" exported="" name="_Users_ReverendCode__gradle_caches_modules_2_files_2_1_com_google_oauth_client_google_oauth_client_appengine_1_23_0_9e4e6d0438278cf239eb514a78769e6e6b3cbcf7_google_oauth_client_appengine_1_23_0_jar" level="project" />
+    <orderEntry type="library" exported="" name="_Users_ReverendCode__gradle_caches_modules_2_files_2_1_com_google_api_client_google_api_client_servlet_1_23_0_7ede169383ac757d35de142899d7861617bdc5e1_google_api_client_servlet_1_23_0_jar" level="project" />
     <orderEntry type="library" exported="" name="jsr305-1.3.9" level="project" />
-    <orderEntry type="library" exported="" name="httpclient-4.0.1" level="project" />
-    <orderEntry type="library" exported="" name="jackson-core-2.1.3" level="project" />
-    <orderEntry type="library" exported="" name="google-oauth-client-1.20.0" level="project" />
-    <orderEntry type="library" exported="" name="google-oauth-client-servlet-1.20.0" level="project" />
-    <orderEntry type="library" exported="" name="jdo2-api-2.3-eb" level="project" />
-    <orderEntry type="library" exported="" name="google-http-client-jdo-1.20.0" level="project" />
-    <orderEntry type="library" exported="" name="transaction-api-1.1" level="project" />
-    <orderEntry type="library" exported="" name="appengine-api-1.0-sdk-1.9.27" level="project" />
-    <orderEntry type="library" exported="" name="guava-19.0-rc2" level="project" />
-    <orderEntry type="library" exported="" name="google-api-client-1.20.0" level="project" />
-    <orderEntry type="library" exported="" name="google-http-client-appengine-1.20.0" level="project" />
-    <orderEntry type="library" exported="" name="google-http-client-1.20.0" level="project" />
-    <orderEntry type="library" exported="" name="httpcore-4.0.1" level="project" />
-    <orderEntry type="library" exported="" name="commons-logging-1.1.1" level="project" />
-    <orderEntry type="library" exported="" name="commons-codec-1.3" level="project" />
+    <orderEntry type="library" exported="" name="_Users_ReverendCode__gradle_caches_modules_2_files_2_1_org_apache_httpcomponents_httpclient_4_0_1_1d7d28fa738bdbfe4fbd895d9486308999bdf440_httpclient_4_0_1_jar" level="project" />
+    <orderEntry type="library" exported="" name="_Users_ReverendCode__gradle_caches_modules_2_files_2_1_com_fasterxml_jackson_core_jackson_core_2_1_3_f6c3aed1cdfa21b5c1737c915186ea93a95a58bd_jackson_core_2_1_3_jar" level="project" />
+    <orderEntry type="library" exported="" name="_Users_ReverendCode__gradle_caches_modules_2_files_2_1_com_google_oauth_client_google_oauth_client_1_23_0_e57ea1e2220bda5a2bd24ff17860212861f3c5cf_google_oauth_client_1_23_0_jar" level="project" />
+    <orderEntry type="library" exported="" name="_Users_ReverendCode__gradle_caches_modules_2_files_2_1_com_google_oauth_client_google_oauth_client_servlet_1_23_0_2058a1625142e6084df3d9863482c83390a0f0b4_google_oauth_client_servlet_1_23_0_jar" level="project" />
+    <orderEntry type="library" exported="" name="_Users_ReverendCode__gradle_caches_modules_2_files_2_1_javax_jdo_jdo2_api_2_3_eb_ec6b839251fb235a86ccd23adc4fc62dab07a7d8_jdo2_api_2_3_eb_jar" level="project" />
+    <orderEntry type="library" exported="" name="_Users_ReverendCode__gradle_caches_modules_2_files_2_1_com_google_http_client_google_http_client_jdo_1_23_0_d77d05bdafd3eb6b3d992b0167f4009aca5c03fe_google_http_client_jdo_1_23_0_jar" level="project" />
+    <orderEntry type="library" exported="" name="_Users_ReverendCode__gradle_caches_modules_2_files_2_1_javax_transaction_transaction_api_1_1_2ca09f0b36ca7d71b762e14ea2ff09d5eac57558_transaction_api_1_1_jar" level="project" />
+    <orderEntry type="library" exported="" name="_Users_ReverendCode__gradle_caches_modules_2_files_2_1_com_google_appengine_appengine_api_1_0_sdk_1_9_58_8c5dc6858210615deb1f76471eebb33d04b4eb5d_appengine_api_1_0_sdk_1_9_58_jar" level="project" />
+    <orderEntry type="library" exported="" name="_Users_ReverendCode__gradle_caches_modules_2_files_2_1_com_google_guava_guava_20_0_89507701249388e1ed5ddcf8c41f4ce1be7831ef_guava_20_0_jar" level="project" />
+    <orderEntry type="library" exported="" name="_Users_ReverendCode__gradle_caches_modules_2_files_2_1_com_google_api_client_google_api_client_1_23_0_522ea860eb48dee71dfe2c61a1fd09663539f556_google_api_client_1_23_0_jar" level="project" />
+    <orderEntry type="library" exported="" name="_Users_ReverendCode__gradle_caches_modules_2_files_2_1_com_google_http_client_google_http_client_appengine_1_23_0_eda0d0f758c1cc525866e52e1226c4eb579d130_google_http_client_appengine_1_23_0_jar" level="project" />
+    <orderEntry type="library" exported="" name="_Users_ReverendCode__gradle_caches_modules_2_files_2_1_com_google_http_client_google_http_client_1_23_0_8e86c84ff3c98eca6423e97780325b299133d858_google_http_client_1_23_0_jar" level="project" />
+    <orderEntry type="library" exported="" name="_Users_ReverendCode__gradle_caches_modules_2_files_2_1_org_apache_httpcomponents_httpcore_4_0_1_e813b8722c387b22e1adccf7914729db09bcb4a9_httpcore_4_0_1_jar" level="project" />
+    <orderEntry type="library" exported="" name="_Applications_Android_Studio_app_Contents_gradle_m2repository_commons_logging_commons_logging_1_1_1_commons_logging_1_1_1_jar" level="project" />
+    <orderEntry type="library" exported="" name="_Users_ReverendCode__gradle_caches_modules_2_files_2_1_commons_codec_commons_codec_1_3_fd32786786e2adb664d5ecc965da47629dca14ba_commons_codec_1_3_jar" level="project" />
     <orderEntry type="library" exported="" name="backend.backend-android-endpoints" level="project" />
   </component>
 </module>

@@ -11,6 +11,7 @@ import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.islandturtlewatch.nest.data.ReportProto;
 import com.islandturtlewatch.nest.data.ReportProto.GpsCoordinates;
+import com.islandturtlewatch.nest.data.ReportProto.Intervention;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation.City;
 import com.islandturtlewatch.nest.data.ReportProto.NestLocation.Placement;
@@ -34,15 +35,16 @@ import com.islandturtlewatch.nest.reporter.data.ReportMutations.WaterToApexFtMut
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.WaterToApexInMutation;
 import com.islandturtlewatch.nest.reporter.ui.GpsCoordinateDialog.GpsLocationCallback;
 import com.islandturtlewatch.nest.reporter.util.GpsUtil;
-import com.islandturtlewatch.nest.data.ReportProto.Intervention;
 
 import java.util.Map;
 
 public class EditFragmentNestLocation extends EditFragment {
   //private static final String TAG = EditFragmentNestLocation.class.getSimpleName();
 
-  private static final Map<Integer, ClickHandler> CLICK_HANDLERS =
+  private  final Map<Integer, ClickHandler> CLICK_HANDLERS =
       ClickHandler.toMap(
+          new HandleManualSetGps(),
+          new HandleManualSetRelocationGps(),
           new HandleSetOpenBeach(),
           new HandleSetInVegitation(),
           new HandleSetAtVegitation(),
@@ -54,6 +56,8 @@ public class EditFragmentNestLocation extends EditFragment {
           new HandleSetCityAM(),
           new HandleSetCityHB(),
           new HandleSetCityBB(),
+          new HandleSetWithinReplacementArea(),
+          new HandleSetWithinProjectArea(),
           new HandleSetEscarpmentOver18Inches(),
           new HandleSetEscarpmentOver18Inches2(),
           new HandleSetRelocated(),
@@ -62,17 +66,23 @@ public class EditFragmentNestLocation extends EditFragment {
           new HandleSetWashingOut(),
           new HandleSetConstruction(),
           new HandleSetRelocationDate(),
+          new HandleSetSeawardOfArmoringStructure(),
+          new HandleSetWithin3FeetofStructure(),
+          new HandleSetRelocationGPS(),
           new HandleSetGps());
 
   private static final Map<Integer, TextChangeHandler> TEXT_CHANGE_HANDLERS =
       TextChangeHandler.toMap(
           new HandleUpdateAddress(),
+          new HandleUpdateRelocationAddress(),
           new HandleUpdateDetails(),
           new HandleUpdateApexToBarrierFt(),
           new HandleUpdateApexToBarrierIn(),
           new HandleUpdateWaterToApexFt(),
           new HandleUpdateWaterToApexIn(),
-              new HandleUpdateEggsRelocated(),
+          new HandleUpdateEggsRelocated(),
+          new HandleUpdateEggsDestroyed(),
+          new HandleUpdateTypeOfStructure(),
           new HandleUpdateObstructionsOther());
 
   @Override
@@ -103,11 +113,36 @@ public class EditFragmentNestLocation extends EditFragment {
       setText(R.id.buttonGps, getString(R.string.edit_nest_location_button_gps));
     }
 
+    //this might work??
+
+    if (location.getCoordinates().hasLong()) {
+      setText(R.id.fieldGpsLon, String.valueOf(location.getCoordinates().getLong()));
+    } else {
+      setText(R.id.fieldGpsLon, "");
+    }
+    if (location.getCoordinates().hasLat()) {
+      setText(R.id.fieldGpsLat, String.valueOf(location.getCoordinates().getLat()));
+    } else {
+      setText(R.id.fieldGpsLat,"");
+    }
+
+    if (intervention.getRelocation().getCoordinates().hasLat()) {
+      setText(R.id.fieldRelocatedGpsLat,String.valueOf(intervention.getRelocation().getCoordinates().getLat()));
+    } else
+    setText(R.id.fieldRelocatedGpsLat,"");
+
+    if (intervention.getRelocation().getCoordinates().hasLong()) {
+      setText(R.id.fieldRelocatedGpsLon,String.valueOf(intervention.getRelocation().getCoordinates().getLong()));
+    } else
+    setText(R.id.fieldRelocatedGpsLon,"");
+
     setText(R.id.fieldAddress, location.hasStreetAddress() ?
             location.getStreetAddress() : "");
     setChecked(R.id.fieldLocationAM, location.getCity() == City.AM);
     setChecked(R.id.fieldLocationHB, location.getCity() == City.HB);
     setChecked(R.id.fieldLocationBB, location.getCity() == City.BB);
+    setChecked(R.id.fieldLocationCortezReplacementArea, location.getInCortezGroinReplacementArea());
+    setChecked(R.id.fieldWithinProjectArea, location.getNestWithinProjectArea());
 
     setText(R.id.fieldDetails, location.hasDetails() ?
             location.getDetails() : "");
@@ -139,6 +174,14 @@ public class EditFragmentNestLocation extends EditFragment {
     setChecked(R.id.fieldLocationEscarpmentOver18Inches2,
             location.getEscarpmentOver18Inches() && location.getObstructions().getEscarpment());
 
+    setChecked(R.id.fieldSeawardOfArmoringStructure,report.getNestSeawardOfArmoringStructure());
+
+    setVisible(R.id.fieldTypeOfStructure,isChecked(R.id.fieldSeawardOfArmoringStructure));
+    setVisible(R.id.textTypeOfStructure,isChecked(R.id.fieldSeawardOfArmoringStructure));
+    setVisible(R.id.fieldWithin3FeetofStructure, isChecked(R.id.fieldSeawardOfArmoringStructure));
+    setChecked(R.id.fieldWithin3FeetofStructure, report.getWithin3FeetOfStructure());
+    setText(R.id.fieldTypeOfStructure, report.hasTypeOfStructure() ?
+            report.getTypeOfStructure() : "");
 
     setChecked(R.id.fieldObstructionsSeawallRocks, location.getObstructions().getSeawallRocks());
     setChecked(R.id.fieldObstructionsFurniture, location.getObstructions().getFurniture());
@@ -161,8 +204,9 @@ public class EditFragmentNestLocation extends EditFragment {
     } else {
       setText(R.id.buttonNewGps, getString(R.string.edit_nest_location_button_gps));
     }
-
-    setText(R.id.fieldNewAddress, relocation.getNewAddress());
+if (relocation.hasNewAddress()) {
+  setText(R.id.fieldNewAddress, relocation.getNewAddress());
+} else setText(R.id.fieldNewAddress,"");
     // TODO(edcoyne) Set gps coordinates
     setText(R.id.fieldEggsRelocated, relocation.hasEggsRelocated() ?
             Integer.toString(relocation.getEggsRelocated()) : "");
@@ -246,6 +290,27 @@ public class EditFragmentNestLocation extends EditFragment {
       updateHandler.applyMutation(new ReportMutations.EggsRelocatedMutation(getInteger(newText)));
     }
   }
+  private static class HandleUpdateEggsDestroyed extends TextChangeHandler {
+    protected HandleUpdateEggsDestroyed() {super(R.id.fieldEggsDestroyed);}
+
+    @Override
+    public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.EggsDestroyedMutation(getInteger(newText)));
+    }
+  }
+
+  private static class HandleUpdateRelocationAddress extends TextChangeHandler {
+    protected HandleUpdateRelocationAddress() {
+      super(R.id.fieldNewAddress);
+    }
+
+    @Override
+    public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.NewAddressMutation(newText));
+    }
+  }
+
+
 
   private static class HandleUpdateAddress extends TextChangeHandler {
     protected HandleUpdateAddress() {
@@ -339,7 +404,6 @@ public class EditFragmentNestLocation extends EditFragment {
     protected HandleSetCityBB() {
       super(R.id.fieldLocationBB);
     }
-
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
       updateHandler.applyMutation(new CityMutation(City.BB));
@@ -401,6 +465,28 @@ public class EditFragmentNestLocation extends EditFragment {
               new ReportMutations.EscarpmentOver18InchesMutation(isChecked(view)));
     }
   }
+
+  private static class HandleSetWithinProjectArea extends ClickHandler {
+    protected HandleSetWithinProjectArea() {super(R.id.fieldWithinProjectArea);}
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(
+              new ReportMutations.WithinProjectArea(isChecked(view)));
+    }
+  }
+
+  private static class HandleSetWithinReplacementArea extends ClickHandler {
+    protected HandleSetWithinReplacementArea() {
+      super(R.id.fieldLocationCortezReplacementArea);
+    }
+
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(
+              new ReportMutations.WithinReplacementArea(isChecked(view)));
+    }
+  }
+
   private static class HandleSetEscarpmentOver18Inches2 extends ClickHandler {
     protected HandleSetEscarpmentOver18Inches2() {
       super(R.id.fieldLocationEscarpmentOver18Inches2);
@@ -421,6 +507,35 @@ public class EditFragmentNestLocation extends EditFragment {
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
       updateHandler.applyMutation(new PlacementMutation(Placement.ON_ESCARPMENT));
+    }
+  }
+
+  private static class HandleSetSeawardOfArmoringStructure extends ClickHandler {
+    protected HandleSetSeawardOfArmoringStructure() { super(R.id.fieldSeawardOfArmoringStructure);}
+
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.SeawardOfArmoringStructuresMutation(isChecked(view)));
+    }
+  }
+
+  private static class HandleSetWithin3FeetofStructure extends ClickHandler {
+    protected HandleSetWithin3FeetofStructure() { super(R.id.fieldWithin3FeetofStructure);}
+
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.Within3FeetofStructureMutation(isChecked(view)));
+    }
+  }
+
+  private static class HandleUpdateTypeOfStructure extends TextChangeHandler {
+    protected HandleUpdateTypeOfStructure() {
+      super(R.id.fieldTypeOfStructure);
+    }
+
+    @Override
+    public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.TypeOfStructureMutation(newText));
     }
   }
 
@@ -469,9 +584,74 @@ public class EditFragmentNestLocation extends EditFragment {
     }
   }
 
+  private class HandleManualSetGps extends ClickHandler{
+    protected HandleManualSetGps() {
+      super(R.id.buttonManualGps);
+    }
+
+    @Override
+    public void handleClick(final View view, final DataUpdateHandler updateHandler) {
+      GpsManualSetDialog dialog = new GpsManualSetDialog();
+      Preconditions.checkArgument(view.getContext() instanceof Activity);
+      dialog.setCallback(new GpsManualSetDialog.GpsLocationCallback() {
+        @Override
+        public void location(GpsCoordinates coordinates) {
+          updateHandler.applyMutation(new GpsMutation(coordinates));
+        }
+      });
+
+      dialog.show(((Activity)view.getContext()).getFragmentManager(), "GPS");
+
+    }
+  }
+
   private static class HandleSetGps extends ClickHandler {
     protected HandleSetGps() {
       super(R.id.buttonGps);
+    }
+
+    @Override
+    public void handleClick(View view, final DataUpdateHandler updateHandler) {
+
+      GpsCoordinateDialog dialog = new GpsCoordinateDialog();
+      Preconditions.checkArgument(view.getContext() instanceof Activity);
+      dialog.setCallback(new GpsLocationCallback() {
+        @Override
+        public void location(GpsCoordinates coordinates) {
+          updateHandler.applyMutation(new GpsMutation(coordinates));
+        }
+      });
+
+      dialog.show(((Activity)view.getContext()).getFragmentManager(), "GPS");
+
+    }
+  }
+
+  private class HandleManualSetRelocationGps extends ClickHandler{
+    protected HandleManualSetRelocationGps() {
+      super(R.id.buttonManualRelocatedGps);
+    }
+
+    @Override
+    public void handleClick(final View view, final DataUpdateHandler updateHandler) {
+
+      GpsManualSetRelocationDialog dialog = new GpsManualSetRelocationDialog();
+      Preconditions.checkArgument(view.getContext() instanceof Activity);
+      dialog.setCallback(new GpsManualSetRelocationDialog.GpsLocationCallback() {
+        @Override
+        public void location(GpsCoordinates coordinates) {
+          updateHandler.applyMutation(new ReportMutations.RelocationGpsMutation(coordinates));
+        }
+      });
+
+      dialog.show(((Activity)view.getContext()).getFragmentManager(), "GPS");
+
+    }
+  }
+
+  private static class HandleSetRelocationGPS extends ClickHandler {
+    protected HandleSetRelocationGPS() {
+      super(R.id.buttonNewGps);
     }
 
     @Override
@@ -481,7 +661,7 @@ public class EditFragmentNestLocation extends EditFragment {
       dialog.setCallback(new GpsLocationCallback() {
         @Override
         public void location(GpsCoordinates coordinates) {
-          updateHandler.applyMutation(new GpsMutation(coordinates));
+          updateHandler.applyMutation(new ReportMutations.RelocationGpsMutation(coordinates));
         }
       });
 

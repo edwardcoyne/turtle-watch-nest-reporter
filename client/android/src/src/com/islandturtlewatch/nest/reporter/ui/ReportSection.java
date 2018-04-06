@@ -3,6 +3,7 @@ package com.islandturtlewatch.nest.reporter.ui;
 public enum ReportSection {
 	INFO("Info"),
 	NEST_LOCATION("Nest Location"),
+	STORMS("Storms"),
 	NEST_CONDITION("Nest Condition"),
 	NEST_CARE("Nest Care"),
 	NEST_RESOLUTION("Nest Resolution"),

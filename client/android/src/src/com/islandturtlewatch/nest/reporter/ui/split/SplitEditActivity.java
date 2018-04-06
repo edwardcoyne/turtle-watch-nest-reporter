@@ -1,9 +1,9 @@
 package com.islandturtlewatch.nest.reporter.ui.split;
 
-import java.util.Map;
-
 import android.accounts.AccountManager;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -35,6 +35,7 @@ import com.islandturtlewatch.nest.reporter.data.LocalDataStore;
 import com.islandturtlewatch.nest.reporter.data.ReportsModel;
 import com.islandturtlewatch.nest.reporter.data.ReportsModel.ReportsListItemViewFactory;
 import com.islandturtlewatch.nest.reporter.service.SyncService;
+import com.islandturtlewatch.nest.reporter.ui.ConfirmationDialogReportParser;
 import com.islandturtlewatch.nest.reporter.ui.EditFragment;
 import com.islandturtlewatch.nest.reporter.ui.EditFragment.ClickHandler;
 import com.islandturtlewatch.nest.reporter.ui.EditFragment.ClickHandlerSimple;
@@ -47,6 +48,7 @@ import com.islandturtlewatch.nest.reporter.ui.EditFragmentNestCondition;
 import com.islandturtlewatch.nest.reporter.ui.EditFragmentNestLocation;
 import com.islandturtlewatch.nest.reporter.ui.EditFragmentNestResolution;
 import com.islandturtlewatch.nest.reporter.ui.EditFragmentNotes;
+import com.islandturtlewatch.nest.reporter.ui.EditFragmentStorms;
 import com.islandturtlewatch.nest.reporter.ui.EditView;
 import com.islandturtlewatch.nest.reporter.ui.FocusMonitoredEditText;
 import com.islandturtlewatch.nest.reporter.ui.ReportSection;
@@ -57,6 +59,8 @@ import com.islandturtlewatch.nest.reporter.util.DialogUtil;
 import com.islandturtlewatch.nest.reporter.util.ReportUtil;
 import com.islandturtlewatch.nest.reporter.util.SettingsUtil;
 
+import java.util.Map;
+
 public class SplitEditActivity extends FragmentActivity implements EditView {
   //private static final String TAG = SplitEditActivity.class.getSimpleName();
   private static final String KEY_SECTION = "Section";
@@ -66,6 +70,7 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
       ImmutableMap.<ReportSection, EditFragment>builder()
           .put(ReportSection.INFO, new EditFragmentInfo())
           .put(ReportSection.NEST_LOCATION, new EditFragmentNestLocation())
+          .put(ReportSection.STORMS, new EditFragmentStorms())
           .put(ReportSection.NEST_CONDITION, new EditFragmentNestCondition())
           .put(ReportSection.NEST_CARE, new EditFragmentNestCare())
           .put(ReportSection.NEST_RESOLUTION, new EditFragmentNestResolution())
@@ -98,29 +103,54 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
     //TODO(edcoyne): Messy, cleanup.
     drawerList.setAdapter(model.getReportsListAdapter(new ReportsListItemViewFactory(){
       @Override
-      public View getView(Report report,
+      public View getView(LocalDataStore.CachedReportWrapper report,
           Optional<View> possibleConvertableView, ViewGroup parent) {
         LayoutInflater inflator =
             (LayoutInflater)parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         TextView view =
             (TextView) inflator.inflate(R.layout.reports_list_item, parent, false);
         view.setText(ReportUtil.getShortName(report));
+
         return view;
       }}));
+
     drawerList.setOnItemClickListener(new OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> parent,
           View view,
           int position,
           long id) {
+        long oldId = model.getActiveReportId();
         model.switchActiveReport(id);
-        updateDisplay(model.getActiveReport());
+        Report newReport = model.getActiveReport();
+        confirmSwitchReport(newReport, oldId);
         DrawerLayout drawer = ((DrawerLayout) findViewById(R.id.drawer_layout));
         drawer.closeDrawers();
       }
     });
+
   }
 
+  private void confirmSwitchReport(Report newReport, final long id) {
+    AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+    dialog.setTitle(R.string.confirmChangeReport);
+    dialog.setMessage(ConfirmationDialogReportParser.parseReport(newReport));
+    dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialog, int which) {
+//        model.switchActiveReport(id);
+        updateDisplay(model.getActiveReport());
+      }
+    });
+    dialog.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialog, int which) {
+        model.switchActiveReport(id);
+        updateDisplay(model.getActiveReport());
+      }
+    });
+    dialog.show();
+  }
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     // Inflate the menu items for use in the action bar
@@ -143,6 +173,7 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
         case R.id.action_new_report:
           model.startNewActiveReport();
           updateDisplay(model.getActiveReport());
+
           return true;
         case R.id.action_delete_report:
           DialogUtil.confirm(this, "Are you sure you want to delete this report?",
@@ -169,7 +200,9 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
 
   @Override
   public void updateDisplay(Report report) {
-    setTitle(ReportUtil.getShortName(report));
+    LocalDataStore.CachedReportWrapper wrapper = new LocalDataStore.CachedReportWrapper();
+    wrapper.setReport(report);
+    setTitle(ReportUtil.getShortName(wrapper));
     sectionManager.updateSections(report);
   }
 
@@ -213,6 +246,15 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
        sectionManager.handleIntentResult(requestCode, resultCode, data);
        break;
    }
+  }
+
+  public void handleItemSelected(View view, String selectedText) {
+    Map<Integer,EditFragment.OnItemSelectedHandler> itemSelectedHandlers =
+            sectionManager.getCurrentOnItemSelectedHandlers();
+    Preconditions.checkArgument(itemSelectedHandlers.containsKey(view.getId()),
+            "No On Item Selected handler registered for %s", view.getId());
+      itemSelectedHandlers.get(view.getId()).handleItemSelected(selectedText, presenter.getUpdateHandler());
+
   }
 
   public void handleClick(View view) {
@@ -264,6 +306,10 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
     void updateSections(Report report) {
       currentFragment.updateDisplay(report);
       currentReport = Optional.of(report);
+    }
+
+    Map<Integer, EditFragment.OnItemSelectedHandler> getCurrentOnItemSelectedHandlers() {
+      return currentFragment.getOnItemSelectedHandlers();
     }
 
     Map<Integer, ClickHandler> getCurrentClickHandlers() {
@@ -328,7 +374,7 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
       };
     }
 
-    public TextWatcher getTextchangedListener(final TextChangeHandlerSimple handler) {
+    public TextWatcher getTextChangedListener(final TextChangeHandlerSimple handler) {
       return new TextWatcher() {
         @Override
         public void afterTextChanged(Editable newText) {
@@ -346,6 +392,8 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
     public DataUpdateHandler getUpdateHandler() {
       return presenter.getUpdateHandler();
     }
+
+
 
     public void setFocusLossListener(FocusMonitoredEditText editText,
         TextChangeHandlerSimple handler) {
