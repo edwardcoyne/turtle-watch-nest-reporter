@@ -25,17 +25,8 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="b16f67fbc6b8d1e89145af49ef730aef93decbf3">
+        sha1="20dac787e88b7ecacb065c97c8a8ddf85c0d171e">
         <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_90f082256d63d5786438dc01910b2978ef5ed7f6/classes.dex" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client/1.23.0/522ea860eb48dee71dfe2c61a1fd09663539f556/google-api-client-1.23.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.0"
-        sha1="522ea860eb48dee71dfe2c61a1fd09663539f556">
-        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/pre-dexed/release/google-api-client-1.23.0_c79f08cccfeba7e8a7b8b38efc6aed9c0a0acc6e.jar" />
     </item>
     <item
         is-multidex="true"
@@ -45,15 +36,6 @@
         revision="25.0.0"
         sha1="b3cdefb990d5212bb2a130525b20e2c44aeffc4c">
         <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/google-http-client-gson-1.19.0_a1c89272449d9460471d9bdeda3ea10a82db473e/classes.dex" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-jackson2/1.23.0/fd6761f4046a8cb0455e6fa5f58e12b061e9826e/google-http-client-jackson2-1.23.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.0"
-        sha1="fd6761f4046a8cb0455e6fa5f58e12b061e9826e">
-        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/pre-dexed/release/google-http-client-jackson2-1.23.0_e12a5e1cbd87a9fdfe6622d56a62d75068e905cb.jar" />
     </item>
     <item
         is-multidex="true"
@@ -92,15 +74,6 @@
         <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/google-http-client-jackson2-1.23.0_e12a5e1cbd87a9fdfe6622d56a62d75068e905cb/classes.dex" />
     </item>
     <item
-        is-multidex="false"
-        jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-android/1.23.0/1bbe77a8594d7892571266392b8a7dd0a5980664/google-http-client-android-1.23.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.0"
-        sha1="1bbe77a8594d7892571266392b8a7dd0a5980664">
-        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/pre-dexed/release/google-http-client-android-1.23.0_c5642dd6ddda096a916384f23a6ceaffc95d0411.jar" />
-    </item>
-    <item
         is-multidex="true"
         jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-android/1.23.0/1bbe77a8594d7892571266392b8a7dd0a5980664/google-http-client-android-1.23.0.jar"
         jumboMode="true"
@@ -117,15 +90,6 @@
         revision="25.0.0"
         sha1="1dd0d38df9c6d21e893f2e52403f1cd99e91cd81">
         <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/httpmime-4.3.5_41c7de00e92b97c3a8bf6932e98eb1ce9385d22b/classes.dex" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/com.google.oauth-client/google-oauth-client/1.23.0/e57ea1e2220bda5a2bd24ff17860212861f3c5cf/google-oauth-client-1.23.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.0"
-        sha1="e57ea1e2220bda5a2bd24ff17860212861f3c5cf">
-        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/pre-dexed/release/google-oauth-client-1.23.0_05278191c80118f581c1788524b091881be619e1.jar" />
     </item>
     <item
         is-multidex="false"
@@ -151,7 +115,7 @@
         jumboMode="false"
         optimize="true"
         revision="25.0.0"
-        sha1="4c75d9aa34e8f5f18a5214608705eca1eb2c9814">
+        sha1="c05fedba6f3ed565c81d06b61f71122ca32d1638">
         <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/pre-dexed/release/backend-android-endpoints_f01c0dee61b041a9a5527d1a94e3d3e93efd8df7.jar" />
     </item>
     <item
@@ -198,15 +162,6 @@
         revision="25.0.0"
         sha1="82edcaec6c7b4599eaeaaf11167ceea41db42f33">
         <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/httpclient-android-4.3.5_76b692bc7318ee020984c8f8d31dde1cb4442cf1/classes.dex" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client-android/1.23.0/b95521559faf49989ff036a5b15fd16476bdc955/google-api-client-android-1.23.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.0"
-        sha1="b95521559faf49989ff036a5b15fd16476bdc955">
-        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/pre-dexed/release/google-api-client-android-1.23.0_69089b90ac09bc87c3276c8fb22cca3d6b7e5a33.jar" />
     </item>
     <item
         is-multidex="true"
@@ -261,15 +216,6 @@
         revision="25.0.0"
         sha1="8e86c84ff3c98eca6423e97780325b299133d858">
         <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/transforms/dex/debug/folders/1000/10/google-http-client-1.23.0_1f47c0413a52124fdb0fbfa8829e0106e980190f/classes.dex" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/ReverendCode/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client/1.23.0/8e86c84ff3c98eca6423e97780325b299133d858/google-http-client-1.23.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.0"
-        sha1="8e86c84ff3c98eca6423e97780325b299133d858">
-        <dex dex="/Users/ReverendCode/Desktop/Nest App 2016/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/pre-dexed/release/google-http-client-1.23.0_1f47c0413a52124fdb0fbfa8829e0106e980190f.jar" />
     </item>
     <item
         is-multidex="true"
