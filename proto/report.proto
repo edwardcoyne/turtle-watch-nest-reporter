@@ -35,7 +35,7 @@ message Report {
     GREEN = 2;
     OTHER = 3;
   }
-  optional Species species = 4 [default = NOT_REPORTED];
+  optional Species species = 4 [default = LOGGERHEAD];
   optional string species_other = 5;
 
   enum NestStatus {
@@ -187,7 +187,7 @@ message NestLocation {
     HB = 4;    
   }
   optional City city = 4;
-  optional bool nest_within_project_area = 15 [default = true];
+  optional bool nest_within_project_area = 15;
   optional bool in_cortez_groin_replacement_area = 14;
 
   enum Placement {
