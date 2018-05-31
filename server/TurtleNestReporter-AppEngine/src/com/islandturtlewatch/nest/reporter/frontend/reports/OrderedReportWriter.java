@@ -278,7 +278,8 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
         @Override
         public String fetch(Map<Path, Column> columnMap, int rowId) {
           Column column = columnMap.get(path);
-//          if (column.getValue(rowId) == null) return "";
+          if (column == null) return "";
+          if (column.getValue(rowId) == null) return "";
           Preconditions.checkNotNull(column, "Missing path: " + stringPath);
           if (column.getValue(rowId) == option.toString()) {
             return "Yes";
@@ -387,7 +388,7 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
         @Override
         public String fetch(Map<Path, Column> columnMap, int rowId) {
           Column column = columnMap.get(path);
-          Preconditions.checkNotNull(column, "Missing path: " + stringPath);
+          if (column == null) return "";
           if (column.getValue(rowId).equals(name)) {
             return column.getValue(rowId);
           } else return "";
@@ -846,28 +847,6 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
       });
     }
   }
-
-//  public static class FinalTreatmentCompareColumn extends ReportColumn {
-//    public FinalTreatmentCompareColumn(
-//            final String name,
-//            final String relocatedPathStr,
-//            final String dateFoundPathStr,
-//            final String dateProtectedPathStr,
-//            final String protectionEventPathStr) {
-//      super(name, new ValueFetcher() {
-//        private final InitialTreatmentColumn initialColumn = new InitialTreatmentColumn(name,
-//                relocatedPathStr, dateFoundPathStr, dateProtectedPathStr, protectionEventPathStr);
-//        private final FinalTreatmentColumn finalColumn = new FinalTreatmentColumn(name,
-//                relocatedPathStr, dateFoundPathStr, dateProtectedPathStr, protectionEventPathStr);
-//        @Override
-//        public String fetch(Map<Path, Column> columnMap, int rowId) {
-//
-//          return initialColumn.getFetcher().fetch(columnMap, rowId) ==
-//                  finalColumn.getFetcher().fetch(columnMap, rowId) ? "" : finalColumn.getFetcher().fetch(columnMap, rowId);
-//        }
-//      });
-//    }
-//  }
 
   public static class FinalTreatmentColumn extends ReportColumn {
     public FinalTreatmentColumn(

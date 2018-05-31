@@ -52,50 +52,29 @@ public class StateNestReportServlet extends HttpServlet {
   // Keep this column separate so we can test against it.
   private static ReportColumn sectionColumn = new MappedSectionColumn("Beach Zone", "ref.owner_id");
 
-//    private static ReportColumn sectionColumn = new StaticValueColumn("**TEST**", "1");
-
-  static ColumnGenerator columnGenerator = new ColumnGenerator();
-
   // This is the list of columns in the report, they will appear in this order.
   private static List<ReportColumn> reportColumns = ImmutableList.of(
-//          columnGenerator.generateTimestampColumn("Date Nest Recorded", "report.timestamp_found_ms"),
       new MappedTimestampColumn("Date Nest Recorded", "report.timestamp_found_ms"),
-//          columnGenerator.generateDefaultColumn("Escarpment >= 18 Encountered", "report.location.escarpment_over_18_inches"),
           new MappedColumn("ID/Label", "report.nest_number"),
           sectionColumn,
       new MappedColumn("Escarpment >= 18 Encountered", "report.location.escarpment_over_18_inches"),
-//          columnGenerator.generateYNColumn("Nest seaward of armoring structure","report.nest_seaward_of_armoring_structure"),
       new MappedYNColumn("Nest seaward of armoring structure","report.nest_seaward_of_armoring_structure"),
-//          columnGenerator.generateYNColumn("Nest within 3 feet of armoring structure","report.within_3_feet_of_structure"),
       new OrderedReportWriter.MappedYNColumn("Nest within 3 feet of armoring structure","report.within_3_feet_of_structure"),
-//          columnGenerator.generateDefaultColumn("Type of Structure","report.type_of_structure"),
       new MappedColumn("Type of Structure","report.type_of_structure"),
-//          columnGenerator.generateSpeciesColumn("Species","report.species"),
       new MappedSpeciesColumn("Species","report.species"),
-//          columnGenerator.generateDefaultColumn("ID/Label", "report.nest_number"),
 
       new OrderedReportWriter.MappedComboColumn("Nest Label","ref.owner_id","report.nest_number"),
       new MappedColumn("Nest within Project Area","report.location.nest_within_project_area"),
 
-//      columnGenerator.generateDefaultColumn("Nest within Project Area","report.location.nest_wihin_project_area"),
 
       new MappedColumn("City","report.location.city"),
-//          columnGenerator.generateYNColumn("Within Cortez Groin Replacement Area",
-//            "report.location.in_cortez_groin_replacement_area"),
       new MappedYNColumn("Within Cortez Groin Replacement Area",
               "report.location.in_cortez_groin_replacement_area"),
-//          columnGenerator.generateDefaultColumn("Address","report.location.street_address"),
       new MappedColumn("Address","report.location.street_address"),
-//            columnGenerator.generateYesOrBlankColumn("Body Pits",
-//                    "report.condition.abandoned_body_pits"),
       new OrderedReportWriter.MappedYesOrBlankColumn("Body Pits",
               "report.condition.abandoned_body_pits"),
-//          columnGenerator.generateYesOrBlankColumn("Egg Chambers",
-//                  "report.condition.abandoned_egg_cavities"),
       new OrderedReportWriter.MappedYesOrBlankColumn("Egg Chambers",
               "report.condition.abandoned_egg_cavities"),
-//          columnGenerator.generate0AsBlankColumn("Clutch Size Counted When Nest Was Made",
-//                  "report.intervention.relocation.eggs_relocated"),
       new MappedColumnWithDefault("Clutch Size Counted When Nest Was Made",
               "report.intervention.relocation.eggs_relocated",
               ""),
@@ -152,8 +131,6 @@ public class StateNestReportServlet extends HttpServlet {
               ReportProto.NestCondition.WashoutTimeOption.PRE_HATCH,
               "report.condition.partial_washout.timestamp_ms"),
 
-//      new MappedIfExistsColumn("Did Partial Washout Occur Prior to Hatching?",
-//              "report.condition.partial_washout.event_prior_to_hatching"),
       new OrderedReportWriter.MappedWashoutTimeOptionColumn(
               "Did Partial Washout Occur Post-Hatch, but Pre-Inventory",
               "report.condition.partial_washout_timing",

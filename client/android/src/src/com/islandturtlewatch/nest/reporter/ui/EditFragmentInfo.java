@@ -219,6 +219,7 @@ public class EditFragmentInfo extends EditFragment {
     public void handleClick(View view, DataUpdateHandler updateHandler) {
       updateHandler.applyMutation(new NestStatusMutation(NestStatus.NEST_VERIFIED));
       updateHandler.applyMutation(new ReportMutations.PossibleFalseCrawlMutation(false));
+      updateHandler.applyMutation(new NoDiggingMutation(false));
     }
   }
 
@@ -231,6 +232,7 @@ public class EditFragmentInfo extends EditFragment {
     public void handleClick(View view, DataUpdateHandler updateHandler) {
       updateHandler.applyMutation(new NestStatusMutation(NestStatus.NEST_NOT_VERIFIED));
       updateHandler.applyMutation(new ReportMutations.PossibleFalseCrawlMutation(false));
+      updateHandler.applyMutation(new NoDiggingMutation(false));
     }
   }
 
@@ -254,6 +256,7 @@ public class EditFragmentInfo extends EditFragment {
       updateHandler.applyMutation(new ReportMutations.PossibleFalseCrawlMutation(isChecked(view)));
       if (isChecked(view)) {
         updateHandler.applyMutation(new NestStatusMutation(NestStatus.FALSE_CRAWL));
+        updateHandler.applyMutation(new NoDiggingMutation(true));
       }
     }
   }
@@ -266,6 +269,7 @@ public class EditFragmentInfo extends EditFragment {
     @Override
     public void handleClick(View view, DataUpdateHandler updateHandler) {
       updateHandler.applyMutation(new NestStatusMutation(NestStatus.FALSE_CRAWL));
+      updateHandler.applyMutation(new NoDiggingMutation(true));
     }
   }
 
