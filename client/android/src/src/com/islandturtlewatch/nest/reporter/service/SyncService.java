@@ -66,6 +66,7 @@ import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.Report
 import com.islandturtlewatch.nest.reporter.util.ErrorUtil;
 import com.islandturtlewatch.nest.reporter.util.ImageUtil;
 
+
 public class SyncService extends Service {
   private static final String TAG = SyncService.class.getSimpleName();
   private static final int NOTIFICATION_ID = SyncService.class.hashCode();
@@ -259,6 +260,7 @@ public class SyncService extends Service {
 
       HttpParams params = new BasicHttpParams();
       params.setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
+
       httpClient = new DefaultHttpClient(params);
     }
 
@@ -438,9 +440,7 @@ public class SyncService extends Service {
   }
 
   private static class Upload {
-    //private static final int MAX_RETRY_DELAY_S = 300; // 5 min.
     private static final int MAX_RETRY_DELAY_S = 45;
-
     private final long localReportId;
     private final LocalDataStore dataStore;
     private final int retryDelayS;

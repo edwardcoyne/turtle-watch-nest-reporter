@@ -48,7 +48,7 @@
     <orderEntry type="library" exported="" name="appengine-endpoints-1.9.14" level="project" />
     <orderEntry type="library" exported="" name="appengine-endpoints-deps-1.9.14" level="project" />
     <orderEntry type="library" exported="" name="servlet-api-2.5" level="project" />
-    <orderEntry type="library" exported="" name="_Applications_Android_Studio_app_Contents_gradle_m2repository_com_google_protobuf_protobuf_java_2_5_0_protobuf_java_2_5_0_jar" level="project" />
+    <orderEntry type="library" exported="" name="protobuf-java-2.5.0" level="project" />
     <orderEntry type="library" exported="" name="lombok-1.16.2" level="project" />
     <orderEntry type="library" exported="" name="objectify-5.1.5" level="project" />
     <orderEntry type="library" exported="" name="persistence-api-1.0" level="project" />
@@ -70,13 +70,13 @@
     <orderEntry type="library" exported="" name="jdo2-api-2.3-eb" level="project" />
     <orderEntry type="library" exported="" name="google-http-client-jdo-1.23.0" level="project" />
     <orderEntry type="library" exported="" name="transaction-api-1.1" level="project" />
-    <orderEntry type="library" exported="" name="_Users_ReverendCode__gradle_caches_modules_2_files_2_1_com_google_appengine_appengine_api_1_0_sdk_1_9_58_8c5dc6858210615deb1f76471eebb33d04b4eb5d_appengine_api_1_0_sdk_1_9_58_jar" level="project" />
+    <orderEntry type="library" exported="" name="appengine-api-1.0-sdk-1.9.63" level="project" />
     <orderEntry type="library" exported="" name="guava-20.0" level="project" />
     <orderEntry type="library" exported="" name="google-api-client-1.23.0" level="project" />
     <orderEntry type="library" exported="" name="google-http-client-appengine-1.23.0" level="project" />
     <orderEntry type="library" exported="" name="google-http-client-1.23.0" level="project" />
     <orderEntry type="library" exported="" name="httpcore-4.0.1" level="project" />
-    <orderEntry type="library" exported="" name="_Applications_Android_Studio_app_Contents_gradle_m2repository_commons_logging_commons_logging_1_1_1_commons_logging_1_1_1_jar" level="project" />
+    <orderEntry type="library" exported="" name="commons-logging-1.1.1" level="project" />
     <orderEntry type="library" exported="" name="commons-codec-1.3" level="project" />
     <orderEntry type="library" exported="" name="backend.backend-android-endpoints" level="project" />
   </component>

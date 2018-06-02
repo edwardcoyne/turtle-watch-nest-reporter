@@ -96,7 +96,7 @@ public class OrderedReportWriter implements ReportCsvGenerator.ReportWriter {
         public String fetch(Map<Path, Column> columnMap, int rowId) {
           Column column = columnMap.get(path);
           Preconditions.checkNotNull(column, "Missing path: " + stringPath);
-          if (column.getValue(rowId).equals("LOGGERHEAD")) {
+          if (column.getValue(rowId).equals("LOGGERHEAD") || column.getValue(rowId).equals("NO ENUM")) {
             return "Cc";
           } else if (column.getValue(rowId).equals("GREEN")) {
             return "Cm";

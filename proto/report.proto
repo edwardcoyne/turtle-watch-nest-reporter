@@ -170,8 +170,6 @@ enum ProportionEventsRecorded {
   optional bool no_digging = 18;
   optional bool nest_depredated = 23;
   optional bool eggs_damaged_by_another_turtle = 24;
-
-
   // Next ID=35
 }
 
@@ -294,7 +292,7 @@ message Relocation {
   optional int32 eggs_relocated = 5;
   optional int32 eggs_destroyed = 6;
 
-  enum Reason{
+  enum Reason {
     UNSET_REASON = 1;
     HIGH_WATER = 2;
     PREDATION = 3;

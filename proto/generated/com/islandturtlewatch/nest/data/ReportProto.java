@@ -5565,10 +5565,18 @@ public final class ReportProto {
 
     /**
      * <code>optional bool eggs_damaged_by_another_turtle = 24;</code>
+     *
+     * <pre>
+     * Next ID=35
+     * </pre>
      */
     boolean hasEggsDamagedByAnotherTurtle();
     /**
      * <code>optional bool eggs_damaged_by_another_turtle = 24;</code>
+     *
+     * <pre>
+     * Next ID=35
+     * </pre>
      */
     boolean getEggsDamagedByAnotherTurtle();
   }
@@ -9458,12 +9466,20 @@ public final class ReportProto {
     private boolean eggsDamagedByAnotherTurtle_;
     /**
      * <code>optional bool eggs_damaged_by_another_turtle = 24;</code>
+     *
+     * <pre>
+     * Next ID=35
+     * </pre>
      */
     public boolean hasEggsDamagedByAnotherTurtle() {
       return ((bitField0_ & 0x20000000) == 0x20000000);
     }
     /**
      * <code>optional bool eggs_damaged_by_another_turtle = 24;</code>
+     *
+     * <pre>
+     * Next ID=35
+     * </pre>
      */
     public boolean getEggsDamagedByAnotherTurtle() {
       return eggsDamagedByAnotherTurtle_;
@@ -12943,18 +12959,30 @@ public final class ReportProto {
       private boolean eggsDamagedByAnotherTurtle_ ;
       /**
        * <code>optional bool eggs_damaged_by_another_turtle = 24;</code>
+       *
+       * <pre>
+       * Next ID=35
+       * </pre>
        */
       public boolean hasEggsDamagedByAnotherTurtle() {
         return ((bitField1_ & 0x00000004) == 0x00000004);
       }
       /**
        * <code>optional bool eggs_damaged_by_another_turtle = 24;</code>
+       *
+       * <pre>
+       * Next ID=35
+       * </pre>
        */
       public boolean getEggsDamagedByAnotherTurtle() {
         return eggsDamagedByAnotherTurtle_;
       }
       /**
        * <code>optional bool eggs_damaged_by_another_turtle = 24;</code>
+       *
+       * <pre>
+       * Next ID=35
+       * </pre>
        */
       public Builder setEggsDamagedByAnotherTurtle(boolean value) {
         bitField1_ |= 0x00000004;
@@ -12964,6 +12992,10 @@ public final class ReportProto {
       }
       /**
        * <code>optional bool eggs_damaged_by_another_turtle = 24;</code>
+       *
+       * <pre>
+       * Next ID=35
+       * </pre>
        */
       public Builder clearEggsDamagedByAnotherTurtle() {
         bitField1_ = (bitField1_ & ~0x00000004);
