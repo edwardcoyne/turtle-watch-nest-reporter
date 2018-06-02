@@ -35,7 +35,7 @@ message Report {
     GREEN = 2;
     OTHER = 3;
   }
-  optional Species species = 4 [default = LOGGERHEAD];
+  optional Species species = 4 [default = LOGGERHEAD]; //Default is also set in MappedSpeciesColumn
   optional string species_other = 5;
 
   enum NestStatus {
