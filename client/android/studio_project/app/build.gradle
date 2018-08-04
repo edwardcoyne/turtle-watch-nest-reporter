@@ -45,7 +45,8 @@ dependencies {
     compile ('org.apache.httpcomponents:httpmime:4.3.5') {
         exclude module: 'org.apache.httpcomponents:httpclient'
     }
-    compile (project(path: ':backend', configuration: 'android-endpoints')) {
+
+    compile (project(path: ':backend', configuration: 'endpoints')) {
         exclude(module: 'guava-jdk5')
     }
     compile 'com.google.guava:guava:18.0'
