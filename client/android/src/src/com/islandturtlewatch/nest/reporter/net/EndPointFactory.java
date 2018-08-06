@@ -8,6 +8,7 @@ import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.common.base.Optional;
 import com.islandturtlewatch.nest.reporter.RunEnvironment;
+
 import com.islandturtlewatch.nest.reporter.transport.imageEndpoint.ImageEndpoint;
 import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.ReportEndpoint;
 import com.islandturtlewatch.nest.reporter.util.AuthenticationUtil;
