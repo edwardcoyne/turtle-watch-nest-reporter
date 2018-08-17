@@ -1,39 +1,41 @@
-// If you would like more information on the gradle-appengine-plugin please refer to the github page
-// https://github.com/GoogleCloudPlatform/gradle-appengine-plugin
 
 buildscript {
     repositories {
         jcenter()
     }
     dependencies {
-        classpath 'com.google.appengine:gradle-appengine-plugin:1.9.14'
+
+        classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:1.0.2'
+        classpath 'com.google.cloud.tools:appengine-gradle-plugin:1.3.3'
     }
 }
 
 repositories {
-    jcenter();
+
+    jcenter()
 }
 
 apply plugin: 'java'
 apply plugin: 'war'
-apply plugin: 'appengine'
+
+apply plugin: 'com.google.cloud.tools.appengine'
+apply plugin: 'com.google.cloud.tools.endpoints-framework-server'
 
 sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
 
 dependencies {
-    appengineSdk 'com.google.appengine:appengine-java-sdk:1.9.14'
-    compile 'com.google.appengine:appengine-endpoints:1.9.14'
-    compile 'com.google.appengine:appengine-endpoints-deps:1.9.14'
-    compile 'javax.servlet:servlet-api:2.5'
-    compile 'com.google.protobuf:protobuf-java:2.5.0'
-    compile 'com.google.guava:guava:18.0'
-    compile 'org.projectlombok:lombok:1.16.2'
-    compile 'com.googlecode.objectify:objectify:5.1.5'
-    compile 'javax.persistence:persistence-api:1.0'
-    compile 'com.google.appengine.tools:appengine-gcs-client:0.4.4'
-    compile 'junit:junit:4.12'
-    compile 'com.google.appengine:appengine-testing:1.9.18'
+
+    implementation 'com.google.endpoints:endpoints-framework:2.0.9'
+    implementation ('javax.servlet:servlet-api:2.5') {
+    }
+    implementation 'com.google.protobuf:protobuf-java:3.4.0'
+    implementation 'org.projectlombok:lombok:1.16.2'
+    implementation 'com.googlecode.objectify:objectify:5.1.5'
+    implementation 'javax.persistence:persistence-api:1.0'
+    implementation 'com.google.appengine.tools:appengine-gcs-client:0.4.4'
+    implementation 'junit:junit:4.12'
+    implementation 'com.google.appengine:appengine-testing:1.9.18'
 }
 
 sourceSets {
@@ -42,16 +44,7 @@ sourceSets {
     main.resources.srcDirs = ['src/main/webapp/']
 }
 
-appengine {
-    httpAddress = "0.0.0.0"
-    downloadSdk = true
-    appcfg {
-        oauth2 = true
-    }
-    endpoints {
-        getClientLibsOnBuild = true
-        getDiscoveryDocsOnBuild = true
-        googleClientVersion = '1.23.0'
-    }
-
+endpointsServer {
+    // Endpoints Framework Plugin server-side configuration
+    hostname = "static-sentinel-567.appspot.com"
 }
