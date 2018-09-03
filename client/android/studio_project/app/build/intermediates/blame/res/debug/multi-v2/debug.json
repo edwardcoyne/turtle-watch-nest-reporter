@@ -1699,6 +1699,28 @@
             ]
         },
         {
+            "outputFile": "/Users/ReverendCode/Desktop/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/res/merged/debug/values-watch-v20_values-watch-v20.arsc.flat",
+            "map": [
+                {
+                    "source": "/Users/ReverendCode/.gradle/caches/transforms-1/files-1.1/play-services-auth-16.0.0.aar/ef8a4da1c5d7e301fcce4bd0417e779d/res/values-watch-v20/values.xml",
+                    "from": {
+                        "startLines": "4,5,6,7,8,9,10,11",
+                        "startColumns": "0,0,0,0,0,0,0,0",
+                        "startOffsets": "171,246,322,397,472,559,636,723",
+                        "endColumns": "74,75,74,74,86,76,86,75",
+                        "endOffsets": "245,321,396,471,558,635,722,798"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,134,214,293,372,463,544,635",
+                        "endColumns": "78,79,78,78,90,80,90,79",
+                        "endOffsets": "129,209,288,367,458,539,630,710"
+                    }
+                }
+            ]
+        },
+        {
             "outputFile": "/Users/ReverendCode/Desktop/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/res/merged/debug/values-fr-rCA_values-fr-rCA.arsc.flat",
             "map": [
                 {
@@ -3267,49 +3289,6 @@
             ]
         },
         {
-            "outputFile": "/Users/ReverendCode/Desktop/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/res/merged/debug/values-v21_values-v21.arsc.flat",
-            "map": [
-                {
-                    "source": "/Users/ReverendCode/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/7676e18c44d86163ae74e3857069cc4e/res/values-v21/values-v21.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9,10,13",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,159,223,290,354,470,596,722,850,1022",
-                        "endLines": "2,3,4,5,6,7,8,9,12,17",
-                        "endColumns": "103,63,66,63,115,125,125,127,12,12",
-                        "endOffsets": "154,218,285,349,465,591,717,845,1017,1355"
-                    },
-                    "to": {
-                        "startLines": "2,3,4,5,6,7,14,18,22,25",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,159,223,290,354,470,927,1221,1516,1688",
-                        "endLines": "2,3,4,5,6,7,14,18,24,29",
-                        "endColumns": "103,63,66,63,115,125,125,127,12,12",
-                        "endOffsets": "154,218,285,349,465,591,1048,1344,1683,2021"
-                    }
-                },
-                {
-                    "source": "/Users/ReverendCode/.gradle/caches/transforms-1/files-1.1/support-media-compat-26.1.0.aar/89e747ebf6e28b83251911400bb45033/res/values-v21/values-v21.xml",
-                    "from": {
-                        "startLines": "2,5,8,11",
-                        "startColumns": "4,4,4,4",
-                        "startOffsets": "55,223,386,554",
-                        "endLines": "4,7,10,13",
-                        "endColumns": "12,12,12,12",
-                        "endOffsets": "218,381,549,716"
-                    },
-                    "to": {
-                        "startLines": "8,11,15,19",
-                        "startColumns": "4,4,4,4",
-                        "startOffsets": "596,764,1053,1349",
-                        "endLines": "10,13,17,21",
-                        "endColumns": "12,12,12,12",
-                        "endOffsets": "759,922,1216,1511"
-                    }
-                }
-            ]
-        },
-        {
             "outputFile": "/Users/ReverendCode/Desktop/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/res/merged/debug/values-mn_values-mn.arsc.flat",
             "map": [
                 {
@@ -3361,6 +3340,49 @@
                         "startOffsets": "1271",
                         "endColumns": "208",
                         "endOffsets": "1475"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "/Users/ReverendCode/Desktop/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/res/merged/debug/values-v21_values-v21.arsc.flat",
+            "map": [
+                {
+                    "source": "/Users/ReverendCode/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/7676e18c44d86163ae74e3857069cc4e/res/values-v21/values-v21.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,13",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,159,223,290,354,470,596,722,850,1022",
+                        "endLines": "2,3,4,5,6,7,8,9,12,17",
+                        "endColumns": "103,63,66,63,115,125,125,127,12,12",
+                        "endOffsets": "154,218,285,349,465,591,717,845,1017,1355"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,14,18,22,25",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,159,223,290,354,470,927,1221,1516,1688",
+                        "endLines": "2,3,4,5,6,7,14,18,24,29",
+                        "endColumns": "103,63,66,63,115,125,125,127,12,12",
+                        "endOffsets": "154,218,285,349,465,591,1048,1344,1683,2021"
+                    }
+                },
+                {
+                    "source": "/Users/ReverendCode/.gradle/caches/transforms-1/files-1.1/support-media-compat-26.1.0.aar/89e747ebf6e28b83251911400bb45033/res/values-v21/values-v21.xml",
+                    "from": {
+                        "startLines": "2,5,8,11",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,223,386,554",
+                        "endLines": "4,7,10,13",
+                        "endColumns": "12,12,12,12",
+                        "endOffsets": "218,381,549,716"
+                    },
+                    "to": {
+                        "startLines": "8,11,15,19",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "596,764,1053,1349",
+                        "endLines": "10,13,17,21",
+                        "endColumns": "12,12,12,12",
+                        "endOffsets": "759,922,1216,1511"
                     }
                 }
             ]

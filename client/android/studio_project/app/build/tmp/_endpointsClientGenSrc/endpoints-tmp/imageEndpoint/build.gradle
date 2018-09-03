@@ -4,7 +4,7 @@ apply plugin: 'maven'
 
 group = 'com.islandturtlewatch'
 archivesBaseName = 'nest-reporter-transport-imageendpoint'
-version = 'v1-1.24.1-SNAPSHOT'
+version = 'v1-1.25.0-SNAPSHOT'
 
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
@@ -25,5 +25,5 @@ repositories {
 }
 
 dependencies {
-    compile ([group: 'com.google.api-client', name: 'google-api-client', version: '1.24.1'])
+    compile ([group: 'com.google.api-client', name: 'google-api-client', version: '1.25.0'])
 }

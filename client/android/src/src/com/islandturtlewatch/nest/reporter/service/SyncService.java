@@ -1,6 +1,9 @@
 package com.islandturtlewatch.nest.reporter.service;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -10,20 +13,9 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
-
 import javax.annotation.Nullable;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpVersion;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.CoreProtocolPNames;
-import org.apache.http.params.HttpParams;
-import org.apache.http.util.EntityUtils;
-
+import java.lang.Object;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -38,6 +30,8 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.google.appengine.api.files.FileServicePb;
+import com.google.apphosting.api.search.DocumentPb;
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
@@ -65,6 +59,11 @@ import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.Report
 import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.ReportResponse;
 import com.islandturtlewatch.nest.reporter.util.ErrorUtil;
 import com.islandturtlewatch.nest.reporter.util.ImageUtil;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
 
 
 public class SyncService extends Service {
@@ -250,7 +249,8 @@ public class SyncService extends Service {
     private LocalDataStore dataStore;
     private Thread thread;
     private final AtomicBoolean running = new AtomicBoolean(false);
-    private DefaultHttpClient httpClient;
+    private HttpURLConnection client;
+//    private DefaultHttpClient httpClient;
 
     public void start() {
       running.set(true);
@@ -258,10 +258,10 @@ public class SyncService extends Service {
       dataStore = new LocalDataStore(SyncService.this);
       thread.start();
 
-      HttpParams params = new BasicHttpParams();
-      params.setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
-
-      httpClient = new DefaultHttpClient(params);
+//      HttpParams params = new BasicHttpParams();
+//      params.setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
+//      httpClient = new DefaultHttpClient(params);
+//
     }
 
     public void stop() {
@@ -425,17 +425,28 @@ public class SyncService extends Service {
     }
 
     private void uploadImage(ImageUploadRef ref) throws IOException {
-      HttpPost httppost = new HttpPost(ref.getUrl());
-      httppost.setEntity(MultipartEntityBuilder.create()
-          .addBinaryBody("Image",
-              ImageUtil.readImageBytes(SyncService.this, ref.getImage().getImageName()),
+      HttpURLConnection connection = (HttpURLConnection) new URL(ref.getUrl()).openConnection();
+      connection.setDoInput(true);
+      connection.setDoOutput(true);
+      connection.setUseCaches(false);
+      connection.setRequestMethod("POST");
+      MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+      builder.addBinaryBody("Image",
+                            ImageUtil.readImageBytes(SyncService.this,
+                                    ref.getImage().getImageName()),
               ContentType.create("image/jpeg"),
-              ref.getImage().getImageName())
-          .build());
-
-      HttpResponse response = httpClient.execute(httppost);
-      Log.d(TAG, "Response:" + response.getStatusLine() + " :: " +
-          EntityUtils.toString(response.getEntity()));
+              ref.getImage().getImageName());
+      HttpEntity entity = builder.build();
+      try {
+        OutputStream outputStream = connection.getOutputStream();
+        entity.writeTo(outputStream);
+        outputStream.close();
+        connection.connect();
+      } catch (Exception e) {
+        Log.e("UploadImage()","Error: "+ e.getMessage());
+      } finally {
+        connection.disconnect();
+      }
     }
   }
 

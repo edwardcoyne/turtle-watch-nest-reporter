@@ -11,10 +11,10 @@ buildscript {
 }
 
 android {
-    useLibrary 'org.apache.http.legacy'
+//    useLibrary 'org.apache.http.legacy'
     lintOptions {
-        abortOnError false
-        warning 'InvalidPackage'
+        abortOnError true
+//        warning 'InvalidPackage'
     }
 
     compileSdkVersion 26 //from 19
@@ -31,6 +31,7 @@ android {
     configurations {
         all {
             exclude module: 'commons-logging'
+            exclude module: 'httpclient'
         }
     }
 
@@ -65,10 +66,19 @@ dependencies {
     implementation 'com.google.http-client:google-http-client-gson:1.19.0'
     implementation 'com.google.http-client:google-http-client-android:1.23.0'
 
-    implementation ('org.apache.httpcomponents:httpmime:4.3.5')
+    implementation 'org.apache.httpcomponents:httpcore:4.4.6'
+    implementation 'com.google.android.gms:play-services-auth:16.0.0'
 
-    implementation ('com.google.api-client:google-api-client:1.24.1') {
-    }
+    implementation 'org.apache.httpcomponents:httpmime:4.3.5'
+
+
+    implementation 'com.google.api-client:google-api-client:1.24.1'
 
     endpointsServer project(path: ':backend', configuration: 'endpoints')
+
+    annotationProcessor 'com.google.appengine:appengine-api-1.0-sdk:1.9.64'
+    compileOnly 'com.google.appengine:appengine-api-1.0-sdk:1.9.64'
+}
+repositories {
+    mavenCentral()
 }

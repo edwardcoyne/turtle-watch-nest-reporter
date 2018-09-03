@@ -204,6 +204,10 @@
         "source": "/Users/ReverendCode/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/7676e18c44d86163ae74e3857069cc4e/res/drawable-mdpi-v4/notification_bg_normal.9.png"
     },
     {
+        "merged": "/Users/ReverendCode/Desktop/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/res/merged/debug/drawable-watch-v20_common_google_signin_btn_text_disabled.xml.flat",
+        "source": "/Users/ReverendCode/.gradle/caches/transforms-1/files-1.1/play-services-auth-16.0.0.aar/ef8a4da1c5d7e301fcce4bd0417e779d/res/drawable-watch-v20/common_google_signin_btn_text_disabled.xml"
+    },
+    {
         "merged": "/Users/ReverendCode/Desktop/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/res/merged/debug/layout_notification_template_media.xml.flat",
         "source": "/Users/ReverendCode/.gradle/caches/transforms-1/files-1.1/support-media-compat-26.1.0.aar/89e747ebf6e28b83251911400bb45033/res/layout/notification_template_media.xml"
     },
@@ -266,6 +270,10 @@
     {
         "merged": "/Users/ReverendCode/Desktop/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/res/merged/debug/drawable-mdpi-v4_notification_bg_low_normal.9.png.flat",
         "source": "/Users/ReverendCode/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/7676e18c44d86163ae74e3857069cc4e/res/drawable-mdpi-v4/notification_bg_low_normal.9.png"
+    },
+    {
+        "merged": "/Users/ReverendCode/Desktop/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/res/merged/debug/drawable-watch-v20_common_google_signin_btn_text_dark_normal.xml.flat",
+        "source": "/Users/ReverendCode/.gradle/caches/transforms-1/files-1.1/play-services-auth-16.0.0.aar/ef8a4da1c5d7e301fcce4bd0417e779d/res/drawable-watch-v20/common_google_signin_btn_text_dark_normal.xml"
     },
     {
         "merged": "/Users/ReverendCode/Desktop/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/res/merged/debug/drawable_common_google_signin_btn_text_light_focused.xml.flat",
@@ -358,6 +366,10 @@
     {
         "merged": "/Users/ReverendCode/Desktop/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/res/merged/debug/drawable-xxhdpi_ic_launcher.png.flat",
         "source": "/Users/ReverendCode/Desktop/turtle-watch-nest-reporter/client/android/studio_project/app/src/main/res/drawable-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/ReverendCode/Desktop/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/res/merged/debug/drawable-watch-v20_common_google_signin_btn_text_light_normal.xml.flat",
+        "source": "/Users/ReverendCode/.gradle/caches/transforms-1/files-1.1/play-services-auth-16.0.0.aar/ef8a4da1c5d7e301fcce4bd0417e779d/res/drawable-watch-v20/common_google_signin_btn_text_light_normal.xml"
     },
     {
         "merged": "/Users/ReverendCode/Desktop/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/res/merged/debug/color_common_google_signin_btn_tint.xml.flat",
