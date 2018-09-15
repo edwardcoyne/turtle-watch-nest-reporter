@@ -15,7 +15,9 @@ android {
         debug {
             keyAlias 'turtle nest reporter'
             keyPassword 'amitwsm'
-            storeFile file('/code/turtle-watch-nest-reporter/app.keystore')
+            // Download here: https://drive.google.com/file/d/0B4ZK1C9FL9MBTWlmZkxKNUZ6NE0/view
+            // DO NOT checkin.
+            storeFile file('./app.keystore')
             storePassword 'amitwsm'
         }
     }
