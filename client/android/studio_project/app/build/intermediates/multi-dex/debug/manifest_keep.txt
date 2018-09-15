@@ -1,3 +1,3 @@
-# Referenced at /Users/ReverendCode/Desktop/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/manifests/full/debug/AndroidManifest.xml:36
+# Referenced at /code/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/manifests/full/debug/AndroidManifest.xml:36
 -keep class android.support.multidex.MultiDexApplication { <init>(...); }
 

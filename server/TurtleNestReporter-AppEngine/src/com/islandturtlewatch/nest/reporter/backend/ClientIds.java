@@ -4,7 +4,8 @@ public class ClientIds {
   private ClientIds() {} // Static only.
 
     //This is the Production CLIENT_ID
-  public static final String CLIENT_ID = "362099484578.apps.googleusercontent.com";
+  //public static final String CLIENT_ID = "362099484578.apps.googleusercontent.com";
+  public static final String CLIENT_ID = "362099484578-8pgeec1f3r137278po1btff19cs9spv6.apps.googleusercontent.com";
 
 
     //This is for connecting to the Test backend only

@@ -18,7 +18,7 @@ public class RunEnvironment {
   private static final Environment environment = Environment.PROD;
   private static final String localAddress = "10.0.0.134";
   private static final String localAddressWPort = localAddress + ":8080";
-  private static final int backendVersion = 3;
+  private static final String backendVersion = "20180908t160502";
 
 
   public static String getRootBackendUrl() {

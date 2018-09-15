@@ -11,6 +11,8 @@ import com.google.api.client.repackaged.com.google.common.base.Preconditions;
 public class AuthenticationUtil {
   // NOTE: this is the WEB client id, not the android client id. Ask google why, not me.
   private static final String WEB_CLIENT_ID = "362099484578.apps.googleusercontent.com";
+  //private static final String WEB_CLIENT_ID = "362099484578-8pgeec1f3r137278po1btff19cs9spv6.apps.googleusercontent.com";
+  private static final String ANDROID_CLIENT_ID = "362099484578-lbl3ef0b8mi6t13fpdthvr3n0qssqq4m.apps.googleusercontent.com";
   private static final String DEV_CLIENT_ID = "625582312057-mft8ce438s5dt5rfujufd7dlsavt5bk9.apps.googleusercontent.com";
 
 

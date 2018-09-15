@@ -3,7 +3,6 @@ apply plugin: 'com.google.cloud.tools.endpoints-framework-client'
 buildscript {
     repositories {
         jcenter()
-        maven {url "https://maven.google.com"}
     }
     dependencies {
         classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:1.0.2'
@@ -12,11 +11,18 @@ buildscript {
 
 android {
 //    useLibrary 'org.apache.http.legacy'
+    signingConfigs {
+        debug {
+            keyAlias 'turtle nest reporter'
+            keyPassword 'amitwsm'
+            storeFile file('/code/turtle-watch-nest-reporter/app.keystore')
+            storePassword 'amitwsm'
+        }
+    }
     lintOptions {
         abortOnError true
 //        warning 'InvalidPackage'
     }
-
     compileSdkVersion 26 //from 19
     defaultConfig {
         applicationId "com.islandturtlewatch.nest.reporter"
@@ -24,8 +30,8 @@ android {
         targetSdkVersion 26
         multiDexEnabled true
         compileOptions {
-            sourceCompatibility JavaVersion.VERSION_1_7
-            targetCompatibility JavaVersion.VERSION_1_7
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
         }
     }
     configurations {
@@ -34,17 +40,19 @@ android {
             exclude module: 'httpclient'
         }
     }
-
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/LICENSE'
     }
-
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            signingConfig signingConfigs.debug
+        }
+        debug {
+            signingConfig signingConfigs.debug
         }
     }
     sourceSets {
@@ -52,30 +60,36 @@ android {
     }
 }
 dependencies {
-
-    implementation 'com.fasterxml.jackson.core:jackson-core:2.9.4'
-    implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    // androidTestCompile compiles instrumentation tests written using Espresso
+    // used by Firebase Test Lab
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    // V2: Endpoints Framework v2 migration
+    endpointsServer project(path: ':backend', configuration: 'endpoints')
+    implementation 'com.google.api-client:google-api-client:1.25.0'
+    implementation 'com.google.api-client:google-api-client-android:1.25.0'
+    implementation 'com.google.http-client:google-http-client-android:1.25.0'
+    implementation 'com.google.http-client:google-http-client-jackson2:1.25.0'
+    implementation 'com.google.http-client:google-http-client-gson:1.25.0'
+    //implementation 'com.fasterxml.jackson.core:jackson-core:2.9.4'
+    implementation 'com.google.code.findbugs:jsr305:3.0.2'
     annotationProcessor 'org.projectlombok:lombok:1.16.2'
     compileOnly 'org.projectlombok:lombok:1.16.2'
-    implementation 'com.google.api-client:google-api-client-android:1.23.0'
     implementation 'com.android.support:support-v4:26.1.0'
-    implementation 'com.google.android.gms:play-services-identity:15.0.1'
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'joda-time:joda-time:2.3'
     implementation 'com.google.protobuf:protobuf-java:3.4.0'
-    implementation 'com.google.http-client:google-http-client-gson:1.19.0'
-    implementation 'com.google.http-client:google-http-client-android:1.23.0'
-
     implementation 'org.apache.httpcomponents:httpcore:4.4.6'
+    implementation 'com.google.android.gms:play-services-identity:15.0.1'
     implementation 'com.google.android.gms:play-services-auth:16.0.0'
-
+    implementation 'com.google.android.gms:play-services-base:15.0.1'
     implementation 'org.apache.httpcomponents:httpmime:4.3.5'
-
-
-    implementation 'com.google.api-client:google-api-client:1.24.1'
-
     endpointsServer project(path: ':backend', configuration: 'endpoints')
-
     annotationProcessor 'com.google.appengine:appengine-api-1.0-sdk:1.9.64'
     compileOnly 'com.google.appengine:appengine-api-1.0-sdk:1.9.64'
 }

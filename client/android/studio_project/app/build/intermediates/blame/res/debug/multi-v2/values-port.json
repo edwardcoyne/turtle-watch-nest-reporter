@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/ReverendCode/Desktop/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-port/values-port.xml",
+            "outputFile": "/code/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-port/values-port.xml",
             "map": [
                 {
-                    "source": "/Users/ReverendCode/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/7676e18c44d86163ae74e3857069cc4e/res/values-port/values-port.xml",
+                    "source": "/home/ed/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/a2ca4f8550a1986b6d2873c98cd0a386/res/values-port/values-port.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

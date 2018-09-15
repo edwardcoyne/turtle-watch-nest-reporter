@@ -30,7 +30,8 @@ import com.islandturtlewatch.nest.reporter.transport.ReportResponse.Code;
 import javax.xml.ws.Endpoint;
 
 @Api(name = "reportEndpoint",
-clientIds = {ClientIds.ANDROID_CLIENT_ID_DEV, ClientIds.ANDROID_CLIENT_ID_PROD,
+clientIds = {ClientIds.CLIENT_ID, ClientIds.ANDROID_CLIENT_ID_DEV,
+        ClientIds.ANDROID_CLIENT_ID_PROD,
         ClientIds.ANDROID_CLIENT_ID_LOCAL },
 audiences = ClientIds.CLIENT_ID,
 scopes = {"https://www.googleapis.com/auth/userinfo.email"},

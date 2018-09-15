@@ -1,10 +1,29 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/ReverendCode/Desktop/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v16/values-v16.xml",
+            "outputFile": "/code/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v16/values-v16.xml",
             "map": [
                 {
-                    "source": "/Users/ReverendCode/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/7676e18c44d86163ae74e3857069cc4e/res/values-v16/values-v16.xml",
+                    "source": "/home/ed/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/a2ca4f8550a1986b6d2873c98cd0a386/res/values-v16/values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "5",
+                        "endColumns": "12",
+                        "endOffsets": "223"
+                    },
+                    "to": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "121",
+                        "endLines": "6",
+                        "endColumns": "12",
+                        "endOffsets": "289"
+                    }
+                },
+                {
+                    "source": "/home/ed/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/1afee15abda467f059985fb6f1fc5724/res/values-v16/values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
