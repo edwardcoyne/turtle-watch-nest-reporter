@@ -1,13 +1,17 @@
 package com.islandturtlewatch.nest.reporter.ui.split;
 
+import android.Manifest;
 import android.accounts.AccountManager;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -26,6 +30,7 @@ import android.widget.TextView;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter;
@@ -59,11 +64,17 @@ import com.islandturtlewatch.nest.reporter.util.DialogUtil;
 import com.islandturtlewatch.nest.reporter.util.ReportUtil;
 import com.islandturtlewatch.nest.reporter.util.SettingsUtil;
 
+import java.util.List;
 import java.util.Map;
 
 public class SplitEditActivity extends FragmentActivity implements EditView {
   //private static final String TAG = SplitEditActivity.class.getSimpleName();
   private static final String KEY_SECTION = "Section";
+  private static final List<String> PERMISSIONS = ImmutableList.of(
+          Manifest.permission.GET_ACCOUNTS,
+          Manifest.permission.ACCESS_FINE_LOCATION,
+          Manifest.permission.CAMERA);
+
   public static final int REQUEST_ACCOUNT_PICKER = 1;
 
   private static final ImmutableMap<ReportSection, EditFragment> FRAGMENT_MAP =
@@ -89,6 +100,7 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
     setContentView(R.layout.split_edit_activity);
     settings = getSharedPreferences(SettingsUtil.SETTINGS_ID, MODE_PRIVATE);
     ensureUsernameSet();
+    ensureCorePermissions();
     AuthenticationUtil.checkGooglePlayServicesAvailable(this);
 
     model = new ReportsModel(new LocalDataStore(this),
@@ -280,6 +292,18 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
     if (!settings.contains(SettingsUtil.KEY_USERNAME)) {
       startActivityForResult(AuthenticationUtil.getCredential(this, "DUMMY").newChooseAccountIntent(),
           REQUEST_ACCOUNT_PICKER);
+    }
+  }
+
+  private void ensureCorePermissions() {
+    for (String permisson : PERMISSIONS) {
+      if (ContextCompat.checkSelfPermission(this, permisson)
+              != PackageManager.PERMISSION_GRANTED) {
+        // No explanation needed; request the permission
+        ActivityCompat.requestPermissions(this,
+                PERMISSIONS.toArray(new String[]{}),
+                1);
+      }
     }
   }
 

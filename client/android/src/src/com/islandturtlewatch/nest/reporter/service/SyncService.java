@@ -61,9 +61,17 @@ import com.islandturtlewatch.nest.reporter.util.ErrorUtil;
 import com.islandturtlewatch.nest.reporter.util.ImageUtil;
 
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpVersion;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.CoreProtocolPNames;
+import org.apache.http.params.HttpParams;
+import org.apache.http.util.EntityUtils;
 
 
 public class SyncService extends Service {
@@ -249,19 +257,16 @@ public class SyncService extends Service {
     private LocalDataStore dataStore;
     private Thread thread;
     private final AtomicBoolean running = new AtomicBoolean(false);
-    private HttpURLConnection client;
-//    private DefaultHttpClient httpClient;
-
+    private DefaultHttpClient httpClient;
     public void start() {
       running.set(true);
       thread = new Thread(this);
       dataStore = new LocalDataStore(SyncService.this);
       thread.start();
 
-//      HttpParams params = new BasicHttpParams();
-//      params.setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
-//      httpClient = new DefaultHttpClient(params);
-//
+      HttpParams params = new BasicHttpParams();
+      params.setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
+      httpClient = new DefaultHttpClient(params);
     }
 
     public void stop() {
@@ -414,6 +419,7 @@ public class SyncService extends Service {
         EncodedImageRef encodedRef = new EncodedImageRef();
         encodedRef.setRefEncoded(BaseEncoding.base64().encode(imageRef.build().toByteArray()));
 
+        Log.d(TAG, "Uploading image: " + imageRef.build().toString());
         SerializedProto serializedProto = imageService.imageUpload(encodedRef).execute();
         ImageUploadRef.Builder uploadRef = ImageUploadRef.newBuilder();
         TextFormat.merge(serializedProto.getSerializedProto(), uploadRef);
@@ -425,28 +431,17 @@ public class SyncService extends Service {
     }
 
     private void uploadImage(ImageUploadRef ref) throws IOException {
-      HttpURLConnection connection = (HttpURLConnection) new URL(ref.getUrl()).openConnection();
-      connection.setDoInput(true);
-      connection.setDoOutput(true);
-      connection.setUseCaches(false);
-      connection.setRequestMethod("POST");
-      MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-      builder.addBinaryBody("Image",
-                            ImageUtil.readImageBytes(SyncService.this,
-                                    ref.getImage().getImageName()),
-              ContentType.create("image/jpeg"),
-              ref.getImage().getImageName());
-      HttpEntity entity = builder.build();
-      try {
-        OutputStream outputStream = connection.getOutputStream();
-        entity.writeTo(outputStream);
-        outputStream.close();
-        connection.connect();
-      } catch (Exception e) {
-        Log.e("UploadImage()","Error: "+ e.getMessage());
-      } finally {
-        connection.disconnect();
-      }
+      HttpPost httppost = new HttpPost(ref.getUrl());
+      httppost.setEntity(MultipartEntityBuilder.create()
+              .addBinaryBody("Image",
+                      ImageUtil.readImageBytes(SyncService.this, ref.getImage().getImageName()),
+                      ContentType.create("image/jpeg"),
+                      ref.getImage().getImageName())
+              .build());
+        HttpResponse response = httpClient.execute(httppost);
+        Log.d(TAG, "Response:" + response.getStatusLine() + " :: " +
+                EntityUtils.toString(response.getEntity()));
+
     }
   }
 

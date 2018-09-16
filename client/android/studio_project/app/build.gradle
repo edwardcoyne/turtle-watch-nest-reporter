@@ -60,6 +60,9 @@ android {
     sourceSets {
         main.java.srcDirs = ['../../src/src/', '../../../../proto/generated/']
     }
+
+    // We use this to upload images.
+    useLibrary  'org.apache.http.legacy'
 }
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -78,7 +81,6 @@ dependencies {
     implementation 'com.google.http-client:google-http-client-android:1.25.0'
     implementation 'com.google.http-client:google-http-client-jackson2:1.25.0'
     implementation 'com.google.http-client:google-http-client-gson:1.25.0'
-    //implementation 'com.fasterxml.jackson.core:jackson-core:2.9.4'
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
     annotationProcessor 'org.projectlombok:lombok:1.16.2'
     compileOnly 'org.projectlombok:lombok:1.16.2'

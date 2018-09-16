@@ -9,7 +9,76 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1c757876-9da6-4626-89e0-2bcd72cf89d2" name="Default" comment="" />
+    <list default="true" id="1c757876-9da6-4626-89e0-2bcd72cf89d2" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/../../../.gitignore" afterPath="$PROJECT_DIR$/../../../.gitignore" />
+      <change beforePath="$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/service/SyncService.java" afterPath="$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/service/SyncService.java" />
+      <change beforePath="$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/ui/split/SplitEditActivity.java" afterPath="$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/ui/split/SplitEditActivity.java" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4/fileContent/fileContent.lock" afterPath="$PROJECT_DIR$/.gradle/4.4/fileContent/fileContent.lock" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.bin" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.lock" afterPath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.lock" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4/fileHashes/resourceHashesCache.bin" afterPath="$PROJECT_DIR$/.gradle/4.4/fileHashes/resourceHashesCache.bin" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4/javaCompile/classAnalysis.bin" afterPath="$PROJECT_DIR$/.gradle/4.4/javaCompile/classAnalysis.bin" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4/javaCompile/javaCompile.lock" afterPath="$PROJECT_DIR$/.gradle/4.4/javaCompile/javaCompile.lock" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4/javaCompile/taskHistory.bin" afterPath="$PROJECT_DIR$/.gradle/4.4/javaCompile/taskHistory.bin" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4/javaCompile/taskJars.bin" afterPath="$PROJECT_DIR$/.gradle/4.4/javaCompile/taskJars.bin" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.bin" afterPath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.bin" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.lock" afterPath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.lock" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_httpcomponents_httpcore_4_4_6_jar.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_httpcomponents_httpmime_4_3_5_jar.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
+      <change beforePath="$PROJECT_DIR$/app/build/endpointsClientLibs/imageEndpoint-v1-java.zip" afterPath="$PROJECT_DIR$/app/build/endpointsClientLibs/imageEndpoint-v1-java.zip" />
+      <change beforePath="$PROJECT_DIR$/app/build/endpointsClientLibs/reportEndpoint-v1-java.zip" afterPath="$PROJECT_DIR$/app/build/endpointsClientLibs/reportEndpoint-v1-java.zip" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/buildConfig/debug/com/islandturtlewatch/nest/reporter/BuildConfig.java" afterPath="$PROJECT_DIR$/app/build/generated/source/buildConfig/debug/com/islandturtlewatch/nest/reporter/BuildConfig.java" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/ImageEndpoint.java" afterPath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/ImageEndpoint.java" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/ImageEndpointRequest.java" afterPath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/ImageEndpointRequest.java" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/ImageEndpointRequestInitializer.java" afterPath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/ImageEndpointRequestInitializer.java" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/ImageEndpointScopes.java" afterPath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/ImageEndpointScopes.java" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/model/EncodedImageRef.java" afterPath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/model/EncodedImageRef.java" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/model/SerializedProto.java" afterPath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/model/SerializedProto.java" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/ReportEndpoint.java" afterPath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/ReportEndpoint.java" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/ReportEndpointRequest.java" afterPath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/ReportEndpointRequest.java" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/ReportEndpointRequestInitializer.java" afterPath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/ReportEndpointRequestInitializer.java" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/ReportEndpointScopes.java" afterPath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/ReportEndpointScopes.java" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/CollectionResponseEncodedReportRef.java" afterPath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/CollectionResponseEncodedReportRef.java" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/EncodedReport.java" afterPath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/EncodedReport.java" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/EncodedReportRef.java" afterPath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/EncodedReportRef.java" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/ReportRequest.java" afterPath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/ReportRequest.java" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/ReportResponse.java" afterPath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/ReportResponse.java" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/compile-file-map.properties" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/compile-file-map.properties" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/manifests/full/debug/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/build/intermediates/manifests/full/debug/AndroidManifest.xml" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/manifests/full/debug/output.json" afterPath="$PROJECT_DIR$/app/build/intermediates/manifests/full/debug/output.json" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/manifests/instant-run/debug/output.json" afterPath="$PROJECT_DIR$/app/build/intermediates/manifests/instant-run/debug/output.json" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/debug/output.json" afterPath="$PROJECT_DIR$/app/build/intermediates/res/debug/output.json" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/debug/resources-debug.ap_" afterPath="$PROJECT_DIR$/app/build/intermediates/res/debug/resources-debug.ap_" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/splits-support/debug/apk-list/apk-list.gson" afterPath="$PROJECT_DIR$/app/build/intermediates/splits-support/debug/apk-list/apk-list.gson" />
+      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/imageEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/ImageEndpoint.java" afterPath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/imageEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/ImageEndpoint.java" />
+      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/imageEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/ImageEndpointRequest.java" afterPath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/imageEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/ImageEndpointRequest.java" />
+      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/imageEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/ImageEndpointRequestInitializer.java" afterPath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/imageEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/ImageEndpointRequestInitializer.java" />
+      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/imageEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/ImageEndpointScopes.java" afterPath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/imageEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/ImageEndpointScopes.java" />
+      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/imageEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/model/EncodedImageRef.java" afterPath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/imageEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/model/EncodedImageRef.java" />
+      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/imageEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/model/SerializedProto.java" afterPath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/imageEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/model/SerializedProto.java" />
+      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/reportEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/ReportEndpoint.java" afterPath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/reportEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/ReportEndpoint.java" />
+      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/reportEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/ReportEndpointRequest.java" afterPath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/reportEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/ReportEndpointRequest.java" />
+      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/reportEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/ReportEndpointRequestInitializer.java" afterPath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/reportEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/ReportEndpointRequestInitializer.java" />
+      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/reportEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/ReportEndpointScopes.java" afterPath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/reportEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/ReportEndpointScopes.java" />
+      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/reportEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/CollectionResponseEncodedReportRef.java" afterPath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/reportEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/CollectionResponseEncodedReportRef.java" />
+      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/reportEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/EncodedReport.java" afterPath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/reportEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/EncodedReport.java" />
+      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/reportEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/EncodedReportRef.java" afterPath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/reportEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/EncodedReportRef.java" />
+      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/reportEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/ReportRequest.java" afterPath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/reportEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/ReportRequest.java" />
+      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/reportEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/ReportResponse.java" afterPath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/reportEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/ReportResponse.java" />
+      <change beforePath="$PROJECT_DIR$/app/release/app-release.apk" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/app/release/output.json" afterPath="$PROJECT_DIR$/app/release/output.json" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+      <change beforePath="$PROJECT_DIR$/backend/build/distributions/backend-discoveryDocs.zip" afterPath="$PROJECT_DIR$/backend/build/distributions/backend-discoveryDocs.zip" />
+      <change beforePath="$PROJECT_DIR$/build/intermediates/lint-cache/maven.google/com/android/support/group-index.xml" afterPath="$PROJECT_DIR$/build/intermediates/lint-cache/maven.google/com/android/support/group-index.xml" />
+      <change beforePath="$PROJECT_DIR$/build/intermediates/lint-cache/maven.google/com/google/android/gms/group-index.xml" afterPath="$PROJECT_DIR$/build/intermediates/lint-cache/maven.google/com/google/android/gms/group-index.xml" />
+      <change beforePath="$PROJECT_DIR$/build/intermediates/lint-cache/maven.google/master-index.xml" afterPath="$PROJECT_DIR$/build/intermediates/lint-cache/maven.google/master-index.xml" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,107 +99,32 @@
     </system>
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/build.gradle">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/build.gradle">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="243">
-              <caret line="24" column="25" lean-forward="true" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SyncService.java" pinned="false" current-in-tab="false">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="SyncService.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/service/SyncService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5184">
-              <caret line="353" column="39" lean-forward="false" selection-start-line="353" selection-start-column="39" selection-end-line="353" selection-end-column="39" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EndPointFactory.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/net/EndPointFactory.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="15" column="13" lean-forward="false" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RunEnvironment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/RunEnvironment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="321">
-              <caret line="55" column="47" lean-forward="false" selection-start-line="55" selection-start-column="47" selection-end-line="55" selection-end-column="47" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AuthenticationUtil.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/util/AuthenticationUtil.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="18" column="86" lean-forward="false" selection-start-line="18" selection-start-column="86" selection-end-line="18" selection-end-column="86" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-          <provider editor-type-id="android-manifest">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="36">
-              <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="48" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ReportEndpoint.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../../server/TurtleNestReporter-AppEngine/src/com/islandturtlewatch/nest/reporter/backend/endpoints/ReportEndpoint.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="42" column="34" lean-forward="false" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="34" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ClientIds.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../../server/TurtleNestReporter-AppEngine/src/com/islandturtlewatch/nest/reporter/backend/ClientIds.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+            <state relative-caret-position="411">
+              <caret line="443" column="0" lean-forward="false" selection-start-line="443" selection-start-column="0" selection-end-line="443" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/build.gradle">
+        <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="11" column="63" lean-forward="false" selection-start-line="11" selection-start-column="63" selection-end-line="11" selection-end-column="63" />
+            <state relative-caret-position="216">
+              <caret line="82" column="74" lean-forward="false" selection-start-line="82" selection-start-column="74" selection-end-line="82" selection-end-column="74" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ImageEndpoint.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../server/TurtleNestReporter-AppEngine/src/com/islandturtlewatch/nest/reporter/backend/endpoints/ImageEndpoint.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="108">
+              <caret line="28" column="13" lean-forward="false" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -141,12 +135,17 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>gms</find>
+      <find>GET_ACCOUNTS</find>
+      <find>upload re</find>
     </findStrings>
   </component>
   <component name="GenerateSignedApkSettings">
-    <option name="KEY_STORE_PATH" value="$PROJECT_DIR$/../../../app.keystore" />
+    <option name="KEY_STORE_PATH" value="$PROJECT_DIR$/app/app.keystore" />
     <option name="KEY_ALIAS" value="turtle nest reporter" />
     <option name="REMEMBER_PASSWORDS" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
   </component>
   <component name="GradleLocalSettings">
     <option name="myGradleHomes">
@@ -2937,6 +2936,9 @@
         <option value="$PROJECT_DIR$/../../../server/TurtleNestReporter-AppEngine/src/com/islandturtlewatch/nest/reporter/backend/ClientIds.java" />
         <option value="$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/RunEnvironment.java" />
         <option value="$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/util/AuthenticationUtil.java" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/ui/split/SplitEditActivity.java" />
+        <option value="$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/service/SyncService.java" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
       </list>
     </option>
@@ -2946,6 +2948,7 @@
     <option name="width" value="1341" />
     <option name="height" value="1080" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
@@ -2961,7 +2964,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -3012,6 +3014,21 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="reporter" type="462c0819:PsiDirectoryNode" />
               <item name="service" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="studio_project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="app" type="47feb1d3:ProjectViewModuleNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="reporter" type="462c0819:PsiDirectoryNode" />
+              <item name="ui" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="studio_project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="app" type="47feb1d3:ProjectViewModuleNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="reporter" type="462c0819:PsiDirectoryNode" />
+              <item name="ui" type="462c0819:PsiDirectoryNode" />
+              <item name="split" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="studio_project" type="b2602c69:ProjectViewProjectNode" />
@@ -3073,6 +3090,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -3131,21 +3149,22 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="android.sdk.path" value="$ANDROID_SDK_ROOT$" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.smartKeys" />
     <property name="show.migrate.to.gradle.popup" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../app.keystore" />
-    <property name="device.picker.selection" value="Nexus_7_API_27" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/app.keystore" />
+    <property name="device.picker.selection" value="057cb2d6" />
     <property name="android.project.structure.last.selected" value="app" />
     <property name="android.project.structure.proportion" value="0.15" />
     <property name="ExportApk.ApkPath" value="$PROJECT_DIR$/app" />
     <property name="ExportApk.Flavors" value="" />
-    <property name="ExportApk.BuildType" value="debug" />
+    <property name="ExportApk.BuildType" value="release" />
     <property name="ExportApk.SignV2" value="true" />
+    <property name="ExportApk.SignV1" value="true" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -3242,53 +3261,6 @@
       <module name="" />
       <envs />
     </configuration>
-    <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="WORKING_DIRECTORY" />
-      <module name="studio_project" />
-      <envs />
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType" factoryName="Kotlin script">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="filePath" />
-      <option name="vmParameters" />
-      <option name="alternativeJrePath" />
-      <option name="programParameters" />
-      <option name="passParentEnvs" value="true" />
-      <option name="workingDirectory" />
-      <option name="isAlternativeJrePathEnabled" value="false" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="WORKING_DIRECTORY" />
-      <module name="studio_project" />
-      <envs />
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="filePath" />
-      <option name="vmParameters" />
-      <option name="alternativeJrePath" />
-      <option name="programParameters" />
-      <option name="passParentEnvs" value="true" />
-      <option name="workingDirectory" />
-      <option name="isAlternativeJrePathEnabled" value="false" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="WORKING_DIRECTORY" />
-      <envs />
-    </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
@@ -3353,6 +3325,53 @@
       <patterns />
       <method />
     </configuration>
+    <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <module name="studio_project" />
+      <envs />
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType" factoryName="Kotlin script">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <module name="studio_project" />
+      <envs />
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <envs />
+    </configuration>
     <configuration name="&lt;template&gt;" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" default="true" selected="false">
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
     </configuration>
@@ -3375,39 +3394,38 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="535" y="0" width="1341" height="1080" extended-state="4" />
-    <editor active="true" />
     <layout>
+      <window_info id="Android Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28286016" sideWeight="0.5057915" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32948583" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Flutter Outline" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4386149" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32948583" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Flutter Outline" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="0.4384858" sideWeight="0.4972973" order="7" side_tool="false" content_ui="tabs" x="0" y="28" width="1603" height="1052" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26486486" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28331584" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Build" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28286016" sideWeight="0.49420848" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Device File Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Device File Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Flutter Inspector" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Flutter Inspector" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -3418,11 +3436,92 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="24" column="25" lean-forward="false" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/service/SyncService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6354">
+          <caret line="353" column="39" lean-forward="false" selection-start-line="353" selection-start-column="39" selection-end-line="353" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/net/EndPointFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="15" column="13" lean-forward="false" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/RunEnvironment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="882">
+          <caret line="55" column="47" lean-forward="false" selection-start-line="55" selection-start-column="47" selection-end-line="55" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/util/AuthenticationUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="18" column="86" lean-forward="false" selection-start-line="18" selection-start-column="86" selection-end-line="18" selection-end-column="86" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../server/TurtleNestReporter-AppEngine/src/com/islandturtlewatch/nest/reporter/backend/endpoints/ReportEndpoint.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="42" column="34" lean-forward="false" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../server/TurtleNestReporter-AppEngine/src/com/islandturtlewatch/nest/reporter/backend/ClientIds.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="11" column="63" lean-forward="false" selection-start-line="11" selection-start-column="63" selection-end-line="11" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="17" column="78" lean-forward="false" selection-start-line="17" selection-start-column="78" selection-end-line="17" selection-end-column="78" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/backend/src/main/webapp/WEB-INF/web.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
           <caret line="17" column="50" lean-forward="false" selection-start-line="17" selection-start-column="50" selection-end-line="17" selection-end-column="50" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3430,7 +3529,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="352">
           <caret line="540" column="19" lean-forward="false" selection-start-line="540" selection-start-column="19" selection-end-line="540" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3458,29 +3556,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/service/SyncService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5184">
-          <caret line="353" column="39" lean-forward="false" selection-start-line="353" selection-start-column="39" selection-end-line="353" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/net/EndPointFactory.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
           <caret line="15" column="13" lean-forward="false" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider editor-type-id="android-manifest">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="48" />
           <folding />
         </state>
       </provider>
@@ -3503,7 +3582,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/RunEnvironment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="321">
+        <state relative-caret-position="882">
           <caret line="55" column="47" lean-forward="false" selection-start-line="55" selection-start-column="47" selection-end-line="55" selection-end-column="47" />
           <folding />
         </state>
@@ -3511,18 +3590,57 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/util/AuthenticationUtil.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
+        <state relative-caret-position="216">
           <caret line="18" column="86" lean-forward="false" selection-start-line="18" selection-start-column="86" selection-end-line="18" selection-end-column="86" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider editor-type-id="android-manifest">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="18" column="74" lean-forward="false" selection-start-line="18" selection-start-column="54" selection-end-line="18" selection-end-column="74" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/ui/split/SplitEditActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="290" column="36" lean-forward="true" selection-start-line="290" selection-start-column="36" selection-end-line="290" selection-end-column="36" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#8809#8810#0" expanded="false" />
+            <element signature="e#8876#8877#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../server/TurtleNestReporter-AppEngine/src/com/islandturtlewatch/nest/reporter/backend/endpoints/ImageEndpoint.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="28" column="13" lean-forward="false" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="24" column="25" lean-forward="true" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
+        <state relative-caret-position="216">
+          <caret line="82" column="74" lean-forward="false" selection-start-line="82" selection-start-column="74" selection-end-line="82" selection-end-column="74" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/service/SyncService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="411">
+          <caret line="443" column="0" lean-forward="false" selection-start-line="443" selection-start-column="0" selection-end-line="443" selection-end-column="0" />
           <folding />
         </state>
       </provider>
