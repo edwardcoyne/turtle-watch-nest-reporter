@@ -4,7 +4,7 @@
             "outputFile": "/code/turtle-watch-nest-reporter/client/android/studio_project/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v24/values-v24.xml",
             "map": [
                 {
-                    "source": "/home/ed/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/a2ca4f8550a1986b6d2873c98cd0a386/res/values-v24/values-v24.xml",
+                    "source": "/home/ed/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/3b9a908454b84083aa0d6ac04ca86872/res/values-v24/values-v24.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7",
                         "startColumns": "4,4,4,4,4,4",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "/home/ed/.gradle/caches/transforms-1/files-1.1/support-media-compat-26.1.0.aar/88214cf891c54465daeebcbb7a8cd837/res/values-v24/values-v24.xml",
+                    "source": "/home/ed/.gradle/caches/transforms-1/files-1.1/support-media-compat-26.1.0.aar/59efc59d5d694e8667f253bf7e6b707e/res/values-v24/values-v24.xml",
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",

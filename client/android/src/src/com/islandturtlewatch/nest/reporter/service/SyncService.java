@@ -480,6 +480,7 @@ public class SyncService extends Service {
     }
 
     @Override
+
     public boolean equals(Object o) {
       if (!(o instanceof Upload)) {
         return false;
