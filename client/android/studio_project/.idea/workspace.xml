@@ -10,172 +10,227 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c757876-9da6-4626-89e0-2bcd72cf89d2" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/../src/google-services.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/net/EndPointFactory.java" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/res/layout/split_edit_activity.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../src/res/layout/split_edit_activity.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/service/SyncService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/service/SyncService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4/fileContent/fileContent.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.4/fileContent/fileContent.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.9/fileChanges/last-build.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.9/fileContent/fileContent.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.9/fileHashes/fileHashes.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.9/fileHashes/fileHashes.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.9/fileHashes/resourceHashesCache.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.9/javaCompile/classAnalysis.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.9/javaCompile/jarAnalysis.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.9/javaCompile/javaCompile.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.9/javaCompile/processorPath.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.9/javaCompile/taskHistory.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.9/javaCompile/taskJars.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.9/taskHistory/taskHistory.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.9/taskHistory/taskHistory.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/ui/GpsCoordinateDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/ui/GpsCoordinateDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/ui/split/SplitEditActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/src/com/islandturtlewatch/nest/reporter/ui/split/SplitEditActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_core_common_1_0_0_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_common_1_0_0_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_annotations_26_1_0_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_appengine_appengine_api_1_0_sdk_1_9_64_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_code_findbugs_jsr305_3_0_2_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_code_gson_gson_2_8_2_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_guava_guava_20_0_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_protobuf_protobuf_java_3_4_0_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__joda_time_joda_time_2_3_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_projectlombok_lombok_1_16_2_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/endpointsClientLibs/imageEndpoint-v1-java.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/endpointsClientLibs/reportEndpoint-v1-java.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/endpointsDiscoveryDocsFromDependencies/imageEndpoint-v1-rest.discovery" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/endpointsDiscoveryDocsFromDependencies/reportEndpoint-v1-rest.discovery" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/generated/source/buildConfig/debug/com/islandturtlewatch/nest/reporter/BuildConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/generated/source/buildConfig/debug/com/islandturtlewatch/nest/reporter/BuildConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/ImageEndpoint.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/ImageEndpointRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/ImageEndpointRequestInitializer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/ImageEndpointScopes.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/model/EncodedImageRef.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/model/SerializedProto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/ReportEndpoint.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/ReportEndpointRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/ReportEndpointRequestInitializer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/ReportEndpointScopes.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/CollectionResponseEncodedReportRef.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/EncodedReport.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/EncodedReportRef.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/ReportRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/generated/source/endpoints/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/ReportResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/r/debug/android/arch/lifecycle/R.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/r/debug/android/support/compat/R.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/r/debug/android/support/coreui/R.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/r/debug/android/support/coreutils/R.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/r/debug/android/support/fragment/R.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/r/debug/android/support/mediacompat/R.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/r/debug/android/support/multidex/R.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/r/debug/android/support/v4/R.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/r/debug/com/google/android/gms/auth/R.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/r/debug/com/google/android/gms/auth/api/R.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/r/debug/com/google/android/gms/auth/api/phone/R.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/r/debug/com/google/android/gms/base/R.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/r/debug/com/google/android/gms/common/R.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/r/debug/com/google/android/gms/identity/R.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/r/debug/com/google/android/gms/tasks/R.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/r/debug/com/islandturtlewatch/nest/reporter/Manifest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/generated/source/r/debug/com/islandturtlewatch/nest/reporter/R.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/debug.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-af.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-am.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-ar.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-az.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-b+sr+Latn.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-be.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-bg.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-bn.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-bs.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-ca.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-cs.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-da.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-de.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-el.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-en-rAU.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-en-rGB.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-en-rIN.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-es-rUS.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-es.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-et.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-eu.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-fa.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-fi.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-fr-rCA.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-fr.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-gl.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-gu.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-hi.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-hr.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-hu.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-hy.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-in.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-is.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-it.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-iw.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-ja.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-ka.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-kk.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-km.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-kn.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-ko.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-ky.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-lo.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-lt.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-lv.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-mk.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-ml.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-mn.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-mr.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-ms.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-my.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-nb.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-ne.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-nl.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-pa.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-pl.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-port.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-pt-rBR.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-pt-rPT.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-pt.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-ro.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-ru.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-si.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-sk.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-sl.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-sq.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-sr.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-sv.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-sw.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-ta.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-te.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-th.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-tl.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-tr.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-uk.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-ur.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-uz.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-v11.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-v14.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-v16.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-v21.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-v24.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-vi.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-watch-v20.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-zh-rCN.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-zh-rHK.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-zh-rTW.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values-zu.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi-v2/values.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/single/debug.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/compileDebugAidl/dependency.store" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/compile-file-map.properties" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/compile-file-map.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-af/values-af.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-am/values-am.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ar/values-ar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-az/values-az.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-b+sr+Latn/values-b+sr+Latn.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-be/values-be.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-bg/values-bg.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-bn/values-bn.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-bs/values-bs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ca/values-ca.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-cs/values-cs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-da/values-da.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-de/values-de.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-el/values-el.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-en-rAU/values-en-rAU.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-en-rGB/values-en-rGB.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-en-rIN/values-en-rIN.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-es-rUS/values-es-rUS.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-es/values-es.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-et/values-et.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-eu/values-eu.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-fa/values-fa.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-fi/values-fi.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-fr-rCA/values-fr-rCA.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-fr/values-fr.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-gl/values-gl.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-gu/values-gu.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-hi/values-hi.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-hr/values-hr.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-hu/values-hu.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-hy/values-hy.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-in/values-in.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-is/values-is.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-it/values-it.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-iw/values-iw.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ja/values-ja.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ka/values-ka.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-kk/values-kk.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-km/values-km.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-kn/values-kn.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ko/values-ko.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ky/values-ky.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-lo/values-lo.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-lt/values-lt.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-lv/values-lv.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-mk/values-mk.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ml/values-ml.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-mn/values-mn.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-mr/values-mr.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ms/values-ms.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-my/values-my.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-nb/values-nb.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ne/values-ne.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-nl/values-nl.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-pa/values-pa.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-pl/values-pl.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-port/values-port.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-pt-rBR/values-pt-rBR.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-pt-rPT/values-pt-rPT.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-pt/values-pt.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ro/values-ro.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ru/values-ru.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-si/values-si.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-sk/values-sk.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-sl/values-sl.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-sq/values-sq.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-sr/values-sr.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-sv/values-sv.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-sw/values-sw.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ta/values-ta.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-te/values-te.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-th/values-th.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-tl/values-tl.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-tr/values-tr.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-uk/values-uk.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ur/values-ur.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-uz/values-uz.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v11/values-v11.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v14/values-v14.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v16/values-v16.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v21/values-v21.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v24/values-v24.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-vi/values-vi.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-watch-v20/values-watch-v20.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-zh-rCN/values-zh-rCN.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-zh-rHK/values-zh-rHK.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-zh-rTW/values-zh-rTW.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-zu/values-zu.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merger.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merger.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/color_common_google_signin_btn_text_dark.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/color_common_google_signin_btn_text_light.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/color_common_google_signin_btn_tint.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-hdpi-v4_common_full_open_on_phone.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-hdpi-v4_common_google_signin_btn_icon_dark_normal_background.9.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-hdpi-v4_common_google_signin_btn_icon_light_normal_background.9.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-hdpi-v4_common_google_signin_btn_text_dark_normal_background.9.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-hdpi-v4_common_google_signin_btn_text_light_normal_background.9.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-hdpi-v4_googleg_disabled_color_18.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-hdpi-v4_googleg_standard_color_18.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-hdpi-v4_notification_bg_low_normal.9.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-hdpi-v4_notification_bg_low_pressed.9.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-hdpi-v4_notification_bg_normal.9.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-hdpi-v4_notification_bg_normal_pressed.9.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-hdpi-v4_notify_panel_notification_icon_bg.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-hdpi_ic_launcher.png.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-hdpi_ic_launcher.png.flat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-mdpi-v4_common_google_signin_btn_icon_dark_normal_background.9.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-mdpi-v4_common_google_signin_btn_icon_light_normal_background.9.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-mdpi-v4_common_google_signin_btn_text_dark_normal_background.9.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-mdpi-v4_common_google_signin_btn_text_light_normal_background.9.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-mdpi-v4_googleg_disabled_color_18.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-mdpi-v4_googleg_standard_color_18.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-mdpi-v4_notification_bg_low_normal.9.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-mdpi-v4_notification_bg_low_pressed.9.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-mdpi-v4_notification_bg_normal.9.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-mdpi-v4_notification_bg_normal_pressed.9.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-mdpi-v4_notify_panel_notification_icon_bg.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-mdpi_ic_launcher.png.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-mdpi_ic_launcher.png.flat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-v21_notification_action_background.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-watch-v20_common_google_signin_btn_text_dark_normal.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-watch-v20_common_google_signin_btn_text_disabled.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-watch-v20_common_google_signin_btn_text_light_normal.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-xhdpi-v4_common_full_open_on_phone.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-xhdpi-v4_common_google_signin_btn_icon_dark_normal_background.9.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-xhdpi-v4_common_google_signin_btn_icon_light_normal_background.9.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-xhdpi-v4_common_google_signin_btn_text_dark_normal_background.9.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-xhdpi-v4_common_google_signin_btn_text_light_normal_background.9.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-xhdpi-v4_googleg_disabled_color_18.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-xhdpi-v4_googleg_standard_color_18.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-xhdpi-v4_notification_bg_low_normal.9.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-xhdpi-v4_notification_bg_low_pressed.9.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-xhdpi-v4_notification_bg_normal.9.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-xhdpi-v4_notification_bg_normal_pressed.9.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-xhdpi-v4_notify_panel_notification_icon_bg.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-xhdpi_ic_launcher.png.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-xhdpi_ic_launcher.png.flat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-xxhdpi-v4_common_google_signin_btn_icon_dark_normal_background.9.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-xxhdpi-v4_common_google_signin_btn_icon_light_normal_background.9.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-xxhdpi-v4_common_google_signin_btn_text_dark_normal_background.9.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-xxhdpi-v4_common_google_signin_btn_text_light_normal_background.9.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-xxhdpi-v4_googleg_disabled_color_18.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-xxhdpi-v4_googleg_standard_color_18.png.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-xxhdpi_ic_launcher.png.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable-xxhdpi_ic_launcher.png.flat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable_common_google_signin_btn_icon_dark.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable_common_google_signin_btn_icon_dark_focused.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable_common_google_signin_btn_icon_dark_normal.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable_common_google_signin_btn_icon_disabled.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable_common_google_signin_btn_icon_light.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable_common_google_signin_btn_icon_light_focused.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable_common_google_signin_btn_icon_light_normal.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable_common_google_signin_btn_text_dark.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable_common_google_signin_btn_text_dark_focused.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable_common_google_signin_btn_text_dark_normal.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable_common_google_signin_btn_text_disabled.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable_common_google_signin_btn_text_light.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable_common_google_signin_btn_text_light_focused.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable_common_google_signin_btn_text_light_normal.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable_notification_bg.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable_notification_bg_low.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable_notification_icon_background.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/drawable_notification_tile_bg.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout-v16_notification_template_custom_big.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout-v21_notification_action.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout-v21_notification_action_tombstone.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout-v21_notification_template_custom_big.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout-v21_notification_template_icon_group.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_clearable_date_picker_dialog.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_clearable_date_picker_dialog.xml.flat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_edit_fragment_info.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_edit_fragment_info.xml.flat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_edit_fragment_media.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_edit_fragment_media.xml.flat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_edit_fragment_nest_care.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_edit_fragment_nest_care.xml.flat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_edit_fragment_nest_condition.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_edit_fragment_nest_condition.xml.flat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_edit_fragment_nest_location.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_edit_fragment_nest_location.xml.flat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_edit_fragment_nest_resolution.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_edit_fragment_nest_resolution.xml.flat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_edit_fragment_notes.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_edit_fragment_notes.xml.flat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_edit_fragment_storms.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_edit_fragment_storms.xml.flat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_edit_wash_event_layout.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_edit_wash_event_layout.xml.flat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_notification_action.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_notification_action_tombstone.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_notification_media_action.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_notification_media_cancel_action.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_notification_template_big_media.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_notification_template_big_media_custom.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_notification_template_big_media_narrow.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_notification_template_big_media_narrow_custom.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_notification_template_icon_group.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_notification_template_lines_media.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_notification_template_media.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_notification_template_media_custom.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_notification_template_part_chronometer.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_notification_template_part_time.xml.flat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_reports_list_item.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_reports_list_item.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/manifests/density/debug/output.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/manifests/full/debug/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/manifests/full/debug/output.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/manifests/instant-run/debug/output.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/multi-dex/debug/manifest_keep.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/debug/output.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/debug/resources-debug.ap_" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_split_edit_activity.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout_split_edit_activity.xml.flat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/menu_split_edit_activity_menu.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/menu_split_edit_activity_menu.xml.flat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-af_values-af.arsc.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-af_values-af.arsc.flat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-am_values-am.arsc.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-am_values-am.arsc.flat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-ar_values-ar.arsc.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-ar_values-ar.arsc.flat" afterDir="false" />
@@ -232,7 +287,6 @@
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-nl_values-nl.arsc.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-nl_values-nl.arsc.flat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-pa_values-pa.arsc.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-pa_values-pa.arsc.flat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-pl_values-pl.arsc.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-pl_values-pl.arsc.flat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-port_values-port.arsc.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-port_values-port.arsc.flat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-pt-rBR_values-pt-rBR.arsc.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-pt-rBR_values-pt-rBR.arsc.flat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-pt-rPT_values-pt-rPT.arsc.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-pt-rPT_values-pt-rPT.arsc.flat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-pt_values-pt.arsc.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-pt_values-pt.arsc.flat" afterDir="false" />
@@ -255,7 +309,6 @@
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-uz_values-uz.arsc.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-uz_values-uz.arsc.flat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-v11_values-v11.arsc.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-v11_values-v11.arsc.flat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-v14_values-v14.arsc.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-v14_values-v14.arsc.flat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-v16_values-v16.arsc.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-v16_values-v16.arsc.flat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-v21_values-v21.arsc.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-v21_values-v21.arsc.flat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-v24_values-v24.arsc.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-v24_values-v24.arsc.flat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-vi_values-vi.arsc.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-vi_values-vi.arsc.flat" afterDir="false" />
@@ -265,286 +318,14 @@
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-zh-rTW_values-zh-rTW.arsc.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-zh-rTW_values-zh-rTW.arsc.flat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-zu_values-zu.arsc.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values-zu_values-zu.arsc.flat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values_values.arsc.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values_values.arsc.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/symbol-table-with-package/debug/package-aware-r.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/splits-support/debug/apk-list/apk-list.gson" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/splits-support/debug/split-list/split-list.gson" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/symbols/debug/R.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/outputs/logs/manifest-merger-debug-report.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/outputs/logs/manifest-merger-debug-report.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/imageEndpoint/LICENSE.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/imageEndpoint/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/imageEndpoint/proguard-google-api-client.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/imageEndpoint/readme.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/imageEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/ImageEndpoint.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/imageEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/ImageEndpointRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/imageEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/ImageEndpointRequestInitializer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/imageEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/ImageEndpointScopes.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/imageEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/model/EncodedImageRef.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/imageEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/imageEndpoint/model/SerializedProto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/reportEndpoint/LICENSE.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/reportEndpoint/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/reportEndpoint/proguard-google-api-client.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/reportEndpoint/readme.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/reportEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/ReportEndpoint.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/reportEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/ReportEndpointRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/reportEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/ReportEndpointRequestInitializer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/reportEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/ReportEndpointScopes.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/reportEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/CollectionResponseEncodedReportRef.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/reportEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/EncodedReport.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/reportEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/EncodedReportRef.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/reportEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/ReportRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/_endpointsClientGenSrc/endpoints-tmp/reportEndpoint/src/main/java/com/islandturtlewatch/nest/reporter/transport/reportEndpoint/model/ReportResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/backend.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ImageProto$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ImageProto$ImageDownloadRef$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ImageProto$ImageDownloadRef$Builder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ImageProto$ImageDownloadRef.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ImageProto$ImageDownloadRefOrBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ImageProto$ImageRef$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ImageProto$ImageRef$Builder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ImageProto$ImageRef.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ImageProto$ImageRefOrBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ImageProto$ImageUploadRef$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ImageProto$ImageUploadRef$Builder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ImageProto$ImageUploadRef.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ImageProto$ImageUploadRefOrBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ImageProto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Excavation$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Excavation$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Excavation$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Excavation$Builder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Excavation$ExcavationFailureReason$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Excavation$ExcavationFailureReason$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Excavation$ExcavationFailureReason.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Excavation$ExcavationFailureReason.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Excavation.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Excavation.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$GpsCoordinates$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$GpsCoordinates$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$GpsCoordinates$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$GpsCoordinates$Builder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$GpsCoordinates.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$GpsCoordinates.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Image$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Image$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Image$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Image$Builder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Image.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Image.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Intervention$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Intervention$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Intervention$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Intervention$Builder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Intervention$ProtectionEvent$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Intervention$ProtectionEvent$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Intervention$ProtectionEvent$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Intervention$ProtectionEvent$Builder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Intervention$ProtectionEvent$Reason$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Intervention$ProtectionEvent$Reason$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Intervention$ProtectionEvent$Reason.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Intervention$ProtectionEvent$Reason.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Intervention$ProtectionEvent$Type$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Intervention$ProtectionEvent$Type$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Intervention$ProtectionEvent$Type.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Intervention$ProtectionEvent$Type.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Intervention$ProtectionEvent.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Intervention$ProtectionEvent.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Intervention.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Intervention.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$Builder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$PreditationEvent$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$PreditationEvent$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$PreditationEvent$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$PreditationEvent$Builder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$PreditationEvent$PredationTimeOption$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$PreditationEvent$PredationTimeOption$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$PreditationEvent$PredationTimeOption.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$PreditationEvent$PredationTimeOption.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$PreditationEvent$PredatorType$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$PreditationEvent$PredatorType$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$PreditationEvent$PredatorType.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$PreditationEvent$PredatorType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$PreditationEvent.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$PreditationEvent.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$ProportionEventsRecorded$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$ProportionEventsRecorded$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$ProportionEventsRecorded.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$ProportionEventsRecorded.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$StormImpact$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$StormImpact$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$StormImpact$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$StormImpact$Builder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$StormImpact.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$StormImpact.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$VandalismType$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$VandalismType$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$VandalismType.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$VandalismType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$WashEvent$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$WashEvent$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$WashEvent$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$WashEvent$Builder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$WashEvent.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$WashEvent.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$WashoutTimeOption$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$WashoutTimeOption$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$WashoutTimeOption.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition$WashoutTimeOption.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestCondition.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestLocation$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestLocation$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestLocation$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestLocation$Builder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestLocation$City$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestLocation$City$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestLocation$City.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestLocation$City.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestLocation$NestObstructions$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestLocation$NestObstructions$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestLocation$NestObstructions$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestLocation$NestObstructions$Builder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestLocation$NestObstructions.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestLocation$NestObstructions.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestLocation$Placement$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestLocation$Placement$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestLocation$Placement.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestLocation$Placement.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestLocation$Triangulation$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestLocation$Triangulation$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestLocation$Triangulation$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestLocation$Triangulation$Builder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestLocation$Triangulation.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestLocation$Triangulation.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestLocation.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$NestLocation.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Relocation$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Relocation$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Relocation$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Relocation$Builder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Relocation$Reason$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Relocation$Reason$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Relocation$Reason.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Relocation$Reason.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Relocation.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Relocation.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Report$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Report$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Report$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Report$Builder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Report$NestStatus$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Report$NestStatus$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Report$NestStatus.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Report$NestStatus.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Report$Species$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Report$Species$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Report$Species.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Report$Species.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Report.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$Report.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$ReportRef$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$ReportRef$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$ReportRef$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$ReportRef$Builder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$ReportRef$State$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$ReportRef$State$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$ReportRef$State.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$ReportRef$State.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$ReportRef.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$ReportRef.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$ReportWrapper$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$ReportWrapper$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$ReportWrapper$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$ReportWrapper$Builder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$ReportWrapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto$ReportWrapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/data/ReportProto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/backend/endpoints/ImageEndpoint.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/backend/endpoints/ReportEndpoint$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/backend/endpoints/ReportEndpoint.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/backend/servlets/ImagePostUpload.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/backend/storage/ImageStore$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/backend/storage/ImageStore.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/backend/storage/ReportStore$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/backend/storage/ReportStore$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/backend/storage/ReportStore$3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/backend/storage/ReportStore$4.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/backend/storage/ReportStore$5.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/backend/storage/ReportStore$6.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/backend/storage/ReportStore.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/backend/storage/entities/StoredImage$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/backend/storage/entities/StoredImage$StoredImageBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/backend/storage/entities/StoredImage.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/backend/storage/entities/StoredReport$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/backend/storage/entities/StoredReport$StoredReportBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/backend/storage/entities/StoredReport.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/backend/storage/entities/StoredReportVersion$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/backend/storage/entities/StoredReportVersion$StoredReportVersionBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/backend/storage/entities/StoredReportVersion.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/backend/storage/entities/User$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/backend/storage/entities/User$UserBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/backend/storage/entities/User.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/backend/storage/test/ReportStoreTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/backend/util/Environment.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/backend/util/UserUtil.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/ColumnGenerator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/FetcherBuilder$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/FetcherBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$ConditionallyMappedColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$ConditionallyMappedColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$FinalActivityColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$FinalActivityColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$FinalTreatmentColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$FinalTreatmentColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$InitialTreatmentColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$InitialTreatmentColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedAnyMatchColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedAnyMatchColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedBlankIfUnsetColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedBlankIfUnsetColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedBlankIfUnsetWithOtherColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedBlankIfUnsetWithOtherColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedBlankIfZeroColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedBlankIfZeroColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedColumnAbsoluteValueDouble$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedColumnAbsoluteValueDouble.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedColumnWithDefault$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedColumnWithDefault.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedColumnWithFetcher.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedComboColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedComboColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedDistanceColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedDistanceColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedEitherOrColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedEitherOrColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedExistsOrWashoutTimeColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedExistsOrWashoutTimeColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedHasTimestampColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedHasTimestampColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedHasTimestampYOrBlankColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedHasTimestampYOrBlankColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedIfExistsColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedIfExistsColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedIsPresentColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedIsPresentColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedIsPresentYNColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedIsPresentYNColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedIsPresentYesOrBlankColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedIsPresentYesOrBlankColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedNotNullColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedNotNullColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedNotNullTimestampColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedNotNullTimestampColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedNullIfNotInventoriedColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedNullIfNotInventoriedColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedPartialPredationColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedPartialPredationColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedPredatorColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedPredatorColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedPriorityColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedPriorityColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedProportionColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedProportionColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedSectionColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedSectionColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedShortTimestampColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedShortTimestampColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedSpeciesColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedSpeciesColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedTimestampColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedTimestampColumn$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedTimestampColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedWashoutTimeOptionColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedWashoutTimeOptionColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedYNColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedYNColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedYesOrBlankColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedYesOrBlankColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedYesOrBlankRadioColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$MappedYesOrBlankRadioColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$ReportColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$RowFilter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$StaticValueColumn$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$StaticValueColumn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter$ValueFetcher.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/OrderedReportWriter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/ReportCsvGenerator$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/ReportCsvGenerator$Column.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/ReportCsvGenerator$Path.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/ReportCsvGenerator$ReportWriter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/ReportCsvGenerator$ReportWriterAll.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/frontend/reports/ReportCsvGenerator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/transport/CreateUserResponse$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/transport/CreateUserResponse$Code.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/transport/CreateUserResponse$CreateUserResponseBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/transport/CreateUserResponse.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/transport/EncodedImage$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/transport/EncodedImage$EncodedImageBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/transport/EncodedImage.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/transport/EncodedImageRef$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/transport/EncodedImageRef$EncodedImageRefBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/transport/EncodedImageRef.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/transport/EncodedReport$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/transport/EncodedReport$EncodedReportBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/transport/EncodedReport.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/transport/EncodedReportRef$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/transport/EncodedReportRef$EncodedReportRefBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/transport/EncodedReportRef.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/transport/GetReportResponse$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/transport/GetReportResponse$GetReportResponseBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/transport/GetReportResponse.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/transport/ReportRequest$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/transport/ReportRequest$ReportRequestBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/transport/ReportRequest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/transport/ReportResponse$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/transport/ReportResponse$Code.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/transport/ReportResponse$ReportResponseBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/transport/ReportResponse.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/transport/SerializedProto$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/transport/SerializedProto$SerializedProtoBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/transport/SerializedProto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/web/servlets/ArchiveActiveReportsServlet.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/web/servlets/CsvServlet.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/web/servlets/ImageServlet.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/web/servlets/StateFalseCrawlReportServlet$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/web/servlets/StateFalseCrawlReportServlet$Filter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/web/servlets/StateFalseCrawlReportServlet.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/web/servlets/StateNestReportServlet$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/web/servlets/StateNestReportServlet$Filter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/classes/java/main/com/islandturtlewatch/nest/reporter/web/servlets/StateNestReportServlet.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build/resources/main/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build/resources/main/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/studio_project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/studio_project.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../proto/generated/com/islandturtlewatch/nest/data/ImageProto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../proto/generated/com/islandturtlewatch/nest/data/ImageProto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../proto/generated/com/islandturtlewatch/nest/data/ReportProto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../proto/generated/com/islandturtlewatch/nest/data/ReportProto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/split_edit_activity.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/split_edit_activity.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -589,7 +370,7 @@
     <property name="android.project.structure.proportion" value="0.15" />
     <property name="android.sdk.path" value="$ANDROID_SDK_ROOT$" />
     <property name="device.picker.selection" value="Nexus_7_API_27" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../src" />
+    <property name="last_opened_file_path" value="/tmp" />
     <property name="not.eligible.for.single.variant.sync" value="true" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.smartKeys" />
     <property name="show.migrate.to.gradle.popup" value="false" />
@@ -758,5 +539,27 @@
       <updated>1537033620565</updated>
     </task>
     <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="685" y="268" width="495" height="541" key="FileChooserDialogImpl" timestamp="1611291443429">
+      <screen x="0" y="0" width="1876" height="1080" />
+    </state>
+    <state x="685" y="268" width="495" height="541" key="FileChooserDialogImpl/0.0.1876.1080@0.0.1876.1080" timestamp="1611291443429" />
+    <state width="1828" height="395" key="GridCell.Tab.0.bottom" timestamp="1611292869167">
+      <screen x="0" y="0" width="1876" height="1080" />
+    </state>
+    <state width="1828" height="395" key="GridCell.Tab.0.bottom/0.0.1876.1080@0.0.1876.1080" timestamp="1611292869167" />
+    <state width="1828" height="395" key="GridCell.Tab.0.center" timestamp="1611292869166">
+      <screen x="0" y="0" width="1876" height="1080" />
+    </state>
+    <state width="1828" height="395" key="GridCell.Tab.0.center/0.0.1876.1080@0.0.1876.1080" timestamp="1611292869166" />
+    <state width="1828" height="395" key="GridCell.Tab.0.left" timestamp="1611292869166">
+      <screen x="0" y="0" width="1876" height="1080" />
+    </state>
+    <state width="1828" height="395" key="GridCell.Tab.0.left/0.0.1876.1080@0.0.1876.1080" timestamp="1611292869166" />
+    <state width="1828" height="395" key="GridCell.Tab.0.right" timestamp="1611292869167">
+      <screen x="0" y="0" width="1876" height="1080" />
+    </state>
+    <state width="1828" height="395" key="GridCell.Tab.0.right/0.0.1876.1080@0.0.1876.1080" timestamp="1611292869167" />
   </component>
 </project>

@@ -17,6 +17,7 @@ import javax.annotation.Nullable;
 
 import java.lang.Object;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -24,8 +25,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
@@ -62,18 +65,22 @@ import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 
+import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
+
 
 public class SyncService extends Service {
   private static final String TAG = SyncService.class.getSimpleName();
   private static final int NOTIFICATION_ID = SyncService.class.hashCode();
   private static final int DB_POLL_PERIOD_S = 30;
+  private static final String NOTIFICATION_CHANNEL_ID = "com.islandturtlewatch.nest.reporter.sync_service";
 
   private Handler uiThreadHandler;
 
   private NotificationManager notificationManager;
   private ConnectivityManager connectivityManager;
 
-  private Notification.Builder notification;
+  private NotificationCompat.Builder notification;
   private final AtomicBoolean networkConnected = new AtomicBoolean(false);
   private final Optional<String> errorMessage = Optional.absent();
   private final BlockingQueue<Upload> pendingUploads = new LinkedBlockingDeque<>();
@@ -86,6 +93,7 @@ public class SyncService extends Service {
     Log.i(TAG, "Starting sync service");
   }
 
+  @RequiresApi(api = Build.VERSION_CODES.O)
   @Override
   public int onStartCommand(Intent intent, int flags, int startId) {
     uiThreadHandler = new Handler();
@@ -101,8 +109,16 @@ public class SyncService extends Service {
     return Service.START_STICKY;
   }
 
+  @RequiresApi(api = Build.VERSION_CODES.O)
   private void startForeground() {
-    notification = new Notification.Builder(this)
+    NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "Sync Service", NotificationManager.IMPORTANCE_NONE);
+    chan.setLightColor(Color.BLUE);
+    chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+    NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+    assert manager != null;
+    manager.createNotificationChannel(chan);
+
+    notification = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
         .setContentTitle(getText(R.string.sync_service_name))
         .setContentText("")
         .setSmallIcon(R.drawable.ic_launcher);
