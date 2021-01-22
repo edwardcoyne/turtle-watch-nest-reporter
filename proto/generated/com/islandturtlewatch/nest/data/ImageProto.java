@@ -6,7 +6,13 @@ package com.islandturtlewatch.nest.data;
 public final class ImageProto {
   private ImageProto() {}
   public static void registerAllExtensions(
+      com.google.protobuf.ExtensionRegistryLite registry) {
+  }
+
+  public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
+    registerAllExtensions(
+        (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   public interface ImageRefOrBuilder extends
       // @@protoc_insertion_point(interface_extends:com.islandturtlewatch.nest.data.ImageRef)
@@ -50,43 +56,40 @@ public final class ImageProto {
         getImageNameBytes();
   }
   /**
-   * Protobuf type {@code com.islandturtlewatch.nest.data.ImageRef}
-   *
    * <pre>
    * Uniquely identify an image.
    * </pre>
+   *
+   * Protobuf type {@code com.islandturtlewatch.nest.data.ImageRef}
    */
-  public static final class ImageRef extends
-      com.google.protobuf.GeneratedMessage implements
+  public  static final class ImageRef extends
+      com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:com.islandturtlewatch.nest.data.ImageRef)
       ImageRefOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use ImageRef.newBuilder() to construct.
-    private ImageRef(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+    private ImageRef(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
-      this.unknownFields = builder.getUnknownFields();
     }
-    private ImageRef(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final ImageRef defaultInstance;
-    public static ImageRef getDefaultInstance() {
-      return defaultInstance;
+    private ImageRef() {
+      ownerId_ = "";
+      reportId_ = 0L;
+      imageName_ = "";
     }
 
-    public ImageRef getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
+    getUnknownFields() {
       return this.unknownFields;
     }
     private ImageRef(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -98,13 +101,6 @@ public final class ImageProto {
             case 0:
               done = true;
               break;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
             case 10: {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
@@ -122,13 +118,20 @@ public final class ImageProto {
               imageName_ = bs;
               break;
             }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
+            e).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -139,31 +142,17 @@ public final class ImageProto {
       return com.islandturtlewatch.nest.data.ImageProto.internal_static_com_islandturtlewatch_nest_data_ImageRef_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.islandturtlewatch.nest.data.ImageProto.internal_static_com_islandturtlewatch_nest_data_ImageRef_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               com.islandturtlewatch.nest.data.ImageProto.ImageRef.class, com.islandturtlewatch.nest.data.ImageProto.ImageRef.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<ImageRef> PARSER =
-        new com.google.protobuf.AbstractParser<ImageRef>() {
-      public ImageRef parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new ImageRef(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<ImageRef> getParserForType() {
-      return PARSER;
-    }
-
     private int bitField0_;
     public static final int OWNER_ID_FIELD_NUMBER = 1;
-    private java.lang.Object ownerId_;
+    private volatile java.lang.Object ownerId_;
     /**
      * <code>optional string owner_id = 1;</code>
      */
@@ -220,7 +209,7 @@ public final class ImageProto {
     }
 
     public static final int IMAGE_NAME_FIELD_NUMBER = 3;
-    private java.lang.Object imageName_;
+    private volatile java.lang.Object imageName_;
     /**
      * <code>optional string image_name = 3;</code>
      */
@@ -261,12 +250,8 @@ public final class ImageProto {
       }
     }
 
-    private void initFields() {
-      ownerId_ = "";
-      reportId_ = 0L;
-      imageName_ = "";
-    }
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -276,51 +261,108 @@ public final class ImageProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeBytes(1, getOwnerIdBytes());
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, ownerId_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeUInt64(2, reportId_);
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        output.writeBytes(3, getImageNameBytes());
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, imageName_);
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
-    private int memoizedSerializedSize = -1;
+    @java.lang.Override
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(1, getOwnerIdBytes());
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, ownerId_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt64Size(2, reportId_);
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(3, getImageNameBytes());
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, imageName_);
       }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.islandturtlewatch.nest.data.ImageProto.ImageRef)) {
+        return super.equals(obj);
+      }
+      com.islandturtlewatch.nest.data.ImageProto.ImageRef other = (com.islandturtlewatch.nest.data.ImageProto.ImageRef) obj;
+
+      boolean result = true;
+      result = result && (hasOwnerId() == other.hasOwnerId());
+      if (hasOwnerId()) {
+        result = result && getOwnerId()
+            .equals(other.getOwnerId());
+      }
+      result = result && (hasReportId() == other.hasReportId());
+      if (hasReportId()) {
+        result = result && (getReportId()
+            == other.getReportId());
+      }
+      result = result && (hasImageName() == other.hasImageName());
+      if (hasImageName()) {
+        result = result && getImageName()
+            .equals(other.getImageName());
+      }
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
     }
 
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (hasOwnerId()) {
+        hash = (37 * hash) + OWNER_ID_FIELD_NUMBER;
+        hash = (53 * hash) + getOwnerId().hashCode();
+      }
+      if (hasReportId()) {
+        hash = (37 * hash) + REPORT_ID_FIELD_NUMBER;
+        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+            getReportId());
+      }
+      if (hasImageName()) {
+        hash = (37 * hash) + IMAGE_NAME_FIELD_NUMBER;
+        hash = (53 * hash) + getImageName().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.islandturtlewatch.nest.data.ImageProto.ImageRef parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.islandturtlewatch.nest.data.ImageProto.ImageRef parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static com.islandturtlewatch.nest.data.ImageProto.ImageRef parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -344,58 +386,71 @@ public final class ImageProto {
     }
     public static com.islandturtlewatch.nest.data.ImageProto.ImageRef parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
     }
     public static com.islandturtlewatch.nest.data.ImageProto.ImageRef parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
     }
     public static com.islandturtlewatch.nest.data.ImageProto.ImageRef parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
     }
     public static com.islandturtlewatch.nest.data.ImageProto.ImageRef parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
     public static com.islandturtlewatch.nest.data.ImageProto.ImageRef parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
     }
     public static com.islandturtlewatch.nest.data.ImageProto.ImageRef parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static Builder newBuilder() { return Builder.create(); }
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.islandturtlewatch.nest.data.ImageProto.ImageRef prototype) {
-      return newBuilder().mergeFrom(prototype);
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
     }
-    public Builder toBuilder() { return newBuilder(this); }
+    public static Builder newBuilder(com.islandturtlewatch.nest.data.ImageProto.ImageRef prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
-     * Protobuf type {@code com.islandturtlewatch.nest.data.ImageRef}
-     *
      * <pre>
      * Uniquely identify an image.
      * </pre>
+     *
+     * Protobuf type {@code com.islandturtlewatch.nest.data.ImageRef}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:com.islandturtlewatch.nest.data.ImageRef)
         com.islandturtlewatch.nest.data.ImageProto.ImageRefOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
@@ -403,7 +458,8 @@ public final class ImageProto {
         return com.islandturtlewatch.nest.data.ImageProto.internal_static_com_islandturtlewatch_nest_data_ImageRef_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.islandturtlewatch.nest.data.ImageProto.internal_static_com_islandturtlewatch_nest_data_ImageRef_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -416,18 +472,16 @@ public final class ImageProto {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
         }
       }
-      private static Builder create() {
-        return new Builder();
-      }
-
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         ownerId_ = "";
@@ -439,19 +493,18 @@ public final class ImageProto {
         return this;
       }
 
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
-      }
-
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.islandturtlewatch.nest.data.ImageProto.internal_static_com_islandturtlewatch_nest_data_ImageRef_descriptor;
       }
 
+      @java.lang.Override
       public com.islandturtlewatch.nest.data.ImageProto.ImageRef getDefaultInstanceForType() {
         return com.islandturtlewatch.nest.data.ImageProto.ImageRef.getDefaultInstance();
       }
 
+      @java.lang.Override
       public com.islandturtlewatch.nest.data.ImageProto.ImageRef build() {
         com.islandturtlewatch.nest.data.ImageProto.ImageRef result = buildPartial();
         if (!result.isInitialized()) {
@@ -460,6 +513,7 @@ public final class ImageProto {
         return result;
       }
 
+      @java.lang.Override
       public com.islandturtlewatch.nest.data.ImageProto.ImageRef buildPartial() {
         com.islandturtlewatch.nest.data.ImageProto.ImageRef result = new com.islandturtlewatch.nest.data.ImageProto.ImageRef(this);
         int from_bitField0_ = bitField0_;
@@ -481,6 +535,39 @@ public final class ImageProto {
         return result;
       }
 
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.islandturtlewatch.nest.data.ImageProto.ImageRef) {
           return mergeFrom((com.islandturtlewatch.nest.data.ImageProto.ImageRef)other);
@@ -505,14 +592,17 @@ public final class ImageProto {
           imageName_ = other.imageName_;
           onChanged();
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -522,7 +612,7 @@ public final class ImageProto {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (com.islandturtlewatch.nest.data.ImageProto.ImageRef) e.getUnfinishedMessage();
-          throw e;
+          throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -715,16 +805,57 @@ public final class ImageProto {
         onChanged();
         return this;
       }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
 
       // @@protoc_insertion_point(builder_scope:com.islandturtlewatch.nest.data.ImageRef)
     }
 
+    // @@protoc_insertion_point(class_scope:com.islandturtlewatch.nest.data.ImageRef)
+    private static final com.islandturtlewatch.nest.data.ImageProto.ImageRef DEFAULT_INSTANCE;
     static {
-      defaultInstance = new ImageRef(true);
-      defaultInstance.initFields();
+      DEFAULT_INSTANCE = new com.islandturtlewatch.nest.data.ImageProto.ImageRef();
     }
 
-    // @@protoc_insertion_point(class_scope:com.islandturtlewatch.nest.data.ImageRef)
+    public static com.islandturtlewatch.nest.data.ImageProto.ImageRef getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<ImageRef>
+        PARSER = new com.google.protobuf.AbstractParser<ImageRef>() {
+      @java.lang.Override
+      public ImageRef parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new ImageRef(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<ImageRef> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ImageRef> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.islandturtlewatch.nest.data.ImageProto.ImageRef getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
   public interface ImageUploadRefOrBuilder extends
@@ -761,37 +892,32 @@ public final class ImageProto {
   /**
    * Protobuf type {@code com.islandturtlewatch.nest.data.ImageUploadRef}
    */
-  public static final class ImageUploadRef extends
-      com.google.protobuf.GeneratedMessage implements
+  public  static final class ImageUploadRef extends
+      com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:com.islandturtlewatch.nest.data.ImageUploadRef)
       ImageUploadRefOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use ImageUploadRef.newBuilder() to construct.
-    private ImageUploadRef(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+    private ImageUploadRef(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
-      this.unknownFields = builder.getUnknownFields();
     }
-    private ImageUploadRef(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final ImageUploadRef defaultInstance;
-    public static ImageUploadRef getDefaultInstance() {
-      return defaultInstance;
+    private ImageUploadRef() {
+      url_ = "";
     }
 
-    public ImageUploadRef getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
+    getUnknownFields() {
       return this.unknownFields;
     }
     private ImageUploadRef(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -803,13 +929,6 @@ public final class ImageProto {
             case 0:
               done = true;
               break;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
             case 10: {
               com.islandturtlewatch.nest.data.ImageProto.ImageRef.Builder subBuilder = null;
               if (((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -829,13 +948,20 @@ public final class ImageProto {
               url_ = bs;
               break;
             }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
+            e).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -846,26 +972,12 @@ public final class ImageProto {
       return com.islandturtlewatch.nest.data.ImageProto.internal_static_com_islandturtlewatch_nest_data_ImageUploadRef_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.islandturtlewatch.nest.data.ImageProto.internal_static_com_islandturtlewatch_nest_data_ImageUploadRef_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef.class, com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef.Builder.class);
-    }
-
-    public static com.google.protobuf.Parser<ImageUploadRef> PARSER =
-        new com.google.protobuf.AbstractParser<ImageUploadRef>() {
-      public ImageUploadRef parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new ImageUploadRef(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<ImageUploadRef> getParserForType() {
-      return PARSER;
     }
 
     private int bitField0_;
@@ -881,17 +993,17 @@ public final class ImageProto {
      * <code>optional .com.islandturtlewatch.nest.data.ImageRef image = 1;</code>
      */
     public com.islandturtlewatch.nest.data.ImageProto.ImageRef getImage() {
-      return image_;
+      return image_ == null ? com.islandturtlewatch.nest.data.ImageProto.ImageRef.getDefaultInstance() : image_;
     }
     /**
      * <code>optional .com.islandturtlewatch.nest.data.ImageRef image = 1;</code>
      */
     public com.islandturtlewatch.nest.data.ImageProto.ImageRefOrBuilder getImageOrBuilder() {
-      return image_;
+      return image_ == null ? com.islandturtlewatch.nest.data.ImageProto.ImageRef.getDefaultInstance() : image_;
     }
 
     public static final int URL_FIELD_NUMBER = 2;
-    private java.lang.Object url_;
+    private volatile java.lang.Object url_;
     /**
      * <code>optional string url = 2;</code>
      */
@@ -932,11 +1044,8 @@ public final class ImageProto {
       }
     }
 
-    private void initFields() {
-      image_ = com.islandturtlewatch.nest.data.ImageProto.ImageRef.getDefaultInstance();
-      url_ = "";
-    }
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -946,44 +1055,92 @@ public final class ImageProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeMessage(1, image_);
+        output.writeMessage(1, getImage());
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeBytes(2, getUrlBytes());
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, url_);
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
-    private int memoizedSerializedSize = -1;
+    @java.lang.Override
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, image_);
+          .computeMessageSize(1, getImage());
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(2, getUrlBytes());
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, url_);
       }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef)) {
+        return super.equals(obj);
+      }
+      com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef other = (com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef) obj;
+
+      boolean result = true;
+      result = result && (hasImage() == other.hasImage());
+      if (hasImage()) {
+        result = result && getImage()
+            .equals(other.getImage());
+      }
+      result = result && (hasUrl() == other.hasUrl());
+      if (hasUrl()) {
+        result = result && getUrl()
+            .equals(other.getUrl());
+      }
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
     }
 
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (hasImage()) {
+        hash = (37 * hash) + IMAGE_FIELD_NUMBER;
+        hash = (53 * hash) + getImage().hashCode();
+      }
+      if (hasUrl()) {
+        hash = (37 * hash) + URL_FIELD_NUMBER;
+        hash = (53 * hash) + getUrl().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -1007,46 +1164,59 @@ public final class ImageProto {
     }
     public static com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
     }
     public static com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
     }
     public static com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
     }
     public static com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
     public static com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
     }
     public static com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static Builder newBuilder() { return Builder.create(); }
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef prototype) {
-      return newBuilder().mergeFrom(prototype);
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
     }
-    public Builder toBuilder() { return newBuilder(this); }
+    public static Builder newBuilder(com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -1054,7 +1224,7 @@ public final class ImageProto {
      * Protobuf type {@code com.islandturtlewatch.nest.data.ImageUploadRef}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:com.islandturtlewatch.nest.data.ImageUploadRef)
         com.islandturtlewatch.nest.data.ImageProto.ImageUploadRefOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
@@ -1062,7 +1232,8 @@ public final class ImageProto {
         return com.islandturtlewatch.nest.data.ImageProto.internal_static_com_islandturtlewatch_nest_data_ImageUploadRef_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.islandturtlewatch.nest.data.ImageProto.internal_static_com_islandturtlewatch_nest_data_ImageUploadRef_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -1075,23 +1246,21 @@ public final class ImageProto {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
           getImageFieldBuilder();
         }
       }
-      private static Builder create() {
-        return new Builder();
-      }
-
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         if (imageBuilder_ == null) {
-          image_ = com.islandturtlewatch.nest.data.ImageProto.ImageRef.getDefaultInstance();
+          image_ = null;
         } else {
           imageBuilder_.clear();
         }
@@ -1101,19 +1270,18 @@ public final class ImageProto {
         return this;
       }
 
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
-      }
-
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.islandturtlewatch.nest.data.ImageProto.internal_static_com_islandturtlewatch_nest_data_ImageUploadRef_descriptor;
       }
 
+      @java.lang.Override
       public com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef getDefaultInstanceForType() {
         return com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef.getDefaultInstance();
       }
 
+      @java.lang.Override
       public com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef build() {
         com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef result = buildPartial();
         if (!result.isInitialized()) {
@@ -1122,6 +1290,7 @@ public final class ImageProto {
         return result;
       }
 
+      @java.lang.Override
       public com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef buildPartial() {
         com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef result = new com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef(this);
         int from_bitField0_ = bitField0_;
@@ -1143,6 +1312,39 @@ public final class ImageProto {
         return result;
       }
 
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef) {
           return mergeFrom((com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef)other);
@@ -1162,14 +1364,17 @@ public final class ImageProto {
           url_ = other.url_;
           onChanged();
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1179,7 +1384,7 @@ public final class ImageProto {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef) e.getUnfinishedMessage();
-          throw e;
+          throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -1189,8 +1394,8 @@ public final class ImageProto {
       }
       private int bitField0_;
 
-      private com.islandturtlewatch.nest.data.ImageProto.ImageRef image_ = com.islandturtlewatch.nest.data.ImageProto.ImageRef.getDefaultInstance();
-      private com.google.protobuf.SingleFieldBuilder<
+      private com.islandturtlewatch.nest.data.ImageProto.ImageRef image_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
           com.islandturtlewatch.nest.data.ImageProto.ImageRef, com.islandturtlewatch.nest.data.ImageProto.ImageRef.Builder, com.islandturtlewatch.nest.data.ImageProto.ImageRefOrBuilder> imageBuilder_;
       /**
        * <code>optional .com.islandturtlewatch.nest.data.ImageRef image = 1;</code>
@@ -1203,7 +1408,7 @@ public final class ImageProto {
        */
       public com.islandturtlewatch.nest.data.ImageProto.ImageRef getImage() {
         if (imageBuilder_ == null) {
-          return image_;
+          return image_ == null ? com.islandturtlewatch.nest.data.ImageProto.ImageRef.getDefaultInstance() : image_;
         } else {
           return imageBuilder_.getMessage();
         }
@@ -1244,6 +1449,7 @@ public final class ImageProto {
       public Builder mergeImage(com.islandturtlewatch.nest.data.ImageProto.ImageRef value) {
         if (imageBuilder_ == null) {
           if (((bitField0_ & 0x00000001) == 0x00000001) &&
+              image_ != null &&
               image_ != com.islandturtlewatch.nest.data.ImageProto.ImageRef.getDefaultInstance()) {
             image_ =
               com.islandturtlewatch.nest.data.ImageProto.ImageRef.newBuilder(image_).mergeFrom(value).buildPartial();
@@ -1262,7 +1468,7 @@ public final class ImageProto {
        */
       public Builder clearImage() {
         if (imageBuilder_ == null) {
-          image_ = com.islandturtlewatch.nest.data.ImageProto.ImageRef.getDefaultInstance();
+          image_ = null;
           onChanged();
         } else {
           imageBuilder_.clear();
@@ -1285,17 +1491,18 @@ public final class ImageProto {
         if (imageBuilder_ != null) {
           return imageBuilder_.getMessageOrBuilder();
         } else {
-          return image_;
+          return image_ == null ?
+              com.islandturtlewatch.nest.data.ImageProto.ImageRef.getDefaultInstance() : image_;
         }
       }
       /**
        * <code>optional .com.islandturtlewatch.nest.data.ImageRef image = 1;</code>
        */
-      private com.google.protobuf.SingleFieldBuilder<
+      private com.google.protobuf.SingleFieldBuilderV3<
           com.islandturtlewatch.nest.data.ImageProto.ImageRef, com.islandturtlewatch.nest.data.ImageProto.ImageRef.Builder, com.islandturtlewatch.nest.data.ImageProto.ImageRefOrBuilder> 
           getImageFieldBuilder() {
         if (imageBuilder_ == null) {
-          imageBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+          imageBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
               com.islandturtlewatch.nest.data.ImageProto.ImageRef, com.islandturtlewatch.nest.data.ImageProto.ImageRef.Builder, com.islandturtlewatch.nest.data.ImageProto.ImageRefOrBuilder>(
                   getImage(),
                   getParentForChildren(),
@@ -1380,16 +1587,57 @@ public final class ImageProto {
         onChanged();
         return this;
       }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
 
       // @@protoc_insertion_point(builder_scope:com.islandturtlewatch.nest.data.ImageUploadRef)
     }
 
+    // @@protoc_insertion_point(class_scope:com.islandturtlewatch.nest.data.ImageUploadRef)
+    private static final com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef DEFAULT_INSTANCE;
     static {
-      defaultInstance = new ImageUploadRef(true);
-      defaultInstance.initFields();
+      DEFAULT_INSTANCE = new com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef();
     }
 
-    // @@protoc_insertion_point(class_scope:com.islandturtlewatch.nest.data.ImageUploadRef)
+    public static com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<ImageUploadRef>
+        PARSER = new com.google.protobuf.AbstractParser<ImageUploadRef>() {
+      @java.lang.Override
+      public ImageUploadRef parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new ImageUploadRef(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<ImageUploadRef> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ImageUploadRef> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
   public interface ImageDownloadRefOrBuilder extends
@@ -1426,37 +1674,32 @@ public final class ImageProto {
   /**
    * Protobuf type {@code com.islandturtlewatch.nest.data.ImageDownloadRef}
    */
-  public static final class ImageDownloadRef extends
-      com.google.protobuf.GeneratedMessage implements
+  public  static final class ImageDownloadRef extends
+      com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:com.islandturtlewatch.nest.data.ImageDownloadRef)
       ImageDownloadRefOrBuilder {
+  private static final long serialVersionUID = 0L;
     // Use ImageDownloadRef.newBuilder() to construct.
-    private ImageDownloadRef(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+    private ImageDownloadRef(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
-      this.unknownFields = builder.getUnknownFields();
     }
-    private ImageDownloadRef(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final ImageDownloadRef defaultInstance;
-    public static ImageDownloadRef getDefaultInstance() {
-      return defaultInstance;
+    private ImageDownloadRef() {
+      url_ = "";
     }
 
-    public ImageDownloadRef getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
+    getUnknownFields() {
       return this.unknownFields;
     }
     private ImageDownloadRef(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -1468,13 +1711,6 @@ public final class ImageProto {
             case 0:
               done = true;
               break;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
             case 10: {
               com.islandturtlewatch.nest.data.ImageProto.ImageRef.Builder subBuilder = null;
               if (((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -1494,13 +1730,20 @@ public final class ImageProto {
               url_ = bs;
               break;
             }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
+            e).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -1511,26 +1754,12 @@ public final class ImageProto {
       return com.islandturtlewatch.nest.data.ImageProto.internal_static_com_islandturtlewatch_nest_data_ImageDownloadRef_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.islandturtlewatch.nest.data.ImageProto.internal_static_com_islandturtlewatch_nest_data_ImageDownloadRef_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef.class, com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef.Builder.class);
-    }
-
-    public static com.google.protobuf.Parser<ImageDownloadRef> PARSER =
-        new com.google.protobuf.AbstractParser<ImageDownloadRef>() {
-      public ImageDownloadRef parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new ImageDownloadRef(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<ImageDownloadRef> getParserForType() {
-      return PARSER;
     }
 
     private int bitField0_;
@@ -1546,17 +1775,17 @@ public final class ImageProto {
      * <code>optional .com.islandturtlewatch.nest.data.ImageRef image = 1;</code>
      */
     public com.islandturtlewatch.nest.data.ImageProto.ImageRef getImage() {
-      return image_;
+      return image_ == null ? com.islandturtlewatch.nest.data.ImageProto.ImageRef.getDefaultInstance() : image_;
     }
     /**
      * <code>optional .com.islandturtlewatch.nest.data.ImageRef image = 1;</code>
      */
     public com.islandturtlewatch.nest.data.ImageProto.ImageRefOrBuilder getImageOrBuilder() {
-      return image_;
+      return image_ == null ? com.islandturtlewatch.nest.data.ImageProto.ImageRef.getDefaultInstance() : image_;
     }
 
     public static final int URL_FIELD_NUMBER = 2;
-    private java.lang.Object url_;
+    private volatile java.lang.Object url_;
     /**
      * <code>optional string url = 2;</code>
      */
@@ -1597,11 +1826,8 @@ public final class ImageProto {
       }
     }
 
-    private void initFields() {
-      image_ = com.islandturtlewatch.nest.data.ImageProto.ImageRef.getDefaultInstance();
-      url_ = "";
-    }
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -1611,44 +1837,92 @@ public final class ImageProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeMessage(1, image_);
+        output.writeMessage(1, getImage());
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeBytes(2, getUrlBytes());
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, url_);
       }
-      getUnknownFields().writeTo(output);
+      unknownFields.writeTo(output);
     }
 
-    private int memoizedSerializedSize = -1;
+    @java.lang.Override
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, image_);
+          .computeMessageSize(1, getImage());
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(2, getUrlBytes());
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, url_);
       }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
       return size;
     }
 
-    private static final long serialVersionUID = 0L;
     @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef)) {
+        return super.equals(obj);
+      }
+      com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef other = (com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef) obj;
+
+      boolean result = true;
+      result = result && (hasImage() == other.hasImage());
+      if (hasImage()) {
+        result = result && getImage()
+            .equals(other.getImage());
+      }
+      result = result && (hasUrl() == other.hasUrl());
+      if (hasUrl()) {
+        result = result && getUrl()
+            .equals(other.getUrl());
+      }
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
     }
 
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (hasImage()) {
+        hash = (37 * hash) + IMAGE_FIELD_NUMBER;
+        hash = (53 * hash) + getImage().hashCode();
+      }
+      if (hasUrl()) {
+        hash = (37 * hash) + URL_FIELD_NUMBER;
+        hash = (53 * hash) + getUrl().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -1672,46 +1946,59 @@ public final class ImageProto {
     }
     public static com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
     }
     public static com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
     }
     public static com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
     }
     public static com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
     public static com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return PARSER.parseFrom(input);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
     }
     public static com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static Builder newBuilder() { return Builder.create(); }
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef prototype) {
-      return newBuilder().mergeFrom(prototype);
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
     }
-    public Builder toBuilder() { return newBuilder(this); }
+    public static Builder newBuilder(com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -1719,7 +2006,7 @@ public final class ImageProto {
      * Protobuf type {@code com.islandturtlewatch.nest.data.ImageDownloadRef}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:com.islandturtlewatch.nest.data.ImageDownloadRef)
         com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRefOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
@@ -1727,7 +2014,8 @@ public final class ImageProto {
         return com.islandturtlewatch.nest.data.ImageProto.internal_static_com_islandturtlewatch_nest_data_ImageDownloadRef_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.islandturtlewatch.nest.data.ImageProto.internal_static_com_islandturtlewatch_nest_data_ImageDownloadRef_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -1740,23 +2028,21 @@ public final class ImageProto {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
           getImageFieldBuilder();
         }
       }
-      private static Builder create() {
-        return new Builder();
-      }
-
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         if (imageBuilder_ == null) {
-          image_ = com.islandturtlewatch.nest.data.ImageProto.ImageRef.getDefaultInstance();
+          image_ = null;
         } else {
           imageBuilder_.clear();
         }
@@ -1766,19 +2052,18 @@ public final class ImageProto {
         return this;
       }
 
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
-      }
-
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.islandturtlewatch.nest.data.ImageProto.internal_static_com_islandturtlewatch_nest_data_ImageDownloadRef_descriptor;
       }
 
+      @java.lang.Override
       public com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef getDefaultInstanceForType() {
         return com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef.getDefaultInstance();
       }
 
+      @java.lang.Override
       public com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef build() {
         com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef result = buildPartial();
         if (!result.isInitialized()) {
@@ -1787,6 +2072,7 @@ public final class ImageProto {
         return result;
       }
 
+      @java.lang.Override
       public com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef buildPartial() {
         com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef result = new com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef(this);
         int from_bitField0_ = bitField0_;
@@ -1808,6 +2094,39 @@ public final class ImageProto {
         return result;
       }
 
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef) {
           return mergeFrom((com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef)other);
@@ -1827,14 +2146,17 @@ public final class ImageProto {
           url_ = other.url_;
           onChanged();
         }
-        this.mergeUnknownFields(other.getUnknownFields());
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1844,7 +2166,7 @@ public final class ImageProto {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef) e.getUnfinishedMessage();
-          throw e;
+          throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -1854,8 +2176,8 @@ public final class ImageProto {
       }
       private int bitField0_;
 
-      private com.islandturtlewatch.nest.data.ImageProto.ImageRef image_ = com.islandturtlewatch.nest.data.ImageProto.ImageRef.getDefaultInstance();
-      private com.google.protobuf.SingleFieldBuilder<
+      private com.islandturtlewatch.nest.data.ImageProto.ImageRef image_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
           com.islandturtlewatch.nest.data.ImageProto.ImageRef, com.islandturtlewatch.nest.data.ImageProto.ImageRef.Builder, com.islandturtlewatch.nest.data.ImageProto.ImageRefOrBuilder> imageBuilder_;
       /**
        * <code>optional .com.islandturtlewatch.nest.data.ImageRef image = 1;</code>
@@ -1868,7 +2190,7 @@ public final class ImageProto {
        */
       public com.islandturtlewatch.nest.data.ImageProto.ImageRef getImage() {
         if (imageBuilder_ == null) {
-          return image_;
+          return image_ == null ? com.islandturtlewatch.nest.data.ImageProto.ImageRef.getDefaultInstance() : image_;
         } else {
           return imageBuilder_.getMessage();
         }
@@ -1909,6 +2231,7 @@ public final class ImageProto {
       public Builder mergeImage(com.islandturtlewatch.nest.data.ImageProto.ImageRef value) {
         if (imageBuilder_ == null) {
           if (((bitField0_ & 0x00000001) == 0x00000001) &&
+              image_ != null &&
               image_ != com.islandturtlewatch.nest.data.ImageProto.ImageRef.getDefaultInstance()) {
             image_ =
               com.islandturtlewatch.nest.data.ImageProto.ImageRef.newBuilder(image_).mergeFrom(value).buildPartial();
@@ -1927,7 +2250,7 @@ public final class ImageProto {
        */
       public Builder clearImage() {
         if (imageBuilder_ == null) {
-          image_ = com.islandturtlewatch.nest.data.ImageProto.ImageRef.getDefaultInstance();
+          image_ = null;
           onChanged();
         } else {
           imageBuilder_.clear();
@@ -1950,17 +2273,18 @@ public final class ImageProto {
         if (imageBuilder_ != null) {
           return imageBuilder_.getMessageOrBuilder();
         } else {
-          return image_;
+          return image_ == null ?
+              com.islandturtlewatch.nest.data.ImageProto.ImageRef.getDefaultInstance() : image_;
         }
       }
       /**
        * <code>optional .com.islandturtlewatch.nest.data.ImageRef image = 1;</code>
        */
-      private com.google.protobuf.SingleFieldBuilder<
+      private com.google.protobuf.SingleFieldBuilderV3<
           com.islandturtlewatch.nest.data.ImageProto.ImageRef, com.islandturtlewatch.nest.data.ImageProto.ImageRef.Builder, com.islandturtlewatch.nest.data.ImageProto.ImageRefOrBuilder> 
           getImageFieldBuilder() {
         if (imageBuilder_ == null) {
-          imageBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+          imageBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
               com.islandturtlewatch.nest.data.ImageProto.ImageRef, com.islandturtlewatch.nest.data.ImageProto.ImageRef.Builder, com.islandturtlewatch.nest.data.ImageProto.ImageRefOrBuilder>(
                   getImage(),
                   getParentForChildren(),
@@ -2045,39 +2369,80 @@ public final class ImageProto {
         onChanged();
         return this;
       }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
 
       // @@protoc_insertion_point(builder_scope:com.islandturtlewatch.nest.data.ImageDownloadRef)
     }
 
+    // @@protoc_insertion_point(class_scope:com.islandturtlewatch.nest.data.ImageDownloadRef)
+    private static final com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef DEFAULT_INSTANCE;
     static {
-      defaultInstance = new ImageDownloadRef(true);
-      defaultInstance.initFields();
+      DEFAULT_INSTANCE = new com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef();
     }
 
-    // @@protoc_insertion_point(class_scope:com.islandturtlewatch.nest.data.ImageDownloadRef)
+    public static com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    @java.lang.Deprecated public static final com.google.protobuf.Parser<ImageDownloadRef>
+        PARSER = new com.google.protobuf.AbstractParser<ImageDownloadRef>() {
+      @java.lang.Override
+      public ImageDownloadRef parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new ImageDownloadRef(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<ImageDownloadRef> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ImageDownloadRef> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_com_islandturtlewatch_nest_data_ImageRef_descriptor;
-  private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_com_islandturtlewatch_nest_data_ImageRef_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_com_islandturtlewatch_nest_data_ImageUploadRef_descriptor;
-  private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_com_islandturtlewatch_nest_data_ImageUploadRef_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_com_islandturtlewatch_nest_data_ImageDownloadRef_descriptor;
-  private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_com_islandturtlewatch_nest_data_ImageDownloadRef_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
     return descriptor;
   }
-  private static com.google.protobuf.Descriptors.FileDescriptor
+  private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
     java.lang.String[] descriptorData = {
@@ -2105,19 +2470,19 @@ public final class ImageProto {
     internal_static_com_islandturtlewatch_nest_data_ImageRef_descriptor =
       getDescriptor().getMessageTypes().get(0);
     internal_static_com_islandturtlewatch_nest_data_ImageRef_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_islandturtlewatch_nest_data_ImageRef_descriptor,
         new java.lang.String[] { "OwnerId", "ReportId", "ImageName", });
     internal_static_com_islandturtlewatch_nest_data_ImageUploadRef_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_com_islandturtlewatch_nest_data_ImageUploadRef_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_islandturtlewatch_nest_data_ImageUploadRef_descriptor,
         new java.lang.String[] { "Image", "Url", });
     internal_static_com_islandturtlewatch_nest_data_ImageDownloadRef_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_com_islandturtlewatch_nest_data_ImageDownloadRef_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_islandturtlewatch_nest_data_ImageDownloadRef_descriptor,
         new java.lang.String[] { "Image", "Url", });
   }

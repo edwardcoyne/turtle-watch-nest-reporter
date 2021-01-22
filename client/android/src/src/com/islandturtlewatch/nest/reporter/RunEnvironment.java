@@ -3,7 +3,6 @@ package com.islandturtlewatch.nest.reporter;
 import android.os.Build;
 
 import com.google.api.client.repackaged.com.google.common.base.Preconditions;
-import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.ReportEndpoint;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,7 +27,7 @@ public class RunEnvironment {
       case DEVELOPMENT:
         return  "https://" + "backendtest-1325.appspot.com" + "/_ah/api";
       case PROD:
-        return getVersionedRootUrl(ReportEndpoint.DEFAULT_ROOT_URL);
+        return /*getVersionedRootUrl(ReportEndpoint.DEFAULT_ROOT_URL)*/"";
       default:
         throw new UnsupportedOperationException("Don't support environment: " + environment);
     }

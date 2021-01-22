@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "259474869724",
+    "project_id": "reportbackend",
+    "storage_bucket": "reportbackend.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:259474869724:android:9e6cb1ac77e0444e7e1319",
+        "android_client_info": {
+          "package_name": "com.islandturtlewatch.nest.reporter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "259474869724-13aqi8onmg662c3f6ss972oipad107is.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsVBnXpALp_gHhQIzlZBlPkTK5kQ8r7K0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "259474869724-13aqi8onmg662c3f6ss972oipad107is.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

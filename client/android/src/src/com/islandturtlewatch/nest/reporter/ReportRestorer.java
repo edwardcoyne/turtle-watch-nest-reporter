@@ -19,15 +19,6 @@ import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
 import com.islandturtlewatch.nest.data.ReportProto.ReportWrapper;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore;
-import com.islandturtlewatch.nest.reporter.net.EndPointFactory;
-import com.islandturtlewatch.nest.reporter.net.EndPointFactory.ApplicationName;
-import com.islandturtlewatch.nest.reporter.transport.imageEndpoint.ImageEndpoint;
-import com.islandturtlewatch.nest.reporter.transport.imageEndpoint.model.EncodedImageRef;
-import com.islandturtlewatch.nest.reporter.transport.imageEndpoint.model.SerializedProto;
-import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.ReportEndpoint;
-import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.CollectionResponseEncodedReportRef;
-import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.EncodedReport;
-import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.EncodedReportRef;
 import com.islandturtlewatch.nest.reporter.util.DialogUtil;
 import com.islandturtlewatch.nest.reporter.util.ImageUtil;
 
@@ -35,14 +26,13 @@ public class ReportRestorer {
   private static final String TAG = ReportRestorer.class.getSimpleName();
 
   Context context;
-  ReportEndpoint reportService;
-  ImageEndpoint imageService;
   LocalDataStore store;
   Runnable callback;
   ProgressDialog dialog;
 
   public ReportRestorer(Context context) {
     this.context = context;
+    /*
     Optional<ReportEndpoint> reportServiceOpt =
         EndPointFactory.createReportEndpoint(context, ApplicationName.REPORT_RESTORE);
     Preconditions.checkArgument(reportServiceOpt.isPresent());
@@ -52,6 +42,8 @@ public class ReportRestorer {
         EndPointFactory.createImageEndpoint(context, ApplicationName.REPORT_RESTORE);
     Preconditions.checkArgument(imageServiceOpt.isPresent());
     imageService = imageServiceOpt.get();
+
+     */
     store = new LocalDataStore(context);
   }
 
@@ -70,6 +62,7 @@ public class ReportRestorer {
   }
 
   public void restoreReports(Runnable callback) {
+    /*
     this.callback = callback;
     dialog = new ProgressDialog(context);
     dialog.setTitle("Restoring reports from server.");
@@ -78,8 +71,10 @@ public class ReportRestorer {
     dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
     dialog.show();
     new Worker().execute(reportService);
-  }
 
+     */
+  }
+/*
   private class Worker extends AsyncTask<ReportEndpoint, Integer, Boolean> {
     @Override
     protected Boolean doInBackground(ReportEndpoint... params) {
@@ -169,4 +164,6 @@ public class ReportRestorer {
       }
     }
   }
+
+ */
 }

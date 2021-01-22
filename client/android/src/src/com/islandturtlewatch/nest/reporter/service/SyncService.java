@@ -30,8 +30,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.google.appengine.api.files.FileServicePb;
-import com.google.apphosting.api.search.DocumentPb;
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
@@ -47,16 +45,7 @@ import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
 import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore.CachedReportWrapper;
-import com.islandturtlewatch.nest.reporter.net.EndPointFactory;
-import com.islandturtlewatch.nest.reporter.net.EndPointFactory.ApplicationName;
 import com.islandturtlewatch.nest.reporter.net.StatusCodes.Code;
-import com.islandturtlewatch.nest.reporter.transport.imageEndpoint.ImageEndpoint;
-import com.islandturtlewatch.nest.reporter.transport.imageEndpoint.model.EncodedImageRef;
-import com.islandturtlewatch.nest.reporter.transport.imageEndpoint.model.SerializedProto;
-import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.ReportEndpoint;
-import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.EncodedReportRef;
-import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.ReportRequest;
-import com.islandturtlewatch.nest.reporter.transport.reportEndpoint.model.ReportResponse;
 import com.islandturtlewatch.nest.reporter.util.ErrorUtil;
 import com.islandturtlewatch.nest.reporter.util.ImageUtil;
 
@@ -252,8 +241,6 @@ public class SyncService extends Service {
   }
 
   private class Uploader implements Runnable {
-    private ReportEndpoint reportService;
-    private ImageEndpoint imageService;
     private LocalDataStore dataStore;
     private Thread thread;
     private final AtomicBoolean running = new AtomicBoolean(false);
@@ -297,6 +284,7 @@ public class SyncService extends Service {
     }
 
     private void initService() {
+      /*
       Optional<ReportEndpoint> reportServiceOpt;
       while (!(reportServiceOpt =
           EndPointFactory.createReportEndpoint(SyncService.this, ApplicationName.SYNC_SERVICE))
@@ -320,6 +308,7 @@ public class SyncService extends Service {
         sleep(30);
       }
       imageService = imageServiceOpt.get();
+      */
     }
 
     private boolean handleUpload(Upload upload) {
@@ -344,6 +333,7 @@ public class SyncService extends Service {
     }
 
     private boolean handleCreate(CachedReportWrapper wrapper) throws IOException {
+      /*
       ReportRequest request = new ReportRequest();
       request.setReportEncoded(BaseEncoding.base64().encode(wrapper.getReport().toByteArray()));
 
@@ -359,10 +349,11 @@ public class SyncService extends Service {
       uploadImages(wrapper, reportRef);
 
       dataStore.setServerSideData(wrapper.getLocalId(), reportRef);
+      */
       return true;
     }
 
-    private boolean handleUpdate(CachedReportWrapper wrapper) throws IOException {
+    private boolean handleUpdate(CachedReportWrapper wrapper) throws IOException {/*
       ReportRequest request = new ReportRequest();
       ReportRef ref = ReportRef.newBuilder()
           .setReportId(wrapper.getReportId().get())
@@ -383,7 +374,7 @@ public class SyncService extends Service {
       Log.d(TAG, "Updateing from server: " + reportRef.toString());
       uploadImages(wrapper, reportRef);
       dataStore.setServerSideData(wrapper.getLocalId(), reportRef);
-
+*/
       return true;
     }
 
@@ -394,7 +385,7 @@ public class SyncService extends Service {
             .setReportId(wrapper.getReportId().get())
             .setVersion(wrapper.getVersion().get())
             .build();
-
+/*
         EncodedReportRef encodedRef = new EncodedReportRef();
         encodedRef.setRefEncoded(
             BaseEncoding.base64().encode(ref.toByteArray()));
@@ -404,6 +395,7 @@ public class SyncService extends Service {
           Log.e(TAG, "Call failed: " + response.getCode() + " :: " + response.getErrorMessage());
           return false;
         }
+ */
       }
 
       dataStore.markSynced(wrapper.getLocalId());
@@ -415,6 +407,7 @@ public class SyncService extends Service {
           .setOwnerId(reportRef.getOwnerId())
           .setReportId(reportRef.getReportId());
       for (String imageFileName : wrapper.getUnsynchedImageFileNames()) {
+/*
         imageRef.setImageName(imageFileName);
         EncodedImageRef encodedRef = new EncodedImageRef();
         encodedRef.setRefEncoded(BaseEncoding.base64().encode(imageRef.build().toByteArray()));
@@ -426,6 +419,7 @@ public class SyncService extends Service {
         Log.d(TAG, "upload ref: " + uploadRef.getUrl().toString());
 
         uploadImage(uploadRef.build());
+*/
         dataStore.markImagesSynced(wrapper.getLocalId(), ImmutableList.of(imageFileName));
       }
     }
