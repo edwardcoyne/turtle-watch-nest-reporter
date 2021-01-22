@@ -18,8 +18,8 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='image.proto',
   package='com.islandturtlewatch.nest.data',
   syntax='proto2',
-  serialized_options=_b('B\nImageProto'),
-  serialized_pb=_b('\n\x0bimage.proto\x12\x1f\x63om.islandturtlewatch.nest.data\"C\n\x08ImageRef\x12\x10\n\x08owner_id\x18\x01 \x01(\t\x12\x11\n\treport_id\x18\x02 \x01(\x04\x12\x12\n\nimage_name\x18\x03 \x01(\t\"W\n\x0eImageUploadRef\x12\x38\n\x05image\x18\x01 \x01(\x0b\x32).com.islandturtlewatch.nest.data.ImageRef\x12\x0b\n\x03url\x18\x02 \x01(\t\"Y\n\x10ImageDownloadRef\x12\x38\n\x05image\x18\x01 \x01(\x0b\x32).com.islandturtlewatch.nest.data.ImageRef\x12\x0b\n\x03url\x18\x02 \x01(\tB\x0c\x42\nImageProto')
+  serialized_options=_b('B\nImageProtoH\003'),
+  serialized_pb=_b('\n\x0bimage.proto\x12\x1f\x63om.islandturtlewatch.nest.data\"C\n\x08ImageRef\x12\x10\n\x08owner_id\x18\x01 \x01(\t\x12\x11\n\treport_id\x18\x02 \x01(\x04\x12\x12\n\nimage_name\x18\x03 \x01(\t\"W\n\x0eImageUploadRef\x12\x38\n\x05image\x18\x01 \x01(\x0b\x32).com.islandturtlewatch.nest.data.ImageRef\x12\x0b\n\x03url\x18\x02 \x01(\t\"Y\n\x10ImageDownloadRef\x12\x38\n\x05image\x18\x01 \x01(\x0b\x32).com.islandturtlewatch.nest.data.ImageRef\x12\x0b\n\x03url\x18\x02 \x01(\tB\x0e\x42\nImageProtoH\x03')
 )
 
 

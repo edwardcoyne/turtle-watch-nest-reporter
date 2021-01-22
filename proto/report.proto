@@ -1,5 +1,8 @@
+syntax = "proto2";
+
 package com.islandturtlewatch.nest.data;
 option java_outer_classname = "ReportProto";
+option optimize_for = LITE_RUNTIME;
 
 // Represents a saved report with metadata.
 message ReportWrapper {

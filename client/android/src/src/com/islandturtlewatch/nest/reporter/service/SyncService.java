@@ -39,8 +39,6 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.google.common.io.BaseEncoding;
-import com.google.protobuf.TextFormat;
 import com.islandturtlewatch.nest.data.ImageProto.ImageRef;
 import com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef;
 import com.islandturtlewatch.nest.data.ReportProto.Image;
@@ -349,6 +347,8 @@ public class SyncService extends Service {
     }
 
     private boolean handleCreate(CachedReportWrapper wrapper) throws IOException {
+      Log.e(TAG, "Creating report on server");
+
       /*
       ReportRequest request = new ReportRequest();
       request.setReportEncoded(BaseEncoding.base64().encode(wrapper.getReport().toByteArray()));
@@ -369,7 +369,10 @@ public class SyncService extends Service {
       return true;
     }
 
-    private boolean handleUpdate(CachedReportWrapper wrapper) throws IOException {/*
+    private boolean handleUpdate(CachedReportWrapper wrapper) throws IOException {
+      Log.e(TAG, "Updating report on server");
+
+      /*
       ReportRequest request = new ReportRequest();
       ReportRef ref = ReportRef.newBuilder()
           .setReportId(wrapper.getReportId().get())
@@ -395,6 +398,8 @@ public class SyncService extends Service {
     }
 
     private boolean handleDelete(CachedReportWrapper wrapper) throws IOException {
+      Log.e(TAG, "Deleting report from server");
+
       // Only send delete to server if we ever sent the report there in the first place.
       if (wrapper.getReportId().isPresent()) {
         ReportRef ref = ReportRef.newBuilder()

@@ -11,7 +11,6 @@ import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.io.BaseEncoding;
-import com.google.protobuf.TextFormat;
 import com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef;
 import com.islandturtlewatch.nest.data.ImageProto.ImageRef;
 import com.islandturtlewatch.nest.data.ReportProto.Image;

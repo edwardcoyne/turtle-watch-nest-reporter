@@ -1,9 +1,13 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.protobuf'
+
 buildscript {
     repositories {
         jcenter()
     }
     dependencies {
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.14'
     }
 }
 
@@ -36,6 +40,9 @@ android {
         all {
             exclude module: 'commons-logging'
             exclude module: 'httpclient'
+            exclude module: 'protobuf-lite'
+            exclude module: 'protobuf-javalite'
+            exclude module: 'protolite-well-known-types'
         }
     }
     packagingOptions {
@@ -54,7 +61,9 @@ android {
         }
     }
     sourceSets {
-        main.java.srcDirs = ['../../src/src/', '../../../../proto/generated/']
+        //main.java.srcDirs = ['../../src/src/', '../../../../proto/generated/']
+        main.java.srcDirs = ['../../src/src/']
+        main.proto.srcDirs = ['../../../../proto']
     }
 
     // We use this to upload images.
@@ -79,13 +88,37 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.16.2'
     compileOnly 'org.projectlombok:lombok:1.16.2'
     implementation 'joda-time:joda-time:2.3'
-    implementation 'com.google.protobuf:protobuf-java:3.10.0'
+    implementation 'com.google.protobuf:protobuf-java:3.14.0'
     implementation 'org.apache.httpcomponents:httpcore:4.4.10'
     implementation 'org.apache.httpcomponents:httpmime:4.5.6'
     implementation 'com.google.android.gms:play-services-identity:17.0.0'
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
     implementation 'com.google.android.gms:play-services-base:17.5.0'
+
+    implementation platform('com.google.firebase:firebase-bom:26.3.0')
+    implementation 'com.google.firebase:firebase-firestore:22.0.1'
+
 }
+
+protobuf {
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.11.4'
+    }
+    plugins {
+        javalite {
+            artifact = 'com.google.protobuf:protoc-gen-javalite:3.0.0'
+        }
+    }
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                java {
+                }
+            }
+        }
+    }
+}
+
 repositories {
     mavenCentral()
 }

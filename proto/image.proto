@@ -1,5 +1,8 @@
+syntax = "proto2";
+
 package com.islandturtlewatch.nest.data;
 option java_outer_classname = "ImageProto";
+option optimize_for = LITE_RUNTIME;
 
 // Uniquely identify an image.
 message ImageRef {

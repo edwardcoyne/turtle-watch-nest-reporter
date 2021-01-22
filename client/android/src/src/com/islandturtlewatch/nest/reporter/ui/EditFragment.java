@@ -12,8 +12,6 @@ import android.widget.TextView;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
-import com.google.protobuf.Descriptors.FieldDescriptor;
-import com.google.protobuf.Message;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
@@ -31,8 +29,6 @@ public abstract class EditFragment extends Fragment {
   public static final int UNDEFINED_VIEW_ID = -1;
 
   protected Optional<Report> currentReport = Optional.absent();
-  protected Map<Message, Map<String, FieldDescriptor>> descriptors =
-      new HashMap<Message, Map<String, FieldDescriptor>>();
   protected ListenerProvider listenerProvider;
 
   /**
