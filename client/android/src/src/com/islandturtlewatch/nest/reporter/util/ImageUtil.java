@@ -108,18 +108,4 @@ public class ImageUtil {
     long bytesCopied = ByteStreams.copy(in, out);
     Log.d(TAG, "Copied " + bytesCopied + " from " + contentUri + " to " + destinationFileUri);
   }
-
-  public static Report stripAndWriteEmbeddedImage(Context context, Report report)
-      throws IOException {
-    long startTimestamp = System.currentTimeMillis();
-    Builder reportBuilder = report.toBuilder();
-    for (Image.Builder image : reportBuilder.getImageBuilderList()) {
-      writeImageBytes(context, image.getFileName(), image.getRawData().toByteArray());
-      image.clearRawData();
-    }
-    Log.d(TAG, String.format("Extracted %d images in %f s.",
-        reportBuilder.getImageCount(),
-        (System.currentTimeMillis() - startTimestamp) / 1000.0));
-    return reportBuilder.build();
-  }
 }

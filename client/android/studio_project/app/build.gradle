@@ -40,9 +40,11 @@ android {
         all {
             exclude module: 'commons-logging'
             exclude module: 'httpclient'
+            /*
             exclude module: 'protobuf-lite'
             exclude module: 'protobuf-javalite'
             exclude module: 'protolite-well-known-types'
+             */
         }
     }
     packagingOptions {
@@ -88,7 +90,13 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.16.2'
     compileOnly 'org.projectlombok:lombok:1.16.2'
     implementation 'joda-time:joda-time:2.3'
-    implementation 'com.google.protobuf:protobuf-java:3.14.0'
+    implementation("com.google.protobuf:protobuf-javalite") {
+        version {
+            // The version packaged with firebase has broken serialization :( 
+            strictly '3.11.0'
+        }
+    }
+    //implementation 'com.google.protobuf:protobuf-java:3.14.0'
     implementation 'org.apache.httpcomponents:httpcore:4.4.10'
     implementation 'org.apache.httpcomponents:httpmime:4.5.6'
     implementation 'com.google.android.gms:play-services-identity:17.0.0'
@@ -102,17 +110,13 @@ dependencies {
 
 protobuf {
     protoc {
-        artifact = 'com.google.protobuf:protoc:3.11.4'
-    }
-    plugins {
-        javalite {
-            artifact = 'com.google.protobuf:protoc-gen-javalite:3.0.0'
-        }
+        artifact = 'com.google.protobuf:protoc:3.8.0'
     }
     generateProtoTasks {
         all().each { task ->
             task.builtins {
                 java {
+                    option "lite"
                 }
             }
         }
