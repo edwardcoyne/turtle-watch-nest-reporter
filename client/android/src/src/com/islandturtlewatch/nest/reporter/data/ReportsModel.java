@@ -16,7 +16,6 @@ import com.islandturtlewatch.nest.data.ReportProto.Image;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.ReportRestorer;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore.CachedReportWrapper;
-import com.islandturtlewatch.nest.reporter.util.ImageUtil;
 
 import java.util.List;
 
@@ -124,10 +123,6 @@ public class ReportsModel {
     adapter.notifyDataSetChanged();
   }
 
-  public void updateImages(Report report) {
-    activeReport.updateImages(report.getImageList());
-  }
-
   public void switchActiveReport(long reportId) {
     loadReport(reportId);
   }
@@ -191,35 +186,7 @@ public class ReportsModel {
         return;
       }
       dataStore.saveReport(activeReportId, report);
-      addImages(report.getImageList());
       activeReport = report;
-    }
-
-    void updateImages(List<Image> images) {
-      for (Image image : images) {
-        long newTs = ImageUtil.getModifiedTime(activity, image.getFileName());
-        Optional<Long> oldTs = dataStore.getImageUpdatedTimestamp(activeReportId, image.getFileName());
-        if (!oldTs.isPresent()) {
-          Log.d(TAG, "Adding new image record: " + image.getFileName() + " ts: " + newTs);
-          dataStore.addImageAndInvalidateReport(activeReportId, image.getFileName(), newTs);
-        } else if (!oldTs.get().equals(newTs)) {
-          Log.d(TAG, "Updating image: " + image.getFileName()
-              + " oldts: " + oldTs.get() + " newTs:" + newTs);
-          dataStore.setImageUnsynced(activeReportId, image.getFileName(), newTs);
-        }
-      }
-    }
-
-    // Don't need to do the expensive filesystem checks for the normal case,
-    // only check for new images.
-    void addImages(List<Image> images) {
-      for (Image image : images) {
-        if (!dataStore.getImageUpdatedTimestamp(activeReportId, image.getFileName()).isPresent()) {
-          long newTs = ImageUtil.getModifiedTime(activity, image.getFileName());
-          Log.d(TAG, "Adding new image record: " + image.getFileName() + " ts: " + newTs);
-          dataStore.addImageAndInvalidateReport(activeReportId, image.getFileName(), newTs);
-        }
-      }
     }
 
     void delete() {

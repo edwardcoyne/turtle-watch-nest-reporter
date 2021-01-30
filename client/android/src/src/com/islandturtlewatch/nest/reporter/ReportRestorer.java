@@ -19,7 +19,6 @@ import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
 import com.islandturtlewatch.nest.data.ReportProto.ReportWrapper;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore;
 import com.islandturtlewatch.nest.reporter.util.DialogUtil;
-import com.islandturtlewatch.nest.reporter.util.ImageUtil;
 
 public class ReportRestorer {
   private static final String TAG = ReportRestorer.class.getSimpleName();

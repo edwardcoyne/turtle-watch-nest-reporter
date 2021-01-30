@@ -1924,70 +1924,7 @@ public static class ProtectionChangeTypeMutation extends ReportMutation {
       return relocation.setCoordinates(coordinates);
     }
   }
-
-  public static class AddPhotoMutation extends ReportMutation {
-    private final String fileName;
-
-    public AddPhotoMutation(String fileName) {
-      this.fileName = fileName;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      ReportProto.Image.Builder image = ReportProto.Image.newBuilder();
-      image.setFileName(fileName);
-      updatedReport.addImage(image);
-      return updatedReport.build();
-    }
-  }
-  public static class DeletePhotoMutation extends ReportMutation {
-    private final String fileName;
-
-    public DeletePhotoMutation(String fileName) {
-      this.fileName = fileName;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      for (int i = 0; i < updatedReport.getImageCount(); ++i) {
-        if (updatedReport.getImage(i).getFileName().equals(fileName)) {
-          updatedReport.removeImage(i);
-          break;
-        }
-      }
-      return updatedReport.build();
-    }
-  }
-
-
-    public static class UpdatePhotoMutation
-            extends ReportMutation implements ReportMutation.RequiresReportsModel {
-      // Don't need this now but leaving it for future use.
-      @SuppressWarnings("unused")
-      private final String fileName;
-
-      public UpdatePhotoMutation(String fileName) {
-        this.fileName = fileName;
-      }
-
-      private ReportsModel model;
-
-      @Override
-      public void setModel(ReportsModel model) {
-        this.model = model;
-      }
-
-      @Override
-      public Report apply(Report oldReport) {
-        // Will implicitly get the update by checking filesystem timestamps.
-        model.updateImages(model.getActiveReport());
-        return oldReport;
-      }
-    }
-
-
+  
     public static class SpeciesMutation extends ReportMutation {
       private final Species species;
 

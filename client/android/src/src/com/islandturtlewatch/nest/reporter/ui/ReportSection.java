@@ -7,7 +7,6 @@ public enum ReportSection {
 	NEST_CONDITION("Nest Condition"),
 	NEST_CARE("Nest Care"),
 	NEST_RESOLUTION("Nest Resolution"),
-	MEDIA("Pictures and Diagrams"),
 	NOTES("Notes");
 	
 	private boolean enabled = true;
