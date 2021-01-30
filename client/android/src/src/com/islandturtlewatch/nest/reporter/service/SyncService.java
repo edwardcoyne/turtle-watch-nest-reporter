@@ -40,6 +40,7 @@ import com.google.android.gms.tasks.Tasks;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.io.BaseEncoding;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -51,7 +52,6 @@ import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore.CachedReportWrapper;
 import com.islandturtlewatch.nest.reporter.util.ErrorUtil;
-import com.islandturtlewatch.nest.reporter.util.SettingsUtil;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -310,10 +310,8 @@ public class SyncService extends Service {
     }
 
     private String UserPath() {
-      SharedPreferences settings =
-              getApplicationContext().getSharedPreferences(SettingsUtil.SETTINGS_ID, Activity.MODE_PRIVATE);
       final String username =
-              settings.getString(SettingsUtil.KEY_USERNAME, "").split("@")[0];
+              FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0];
       return "/season/" + Calendar.getInstance().get(Calendar.YEAR) + "/user/" + username;
     }
 
@@ -373,13 +371,16 @@ public class SyncService extends Service {
           DocumentReference reportRef =
                   db.document(UserPath() + "/report/" + wrapper.getReportId().get());
 
-          Log.i(TAG, "ref: " + reportRef.getPath());
           // Find id for new report.
           Long newVersion = transaction.get(reportRef).getLong("last_version") + 1;
           transaction.update(reportRef, "last_version", newVersion);
+
+          DocumentReference versionRef =
+                  db.document(reportRef.getPath() + "/version/" + newVersion);
+          Log.i(TAG, "ref: " + versionRef.getPath());
+
           // Store encoded proto.
-          transaction.set(
-                  db.document(reportRef.getPath() + "/version/" + newVersion),
+          transaction.set(versionRef,
                   Collections.singletonMap("proto", encoded));
           return newVersion;
         }

@@ -1,7 +1,7 @@
 package com.islandturtlewatch.nest.reporter.data;
 
-import com.google.api.client.util.Preconditions;
 import com.google.common.base.Optional;
+import com.google.common.base.Preconditions;
 import com.islandturtlewatch.nest.data.ReportProto;
 import com.islandturtlewatch.nest.data.ReportProto.Excavation;
 import com.islandturtlewatch.nest.data.ReportProto.Excavation.ExcavationFailureReason;

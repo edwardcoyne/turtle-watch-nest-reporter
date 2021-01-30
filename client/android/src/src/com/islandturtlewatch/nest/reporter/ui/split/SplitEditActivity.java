@@ -8,9 +8,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,10 +26,14 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.IdpResponse;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
@@ -55,21 +61,23 @@ import com.islandturtlewatch.nest.reporter.ui.FocusMonitoredEditText;
 import com.islandturtlewatch.nest.reporter.ui.ReportSection;
 import com.islandturtlewatch.nest.reporter.ui.ReportSectionListFragment;
 import com.islandturtlewatch.nest.reporter.ui.ReportSectionListFragment.EventHandler;
-import com.islandturtlewatch.nest.reporter.util.AuthenticationUtil;
 import com.islandturtlewatch.nest.reporter.util.DialogUtil;
 import com.islandturtlewatch.nest.reporter.util.ReportUtil;
-import com.islandturtlewatch.nest.reporter.util.SettingsUtil;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentActivity;
 
 public class SplitEditActivity extends FragmentActivity implements EditView {
-  //private static final String TAG = SplitEditActivity.class.getSimpleName();
+  private static final String TAG = SplitEditActivity.class.getSimpleName();
   private static final String KEY_SECTION = "Section";
   private static final List<String> PERMISSIONS = ImmutableList.of(
           Manifest.permission.GET_ACCOUNTS,
@@ -90,7 +98,6 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
           .put(ReportSection.NOTES, new EditFragmentNotes())
           .build();
 
-  private SharedPreferences settings;
   private EditPresenter presenter;
   private ReportsModel model;
   private SectionManager sectionManager;
@@ -99,10 +106,8 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.split_edit_activity);
-    settings = getSharedPreferences(SettingsUtil.SETTINGS_ID, MODE_PRIVATE);
     ensureUsernameSet();
     ensureCorePermissions();
-    AuthenticationUtil.checkGooglePlayServicesAvailable(this);
 
     model = new ReportsModel(new LocalDataStore(this),
         getPreferences(Context.MODE_PRIVATE),
@@ -164,6 +169,7 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
     });
     dialog.show();
   }
+  @RequiresApi(api = Build.VERSION_CODES.O)
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     // Inflate the menu items for use in the action bar
@@ -242,23 +248,7 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
    super.onActivityResult(requestCode, resultCode, data);
-   switch (requestCode) {
-     case REQUEST_ACCOUNT_PICKER:
-       if (data != null && data.getExtras() != null) {
-         String accountName =
-             data.getExtras().getString(
-                 AccountManager.KEY_ACCOUNT_NAME);
-         if (accountName != null) {
-           SharedPreferences.Editor editor = settings.edit();
-           editor.putString(SettingsUtil.KEY_USERNAME, accountName);
-           editor.commit();
-         }
-       }
-       break;
-     default:
-       sectionManager.handleIntentResult(requestCode, resultCode, data);
-       break;
-   }
+   sectionManager.handleIntentResult(requestCode, resultCode, data);
   }
 
   public void handleItemSelected(View view, String selectedText) {
@@ -290,9 +280,28 @@ public class SplitEditActivity extends FragmentActivity implements EditView {
   }
 
   private void ensureUsernameSet() {
-    if (!settings.contains(SettingsUtil.KEY_USERNAME)) {
-      startActivityForResult(AuthenticationUtil.getCredential(this, "DUMMY").newChooseAccountIntent(),
-          REQUEST_ACCOUNT_PICKER);
+    if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+      ActivityResultLauncher<Intent> resultLauncher = registerForActivityResult(
+              new ActivityResultContracts.StartActivityForResult(),
+              result -> {
+                if (result.getResultCode() == RESULT_OK) {
+                  // Successfully signed in
+                  FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                  Log.d(TAG, "Logged in as user: " + user.getEmail());
+                } else {
+                  Log.e(TAG, "Failed to authenticate with firebase: " + result.toString());
+                }
+              });
+
+      resultLauncher.launch(AuthUI.getInstance()
+              .createSignInIntentBuilder()
+              .setAvailableProviders(Arrays.asList(
+                      new AuthUI.IdpConfig.GoogleBuilder().build()))
+              .setAlwaysShowSignInMethodScreen(true)
+              .build());
+
+    } else {
+      Log.d(TAG, "Already connected to firebase as: " + FirebaseAuth.getInstance().getCurrentUser().getEmail());
     }
   }
 

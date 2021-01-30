@@ -33,6 +33,43 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:259474869724:android:2d468358815375da7e1319",
+        "android_client_info": {
+          "package_name": "com.islandturtlewatch.nest.reporter.v2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "259474869724-qb16a89258vgspufsctchh5ol9ts05ig.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.islandturtlewatch.nest.reporter.v2",
+            "certificate_hash": "d9e004fe2576340accbdfc0a963d80f95783afca"
+          }
+        },
+        {
+          "client_id": "259474869724-13aqi8onmg662c3f6ss972oipad107is.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsVBnXpALp_gHhQIzlZBlPkTK5kQ8r7K0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "259474869724-13aqi8onmg662c3f6ss972oipad107is.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

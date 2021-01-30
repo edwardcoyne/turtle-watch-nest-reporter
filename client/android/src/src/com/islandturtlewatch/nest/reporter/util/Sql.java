@@ -4,7 +4,6 @@ import java.util.List;
 
 import android.database.Cursor;
 
-import com.google.api.client.util.Throwables;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -55,7 +54,7 @@ public class Sql {
           cursor.getBlob(index))
           .build());
     } catch (InvalidProtocolBufferException | IllegalArgumentException e) {
-      throw Throwables.propagate(e);
+      throw new Error(e);
     }
   }
 

@@ -2,7 +2,7 @@ package com.islandturtlewatch.nest.reporter;
 
 import android.os.Build;
 
-import com.google.api.client.repackaged.com.google.common.base.Preconditions;
+import com.google.common.base.Preconditions;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
