@@ -1,21 +1,22 @@
 package com.islandturtlewatch.nest.reporter.service;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
-import javax.annotation.Nullable;
 
 import java.lang.Object;
+
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -25,6 +26,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -33,45 +35,34 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.google.common.base.Function;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
-import com.islandturtlewatch.nest.data.ImageProto.ImageRef;
-import com.islandturtlewatch.nest.data.ImageProto.ImageUploadRef;
-import com.islandturtlewatch.nest.data.ReportProto.Image;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.io.BaseEncoding;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.firestore.Transaction;
 import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
 import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore.CachedReportWrapper;
-import com.islandturtlewatch.nest.reporter.net.StatusCodes.Code;
 import com.islandturtlewatch.nest.reporter.util.ErrorUtil;
-import com.islandturtlewatch.nest.reporter.util.ImageUtil;
+import com.islandturtlewatch.nest.reporter.util.SettingsUtil;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpVersion;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.CoreProtocolPNames;
-import org.apache.http.params.HttpParams;
-import org.apache.http.util.EntityUtils;
-
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
-
 
 public class SyncService extends Service {
   private static final String TAG = SyncService.class.getSimpleName();
   private static final int NOTIFICATION_ID = SyncService.class.hashCode();
   private static final int DB_POLL_PERIOD_S = 30;
-  private static final String NOTIFICATION_CHANNEL_ID = "com.islandturtlewatch.nest.reporter.sync_service";
+  private static final String NOTIFICATION_CHANNEL_ID =
+          "com.islandturtlewatch.nest.reporter.sync_service";
 
   private Handler uiThreadHandler;
 
@@ -85,10 +76,12 @@ public class SyncService extends Service {
   private final DbMonitor dbMonitor = new DbMonitor();
   private final Uploader uploader = new Uploader();
 
+  @RequiresApi(api = Build.VERSION_CODES.O)
   public static void start(Context context) {
     Intent intent = new Intent(context, SyncService.class);
-    context.startService(intent);
-    Log.i(TAG, "Starting sync service");
+    context.startForegroundService(intent);
+
+    Log.i(TAG, "Starting sync service.");
   }
 
   @RequiresApi(api = Build.VERSION_CODES.O)
@@ -258,16 +251,15 @@ public class SyncService extends Service {
     private LocalDataStore dataStore;
     private Thread thread;
     private final AtomicBoolean running = new AtomicBoolean(false);
-    private DefaultHttpClient httpClient;
+    private FirebaseFirestore db;
+
     public void start() {
       running.set(true);
       thread = new Thread(this);
       dataStore = new LocalDataStore(SyncService.this);
       thread.start();
 
-      HttpParams params = new BasicHttpParams();
-      params.setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
-      httpClient = new DefaultHttpClient(params);
+      db = FirebaseFirestore.getInstance();
     }
 
     public void stop() {
@@ -277,7 +269,6 @@ public class SyncService extends Service {
 
     @Override
     public void run() {
-      initService();
       Log.i(TAG, "Starting uploader.");
       while (running.get()) {
         try {
@@ -295,34 +286,6 @@ public class SyncService extends Service {
         }
       }
       Log.i(TAG, "Shutting down uploader.");
-    }
-
-    private void initService() {
-      /*
-      Optional<ReportEndpoint> reportServiceOpt;
-      while (!(reportServiceOpt =
-          EndPointFactory.createReportEndpoint(SyncService.this, ApplicationName.SYNC_SERVICE))
-            .isPresent()) {
-        if (!running.get()) {
-          return;
-        }
-        Log.i(TAG, "Unable to create report endpoint, sleeping...");
-        sleep(30);
-      }
-      reportService = reportServiceOpt.get();
-
-      Optional<ImageEndpoint> imageServiceOpt;
-      while (!(imageServiceOpt =
-          EndPointFactory.createImageEndpoint(SyncService.this, ApplicationName.SYNC_SERVICE))
-            .isPresent()) {
-        if (!running.get()) {
-          return;
-        }
-        Log.i(TAG, "Unable to create image endpoint, sleeping...");
-        sleep(30);
-      }
-      imageService = imageServiceOpt.get();
-      */
     }
 
     private boolean handleUpload(Upload upload) {
@@ -346,117 +309,125 @@ public class SyncService extends Service {
       }
     }
 
+    private String UserPath() {
+      SharedPreferences settings =
+              getApplicationContext().getSharedPreferences(SettingsUtil.SETTINGS_ID, Activity.MODE_PRIVATE);
+      final String username =
+              settings.getString(SettingsUtil.KEY_USERNAME, "").split("@")[0];
+      return "/season/" + Calendar.getInstance().get(Calendar.YEAR) + "/user/" + username;
+    }
+
     private boolean handleCreate(CachedReportWrapper wrapper) throws IOException {
-      Log.e(TAG, "Creating report on server");
+      Log.i(TAG, "Creating report on server");
 
-      /*
-      ReportRequest request = new ReportRequest();
-      request.setReportEncoded(BaseEncoding.base64().encode(wrapper.getReport().toByteArray()));
+      final String encoded = BaseEncoding.base64().encode(wrapper.getReport().toByteArray());
+      Task<Long> transaction = db.runTransaction(new Transaction.Function<Long>() {
+        @Override
+        public Long apply(Transaction transaction) throws FirebaseFirestoreException {
+          DocumentSnapshot userData = transaction.get(db.document(UserPath()));
 
-      ReportResponse response = reportService.createReport(request).execute();
-      if (!response.getCode().equals(Code.OK.name())) {
-        Log.e(TAG, "Call failed: " + response.getCode() + " :: " + response.getErrorMessage());
-        return false;
+          // Find id for new report.
+          Long last_report_id = userData.getLong("last_report_id");
+          long newId = (last_report_id != null ? last_report_id : 0) + 1;
+          transaction.set(userData.getReference(),
+                  Collections.singletonMap("last_report_id", newId),
+                  SetOptions.merge());
+
+          // Set version to 1.
+          DocumentReference reportRef = db.document(UserPath() + "/report/" + newId);
+          transaction.set(reportRef,
+                  ImmutableMap.of("last_version", 1, "deleted", false),
+                  SetOptions.merge());
+
+          Log.i(TAG, "ref: " + reportRef.getPath());
+
+          // Store encoded proto.
+          transaction.set(
+                  db.document(reportRef.getPath() + "/version/1"),
+                  Collections.singletonMap("proto", encoded));
+          return newId;
+        }
+      });
+
+      try {
+        Long reportId = Tasks.await(transaction);
+        ReportRef.Builder ref = ReportRef.newBuilder();
+        ref.setReportId(reportId);
+        ref.setVersion(1);
+        dataStore.setServerSideData(wrapper.getLocalId(), ref.build());
+        return true;
+
+      } catch (ExecutionException | InterruptedException e) {
+        Log.e(TAG, "Create failed: ", e);
       }
-
-      ReportRef reportRef = ReportRef.newBuilder()
-          .mergeFrom(BaseEncoding.base64().decode(response.getReportRefEncoded()))
-          .build();
-      uploadImages(wrapper, reportRef);
-
-      dataStore.setServerSideData(wrapper.getLocalId(), reportRef);
-      */
-      return true;
+      return false;
     }
 
     private boolean handleUpdate(CachedReportWrapper wrapper) throws IOException {
-      Log.e(TAG, "Updating report on server");
+      Log.i(TAG, "Updating report on server");
 
-      /*
-      ReportRequest request = new ReportRequest();
-      ReportRef ref = ReportRef.newBuilder()
-          .setReportId(wrapper.getReportId().get())
-          .setVersion(wrapper.getVersion().get())
-          .build();
-      request.setReportRefEncoded(BaseEncoding.base64().encode(ref.toByteArray()));
-      request.setReportEncoded(BaseEncoding.base64().encode(wrapper.getReport().toByteArray()));
+      final String encoded = BaseEncoding.base64().encode(wrapper.getReport().toByteArray());
+      Task<Long> transaction = db.runTransaction(new Transaction.Function<Long>() {
+        @Override
+        public Long apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
+          DocumentReference reportRef =
+                  db.document(UserPath() + "/report/" + wrapper.getReportId().get());
 
-      ReportResponse response = reportService.updateReport(request).execute();
-      if (!response.getCode().equals(Code.OK.name())) {
-        Log.e(TAG, "Call failed: " + response.getCode() + " :: " + response.getErrorMessage());
-        return false;
+          Log.i(TAG, "ref: " + reportRef.getPath());
+          // Find id for new report.
+          Long newVersion = transaction.get(reportRef).getLong("last_version") + 1;
+          transaction.update(reportRef, "last_version", newVersion);
+          // Store encoded proto.
+          transaction.set(
+                  db.document(reportRef.getPath() + "/version/" + newVersion),
+                  Collections.singletonMap("proto", encoded));
+          return newVersion;
+        }
+      });
+
+      try {
+        Long versionId = Tasks.await(transaction);
+        ReportRef.Builder ref = ReportRef.newBuilder();
+        ref.setReportId(wrapper.getReportId().get());
+        ref.setVersion(versionId);
+        dataStore.setServerSideData(wrapper.getLocalId(), ref.build());
+        return true;
+
+      } catch (ExecutionException | InterruptedException e) {
+        Log.e(TAG, "Update failed: ", e);
       }
-
-      ReportRef reportRef = ReportRef.newBuilder()
-          .mergeFrom(BaseEncoding.base64().decode(response.getReportRefEncoded()))
-          .build();
-      Log.d(TAG, "Updateing from server: " + reportRef.toString());
-      uploadImages(wrapper, reportRef);
-      dataStore.setServerSideData(wrapper.getLocalId(), reportRef);
-*/
-      return true;
+      return false;
     }
 
     private boolean handleDelete(CachedReportWrapper wrapper) throws IOException {
-      Log.e(TAG, "Deleting report from server");
+      Log.i(TAG, "Deleting report from server");
 
       // Only send delete to server if we ever sent the report there in the first place.
-      if (wrapper.getReportId().isPresent()) {
-        ReportRef ref = ReportRef.newBuilder()
-            .setReportId(wrapper.getReportId().get())
-            .setVersion(wrapper.getVersion().get())
-            .build();
-/*
-        EncodedReportRef encodedRef = new EncodedReportRef();
-        encodedRef.setRefEncoded(
-            BaseEncoding.base64().encode(ref.toByteArray()));
+      if (!wrapper.getReportId().isPresent()) {
+        dataStore.markSynced(wrapper.getLocalId());
+        return true;
+      }
 
-        ReportResponse response = reportService.deleteReport(encodedRef).execute();
-        if (!response.getCode().equals(Code.OK.name())) {
-          Log.e(TAG, "Call failed: " + response.getCode() + " :: " + response.getErrorMessage());
-          return false;
+      Task<Void> transaction = db.runTransaction(new Transaction.Function<Void>() {
+        @Override
+        public Void apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
+          DocumentReference reportRef =
+                  db.document(UserPath() + "/report/" + wrapper.getReportId().get());
+          Log.i(TAG, "ref: " + reportRef.getPath());
+          transaction.update(reportRef, "deleted", true);
+          return null;
         }
- */
+      });
+
+      try {
+        Tasks.await(transaction);
+        dataStore.markSynced(wrapper.getLocalId());
+        return true;
+
+      } catch (ExecutionException | InterruptedException e) {
+        Log.e(TAG, "Delete failed: ", e);
       }
-
-      dataStore.markSynced(wrapper.getLocalId());
-      return true;
-    }
-
-    private void uploadImages(CachedReportWrapper wrapper, ReportRef reportRef) throws IOException {
-      ImageRef.Builder imageRef = ImageRef.newBuilder()
-          .setOwnerId(reportRef.getOwnerId())
-          .setReportId(reportRef.getReportId());
-      for (String imageFileName : wrapper.getUnsynchedImageFileNames()) {
-/*
-        imageRef.setImageName(imageFileName);
-        EncodedImageRef encodedRef = new EncodedImageRef();
-        encodedRef.setRefEncoded(BaseEncoding.base64().encode(imageRef.build().toByteArray()));
-
-        Log.d(TAG, "Uploading image: " + imageRef.build().toString());
-        SerializedProto serializedProto = imageService.imageUpload(encodedRef).execute();
-        ImageUploadRef.Builder uploadRef = ImageUploadRef.newBuilder();
-        TextFormat.merge(serializedProto.getSerializedProto(), uploadRef);
-        Log.d(TAG, "upload ref: " + uploadRef.getUrl().toString());
-
-        uploadImage(uploadRef.build());
-*/
-        dataStore.markImagesSynced(wrapper.getLocalId(), ImmutableList.of(imageFileName));
-      }
-    }
-
-    private void uploadImage(ImageUploadRef ref) throws IOException {
-      HttpPost httppost = new HttpPost(ref.getUrl());
-      httppost.setEntity(MultipartEntityBuilder.create()
-              .addBinaryBody("Image",
-                      ImageUtil.readImageBytes(SyncService.this, ref.getImage().getImageName()),
-                      ContentType.create("image/jpeg"),
-                      ref.getImage().getImageName())
-              .build());
-        HttpResponse response = httpClient.execute(httppost);
-        Log.d(TAG, "Response:" + response.getStatusLine() + " :: " +
-                EntityUtils.toString(response.getEntity()));
-
+      return false;
     }
   }
 
@@ -479,23 +450,10 @@ public class SyncService extends Service {
       if (wrapper.isSynched()) {
         return Optional.absent();
       }
-      populateUnsynchedImages(wrapper);
       return Optional.of(wrapper);
     }
 
-    private void populateUnsynchedImages(CachedReportWrapper wrapper) {
-      Set<String> allUnsycnedPhotosFileNames = dataStore.getUnsycnedImageFileNames();
-      Set<String> unsyncedPhotosInThisReport = Sets.intersection(allUnsycnedPhotosFileNames,
-          ImmutableSet.copyOf(
-            Lists.transform(wrapper.getReport().getImageList(), new Function<Image, String>(){
-              @Override public String apply(@Nullable Image image) {
-                return image.getFileName();
-              }})));
-      wrapper.setUnsynchedImageFileNames(ImmutableList.copyOf(unsyncedPhotosInThisReport));
-    }
-
     @Override
-
     public boolean equals(Object o) {
       if (!(o instanceof Upload)) {
         return false;
@@ -528,6 +486,7 @@ public class SyncService extends Service {
    * Listens for the BOOT_COMPLETED message from the system and starts up the sync service.
    */
   public static class OnBoot extends BroadcastReceiver {
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onReceive(Context context, Intent intent) {
       Log.d(TAG, "On Boot");

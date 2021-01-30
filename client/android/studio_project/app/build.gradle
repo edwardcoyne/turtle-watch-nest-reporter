@@ -92,7 +92,7 @@ dependencies {
     implementation 'joda-time:joda-time:2.3'
     implementation("com.google.protobuf:protobuf-javalite") {
         version {
-            // The version packaged with firebase has broken serialization :( 
+            // The version packaged with firebase has broken serialization :(
             strictly '3.11.0'
         }
     }
