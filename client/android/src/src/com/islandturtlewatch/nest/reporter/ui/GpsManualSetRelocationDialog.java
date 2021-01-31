@@ -43,14 +43,14 @@ public class GpsManualSetRelocationDialog extends DialogFragment {
 
     if (!isDouble(lat) || !isDouble(lon)) {
       currentDialog = Optional.of(new AlertDialog.Builder(getActivity())
-              .setIcon(R.drawable.ic_launcher)
+              .setIcon(R.drawable.ic_launcher_foreground)
               .setTitle("Bad Location Data")
               .setMessage("Latitude and Longitude must be entered as decimals only")
               .setNegativeButton(R.string.cancel, cancelListener)
               .create());
     } else {
       currentDialog = Optional.of(new AlertDialog.Builder(getActivity())
-              .setIcon(R.drawable.ic_launcher)
+              .setIcon(R.drawable.ic_launcher_foreground)
               .setTitle("Manually Set GPS Location")
               .setMessage("Tap Accept to set the relocation GPS location for this report \n" +
                       "Latitude: " + lat + "\nLongitude: " + lon +
