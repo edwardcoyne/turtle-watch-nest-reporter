@@ -11,13 +11,14 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.google.common.base.Optional;
 import com.islandturtlewatch.nest.data.ReportProto.GpsCoordinates;
 import com.islandturtlewatch.nest.reporter.R;
+
+import androidx.core.app.ActivityCompat;
 
 public class GpsCoordinateDialog extends DialogFragment {
   private static final String TAG = GpsCoordinateDialog.class.getSimpleName();
@@ -57,7 +58,7 @@ public class GpsCoordinateDialog extends DialogFragment {
     } ;
 
     currentDialog = Optional.of(new AlertDialog.Builder(getActivity())
-      .setIcon(R.drawable.ic_launcher)
+      .setIcon(R.drawable.ic_launcher_foreground)
       .setTitle("Getting GPS coordinates, Please wait...")
       .setMessage("Acquiring signal.")
       .setPositiveButton(R.string.accept, cancelListener)

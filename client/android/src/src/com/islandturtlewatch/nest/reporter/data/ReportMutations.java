@@ -1,7 +1,8 @@
 package com.islandturtlewatch.nest.reporter.data;
 
-import com.google.api.client.util.Preconditions;
 import com.google.common.base.Optional;
+import com.google.common.base.Preconditions;
+import com.islandturtlewatch.nest.data.ReportProto;
 import com.islandturtlewatch.nest.data.ReportProto.Excavation;
 import com.islandturtlewatch.nest.data.ReportProto.Excavation.ExcavationFailureReason;
 import com.islandturtlewatch.nest.data.ReportProto.GpsCoordinates;
@@ -18,1360 +19,1259 @@ import com.islandturtlewatch.nest.data.ReportProto.Report.NestStatus;
 import com.islandturtlewatch.nest.data.ReportProto.Report.Species;
 
 public class ReportMutations {
-  private ReportMutations() {
-  } // namespace really.
+    private ReportMutations() {
+    } // namespace really.
 
 
-  public static class NestNumberMutation implements ReportMutation {
-    private final Optional<Integer> number;
+    public static class NestNumberMutation extends ReportMutation {
+        private final Optional<Integer> number;
 
-    public NestNumberMutation(Optional<Integer> number) {
-      this.number = number;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.setNestNumber(number.or(0));
-      return updatedReport.build();
-    }
-  }
-
-  public static class PossibleFalseCrawlNumberMutation implements ReportMutation {
-    private final Optional<Integer> number;
-
-    public PossibleFalseCrawlNumberMutation(Optional<Integer> number) {
-      this.number = number;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.setPossibleFalseCrawlNumber(number.or(0));
-      return updatedReport.build();
-    }
-  }
-
-  public static class FalseCrawlNumberMutation implements ReportMutation {
-    private final Optional<Integer> number;
-
-    public FalseCrawlNumberMutation(Optional<Integer> number) {
-      this.number = number;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.setFalseCrawlNumber(number.or(0));
-      return updatedReport.build();
-    }
-  }
-
-
-  public static class DateFoundMutation implements ReportMutation {
-    private final Optional<Date> maybeDate;
-
-    public DateFoundMutation(Optional<Date> maybeDate) {
-      this.maybeDate = maybeDate;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      if (maybeDate.isPresent()) {
-        return oldReport.toBuilder()
-                .setTimestampFoundMs(maybeDate.get().getTimestampMs())
-                .build();
-      } else {
-        return oldReport.toBuilder()
-                .clearTimestampFoundMs()
-                .build();
-      }
-    }
-
-  }
-
-
-  public static class ObserversMutation implements ReportMutation {
-    private final String observers;
-
-    public ObserversMutation(String observers) {
-      this.observers = observers;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      if (observers.isEmpty()) {
-        updatedReport.clearObservers();
-      } else {
-        updatedReport.setObservers(observers);
-      }
-      return updatedReport.build();
-    }
-  }
-
-
-  public static class NestStatusMutation
-          implements ReportMutation, ReportMutation.RequiresReportsModel {
-    private final NestStatus status;
-
-    public NestStatusMutation(NestStatus status) {
-      this.status = status;
-    }
-
-    private ReportsModel model;
-
-    @Override
-    public void setModel(ReportsModel model) {
-      this.model = model;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-
-      if (status == NestStatus.FALSE_CRAWL
-              && updatedReport.getStatus() != NestStatus.FALSE_CRAWL) {
-        updatedReport.clearNestNumber();
-        updatedReport
-                .setFalseCrawlNumber(model.getHighestFalseCrawlNumber() + 1);
-      } else if (status != NestStatus.FALSE_CRAWL
-              && updatedReport.getStatus() == NestStatus.FALSE_CRAWL) {
-
-        updatedReport.clearFalseCrawlNumber();
-        updatedReport.setNestNumber(model.getHighestNestNumber() + 1);
-      }
-
-      updatedReport.setStatus(status);
-      return updatedReport.build();
-    }
-  }
-
-  public static class PossibleFalseCrawlMutation implements ReportMutation,
-          ReportMutation.RequiresReportsModel {
-    private final boolean isTrue;
-    private ReportsModel model;
-
-    @Override
-    public void setModel(ReportsModel model) {
-      this.model = model;
-    }
-
-
-    public PossibleFalseCrawlMutation(boolean isTrue) {
-      this.isTrue = isTrue;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.setPossibleFalseCrawl(isTrue);
-      if (isTrue) {
-        updatedReport.setPossibleFalseCrawlNumber(model.getHighestPossibleFalseCrawlNumber() + 1);
-      } else {
-        updatedReport.clearPossibleFalseCrawlNumber();
-      }
-      return updatedReport.build();
-    }
-  }
-
-  public static class AbandonedBodyPitsMutation implements ReportMutation {
-    private final boolean isTrue;
-
-    public AbandonedBodyPitsMutation(boolean isTrue) {
-      this.isTrue = isTrue;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getConditionBuilder().setAbandonedBodyPits(isTrue);
-      return updatedReport.build();
-    }
-  }
-
-  public static class AbandonedEggCavitiesMutation implements ReportMutation {
-    private final boolean isTrue;
-
-    public AbandonedEggCavitiesMutation(boolean isTrue) {
-      this.isTrue = isTrue;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getConditionBuilder().setAbandonedEggCavities(isTrue);
-      return updatedReport.build();
-    }
-  }
-
-  public static class NoDiggingMutation implements ReportMutation {
-    private final boolean isTrue;
-
-    public NoDiggingMutation(boolean isTrue) {
-      this.isTrue = isTrue;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getConditionBuilder().setNoDigging(isTrue);
-      return updatedReport.build();
-    }
-  }
-
-  public static class StreetAddressMutation implements ReportMutation {
-    private final String address;
-
-    public StreetAddressMutation(String address) {
-      this.address = address;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      if (address.isEmpty()) {
-        updatedReport.getLocationBuilder().clearStreetAddress();
-      } else {
-        updatedReport.getLocationBuilder().setStreetAddress(address);
-      }
-      return updatedReport.build();
-    }
-  }
-
-  public static class PropEventsRecordedMutation implements ReportMutation {
-    private final NestCondition.ProportionEventsRecorded proportion;
-    public PropEventsRecordedMutation(NestCondition.ProportionEventsRecorded proportion) {
-      this.proportion = proportion;
-    }
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getConditionBuilder().setPropEventsRecorded(proportion);
-      return updatedReport.build();
-    }
-  }
-
-  public static class CityMutation implements ReportMutation {
-    private final City city;
-    public CityMutation(City city) {
-      this.city = city;
-    }
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getLocationBuilder().setCity(city);
-      return updatedReport.build();
-    }
-  }
-
-  public static class DetailsMutation implements ReportMutation {
-    private final String details;
-    public DetailsMutation(String details) {
-      this.details = details;
-    }
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      if (details.isEmpty()) {
-        updatedReport.getLocationBuilder().clearDetails();
-      } else {
-        updatedReport.getLocationBuilder().setDetails(details);
-      }
-      return updatedReport.build();
-    }
-  }
-
-  public static class ApexToBarrierFtMutation implements ReportMutation {
-    private final Optional<Integer> ft;
-
-    public ApexToBarrierFtMutation(Optional<Integer> ft) {
-      this.ft = ft;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      NestLocation.Builder location = updatedReport.getLocationBuilder();
-
-      if (ft.isPresent()) {
-        location.setApexToBarrierFt(ft.get());
-      } else {
-        location.clearApexToBarrierFt();
-      }
-
-      return updatedReport.build();
-    }
-  }
-
-  public static class ApexToBarrierInMutation implements ReportMutation {
-    private final Optional<Integer> in;
-
-    public ApexToBarrierInMutation(Optional<Integer> in) {
-      this.in = in;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      NestLocation.Builder location = updatedReport.getLocationBuilder();
-
-      if (in.isPresent()) {
-        location.setApexToBarrierIn(in.get());
-      } else {
-        location.clearApexToBarrierIn();
-      }
-
-      return updatedReport.build();
-    }
-  }
-
-  public static class WaterToApexFtMutation implements ReportMutation {
-    private final Optional<Integer> ft;
-
-    public WaterToApexFtMutation(Optional<Integer> ft) {
-      this.ft = ft;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      NestLocation.Builder location = updatedReport.getLocationBuilder();
-      if (ft.isPresent()) {
-        location.setWaterToApexFt(ft.get());
-      } else {
-        location.clearWaterToApexFt();
-      }
-      return updatedReport.build();
-    }
-  }
-
-  public static class WaterToApexInMutation implements ReportMutation {
-    private final Optional<Integer> in;
-    public WaterToApexInMutation(Optional<Integer> in) {
-      this.in = in;
-    }
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      NestLocation.Builder location = updatedReport.getLocationBuilder();
-      if (in.isPresent()) {
-        location.setWaterToApexIn(in.get());
-      } else {
-        location.clearWaterToApexIn();
-      }
-      return updatedReport.build();
-    }
-  }
-
-  public static class PlacementMutation implements ReportMutation {
-    private final Placement placement;
+        public NestNumberMutation(Optional<Integer> number) {
+            this.number = number;
+        }
 
-    public PlacementMutation(Placement placement) {
-      this.placement = placement;
+        @Override
+        public Report apply(Report oldReport) {
+            Report.Builder updatedReport = oldReport.toBuilder();
+            updatedReport.setNestNumber(number.or(0));
+            return updatedReport.build();
+        }
     }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getLocationBuilder().setPlacement(placement);
-      return updatedReport.build();
-    }
-  }
-
-  public static class SeawardOfArmoringStructuresMutation implements ReportMutation {
-    private final boolean isTrue;
-
-    public SeawardOfArmoringStructuresMutation(boolean isTrue) {
-      this.isTrue = isTrue;
-    }
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.setNestSeawardOfArmoringStructure(isTrue);
-      return updatedReport.build();
-    }
-  }
-
-  public static class Within3FeetofStructureMutation implements ReportMutation {
-    private final boolean isTrue;
-
-    public Within3FeetofStructureMutation(boolean isTrue) {
-      this.isTrue = isTrue;
-    }
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.setWithin3FeetOfStructure(isTrue);
-      return updatedReport.build();
-    }
-  }
-
-  public static class TypeOfStructureMutation implements ReportMutation {
-    private final String structureType;
+    public static class PossibleFalseCrawlNumberMutation extends ReportMutation {
+        private final Optional<Integer> number;
 
-    public TypeOfStructureMutation(String details) {
-      this.structureType = details;
-    }
+        public PossibleFalseCrawlNumberMutation(Optional<Integer> number) {
+            this.number = number;
+        }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      if (structureType.isEmpty()) {
-        updatedReport.clearTypeOfStructure();
-      } else {
-        updatedReport.setTypeOfStructure(structureType);
-      }
-      return updatedReport.build();
+        @Override
+        public Report apply(Report oldReport) {
+            Report.Builder updatedReport = oldReport.toBuilder();
+            updatedReport.setPossibleFalseCrawlNumber(number.or(0));
+            return updatedReport.build();
+        }
     }
-  }
 
-  public static class ObstructionsSeawallRocksMutation implements ReportMutation {
-    private final boolean isTrue;
+    public static class FalseCrawlNumberMutation extends ReportMutation {
+        private final Optional<Integer> number;
 
-    public ObstructionsSeawallRocksMutation(boolean isTrue) {
-      this.isTrue = isTrue;
-    }
+        public FalseCrawlNumberMutation(Optional<Integer> number) {
+            this.number = number;
+        }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getLocationBuilder().getObstructionsBuilder()
-              .setSeawallRocks(isTrue);
-      return updatedReport.build();
+        @Override
+        public Report apply(Report oldReport) {
+            Report.Builder updatedReport = oldReport.toBuilder();
+            updatedReport.setFalseCrawlNumber(number.or(0));
+            return updatedReport.build();
+        }
     }
-  }
 
 
-  public static class ObstructionsFurnitureMutation implements ReportMutation {
-    private final boolean isTrue;
+    public static class DateFoundMutation extends ReportMutation {
+        private final Optional<Date> maybeDate;
 
-    public ObstructionsFurnitureMutation(boolean isTrue) {
-      this.isTrue = isTrue;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getLocationBuilder().getObstructionsBuilder()
-              .setFurniture(isTrue);
-      return updatedReport.build();
-    }
-  }
+        public DateFoundMutation(Optional<Date> maybeDate) {
+            this.maybeDate = maybeDate;
+        }
 
-  public static class EscarpmentOver18InchesMutation implements ReportMutation {
-    private final boolean isTrue;
+        @Override
+        public Report apply(Report oldReport) {
+            if (maybeDate.isPresent()) {
+                return oldReport.toBuilder()
+                        .setTimestampFoundMs(maybeDate.get().getTimestampMs())
+                        .build();
+            } else {
+                return oldReport.toBuilder()
+                        .clearTimestampFoundMs()
+                        .build();
+            }
+        }
 
-    public EscarpmentOver18InchesMutation(boolean isTrue) {
-      this.isTrue = isTrue;
     }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getLocationBuilder().setEscarpmentOver18Inches(isTrue);
-      return updatedReport.build();
-    }
-  }
 
-  public static class WithinProjectArea implements ReportMutation {
-    private final boolean isTrue;
-    public WithinProjectArea(boolean isTrue) {
-      this.isTrue = isTrue;
-    }
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getLocationBuilder().setNestWithinProjectArea(isTrue);
-      return updatedReport.build();
-    }
-  }
+    public static class ObserversMutation extends ReportMutation {
+        private final String observers;
 
-  public static class WithinReplacementArea implements ReportMutation {
-    private final boolean isTrue;
+        public ObserversMutation(String observers) {
+            this.observers = observers;
+        }
 
-    public WithinReplacementArea(boolean isTrue) {
-      this.isTrue = isTrue;
+        @Override
+        public Report apply(Report oldReport) {
+            Report.Builder updatedReport = oldReport.toBuilder();
+            if (observers.isEmpty()) {
+                updatedReport.clearObservers();
+            } else {
+                updatedReport.setObservers(observers);
+            }
+            return updatedReport.build();
+        }
     }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getLocationBuilder().setInCortezGroinReplacementArea(isTrue);
-      return updatedReport.build();
-    }
-  }
 
-  public static class ObstructionsEscarpmentMutation implements ReportMutation {
-    private final boolean isTrue;
+    public static class NestStatusMutation
+            extends ReportMutation implements ReportMutation.RequiresReportsModel {
+        private final NestStatus status;
 
-    public ObstructionsEscarpmentMutation(boolean isTrue) {
-      this.isTrue = isTrue;
-    }
+        public NestStatusMutation(NestStatus status) {
+            this.status = status;
+        }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getLocationBuilder().getObstructionsBuilder()
-              .setEscarpment(isTrue);
-      return updatedReport.build();
+        private ReportsModel model;
+
+        @Override
+        public void setModel(ReportsModel model) {
+            this.model = model;
+        }
+
+        @Override
+        public Report apply(Report oldReport) {
+            Report.Builder updatedReport = oldReport.toBuilder();
+
+            if (status == NestStatus.FALSE_CRAWL
+                    && updatedReport.getStatus() != NestStatus.FALSE_CRAWL) {
+                updatedReport.clearNestNumber();
+                updatedReport
+                        .setFalseCrawlNumber(model.getHighestFalseCrawlNumber() + 1);
+            } else if (status != NestStatus.FALSE_CRAWL
+                    && updatedReport.getStatus() == NestStatus.FALSE_CRAWL) {
+
+                updatedReport.clearFalseCrawlNumber();
+                updatedReport.setNestNumber(model.getHighestNestNumber() + 1);
+            }
+
+            updatedReport.setStatus(status);
+            return updatedReport.build();
+        }
+    }
+
+    public static class PossibleFalseCrawlMutation extends ReportMutation implements
+            ReportMutation.RequiresReportsModel {
+        private final boolean isTrue;
+        private ReportsModel model;
+
+        @Override
+        public void setModel(ReportsModel model) {
+            this.model = model;
+        }
+
+
+        public PossibleFalseCrawlMutation(boolean isTrue) {
+            this.isTrue = isTrue;
+        }
+
+        @Override
+        public Report apply(Report oldReport) {
+            Report.Builder updatedReport = oldReport.toBuilder();
+            updatedReport.setPossibleFalseCrawl(isTrue);
+            if (isTrue) {
+                updatedReport.setPossibleFalseCrawlNumber(model.getHighestPossibleFalseCrawlNumber() + 1);
+            } else {
+                updatedReport.clearPossibleFalseCrawlNumber();
+            }
+            return updatedReport.build();
+        }
     }
-  }
 
+    public static class AbandonedBodyPitsMutation extends ReportMutation {
+        private final boolean isTrue;
 
-  public static class ObstructionsOtherMutation implements ReportMutation {
-    private final Optional<String> other;
+        public AbandonedBodyPitsMutation(boolean isTrue) {
+            this.isTrue = isTrue;
+        }
+
+        @Override
+        public Report apply(Report oldReport) {
+            Report.Builder updatedReport = oldReport.toBuilder();
+            updatedReport.setCondition(
+                    updatedReport.getCondition().toBuilder().setAbandonedBodyPits(isTrue));
+            return updatedReport.build();
+        }
+    }
 
-    public ObstructionsOtherMutation(Optional<String> other) {
-      this.other = other;
+    public static class AbandonedEggCavitiesMutation extends ReportMutation {
+        private final boolean isTrue;
+
+        public AbandonedEggCavitiesMutation(boolean isTrue) {
+            this.isTrue = isTrue;
+        }
+
+        @Override
+        public Report apply(Report oldReport) {
+            Report.Builder updatedReport = oldReport.toBuilder();
+            updatedReport.setCondition(
+                    updatedReport.getCondition().toBuilder().setAbandonedEggCavities(isTrue));
+            return updatedReport.build();
+        }
+    }
+
+    public static class NoDiggingMutation extends ReportMutation {
+        private final boolean isTrue;
+
+        public NoDiggingMutation(boolean isTrue) {
+            this.isTrue = isTrue;
+        }
+
+        @Override
+        public Report apply(Report oldReport) {
+            Report.Builder updatedReport = oldReport.toBuilder();
+            updatedReport.setCondition(
+                    updatedReport.getCondition().toBuilder().setNoDigging(isTrue));
+            return updatedReport.build();
+        }
+    }
+
+    public static class StreetAddressMutation extends ReportMutation {
+        private final String address;
+
+        public StreetAddressMutation(String address) {
+            this.address = address;
+        }
+
+        public NestLocation.Builder applyLocation(NestLocation.Builder location) {
+            if (address.isEmpty()) {
+                location.clearStreetAddress();
+            } else {
+                location.setStreetAddress(address);
+            }
+            return location;
+        }
+    }
+
+    public static class PropEventsRecordedMutation extends ReportMutation {
+        private final NestCondition.ProportionEventsRecorded proportion;
+
+        public PropEventsRecordedMutation(NestCondition.ProportionEventsRecorded proportion) {
+            this.proportion = proportion;
+        }
+
+        @Override
+        public Report apply(Report oldReport) {
+            Report.Builder updatedReport = oldReport.toBuilder();
+            updatedReport.setCondition(
+                    updatedReport.getCondition().toBuilder().setPropEventsRecorded(proportion));
+            return updatedReport.build();
+        }
+    }
+
+    public static class CityMutation extends ReportMutation {
+        private final City city;
+
+        public CityMutation(City city) {
+            this.city = city;
+        }
+
+        @Override
+        public NestLocation.Builder applyLocation(NestLocation.Builder location) {
+            return location.setCity(city);
+        }
+    }
+
+    public static class DetailsMutation extends ReportMutation {
+        private final String details;
+
+        public DetailsMutation(String details) {
+            this.details = details;
+        }
+
+        @Override
+        public NestLocation.Builder applyLocation(NestLocation.Builder location) {
+            if (details.isEmpty()) {
+                location.clearDetails();
+            } else {
+                location.setDetails(details);
+            }
+            return location;
+        }
+    }
+
+    public static class ApexToBarrierFtMutation extends ReportMutation {
+        private final Optional<Integer> ft;
+
+        public ApexToBarrierFtMutation(Optional<Integer> ft) {
+            this.ft = ft;
+        }
+
+        @Override
+        public NestLocation.Builder applyLocation(NestLocation.Builder location) {
+            if (ft.isPresent()) {
+                location.setApexToBarrierFt(ft.get());
+            } else {
+                location.clearApexToBarrierFt();
+            }
+            return location;
+        }
+    }
+
+    public static class ApexToBarrierInMutation extends ReportMutation {
+        private final Optional<Integer> in;
+
+        public ApexToBarrierInMutation(Optional<Integer> in) {
+            this.in = in;
+        }
+
+        @Override
+        public NestLocation.Builder applyLocation(NestLocation.Builder location) {
+            if (in.isPresent()) {
+                location.setApexToBarrierIn(in.get());
+            } else {
+                location.clearApexToBarrierIn();
+            }
+            return location;
+        }
+    }
+
+    public static class WaterToApexFtMutation extends ReportMutation {
+        private final Optional<Integer> ft;
+
+        public WaterToApexFtMutation(Optional<Integer> ft) {
+            this.ft = ft;
+        }
+
+        @Override
+        public NestLocation.Builder applyLocation(NestLocation.Builder location) {
+            if (ft.isPresent()) {
+                location.setWaterToApexFt(ft.get());
+            } else {
+                location.clearWaterToApexFt();
+            }
+            return location;
+        }
+    }
+
+    public static class WaterToApexInMutation extends ReportMutation {
+        private final Optional<Integer> in;
+
+        public WaterToApexInMutation(Optional<Integer> in) {
+            this.in = in;
+        }
+
+        @Override
+        public NestLocation.Builder applyLocation(NestLocation.Builder location) {
+            if (in.isPresent()) {
+                location.setWaterToApexIn(in.get());
+            } else {
+                location.clearWaterToApexIn();
+            }
+            return location;
+        }
     }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      if (other.isPresent()) {
-        updatedReport.getLocationBuilder().getObstructionsBuilder()
-                .setOther(other.get());
-      } else {
-        updatedReport.getLocationBuilder().getObstructionsBuilder()
-                .clearOther();
-      }
-      return updatedReport.build();
-    }
-  }
-
-  public static class ProtectionTypeMutation implements ReportMutation {
-    private final ProtectionEvent.Type type;
-
-    public ProtectionTypeMutation(ProtectionEvent.Type type) {
-      this.type = type;
-    }
+    public static class PlacementMutation extends ReportMutation {
+        private final Placement placement;
+
+        public PlacementMutation(Placement placement) {
+            this.placement = placement;
+        }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      ProtectionEvent.Builder protectionEventBuilder = updatedReport
-              .getInterventionBuilder().getProtectionEventBuilder();
-      if (protectionEventBuilder.getType() == type) {
-        // Hack means it was clicked twice, unset.
-        protectionEventBuilder.clearType();
-      } else {
-        protectionEventBuilder.setType(type);
-      }
-      return updatedReport.build();
+        @Override
+        public NestLocation.Builder applyLocation(NestLocation.Builder location) {
+            return location.setPlacement(placement);
+        }
     }
-  }
 
-  public static class WhyProtectedMutation implements ReportMutation {
-    private final ProtectionEvent.Reason reason;
+    public static class SeawardOfArmoringStructuresMutation extends ReportMutation {
+        private final boolean isTrue;
 
-    public WhyProtectedMutation(ProtectionEvent.Reason reason) {
-      this.reason = reason;
-    }
+        public SeawardOfArmoringStructuresMutation(boolean isTrue) {
+            this.isTrue = isTrue;
+        }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      ProtectionEvent.Builder protectionEventBuilder = updatedReport
-              .getInterventionBuilder().getProtectionEventBuilder();
-      if (protectionEventBuilder.getReason() == reason) {
-        // Hack means it was clicked twice, unset.
-        protectionEventBuilder.clearReason();
-      } else {
-        protectionEventBuilder.setReason(reason);
-      }
-      return updatedReport.build();
+        @Override
+        public Report apply(Report oldReport) {
+            Report.Builder updatedReport = oldReport.toBuilder();
+            updatedReport.setNestSeawardOfArmoringStructure(isTrue);
+            return updatedReport.build();
+        }
     }
-  }
-
-  public static class ReasonOtherValueMutation implements ReportMutation {
-    private final String other;
 
-    public ReasonOtherValueMutation(String other) {
-      this.other = other;
-    }
+    public static class Within3FeetofStructureMutation extends ReportMutation {
+        private final boolean isTrue;
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      ProtectionEvent.Builder protectionEventBuilder =
-              updatedReport.getInterventionBuilder().getProtectionEventBuilder();
-      protectionEventBuilder.setReasonOther(other);
+        public Within3FeetofStructureMutation(boolean isTrue) {
+            this.isTrue = isTrue;
+        }
 
-      return updatedReport.build();
+        @Override
+        public Report apply(Report oldReport) {
+            Report.Builder updatedReport = oldReport.toBuilder();
+            updatedReport.setWithin3FeetOfStructure(isTrue);
+            return updatedReport.build();
+        }
     }
-  }
 
-  public static class DateProtectedMutation implements ReportMutation {
-    private final Optional<Date> maybeDate;
+    public static class TypeOfStructureMutation extends ReportMutation {
+        private final String structureType;
 
-    public DateProtectedMutation(Optional<Date> maybeDate) {
-      this.maybeDate = maybeDate;
-    }
+        public TypeOfStructureMutation(String details) {
+            this.structureType = details;
+        }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      ProtectionEvent.Builder eventBuilder =
-              updatedReport.getInterventionBuilder().getProtectionEventBuilder();
-      if (maybeDate.isPresent()) {
-        eventBuilder.setTimestampMs(maybeDate.get().getTimestampMs());
-      } else {
-        eventBuilder.clearTimestampMs();
-      }
-      return updatedReport.build();
+        @Override
+        public Report apply(Report oldReport) {
+            Report.Builder updatedReport = oldReport.toBuilder();
+            if (structureType.isEmpty()) {
+                updatedReport.clearTypeOfStructure();
+            } else {
+                updatedReport.setTypeOfStructure(structureType);
+            }
+            return updatedReport.build();
+        }
     }
-  }
 
-//  TODO: refactor me
-public static class ProtectionChangeTypeMutation implements ReportMutation {
-  private final ProtectionEvent.Type type;
+    public static class ObstructionsSeawallRocksMutation extends ReportMutation {
+        private final boolean isTrue;
 
-  public ProtectionChangeTypeMutation(ProtectionEvent.Type type) {
-    this.type = type;
-  }
+        public ObstructionsSeawallRocksMutation(boolean isTrue) {
+            this.isTrue = isTrue;
+        }
 
-  @Override
-  public Report apply(Report oldReport) {
-    Report.Builder updatedReport = oldReport.toBuilder();
-    ProtectionEvent.Builder protectionEventBuilder = updatedReport
-            .getInterventionBuilder().getProtectionChangedEventBuilder();
-    if (protectionEventBuilder.getType() == type) {
-      // Hack means it was clicked twice, unset.
-      protectionEventBuilder.clearType();
-    } else {
-      protectionEventBuilder.setType(type);
+        @Override
+        public ReportProto.NestLocation.NestObstructions.Builder applyObstructions(
+                ReportProto.NestLocation.NestObstructions.Builder obstructions) {
+            return obstructions.setSeawallRocks(isTrue);
+        }
     }
-    return updatedReport.build();
-  }
-}
 
 
-  public static class WhyProtectedChangeMutation implements ReportMutation {
-    private final ProtectionEvent.Reason reason;
+    public static class ObstructionsFurnitureMutation extends ReportMutation {
+        private final boolean isTrue;
 
-    public WhyProtectedChangeMutation(ProtectionEvent.Reason reason) {
-      this.reason = reason;
-    }
+        public ObstructionsFurnitureMutation(boolean isTrue) {
+            this.isTrue = isTrue;
+        }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      ProtectionEvent.Builder protectionEventBuilder = updatedReport
-              .getInterventionBuilder().getProtectionChangedEventBuilder();
-      if (protectionEventBuilder.getReason() == reason) {
-        // Hack means it was clicked twice, unset.
-        protectionEventBuilder.clearReason();
-      } else {
-        protectionEventBuilder.setReason(reason);
-      }
-      return updatedReport.build();
+        @Override
+        public ReportProto.NestLocation.NestObstructions.Builder applyObstructions(
+                ReportProto.NestLocation.NestObstructions.Builder obstructions) {
+            return obstructions.setFurniture(isTrue);
+        }
     }
-  }
-  public static class ReasonOtherValueChangeMutation implements ReportMutation {
-    private final String other;
 
-    public ReasonOtherValueChangeMutation(String other) {
-      this.other = other;
-    }
+    public static class EscarpmentOver18InchesMutation extends ReportMutation {
+        private final boolean isTrue;
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      ProtectionEvent.Builder protectionEventBuilder =
-              updatedReport.getInterventionBuilder().getProtectionChangedEventBuilder();
-      protectionEventBuilder.setReasonOther(other);
+        public EscarpmentOver18InchesMutation(boolean isTrue) {
+            this.isTrue = isTrue;
+        }
 
-      return updatedReport.build();
-    }
-  }
+        @Override
+        public ReportProto.NestLocation.Builder applyLocation(
+                ReportProto.NestLocation.Builder location) {
+            return location.setEscarpmentOver18Inches(isTrue);
+        }
+    }
+
+    public static class WithinProjectArea extends ReportMutation {
+        private final boolean isTrue;
 
-  public static class DateProtectedChangeMutation implements ReportMutation {
-    private final Optional<Date> maybeDate;
+        public WithinProjectArea(boolean isTrue) {
+            this.isTrue = isTrue;
+        }
 
-    public DateProtectedChangeMutation(Optional<Date> maybeDate) {
-      this.maybeDate = maybeDate;
-    }
+        @Override
+        public ReportProto.NestLocation.Builder applyLocation(
+                ReportProto.NestLocation.Builder location) {
+            return location.setNestWithinProjectArea(isTrue);
+        }
+    }
+
+    public static class WithinReplacementArea extends ReportMutation {
+        private final boolean isTrue;
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      ProtectionEvent.Builder eventBuilder =
-              updatedReport.getInterventionBuilder().getProtectionChangedEventBuilder();
-      if (maybeDate.isPresent()) {
-        eventBuilder.setTimestampMs(maybeDate.get().getTimestampMs());
-      } else {
-        eventBuilder.clearTimestampMs();
-      }
-      return updatedReport.build();
-    }
-  }
+        public WithinReplacementArea(boolean isTrue) {
+            this.isTrue = isTrue;
+        }
 
-  public static class ChangeNestProtectionReasonMutation implements ReportMutation {
-    private final String reason;
-    public ChangeNestProtectionReasonMutation(String reason) {
-      this.reason = reason;
+        @Override
+        public ReportProto.NestLocation.Builder applyLocation(
+                ReportProto.NestLocation.Builder location) {
+            return location.setInCortezGroinReplacementArea(isTrue);
+        }
     }
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getInterventionBuilder().setProtectionChangedReason(reason);
-      return updatedReport.build();
+
+    public static class ObstructionsEscarpmentMutation extends ReportMutation {
+        private final boolean isTrue;
+
+        public ObstructionsEscarpmentMutation(boolean isTrue) {
+            this.isTrue = isTrue;
+        }
+
+        @Override
+        public ReportProto.NestLocation.NestObstructions.Builder applyObstructions(
+                ReportProto.NestLocation.NestObstructions.Builder obstructions) {
+            return obstructions.setEscarpment(isTrue);
+        }
+    }
+
+
+    public static class ObstructionsOtherMutation extends ReportMutation {
+        private final Optional<String> other;
+
+        public ObstructionsOtherMutation(Optional<String> other) {
+            this.other = other;
+        }
+
+        @Override
+        public ReportProto.NestLocation.NestObstructions.Builder applyObstructions(
+                ReportProto.NestLocation.NestObstructions.Builder obstructions) {
+            if (other.isPresent()) {
+                obstructions.setOther(other.get());
+            } else {
+                obstructions.clearOther();
+            }
+            return obstructions;
+        }
+    }
+
+    public static class ProtectionTypeMutation extends ReportMutation {
+        private final ProtectionEvent.Type type;
+
+        public ProtectionTypeMutation(ProtectionEvent.Type type) {
+            this.type = type;
+        }
+
+        @Override
+        public ReportProto.Intervention.ProtectionEvent.Builder applyProtectionEvent(
+                ReportProto.Intervention.ProtectionEvent.Builder protectionEvent) {
+            if (protectionEvent.getType() == type) {
+                // Hack means it was clicked twice, unset.
+                protectionEvent.clearType();
+            } else {
+                protectionEvent.setType(type);
+            }
+            return protectionEvent;
+        }
+    }
+
+    public static class WhyProtectedMutation extends ReportMutation {
+        private final ProtectionEvent.Reason reason;
+
+        public WhyProtectedMutation(ProtectionEvent.Reason reason) {
+            this.reason = reason;
+        }
+
+        @Override
+        public ReportProto.Intervention.ProtectionEvent.Builder applyProtectionEvent(
+                ReportProto.Intervention.ProtectionEvent.Builder protectionEvent) {
+            if (protectionEvent.getReason() == reason) {
+                // Hack means it was clicked twice, unset.
+                protectionEvent.clearReason();
+            } else {
+                protectionEvent.setReason(reason);
+            }
+            return protectionEvent;
+        }
+    }
+
+    public static class ReasonOtherValueMutation extends ReportMutation {
+        private final String other;
+
+        public ReasonOtherValueMutation(String other) {
+            this.other = other;
+        }
+
+        @Override
+        public ReportProto.Intervention.ProtectionEvent.Builder applyProtectionEvent(
+                ReportProto.Intervention.ProtectionEvent.Builder protectionEvent) {
+            return protectionEvent.setReasonOther(other);
+        }
+    }
+
+    public static class DateProtectedMutation extends ReportMutation {
+        private final Optional<Date> maybeDate;
+
+        public DateProtectedMutation(Optional<Date> maybeDate) {
+            this.maybeDate = maybeDate;
+        }
+
+        @Override
+        public ReportProto.Intervention.ProtectionEvent.Builder applyProtectionEvent(
+                ReportProto.Intervention.ProtectionEvent.Builder protectionEvent) {
+            if (maybeDate.isPresent()) {
+                protectionEvent.setTimestampMs(maybeDate.get().getTimestampMs());
+            } else {
+                protectionEvent.clearTimestampMs();
+            }
+            return protectionEvent;
+        }
+    }
+
+    //  TODO: refactor me
+    public static class ProtectionChangeTypeMutation extends ReportMutation {
+        private final ProtectionEvent.Type type;
+
+        public ProtectionChangeTypeMutation(ProtectionEvent.Type type) {
+            this.type = type;
+        }
+
+        @Override
+        public ReportProto.Intervention.ProtectionEvent.Builder applyProtectionChangedEvent(
+                ReportProto.Intervention.ProtectionEvent.Builder protectionEvent) {
+            if (protectionEvent.getType() == type) {
+                // Hack means it was clicked twice, unset.
+                protectionEvent.clearType();
+            } else {
+                protectionEvent.setType(type);
+            }
+            return protectionEvent;
+        }
+    }
+
+
+    public static class WhyProtectedChangeMutation extends ReportMutation {
+        private final ProtectionEvent.Reason reason;
+
+        public WhyProtectedChangeMutation(ProtectionEvent.Reason reason) {
+            this.reason = reason;
+        }
+
+        @Override
+        public ReportProto.Intervention.ProtectionEvent.Builder applyProtectionChangedEvent(
+                ReportProto.Intervention.ProtectionEvent.Builder protectionEvent) {
+            if (protectionEvent.getReason() == reason) {
+                // Hack means it was clicked twice, unset.
+                protectionEvent.clearReason();
+            } else {
+                protectionEvent.setReason(reason);
+            }
+            return protectionEvent;
+        }
+    }
+
+    public static class ReasonOtherValueChangeMutation extends ReportMutation {
+        private final String other;
+
+        public ReasonOtherValueChangeMutation(String other) {
+            this.other = other;
+        }
+
+        @Override
+        public ReportProto.Intervention.ProtectionEvent.Builder applyProtectionChangedEvent(
+                ReportProto.Intervention.ProtectionEvent.Builder protectionEvent) {
+            return protectionEvent.setReasonOther(other);
+        }
+    }
+
+    public static class DateProtectedChangeMutation extends ReportMutation {
+        private final Optional<Date> maybeDate;
+
+        public DateProtectedChangeMutation(Optional<Date> maybeDate) {
+            this.maybeDate = maybeDate;
+        }
+
+        @Override
+        public ReportProto.Intervention.ProtectionEvent.Builder applyProtectionChangedEvent(
+                ReportProto.Intervention.ProtectionEvent.Builder protectionEvent) {
+            if (maybeDate.isPresent()) {
+                protectionEvent.setTimestampMs(maybeDate.get().getTimestampMs());
+            } else {
+                protectionEvent.clearTimestampMs();
+            }
+            return protectionEvent;
+        }
+    }
+
+    public static class ChangeNestProtectionReasonMutation extends ReportMutation {
+        private final String reason;
+
+        public ChangeNestProtectionReasonMutation(String reason) {
+            this.reason = reason;
+        }
+
+        @Override
+        public ReportProto.Intervention.Builder applyIntervention(
+                ReportProto.Intervention.Builder intervention) {
+            return intervention.setProtectionChangedReason(reason);
+        }
     }
-  }
 
 //end section
 
-  public static class RelocatedMutation implements ReportMutation {
-    private final boolean isTrue;
+    public static class RelocatedMutation extends ReportMutation {
+        private final boolean isTrue;
 
-    public RelocatedMutation(boolean isTrue) {
-      this.isTrue = isTrue;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getInterventionBuilder().getRelocationBuilder()
-              .setWasRelocated(isTrue);
-      return updatedReport.build();
-    }
-  }
-
-
-  public static class RelocatedReasonMutation implements ReportMutation {
-    private final Relocation.Reason reason;
-
-    public RelocatedReasonMutation(Relocation.Reason reason) {
-      this.reason = reason;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getInterventionBuilder().getRelocationBuilder()
-              .setReason(reason);
-      return updatedReport.build();
-    }
-  }
-
-  public static class NewAddressMutation implements ReportMutation {
-    private final String address;
-
-    public NewAddressMutation(String address) {
-      this.address = address;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getInterventionBuilder().getRelocationBuilder()
-              .setNewAddress(address);
-      return updatedReport.build();
-    }
-  }
-
-
-  public static class EggsRelocatedMutation implements ReportMutation {
-    private final Optional<Integer> eggs;
-
-    public EggsRelocatedMutation(Optional<Integer> eggs) {
-      this.eggs = eggs;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      Relocation.Builder relocationBuilder = updatedReport
-              .getInterventionBuilder().getRelocationBuilder();
-      if (eggs.isPresent()) {
-        relocationBuilder.setEggsRelocated(eggs.get());
-      } else {
-        relocationBuilder.clearEggsRelocated();
-      }
-      return updatedReport.build();
-    }
-  }
-
-
-  public static class EggsDestroyedMutation implements ReportMutation {
-    private final Optional<Integer> eggs;
-
-    public EggsDestroyedMutation(Optional<Integer> eggs) {
-      this.eggs = eggs;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      Relocation.Builder relocationBuilder = updatedReport
-              .getInterventionBuilder().getRelocationBuilder();
-      if (eggs.isPresent()) {
-        relocationBuilder.setEggsDestroyed(eggs.get());
-      } else {
-        relocationBuilder.clearEggsDestroyed();
-      }
-      return updatedReport.build();
-    }
-  }
-
-
-  public static class DateRelocatedMutation implements ReportMutation {
-    private final Optional<Date> maybeDate;
-
-    public DateRelocatedMutation(Optional<Date> maybeDate) {
-      this.maybeDate = maybeDate;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      Relocation.Builder relocationBuilder =
-              updatedReport.getInterventionBuilder().getRelocationBuilder();
-      if (maybeDate.isPresent()) {
-        relocationBuilder.setTimestampMs(maybeDate.get().getTimestampMs());
-      } else {
-        relocationBuilder.clearTimestampMs();
-      }
-      return updatedReport.build();
-    }
-  }
-
-
-  public static class WasAdoptedMutation implements ReportMutation {
-    private final boolean isTrue;
-
-    public WasAdoptedMutation(boolean isTrue) {
-      this.isTrue = isTrue;
-    }
+        public RelocatedMutation(boolean isTrue) {
+            this.isTrue = isTrue;
+        }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getInterventionBuilder().setAdopted(isTrue);
-      return updatedReport.build();
+        @Override
+        public ReportProto.Relocation.Builder applyRelocation(
+                ReportProto.Relocation.Builder relocation) {
+            return relocation.setWasRelocated(isTrue);
+        }
     }
-  }
 
 
-  public static class HatchDateMutation implements ReportMutation {
-    private final Optional<Date> maybeDate;
+    public static class RelocatedReasonMutation extends ReportMutation {
+        private final Relocation.Reason reason;
 
-    public HatchDateMutation(Optional<Date> maybeDate) {
-      this.maybeDate = maybeDate;
-    }
+        public RelocatedReasonMutation(Relocation.Reason reason) {
+            this.reason = reason;
+        }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      NestCondition.Builder conditionBuilder = updatedReport.getConditionBuilder();
-      if (maybeDate.isPresent()) {
-        conditionBuilder.setHatchTimestampMs(maybeDate.get().getTimestampMs());
-      } else {
-        conditionBuilder.clearHatchTimestampMs();
-      }
-      return updatedReport.build();
+        @Override
+        public ReportProto.Relocation.Builder applyRelocation(
+                ReportProto.Relocation.Builder relocation) {
+            return relocation.setReason(reason);
+        }
     }
-  }
 
+    public static class NewAddressMutation extends ReportMutation {
+        private final String address;
 
-  public static class AdditionalHatchDateMutation implements ReportMutation {
-    private final Optional<Date> maybeDate;
+        public NewAddressMutation(String address) {
+            this.address = address;
+        }
 
-    public AdditionalHatchDateMutation(Optional<Date> maybeDate) {
-      this.maybeDate = maybeDate;
+        @Override
+        public ReportProto.Relocation.Builder applyRelocation(
+                ReportProto.Relocation.Builder relocation) {
+            return relocation.setNewAddress(address);
+        }
     }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      NestCondition.Builder conditionBuilder = updatedReport.getConditionBuilder();
-      if (maybeDate.isPresent()) {
-        conditionBuilder.setAdditionalHatchTimestampMs(maybeDate.get().getTimestampMs());
-      } else {
-        conditionBuilder.clearAdditionalHatchTimestampMs();
-      }
-      return updatedReport.build();
-    }
-  }
 
+    public static class EggsRelocatedMutation extends ReportMutation {
+        private final Optional<Integer> eggs;
 
-  public static class DisorentationMutation implements ReportMutation {
-    private final boolean isTrue;
+        public EggsRelocatedMutation(Optional<Integer> eggs) {
+            this.eggs = eggs;
+        }
 
-    public DisorentationMutation(boolean isTrue) {
-      this.isTrue = isTrue;
+        @Override
+        public ReportProto.Relocation.Builder applyRelocation(
+                ReportProto.Relocation.Builder relocation) {
+            if (eggs.isPresent()) {
+                relocation.setEggsRelocated(eggs.get());
+            } else {
+                relocation.clearEggsRelocated();
+            }
+            return relocation;
+        }
     }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getConditionBuilder().setDisorientation(isTrue);
-      return updatedReport.build();
-    }
-  }
 
+    public static class EggsDestroyedMutation extends ReportMutation {
+        private final Optional<Integer> eggs;
 
-  public static class WasExcavatedMutation implements ReportMutation {
-    private final boolean isTrue;
+        public EggsDestroyedMutation(Optional<Integer> eggs) {
+            this.eggs = eggs;
+        }
 
-    public WasExcavatedMutation(boolean isTrue) {
-      this.isTrue = isTrue;
+        @Override
+        public ReportProto.Relocation.Builder applyRelocation(
+                ReportProto.Relocation.Builder relocation) {
+            if (eggs.isPresent()) {
+                relocation.setEggsDestroyed(eggs.get());
+            } else {
+                relocation.clearEggsDestroyed();
+            }
+            return relocation;
+        }
     }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getInterventionBuilder().getExcavationBuilder().setExcavated(isTrue);
-      return updatedReport.build();
-    }
-  }
 
+    public static class DateRelocatedMutation extends ReportMutation {
+        private final Optional<Date> maybeDate;
 
-  public static class ExcavationFailureMutation implements ReportMutation {
-    private final ExcavationFailureReason reason;
+        public DateRelocatedMutation(Optional<Date> maybeDate) {
+            this.maybeDate = maybeDate;
+        }
 
-    public ExcavationFailureMutation(ExcavationFailureReason reason) {
-      this.reason = reason;
+        @Override
+        public ReportProto.Relocation.Builder applyRelocation(
+                ReportProto.Relocation.Builder relocation) {
+            if (maybeDate.isPresent()) {
+                relocation.setTimestampMs(maybeDate.get().getTimestampMs());
+            } else {
+                relocation.clearTimestampMs();
+            }
+            return relocation;
+        }
     }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getInterventionBuilder().getExcavationBuilder().setFailureReason(reason);
-      return updatedReport.build();
-    }
-  }
 
-  public static class AdopteeNameMutation implements ReportMutation {
-    private final String adoptee;
-    public AdopteeNameMutation(String adoptee) {
-      this.adoptee = adoptee;
-    }
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getInterventionBuilder().setAdoptee(adoptee);
-      return updatedReport.build();
-    }
-  }
+    public static class WasAdoptedMutation extends ReportMutation {
+        private final boolean isTrue;
 
-  public static class ExcavationFailureOtherMutation implements ReportMutation {
-    private final String reason;
+        public WasAdoptedMutation(boolean isTrue) {
+            this.isTrue = isTrue;
+        }
 
-    public ExcavationFailureOtherMutation(String reason) {
-      this.reason = reason;
+        @Override
+        public ReportProto.Intervention.Builder applyIntervention(
+                ReportProto.Intervention.Builder intervention) {
+            return intervention.setAdopted(isTrue);
+        }
     }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getInterventionBuilder().getExcavationBuilder().setFailureOther(reason);
-      return updatedReport.build();
-    }
-  }
 
+    public static class HatchDateMutation extends ReportMutation {
+        private final Optional<Date> maybeDate;
 
-  public static class ExcavationDateMutation implements ReportMutation {
-    private final Optional<Date> maybeDate;
+        public HatchDateMutation(Optional<Date> maybeDate) {
+            this.maybeDate = maybeDate;
+        }
 
-    public ExcavationDateMutation(Optional<Date> maybeDate) {
-      this.maybeDate = maybeDate;
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            if (maybeDate.isPresent()) {
+                condition.setHatchTimestampMs(maybeDate.get().getTimestampMs());
+            } else {
+                condition.clearHatchTimestampMs();
+            }
+            return condition;
+        }
     }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      Excavation.Builder excavationBuilder =
-              updatedReport.getInterventionBuilder().getExcavationBuilder();
-      if (maybeDate.isPresent()) {
-        excavationBuilder.setTimestampMs(maybeDate.get().getTimestampMs());
-      } else {
-        excavationBuilder.clearTimestampMs();
-      }
-      return updatedReport.build();
-    }
-  }
 
+    public static class AdditionalHatchDateMutation extends ReportMutation {
+        private final Optional<Date> maybeDate;
 
-  public static class ExcavationDeadInNestMutation implements ReportMutation {
-    private final Optional<Integer> eggs;
+        public AdditionalHatchDateMutation(Optional<Date> maybeDate) {
+            this.maybeDate = maybeDate;
+        }
 
-    public ExcavationDeadInNestMutation(Optional<Integer> eggs) {
-      this.eggs = eggs;
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            if (maybeDate.isPresent()) {
+                condition.setAdditionalHatchTimestampMs(maybeDate.get().getTimestampMs());
+            } else {
+                condition.clearAdditionalHatchTimestampMs();
+            }
+            return condition;
+        }
     }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      Excavation.Builder excavationBuilder = updatedReport
-              .getInterventionBuilder().getExcavationBuilder();
 
-      if (eggs.isPresent()) {
-        excavationBuilder.setDeadInNest(eggs.get());
-      } else {
-        excavationBuilder.clearDeadInNest();
-      }
-
-      return updatedReport.build();
-    }
-  }
 
+    public static class DisorentationMutation extends ReportMutation {
+        private final boolean isTrue;
 
-  public static class ExcavationLiveInNestMutation implements ReportMutation {
-    private final Optional<Integer> eggs;
+        public DisorentationMutation(boolean isTrue) {
+            this.isTrue = isTrue;
+        }
 
-    public ExcavationLiveInNestMutation(Optional<Integer> eggs) {
-      this.eggs = eggs;
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            return condition.setDisorientation(isTrue);
+        }
     }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      Excavation.Builder excavationBuilder = updatedReport
-              .getInterventionBuilder().getExcavationBuilder();
+    public static class WasExcavatedMutation extends ReportMutation {
+        private final boolean isTrue;
 
-      if (eggs.isPresent()) {
-        excavationBuilder.setLiveInNest(eggs.get());
-      } else {
-        excavationBuilder.clearLiveInNest();
-      }
+        public WasExcavatedMutation(boolean isTrue) {
+            this.isTrue = isTrue;
+        }
 
-      return updatedReport.build();
+        @Override
+        public ReportProto.Excavation.Builder applyExcavation(
+                ReportProto.Excavation.Builder excavation) {
+            return excavation.setExcavated(isTrue);
+        }
     }
-  }
 
+    public static class ExcavationFailureMutation extends ReportMutation {
+        private final ExcavationFailureReason reason;
 
-  public static class ExcavationHatchedMutation implements ReportMutation {
-    private final Optional<Integer> eggs;
+        public ExcavationFailureMutation(ExcavationFailureReason reason) {
+            this.reason = reason;
+        }
 
-    public ExcavationHatchedMutation(Optional<Integer> eggs) {
-      this.eggs = eggs;
+        @Override
+        public ReportProto.Excavation.Builder applyExcavation(
+                ReportProto.Excavation.Builder excavation) {
+            return excavation.setFailureReason(reason);
+        }
     }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      Excavation.Builder excavationBuilder = updatedReport
-              .getInterventionBuilder().getExcavationBuilder();
+    public static class AdopteeNameMutation extends ReportMutation {
+        private final String adoptee;
 
-      if (eggs.isPresent()) {
-        excavationBuilder.setHatchedShells(eggs.get());
-      } else {
-        excavationBuilder.clearHatchedShells();
-      }
+        public AdopteeNameMutation(String adoptee) {
+            this.adoptee = adoptee;
+        }
 
-      return updatedReport.build();
+        @Override
+        public ReportProto.Intervention.Builder applyIntervention(
+                ReportProto.Intervention.Builder intervention) {
+            return intervention.setAdoptee(adoptee);
+        }
     }
-  }
 
+    public static class ExcavationFailureOtherMutation extends ReportMutation {
+        private final String reason;
 
-  public static class ExcavationDeadPippedMutation implements ReportMutation {
-    private final Optional<Integer> hatchlings;
+        public ExcavationFailureOtherMutation(String reason) {
+            this.reason = reason;
+        }
 
-    public ExcavationDeadPippedMutation(Optional<Integer> hatchlings) {
-      this.hatchlings = hatchlings;
+        @Override
+        public ReportProto.Excavation.Builder applyExcavation(
+                ReportProto.Excavation.Builder excavation) {
+            return excavation.setFailureOther(reason);
+        }
     }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      Excavation.Builder excavationBuilder = updatedReport
-              .getInterventionBuilder().getExcavationBuilder();
+    public static class ExcavationDateMutation extends ReportMutation {
+        private final Optional<Date> maybeDate;
 
-      if (hatchlings.isPresent()) {
-        excavationBuilder.setDeadPipped(hatchlings.get());
-      } else {
-        excavationBuilder.clearDeadPipped();
-      }
+        public ExcavationDateMutation(Optional<Date> maybeDate) {
+            this.maybeDate = maybeDate;
+        }
 
-      return updatedReport.build();
+        @Override
+        public ReportProto.Excavation.Builder applyExcavation(
+                ReportProto.Excavation.Builder excavation) {
+            if (maybeDate.isPresent()) {
+                excavation.setTimestampMs(maybeDate.get().getTimestampMs());
+            } else {
+                excavation.clearTimestampMs();
+            }
+            return excavation;
+        }
     }
-  }
 
+    public static class ExcavationDeadInNestMutation extends ReportMutation {
+        private final Optional<Integer> eggs;
 
-  public static class ExcavationLivePippedMutation implements ReportMutation {
-    private final Optional<Integer> hatchlings;
+        public ExcavationDeadInNestMutation(Optional<Integer> eggs) {
+            this.eggs = eggs;
+        }
 
-    public ExcavationLivePippedMutation(Optional<Integer> hatchlings) {
-      this.hatchlings = hatchlings;
+        @Override
+        public ReportProto.Excavation.Builder applyExcavation(
+                ReportProto.Excavation.Builder excavation) {
+            if (eggs.isPresent()) {
+                excavation.setDeadInNest(eggs.get());
+            } else {
+                excavation.clearDeadInNest();
+            }
+            return excavation;
+        }
     }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      Excavation.Builder excavationBuilder = updatedReport
-              .getInterventionBuilder().getExcavationBuilder();
+    public static class ExcavationLiveInNestMutation extends ReportMutation {
+        private final Optional<Integer> eggs;
 
-      if (hatchlings.isPresent()) {
-        excavationBuilder.setLivePipped(hatchlings.get());
-      } else {
-        excavationBuilder.clearLivePipped();
-      }
+        public ExcavationLiveInNestMutation(Optional<Integer> eggs) {
+            this.eggs = eggs;
+        }
 
-      return updatedReport.build();
+        @Override
+        public ReportProto.Excavation.Builder applyExcavation(
+                ReportProto.Excavation.Builder excavation) {
+            if (eggs.isPresent()) {
+                excavation.setLiveInNest(eggs.get());
+            } else {
+                excavation.clearLiveInNest();
+            }
+            return excavation;
+        }
     }
-  }
 
+    public static class ExcavationHatchedMutation extends ReportMutation {
+        private final Optional<Integer> eggs;
 
-  public static class ExcavationWholeUnhatchedMutation implements ReportMutation {
-    private final Optional<Integer> eggs;
+        public ExcavationHatchedMutation(Optional<Integer> eggs) {
+            this.eggs = eggs;
+        }
 
-    public ExcavationWholeUnhatchedMutation(Optional<Integer> eggs) {
-      this.eggs = eggs;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      Excavation.Builder excavationBuilder = updatedReport
-              .getInterventionBuilder().getExcavationBuilder();
+        @Override
+        public ReportProto.Excavation.Builder applyExcavation(
+                ReportProto.Excavation.Builder excavation) {
+            if (eggs.isPresent()) {
+                excavation.setHatchedShells(eggs.get());
+            } else {
+                excavation.clearHatchedShells();
+            }
+            return excavation;
+        }
+    }
 
-      if (eggs.isPresent()) {
-        excavationBuilder.setWholeUnhatched(eggs.get());
-      } else {
-        excavationBuilder.clearWholeUnhatched();
-      }
-
-      return updatedReport.build();
+    public static class ExcavationDeadPippedMutation extends ReportMutation {
+        private final Optional<Integer> hatchlings;
+
+        public ExcavationDeadPippedMutation(Optional<Integer> hatchlings) {
+            this.hatchlings = hatchlings;
+        }
+
+        @Override
+        public ReportProto.Excavation.Builder applyExcavation(
+                ReportProto.Excavation.Builder excavation) {
+            if (hatchlings.isPresent()) {
+                excavation.setDeadPipped(hatchlings.get());
+            } else {
+                excavation.clearDeadPipped();
+            }
+            return excavation;
+        }
+    }
+
+    public static class ExcavationLivePippedMutation extends ReportMutation {
+        private final Optional<Integer> hatchlings;
+
+        public ExcavationLivePippedMutation(Optional<Integer> hatchlings) {
+            this.hatchlings = hatchlings;
+        }
+
+        @Override
+        public ReportProto.Excavation.Builder applyExcavation(
+                ReportProto.Excavation.Builder excavation) {
+            if (hatchlings.isPresent()) {
+                excavation.setLivePipped(hatchlings.get());
+            } else {
+                excavation.clearLivePipped();
+            }
+            return excavation;
+        }
+    }
+
+    public static class ExcavationWholeUnhatchedMutation extends ReportMutation {
+        private final Optional<Integer> eggs;
+
+        public ExcavationWholeUnhatchedMutation(Optional<Integer> eggs) {
+            this.eggs = eggs;
+        }
+
+        @Override
+        public ReportProto.Excavation.Builder applyExcavation(
+                ReportProto.Excavation.Builder excavation) {
+            if (eggs.isPresent()) {
+                excavation.setWholeUnhatched(eggs.get());
+            } else {
+                excavation.clearWholeUnhatched();
+            }
+            return excavation;
+        }
     }
-  }
 
 
-  public static class ExcavationEggsDestroyedMutation implements ReportMutation {
-    private final Optional<Integer> eggs;
+    public static class ExcavationEggsDestroyedMutation extends ReportMutation {
+        private final Optional<Integer> eggs;
 
-    public ExcavationEggsDestroyedMutation(Optional<Integer> eggs) {
-      this.eggs = eggs;
+        public ExcavationEggsDestroyedMutation(Optional<Integer> eggs) {
+            this.eggs = eggs;
+        }
+
+        @Override
+        public ReportProto.Excavation.Builder applyExcavation(
+                ReportProto.Excavation.Builder excavation) {
+            if (eggs.isPresent()) {
+                excavation.setEggsDestroyed(eggs.get());
+            } else {
+                excavation.clearEggsDestroyed();
+            }
+            return excavation;
+        }
     }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      Excavation.Builder excavationBuilder = updatedReport
-              .getInterventionBuilder().getExcavationBuilder();
-
-      if (eggs.isPresent()) {
-        excavationBuilder.setEggsDestroyed(eggs.get());
-      } else {
-        excavationBuilder.clearEggsDestroyed();
-      }
+
+    public static class VandalizedDateMutation extends ReportMutation {
+        private final Optional<Date> maybeDate;
 
-      return updatedReport.build();
+        public VandalizedDateMutation(Optional<Date> maybeDate) {
+            this.maybeDate = maybeDate;
+        }
+
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            if (maybeDate.isPresent()) {
+                condition.setVandalizedTimestampMs(maybeDate.get().getTimestampMs());
+            } else {
+                condition.clearVandalizedTimestampMs();
+            }
+            return condition;
+        }
     }
-  }
 
+    public static class WasVandalizedMutation extends ReportMutation {
+        private final boolean isTrue;
 
-  public static class VandalizedDateMutation implements ReportMutation {
-    private final Optional<Date> maybeDate;
+        public WasVandalizedMutation(boolean isTrue) {
+            this.isTrue = isTrue;
+        }
 
-    public VandalizedDateMutation(Optional<Date> maybeDate) {
-      this.maybeDate = maybeDate;
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            return condition.setVandalized(isTrue);
+        }
     }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      NestCondition.Builder conditionBuilder = updatedReport.getConditionBuilder();
-      if (maybeDate.isPresent()) {
-        conditionBuilder.setVandalizedTimestampMs(maybeDate.get().getTimestampMs());
-      } else {
-        conditionBuilder.clearVandalizedTimestampMs();
-      }
-      return updatedReport.build();
-    }
-  }
-
+    public static class PredatedPriorMutation extends ReportMutation {
+        private final Integer ordinal;
+        private final PreditationEvent.PredationTimeOption option;
 
-  public static class WasVandalizedMutation implements ReportMutation {
-    private final boolean isTrue;
-
-    public WasVandalizedMutation(boolean isTrue) {
-      this.isTrue = isTrue;
-    }
+        public PredatedPriorMutation(Integer ordinal, PreditationEvent.PredationTimeOption option) {
+            this.ordinal = ordinal;
+            this.option = option;
+        }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getConditionBuilder().setVandalized(isTrue);
-      return updatedReport.build();
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            PreditationEvent.Builder preditation = (condition.getPreditationCount() <= ordinal) ?
+                    PreditationEvent.newBuilder() : condition.getPreditation(ordinal).toBuilder();
+            preditation.setPredatedPrior(option);
+            return condition.setPreditation(ordinal, preditation);
+        }
     }
-  }
+
+    public static class PredatorSpinnerMutation extends ReportMutation {
+        private final Integer ordinal;
+        private final String predator;
 
-  public static class PredatedPriorMutation implements ReportMutation {
-    private final Integer ordinal;
-    private final PreditationEvent.PredationTimeOption option;
+        public PredatorSpinnerMutation(Integer ordinal, String predator) {
+            this.ordinal = ordinal;
+            this.predator = predator;
+        }
 
-    public PredatedPriorMutation(Integer ordinal, PreditationEvent.PredationTimeOption option) {
-      this.ordinal = ordinal;
-      this.option = option;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      NestCondition.Builder condition = updatedReport.getConditionBuilder();
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            Preconditions.checkNotNull(ordinal);
 
-      PreditationEvent.Builder predation = (condition.getPreditationCount() <= ordinal) ?
-              condition.addPreditationBuilder() : condition.getPreditationBuilder(ordinal);
-      predation.setPredatedPrior(option);
-      return updatedReport.build();
-    }
-  }
+            PreditationEvent.Builder preditation = (condition.getPreditationCount() <= ordinal) ?
+                    PreditationEvent.newBuilder() : condition.getPreditation(ordinal).toBuilder();
 
-  public static class PredatorSpinnerMutation implements ReportMutation {
-    private final Integer ordinal;
-    private final String predator;
+            preditation.setPredatorSpinnerText(predator);
 
-    public PredatorSpinnerMutation(Integer ordinal, String predator) {
-      this.ordinal = ordinal;
-      this.predator = predator;
+            return condition.setPreditation(ordinal, preditation);
+        }
     }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Preconditions.checkNotNull(ordinal);
-      Report.Builder updatedReport = oldReport.toBuilder();
-      NestCondition.Builder condition = updatedReport.getConditionBuilder();
+    public static class VandalismTypeMutation extends ReportMutation {
+        private final Optional<NestCondition.VandalismType> vandalismType;
 
-      PreditationEvent.Builder preditation = (condition.getPreditationCount() <= ordinal)
-              ? condition.addPreditationBuilder() : condition.getPreditationBuilder(ordinal);
-      preditation.setPredatorSpinnerText(predator);
+        public VandalismTypeMutation(Optional<NestCondition.VandalismType> vandalismType) {
+            this.vandalismType = vandalismType;
+        }
 
-      return updatedReport.build();
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            if (vandalismType.isPresent()) {
+                condition.setVandalismType(vandalismType.get());
+            } else {
+                condition.clearVandalismType();
+            }
+            return condition;
+        }
     }
-  }
 
+    public static class GhostCrabDamageAtMost10EggsMutation extends ReportMutation {
+        private final boolean isTrue;
 
-  public static class VandalismTypeMutation implements ReportMutation {
-    private final Optional<NestCondition.VandalismType> vandalismType;
+        public GhostCrabDamageAtMost10EggsMutation(boolean isTrue) {
+            this.isTrue = isTrue;
+        }
 
-    public VandalismTypeMutation(Optional<NestCondition.VandalismType> vandalismType) {
-      this.vandalismType = vandalismType;
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            return condition.setGhostDamage10OrLess(isTrue);
+        }
     }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      NestCondition.Builder builder = updatedReport
-              .getConditionBuilder();
-
-      if (vandalismType.isPresent()) {
-        builder.setVandalismType(vandalismType.get());
-      } else {
-        builder.clearVandalismType();
-      }
 
-      return updatedReport.build();
-    }
-  }
+    public static class WasStormImpactPriorToHatch extends ReportMutation {
+        private final boolean isTrue;
 
-  public static class GhostCrabDamageAtMost10EggsMutation implements ReportMutation {
-    private final boolean isTrue;
+        public WasStormImpactPriorToHatch(boolean isTrue) {
+            this.isTrue = isTrue;
+        }
 
-    public GhostCrabDamageAtMost10EggsMutation(boolean isTrue) {
-      this.isTrue = isTrue;
+        @Override
+        public ReportProto.NestCondition.StormImpact.Builder applyStormImpact(
+                ReportProto.NestCondition.StormImpact.Builder impact) {
+            return impact.setEventPriorToHatching(isTrue);
+        }
     }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getConditionBuilder().setGhostDamage10OrLess(isTrue);
-      return updatedReport.build();
-    }
-  }
+    public static class WasNestDugIntoMutation extends ReportMutation {
+        private final boolean isTrue;
 
-  public static class WasStormImpactPriorToHatch implements ReportMutation {
-    private final boolean isTrue;
+        public WasNestDugIntoMutation(boolean isTrue) {
+            this.isTrue = isTrue;
+        }
 
-    public WasStormImpactPriorToHatch(boolean isTrue) {
-      this.isTrue = isTrue;
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            return condition.setNestDugInto(isTrue);
+        }
     }
-    @Override
-    public  Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getConditionBuilder().getStormImpactBuilder().setEventPriorToHatching(isTrue);
-      return updatedReport.build();
-    }
-  }
 
-  public static class WasNestDugIntoMutation implements ReportMutation {
-    private final boolean isTrue;
+    public static class PoachedDateMutation extends ReportMutation {
+        private final Optional<Date> maybeDate;
 
-    public WasNestDugIntoMutation(boolean isTrue) {
-      this.isTrue = isTrue;
-    }
+        public PoachedDateMutation(Optional<Date> maybeDate) {
+            this.maybeDate = maybeDate;
+        }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getConditionBuilder().setNestDugInto(isTrue);
-      return updatedReport.build();
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            if (maybeDate.isPresent()) {
+                condition.setPoachedTimestampMs(maybeDate.get().getTimestampMs());
+            } else {
+                condition.clearPoachedTimestampMs();
+            }
+            return condition;
+        }
     }
-  }
 
-  public static class PoachedDateMutation implements ReportMutation {
-    private final Optional<Date> maybeDate;
+    public static class CompleteWashoutTimingMutation extends ReportMutation {
+        private final NestCondition.WashoutTimeOption timing;
 
-    public PoachedDateMutation(Optional<Date> maybeDate) {
-      this.maybeDate = maybeDate;
-    }
+        public CompleteWashoutTimingMutation(NestCondition.WashoutTimeOption timing) {
+            this.timing = timing;
+        }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      NestCondition.Builder conditionBuilder = updatedReport.getConditionBuilder();
-      if (maybeDate.isPresent()) {
-        conditionBuilder.setPoachedTimestampMs(maybeDate.get().getTimestampMs());
-      } else {
-        conditionBuilder.clearPoachedTimestampMs();
-      }
-      return updatedReport.build();
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            return condition.setCompleteWashoutTiming(timing);
+        }
     }
-  }
 
+    public static class PartialWashoutTimingMutation extends ReportMutation {
+        private final NestCondition.WashoutTimeOption timing;
 
-  public static class CompleteWashoutTimingMutation implements ReportMutation {
-    private final NestCondition.WashoutTimeOption timing;
-    public CompleteWashoutTimingMutation(NestCondition.WashoutTimeOption timing) {
-      this.timing = timing;
-    }
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getConditionBuilder().setCompleteWashoutTiming(timing);
-      return updatedReport.build();
-    }
-  }
+        public PartialWashoutTimingMutation(NestCondition.WashoutTimeOption timing) {
+            this.timing = timing;
+        }
 
-  public static class PartialWashoutTimingMutation implements ReportMutation {
-    private final NestCondition.WashoutTimeOption timing;
-    public PartialWashoutTimingMutation (NestCondition.WashoutTimeOption timing) {
-      this.timing = timing;
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            return condition.setPartialWashoutTiming(timing);
+        }
     }
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getConditionBuilder().setPartialWashoutTiming(timing);
-      return updatedReport.build();
-    }
-  }
-
-  public static class WashoutPriorToHatchingMutation implements ReportMutation {
+/*
+  public static class WashoutPriorToHatchingMutation extends ReportMutation {
     private final boolean isTrue;
 
     public WashoutPriorToHatchingMutation(boolean isTrue) {
       this.isTrue = isTrue;
     }
     @Override
-    public Report apply(Report oldReport) {
+    public ReportProto.NestCondition.Builder applyCondition(
+            ReportProto.NestCondition.Builder condition) {
       Report.Builder updatedReport = oldReport.toBuilder();
       updatedReport.getConditionBuilder().getWashOutBuilder().setEventPriorToHatching(isTrue);
       return updatedReport.build();
     }
   }
 
-  public static class WasPostHatchWashout implements ReportMutation {
+  public static class WasPostHatchWashout extends ReportMutation {
     private final boolean isTrue;
 
     public WasPostHatchWashout(boolean isTrue) {
@@ -1385,861 +1285,714 @@ public static class ProtectionChangeTypeMutation implements ReportMutation {
       return updatedReport.build();
     }
   }
+ */
 
-  public static class WasPoachedMutation implements ReportMutation {
-    private final boolean isTrue;
+    public static class WasPoachedMutation extends ReportMutation {
+        private final boolean isTrue;
 
-    public WasPoachedMutation(boolean isTrue) {
-      this.isTrue = isTrue;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getConditionBuilder().setPoached(isTrue);
-      return updatedReport.build();
-    }
-  }
-
-  public static class PoachedEggsRemovedMutation implements ReportMutation {
-    private final boolean isTrue;
-
-    public PoachedEggsRemovedMutation(boolean isTrue) {
-      this.isTrue = isTrue;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getConditionBuilder().setPoachedEggsRemoved(isTrue);
-      return updatedReport.build();
-    }
-  }
-
-  public static class RootsInvadedMutation implements ReportMutation {
-    private final boolean isTrue;
-
-    public RootsInvadedMutation(boolean isTrue) {
-      this.isTrue = isTrue;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getConditionBuilder().setRootsInvadedEggshells(isTrue);
-      return updatedReport.build();
-    }
-  }
-
-  public static class NestDepredatedMutation implements ReportMutation {
-    private final boolean isTrue;
-    public NestDepredatedMutation(boolean isTrue) {
-      this.isTrue = isTrue;
-    }
-
-    @Override
-    public Report apply (Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getConditionBuilder().setNestDepredated(isTrue);
-      return updatedReport.build();
-    }
-  }
-
-  public static class EggsDamagedByAnotherTurtleMutation implements ReportMutation {
-    private final boolean isTrue;
-    public EggsDamagedByAnotherTurtleMutation(boolean isTrue) {
-      this.isTrue = isTrue;
-    }
-
-    @Override
-    public Report apply(Report oldreport) {
-      Report.Builder updatedReport = oldreport.toBuilder();
-      updatedReport.getConditionBuilder().setEggsDamagedByAnotherTurtle(isTrue);
-      return updatedReport.build();
-    }
-  }
-
-    public static class EggsScatteredDateMutation implements ReportMutation {
-      private final Optional<Date> maybeDate;
-
-      public EggsScatteredDateMutation(Optional<Date> maybeDate) {
-        this.maybeDate = maybeDate;
-      }
-
-      @Override
-      public Report apply(Report oldReport) {
-        Report.Builder updatedReport = oldReport.toBuilder();
-        NestCondition.Builder conditionBuilder = updatedReport.getConditionBuilder();
-        if (maybeDate.isPresent()) {
-          conditionBuilder.setEggsScatteredByAnotherTimestampMs(maybeDate.get().getTimestampMs());
-        } else {
-          conditionBuilder.clearEggsScatteredByAnotherTimestampMs();
-        }
-        return updatedReport.build();
-      }
-    }
-
-
-    public static class EggsScatteredMutation implements ReportMutation {
-      private final boolean isTrue;
-
-      public EggsScatteredMutation(boolean isTrue) {
-        this.isTrue = isTrue;
-      }
-
-      @Override
-      public Report apply(Report oldReport) {
-        Report.Builder updatedReport = oldReport.toBuilder();
-        updatedReport.getConditionBuilder().setEggsScatteredByAnother(isTrue);
-        return updatedReport.build();
-      }
-    }
-
-
-    public static class NotesMutation implements ReportMutation {
-      private final String notes;
-
-      public NotesMutation(String notes) {
-        this.notes = notes;
-      }
-
-      @Override
-      public Report apply(Report oldReport) {
-        Report.Builder updatedReport = oldReport.toBuilder();
-
-        if (notes.isEmpty()) {
-          updatedReport.clearAdditionalNotes();
-        } else {
-          updatedReport.setAdditionalNotes(notes);
+        public WasPoachedMutation(boolean isTrue) {
+            this.isTrue = isTrue;
         }
 
-        return updatedReport.build();
-      }
-    }
-
-
-    public static class PartialWashoutDateMutation implements ReportMutation {
-      private final Optional<Date> maybeDate;
-
-      public PartialWashoutDateMutation(Optional<Date> maybeDate) {
-        this.maybeDate = maybeDate;
-      }
-
-      @Override
-      public Report apply(Report oldReport) {
-        Report.Builder updatedReport = oldReport.toBuilder();
-        WashEvent.Builder pWashOutBuilder = updatedReport.getConditionBuilder().getPartialWashoutBuilder();
-        if (maybeDate.isPresent()) {
-          pWashOutBuilder.setTimestampMs(maybeDate.get().getTimestampMs());
-        } else {
-          pWashOutBuilder.clearTimestampMs();
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            return condition.setPoached(isTrue);
         }
-        return updatedReport.build();
-      }
     }
 
-    public static class PartialWashoutStormNameMutation implements ReportMutation {
-      private final String stormName;
+    public static class PoachedEggsRemovedMutation extends ReportMutation {
+        private final boolean isTrue;
 
-      public PartialWashoutStormNameMutation(String stormName) {
-        this.stormName = stormName;
-      }
-
-      @Override
-      public Report apply(Report oldReport) {
-        Report.Builder updatedReport = oldReport.toBuilder();
-        updatedReport.getConditionBuilder().getPartialWashoutBuilder().setStormName(stormName);
-        return updatedReport.build();
-      }
-    }
-
-    public static class PartialWashoutPriorToHatchingMutation implements ReportMutation {
-      private final boolean isTrue;
-
-      public PartialWashoutPriorToHatchingMutation(boolean isTrue) {
-        this.isTrue = isTrue;
-      }
-      @Override
-      public Report apply(Report oldReport) {
-        Report.Builder updatedReport = oldReport.toBuilder();
-        updatedReport.getConditionBuilder().getPartialWashoutBuilder().setEventPriorToHatching(isTrue);
-        return updatedReport.build();
-      }
-    }
-
-  public static class OtherImpactDateMutation implements ReportMutation {
-    private final Optional<Date> maybeDate;
-
-    public OtherImpactDateMutation(Optional<Date> maybeDate) {
-      this.maybeDate = maybeDate;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      NestCondition.StormImpact.Builder stormImpactBuilder = updatedReport.getConditionBuilder().getStormImpactBuilder();
-      if (maybeDate.isPresent()) {
-        stormImpactBuilder.setTimestampMs(maybeDate.get().getTimestampMs());
-      } else {
-        stormImpactBuilder.clearTimestampMs();
-      }
-      return updatedReport.build();
-    }
-  }
-  public static class OtherImpactStormNameMutation implements ReportMutation {
-    private final String stormName;
-
-    public OtherImpactStormNameMutation(String stormName) {
-      this.stormName = stormName;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getConditionBuilder().getStormImpactBuilder().setStormName(stormName);
-      return updatedReport.build();
-    }
-  }
-  public static class OtherImpactDetailsMutation implements ReportMutation {
-    private final String details;
-
-    public OtherImpactDetailsMutation(String details) {
-      this.details = details;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getConditionBuilder().getStormImpactBuilder().setOtherImpact(details);
-      return updatedReport.build();
-    }
-  }
-
-
-
-
-  public static class WashoutDateMutation implements ReportMutation {
-      private final Optional<Date> maybeDate;
-
-      public WashoutDateMutation(Optional<Date> maybeDate) {
-        this.maybeDate = maybeDate;
-      }
-
-      @Override
-      public Report apply(Report oldReport) {
-        Report.Builder updatedReport = oldReport.toBuilder();
-        WashEvent.Builder washOutBuilder = updatedReport.getConditionBuilder().getWashOutBuilder();
-        if (maybeDate.isPresent()) {
-          washOutBuilder.setTimestampMs(maybeDate.get().getTimestampMs());
-        } else {
-          washOutBuilder.clearTimestampMs();
+        public PoachedEggsRemovedMutation(boolean isTrue) {
+            this.isTrue = isTrue;
         }
-        return updatedReport.build();
-      }
+
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            return condition.setPoachedEggsRemoved(isTrue);
+        }
     }
 
+    public static class RootsInvadedMutation extends ReportMutation {
+        private final boolean isTrue;
 
-    public static class WashoutStormNameMutation implements ReportMutation {
-      private final String stormName;
+        public RootsInvadedMutation(boolean isTrue) {
+            this.isTrue = isTrue;
+        }
 
-      public WashoutStormNameMutation(String stormName) {
-        this.stormName = stormName;
-      }
-
-      @Override
-      public Report apply(Report oldReport) {
-        Report.Builder updatedReport = oldReport.toBuilder();
-        updatedReport.getConditionBuilder().getWashOutBuilder()
-                .setStormName(stormName);
-        return updatedReport.build();
-      }
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            return condition.setRootsInvadedEggshells(isTrue);
+        }
     }
 
-//Accretion Section
-  public static class AccretionOccurredPriorToHatchingMutation implements ReportMutation {
-    private final Integer ordinal;
-    private final boolean isTrue;
+    public static class NestDepredatedMutation extends ReportMutation {
+        private final boolean isTrue;
 
-    public AccretionOccurredPriorToHatchingMutation(Integer ordinal, boolean isTrue) {
-      this.ordinal = ordinal;
-      this.isTrue = isTrue;
+        public NestDepredatedMutation(boolean isTrue) {
+            this.isTrue = isTrue;
+        }
+
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            return condition.setNestDepredated(isTrue);
+        }
     }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      NestCondition.Builder condition = updatedReport.getConditionBuilder();
-      WashEvent.Builder accretion = (condition.getAccretionCount() <= ordinal)
-              ? condition.addAccretionBuilder() : condition.getAccretionBuilder(ordinal);
-      accretion.setEventPriorToHatching(isTrue);
-      return updatedReport.build();
-    }
-  }
+    public static class EggsDamagedByAnotherTurtleMutation extends ReportMutation {
+        private final boolean isTrue;
 
-  public static class AccretionDateMutation implements ReportMutation {
-    private final Integer ordinal;
-    private final Optional<Date> maybeDate;
+        public EggsDamagedByAnotherTurtleMutation(boolean isTrue) {
+            this.isTrue = isTrue;
+        }
 
-    public AccretionDateMutation(Integer ordinal, Optional<Date> maybeDate) {
-      this.ordinal = ordinal;
-      this.maybeDate = maybeDate;
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            return condition.setEggsDamagedByAnotherTurtle(isTrue);
+        }
     }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Preconditions.checkNotNull(ordinal);
-      Report.Builder updatedReport = oldReport.toBuilder();
-      NestCondition.Builder condition = updatedReport.getConditionBuilder();
+    public static class EggsScatteredDateMutation extends ReportMutation {
+        private final Optional<Date> maybeDate;
 
-      WashEvent.Builder  accretion = (condition.getAccretionCount() <= ordinal) ? condition
-              .addAccretionBuilder() : condition.getAccretionBuilder(ordinal);
-      if (maybeDate.isPresent()) {
-        accretion.setTimestampMs(maybeDate.get().getTimestampMs());
-      } else {
-        accretion.clearTimestampMs();
-      }
-      return updatedReport.build();
-    }
-  }
-  public static class AccretionStormNameMutation implements ReportMutation {
-    private final Integer ordinal;
-    private final String name;
+        public EggsScatteredDateMutation(Optional<Date> maybeDate) {
+            this.maybeDate = maybeDate;
+        }
 
-    public AccretionStormNameMutation(Integer ordinal, String name) {
-      this.ordinal = ordinal;
-      this.name = name;
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            if (maybeDate.isPresent()) {
+                condition.setEggsScatteredByAnotherTimestampMs(maybeDate.get().getTimestampMs());
+            } else {
+                condition.clearEggsScatteredByAnotherTimestampMs();
+            }
+            return condition;
+        }
     }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Preconditions.checkNotNull(ordinal);
-      Report.Builder updatedReport = oldReport.toBuilder();
-      NestCondition.Builder condition = updatedReport.getConditionBuilder();
+    public static class EggsScatteredMutation extends ReportMutation {
+        private final boolean isTrue;
 
-      WashEvent.Builder accretion = (condition.getAccretionCount() <= ordinal) ? condition
-              .addAccretionBuilder() : condition.getAccretionBuilder(ordinal);
-      accretion.setStormName(name);
+        public EggsScatteredMutation(boolean isTrue) {
+            this.isTrue = isTrue;
+        }
 
-      return updatedReport.build();
-    }
-  }
-
-  public static class DeleteAccretionMutation implements ReportMutation {
-    private final Integer ordinal;
-
-    public DeleteAccretionMutation(Integer ordinal) {
-      this.ordinal = ordinal;
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            return condition.setEggsScatteredByAnother(isTrue);
+        }
     }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Preconditions.checkNotNull(ordinal);
-      Report.Builder updatedReport = oldReport.toBuilder();
-      NestCondition.Builder condition = updatedReport.getConditionBuilder();
+    public static class NotesMutation extends ReportMutation {
+        private final String notes;
 
-      condition.removeAccretion(ordinal);
+        public NotesMutation(String notes) {
+            this.notes = notes;
+        }
 
-      return updatedReport.build();
+        @Override
+        public Report apply(Report oldReport) {
+            Report.Builder updatedReport = oldReport.toBuilder();
+
+            if (notes.isEmpty()) {
+                updatedReport.clearAdditionalNotes();
+            } else {
+                updatedReport.setAdditionalNotes(notes);
+            }
+
+            return updatedReport.build();
+        }
     }
-  }
+
+    public static class PartialWashoutDateMutation extends ReportMutation {
+        private final Optional<Date> maybeDate;
+
+        public PartialWashoutDateMutation(Optional<Date> maybeDate) {
+            this.maybeDate = maybeDate;
+        }
+
+        @Override
+        public ReportProto.NestCondition.WashEvent.Builder applyPartialWashout(
+                ReportProto.NestCondition.WashEvent.Builder washout) {
+            if (maybeDate.isPresent()) {
+                washout.setTimestampMs(maybeDate.get().getTimestampMs());
+            } else {
+                washout.clearTimestampMs();
+            }
+            return washout;
+        }
+    }
+
+    public static class PartialWashoutStormNameMutation extends ReportMutation {
+        private final String stormName;
+
+        public PartialWashoutStormNameMutation(String stormName) {
+            this.stormName = stormName;
+        }
+
+        @Override
+        public ReportProto.NestCondition.WashEvent.Builder applyPartialWashout(
+                ReportProto.NestCondition.WashEvent.Builder washout) {
+            return washout.setStormName(stormName);
+        }
+    }
+
+    public static class PartialWashoutPriorToHatchingMutation extends ReportMutation {
+        private final boolean isTrue;
+
+        public PartialWashoutPriorToHatchingMutation(boolean isTrue) {
+            this.isTrue = isTrue;
+        }
+
+        @Override
+        public ReportProto.NestCondition.WashEvent.Builder applyPartialWashout(
+                ReportProto.NestCondition.WashEvent.Builder washout) {
+            return washout.setEventPriorToHatching(isTrue);
+        }
+    }
+
+    public static class OtherImpactDateMutation extends ReportMutation {
+        private final Optional<Date> maybeDate;
+
+        public OtherImpactDateMutation(Optional<Date> maybeDate) {
+            this.maybeDate = maybeDate;
+        }
+
+        @Override
+        public ReportProto.NestCondition.StormImpact.Builder applyStormImpact(
+                ReportProto.NestCondition.StormImpact.Builder impact) {
+            if (maybeDate.isPresent()) {
+                impact.setTimestampMs(maybeDate.get().getTimestampMs());
+            } else {
+                impact.clearTimestampMs();
+            }
+            return impact;
+        }
+    }
+
+    public static class OtherImpactStormNameMutation extends ReportMutation {
+        private final String stormName;
+
+        public OtherImpactStormNameMutation(String stormName) {
+            this.stormName = stormName;
+        }
+
+        @Override
+        public ReportProto.NestCondition.StormImpact.Builder applyStormImpact(
+                ReportProto.NestCondition.StormImpact.Builder impact) {
+            return impact.setStormName(stormName);
+        }
+    }
+
+    public static class OtherImpactDetailsMutation extends ReportMutation {
+        private final String details;
+
+        public OtherImpactDetailsMutation(String details) {
+            this.details = details;
+        }
+
+        @Override
+        public ReportProto.NestCondition.StormImpact.Builder applyStormImpact(
+                ReportProto.NestCondition.StormImpact.Builder impact) {
+            return impact.setOtherImpact(details);
+        }
+    }
+
+    public static class WashoutDateMutation extends ReportMutation {
+        private final Optional<Date> maybeDate;
+
+        public WashoutDateMutation(Optional<Date> maybeDate) {
+            this.maybeDate = maybeDate;
+        }
+
+        @Override
+        public ReportProto.NestCondition.WashEvent.Builder applyWashout(
+                ReportProto.NestCondition.WashEvent.Builder washout) {
+            if (maybeDate.isPresent()) {
+                washout.setTimestampMs(maybeDate.get().getTimestampMs());
+            } else {
+                washout.clearTimestampMs();
+            }
+            return washout;
+        }
+    }
+
+    public static class WashoutStormNameMutation extends ReportMutation {
+        private final String stormName;
+
+        public WashoutStormNameMutation(String stormName) {
+            this.stormName = stormName;
+        }
+
+        @Override
+        public ReportProto.NestCondition.WashEvent.Builder applyWashout(
+                ReportProto.NestCondition.WashEvent.Builder washout) {
+            return washout.setStormName(stormName);
+        }
+    }
+
+    //Accretion Section
+    public static class AccretionOccurredPriorToHatchingMutation extends ReportMutation {
+        private final Integer ordinal;
+        private final boolean isTrue;
+
+        public AccretionOccurredPriorToHatchingMutation(Integer ordinal, boolean isTrue) {
+            this.ordinal = ordinal;
+            this.isTrue = isTrue;
+        }
+
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            WashEvent.Builder accretion = (condition.getAccretionCount() <= ordinal)
+                    ? WashEvent.newBuilder() : condition.getAccretion(ordinal).toBuilder();
+            accretion.setEventPriorToHatching(isTrue);
+            return condition.setAccretion(ordinal, accretion);
+        }
+    }
+
+    public static class AccretionDateMutation extends ReportMutation {
+        private final Integer ordinal;
+        private final Optional<Date> maybeDate;
+
+        public AccretionDateMutation(Integer ordinal, Optional<Date> maybeDate) {
+            this.ordinal = ordinal;
+            this.maybeDate = maybeDate;
+        }
+
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            WashEvent.Builder accretion = (condition.getAccretionCount() <= ordinal)
+                    ? WashEvent.newBuilder() : condition.getAccretion(ordinal).toBuilder();
+            if (maybeDate.isPresent()) {
+                accretion.setTimestampMs(maybeDate.get().getTimestampMs());
+            } else {
+                accretion.clearTimestampMs();
+            }
+            return condition.setAccretion(ordinal, accretion);
+        }
+    }
+
+    public static class AccretionStormNameMutation extends ReportMutation {
+        private final Integer ordinal;
+        private final String name;
+
+        public AccretionStormNameMutation(Integer ordinal, String name) {
+            this.ordinal = ordinal;
+            this.name = name;
+        }
+
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            WashEvent.Builder accretion = (condition.getAccretionCount() <= ordinal)
+                    ? WashEvent.newBuilder() : condition.getAccretion(ordinal).toBuilder();
+            accretion.setStormName(name);
+            return condition.setAccretion(ordinal, accretion);
+        }
+    }
+
+    public static class DeleteAccretionMutation extends ReportMutation {
+        private final Integer ordinal;
+
+        public DeleteAccretionMutation(Integer ordinal) {
+            this.ordinal = ordinal;
+        }
+
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            return condition.removeAccretion(ordinal);
+        }
+    }
 //End Accretion section
 
-  //Erosion Section
-  public static class ErosionOccurredPriorToHatchingMutation implements ReportMutation {
-    private final Integer ordinal;
-    private final boolean isTrue;
+    //Erosion Section
+    public static class ErosionOccurredPriorToHatchingMutation extends ReportMutation {
+        private final Integer ordinal;
+        private final boolean isTrue;
 
-    public ErosionOccurredPriorToHatchingMutation(Integer ordinal, boolean isTrue) {
-      this.ordinal = ordinal;
-      this.isTrue = isTrue;
+        public ErosionOccurredPriorToHatchingMutation(Integer ordinal, boolean isTrue) {
+            this.ordinal = ordinal;
+            this.isTrue = isTrue;
+        }
+
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            WashEvent.Builder erosion = (condition.getErosionCount() <= ordinal)
+                    ? WashEvent.newBuilder() : condition.getErosion(ordinal).toBuilder();
+            erosion.setEventPriorToHatching(isTrue);
+            return condition.setErosion(ordinal, erosion);
+        }
     }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      NestCondition.Builder condition = updatedReport.getConditionBuilder();
-      WashEvent.Builder erosion = (condition.getErosionCount() <= ordinal)
-              ? condition.addErosionBuilder() : condition.getErosionBuilder(ordinal);
-      erosion.setEventPriorToHatching(isTrue);
-      return updatedReport.build();
-    }
-  }
+    public static class ErosionDateMutation extends ReportMutation {
+        private final Integer ordinal;
+        private final Optional<Date> maybeDate;
 
-  public static class ErosionDateMutation implements ReportMutation {
-    private final Integer ordinal;
-    private final Optional<Date> maybeDate;
+        public ErosionDateMutation(Integer ordinal, Optional<Date> maybeDate) {
+            this.ordinal = ordinal;
+            this.maybeDate = maybeDate;
+        }
 
-    public ErosionDateMutation(Integer ordinal, Optional<Date> maybeDate) {
-      this.ordinal = ordinal;
-      this.maybeDate = maybeDate;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Preconditions.checkNotNull(ordinal);
-      Report.Builder updatedReport = oldReport.toBuilder();
-      NestCondition.Builder condition = updatedReport.getConditionBuilder();
-
-      WashEvent.Builder  erosion = (condition.getErosionCount() <= ordinal) ? condition
-              .addErosionBuilder() : condition.getErosionBuilder(ordinal);
-      if (maybeDate.isPresent()) {
-        erosion.setTimestampMs(maybeDate.get().getTimestampMs());
-      } else {
-        erosion.clearTimestampMs();
-      }
-      return updatedReport.build();
-    }
-  }
-  public static class ErosionStormNameMutation implements ReportMutation {
-    private final Integer ordinal;
-    private final String name;
-
-    public ErosionStormNameMutation(Integer ordinal, String name) {
-      this.ordinal = ordinal;
-      this.name = name;
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            WashEvent.Builder erosion = (condition.getErosionCount() <= ordinal)
+                    ? WashEvent.newBuilder() : condition.getErosion(ordinal).toBuilder();
+            if (maybeDate.isPresent()) {
+                erosion.setTimestampMs(maybeDate.get().getTimestampMs());
+            } else {
+                erosion.clearTimestampMs();
+            }
+            return condition.setErosion(ordinal, erosion);
+        }
     }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Preconditions.checkNotNull(ordinal);
-      Report.Builder updatedReport = oldReport.toBuilder();
-      NestCondition.Builder condition = updatedReport.getConditionBuilder();
+    public static class ErosionStormNameMutation extends ReportMutation {
+        private final Integer ordinal;
+        private final String name;
 
-      WashEvent.Builder erosion = (condition.getErosionCount() <= ordinal) ? condition
-              .addErosionBuilder() : condition.getErosionBuilder(ordinal);
-      erosion.setStormName(name);
+        public ErosionStormNameMutation(Integer ordinal, String name) {
+            this.ordinal = ordinal;
+            this.name = name;
+        }
 
-      return updatedReport.build();
-    }
-  }
-
-  public static class DeleteErosionMutation implements ReportMutation {
-    private final Integer ordinal;
-
-    public DeleteErosionMutation(Integer ordinal) {
-      this.ordinal = ordinal;
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            WashEvent.Builder erosion = (condition.getErosionCount() <= ordinal)
+                    ? WashEvent.newBuilder() : condition.getErosion(ordinal).toBuilder();
+            erosion.setStormName(name);
+            return condition.setErosion(ordinal, erosion);
+        }
     }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Preconditions.checkNotNull(ordinal);
-      Report.Builder updatedReport = oldReport.toBuilder();
-      NestCondition.Builder condition = updatedReport.getConditionBuilder();
+    public static class DeleteErosionMutation extends ReportMutation {
+        private final Integer ordinal;
 
-      condition.removeErosion(ordinal);
+        public DeleteErosionMutation(Integer ordinal) {
+            this.ordinal = ordinal;
+        }
 
-      return updatedReport.build();
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            return condition.removeErosion(ordinal);
+        }
     }
-  }
 //End Erosion section
 
-    public static class WashoverDateMutation implements ReportMutation {
-      private final Integer ordinal;
-      private final Optional<Date> maybeDate;
+    public static class WashoverDateMutation extends ReportMutation {
+        private final Integer ordinal;
+        private final Optional<Date> maybeDate;
 
-      public WashoverDateMutation(Integer ordinal, Optional<Date> maybeDate) {
-        this.ordinal = ordinal;
-        this.maybeDate = maybeDate;
-      }
-
-      @Override
-      public Report apply(Report oldReport) {
-        Preconditions.checkNotNull(ordinal);
-        Report.Builder updatedReport = oldReport.toBuilder();
-        NestCondition.Builder condition = updatedReport.getConditionBuilder();
-
-        WashEvent.Builder washOver = (condition.getWashOverCount() <= ordinal) ? condition
-                .addWashOverBuilder() : condition.getWashOverBuilder(ordinal);
-        if (maybeDate.isPresent()) {
-          washOver.setTimestampMs(maybeDate.get().getTimestampMs());
-        } else {
-          washOver.clearTimestampMs();
-        }
-        return updatedReport.build();
-      }
-    }
-
-
-    public static class WashoverStormNameMutation implements ReportMutation {
-      private final Integer ordinal;
-      private final String name;
-
-      public WashoverStormNameMutation(Integer ordinal, String name) {
-        this.ordinal = ordinal;
-        this.name = name;
-      }
-
-      @Override
-      public Report apply(Report oldReport) {
-        Preconditions.checkNotNull(ordinal);
-        Report.Builder updatedReport = oldReport.toBuilder();
-        NestCondition.Builder condition = updatedReport.getConditionBuilder();
-
-        WashEvent.Builder washOver = (condition.getWashOverCount() <= ordinal) ? condition
-                .addWashOverBuilder() : condition.getWashOverBuilder(ordinal);
-        washOver.setStormName(name);
-
-        return updatedReport.build();
-      }
-    }
-
-
-    public static class DeleteWashOverMutation implements ReportMutation {
-      private final Integer ordinal;
-
-      public DeleteWashOverMutation(Integer ordinal) {
-        this.ordinal = ordinal;
-      }
-
-      @Override
-      public Report apply(Report oldReport) {
-        Preconditions.checkNotNull(ordinal);
-        Report.Builder updatedReport = oldReport.toBuilder();
-        NestCondition.Builder condition = updatedReport.getConditionBuilder();
-
-        condition.removeWashOver(ordinal);
-
-        return updatedReport.build();
-      }
-    }
-
-  public static class InundatedEventDateMutation implements ReportMutation {
-    private final Integer ordinal;
-    private final Optional<Date> maybeDate;
-
-    public InundatedEventDateMutation(Integer ordinal, Optional<Date> maybeDate) {
-      this.ordinal = ordinal;
-      this.maybeDate = maybeDate;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Preconditions.checkNotNull(ordinal);
-      Report.Builder updatedReport = oldReport.toBuilder();
-      NestCondition.Builder condition = updatedReport.getConditionBuilder();
-
-      WashEvent.Builder inundatedEvent = (condition.getInundatedEventCount() <= ordinal) ?
-              condition.addInundatedEventBuilder() : condition.getInundatedEventBuilder(ordinal);
-      if (maybeDate.isPresent()) {
-        inundatedEvent.setTimestampMs(maybeDate.get().getTimestampMs());
-      } else {
-        inundatedEvent.clearTimestampMs();
-      }
-      return updatedReport.build();
-    }
-  }
-
-  public static class InundatedEventStormNameMutation implements ReportMutation {
-    private final Integer ordinal;
-    private final String name;
-
-    public InundatedEventStormNameMutation(Integer ordinal, String name) {
-      this.ordinal = ordinal;
-      this.name = name;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Preconditions.checkNotNull(ordinal);
-      Report.Builder updatedReport = oldReport.toBuilder();
-      NestCondition.Builder condition = updatedReport.getConditionBuilder();
-
-      WashEvent.Builder inundatedEvent = (condition.getInundatedEventCount() <= ordinal) ?
-              condition.addInundatedEventBuilder() : condition.getInundatedEventBuilder(ordinal);
-      inundatedEvent.setStormName(name);
-
-      return updatedReport.build();
-    }
-  }
-
-  public static class InundatedEventOccuredPriorToHatchingMutation implements ReportMutation {
-    private final Integer ordinal;
-    private final boolean isTrue;
-
-    public InundatedEventOccuredPriorToHatchingMutation(Integer ordinal, boolean isTrue) {
-      this.ordinal = ordinal;
-      this.isTrue = isTrue;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Preconditions.checkNotNull(ordinal);
-      Report.Builder updatedReport = oldReport.toBuilder();
-      NestCondition.Builder condition = updatedReport.getConditionBuilder();
-      WashEvent.Builder inundatedEvent = (condition.getInundatedEventCount() <= ordinal)
-              ? condition.addInundatedEventBuilder() : condition.getInundatedEventBuilder(ordinal);
-      inundatedEvent.setEventPriorToHatching(isTrue);
-      return updatedReport.build();
-    }
-  }
-
-  public static class DeleteInundatedEventMutation implements ReportMutation {
-    private final Integer ordinal;
-
-    public DeleteInundatedEventMutation(Integer ordinal) {
-      this.ordinal = ordinal;
-    }
-
-    @Override
-    public Report apply(Report oldReport) {
-      Preconditions.checkNotNull(ordinal);
-      Report.Builder updatedReport = oldReport.toBuilder();
-      NestCondition.Builder condition = updatedReport.getConditionBuilder();
-
-      condition.removeInundatedEvent(ordinal);
-      return updatedReport.build();
-    }
-  }
-
-    public static class PredationDateMutation implements ReportMutation {
-      private final Integer ordinal;
-      Optional<Date> maybeDate;
-
-      public PredationDateMutation(Integer ordinal, Optional<Date> maybeDate) {
-        this.ordinal = ordinal;
-        this.maybeDate = maybeDate;
-      }
-
-      @Override
-      public Report apply(Report oldReport) {
-        Preconditions.checkNotNull(ordinal);
-        Report.Builder updatedReport = oldReport.toBuilder();
-        NestCondition.Builder condition = updatedReport.getConditionBuilder();
-
-        PreditationEvent.Builder preditation = (condition.getPreditationCount() <= ordinal)
-                ? condition.addPreditationBuilder() : condition.getPreditationBuilder(ordinal);
-        if (maybeDate.isPresent()) {
-          preditation.setTimestampMs(maybeDate.get().getTimestampMs());
-        } else {
-          preditation.clearTimestampMs();
+        public WashoverDateMutation(Integer ordinal, Optional<Date> maybeDate) {
+            this.ordinal = ordinal;
+            this.maybeDate = maybeDate;
         }
 
-        return updatedReport.build();
-      }
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            WashEvent.Builder washOver = (condition.getWashOverCount() <= ordinal) ?
+                    WashEvent.newBuilder() : condition.getWashOver(ordinal).toBuilder();
+            if (maybeDate.isPresent()) {
+                washOver.setTimestampMs(maybeDate.get().getTimestampMs());
+            } else {
+                washOver.clearTimestampMs();
+            }
+            return condition.setWashOver(ordinal, washOver);
+        }
     }
 
+    public static class WashoverStormNameMutation extends ReportMutation {
+        private final Integer ordinal;
+        private final String name;
 
-    public static class PredationNumEggsMutation implements ReportMutation {
-      private final Integer ordinal;
-      private final Optional<Integer> numEggs;
-
-      public PredationNumEggsMutation(Integer ordinal, Optional<Integer> numEggs) {
-        this.ordinal = ordinal;
-        this.numEggs = numEggs;
-      }
-
-      @Override
-      public Report apply(Report oldReport) {
-        Preconditions.checkNotNull(ordinal);
-        Report.Builder updatedReport = oldReport.toBuilder();
-        NestCondition.Builder condition = updatedReport.getConditionBuilder();
-
-        PreditationEvent.Builder preditation = (condition.getPreditationCount() <= ordinal)
-                ? condition.addPreditationBuilder() : condition.getPreditationBuilder(ordinal);
-        if (numEggs.isPresent()) {
-          preditation.setNumberOfEggs(numEggs.get());
-        } else {
-          preditation.clearNumberOfEggs();
+        public WashoverStormNameMutation(Integer ordinal, String name) {
+            this.ordinal = ordinal;
+            this.name = name;
         }
 
-        return updatedReport.build();
-      }
-    }
-
-
-    public static class PredationPredatorMutation implements ReportMutation {
-      private final Integer ordinal;
-      private final String predator;
-
-      public PredationPredatorMutation(Integer ordinal, String predator) {
-        this.ordinal = ordinal;
-        this.predator = predator;
-      }
-
-      @Override
-      public Report apply(Report oldReport) {
-        Preconditions.checkNotNull(ordinal);
-        Report.Builder updatedReport = oldReport.toBuilder();
-        NestCondition.Builder condition = updatedReport.getConditionBuilder();
-
-        PreditationEvent.Builder preditation = (condition.getPreditationCount() <= ordinal)
-                ? condition.addPreditationBuilder() : condition.getPreditationBuilder(ordinal);
-        preditation.setPredator(predator);
-
-        return updatedReport.build();
-      }
-    }
-
-  public static class ActivelyRecordPredationMutation implements ReportMutation {
-    private final boolean isTrue;
-
-
-    public ActivelyRecordPredationMutation( boolean isTrue) {
-      this.isTrue = isTrue;
-    }
-      @Override
-      public Report apply(Report oldReport) {
-        Report.Builder updatedReport = oldReport.toBuilder();
-       updatedReport.getConditionBuilder().setActivelyRecordEvents(isTrue);
-        return updatedReport.build();
-      }
-    }
-
-
-  public static class DeletePredationMutation implements ReportMutation {
-      private final Integer ordinal;
-
-      public DeletePredationMutation(Integer ordinal) {
-        this.ordinal = ordinal;
-      }
-
-      @Override
-      public Report apply(Report oldReport) {
-        Preconditions.checkNotNull(ordinal);
-        Report.Builder updatedReport = oldReport.toBuilder();
-
-        return updatedReport.build();
-      }
-    }
-
-
-    public static class GpsMutation implements ReportMutation {
-      private final GpsCoordinates coordinates;
-
-      public GpsMutation(GpsCoordinates coordinates) {
-        this.coordinates = coordinates;
-      }
-
-      @Override
-      public Report apply(Report oldReport) {
-
-        Report.Builder updatedReport = oldReport.toBuilder();
-        updatedReport.getLocationBuilder().setCoordinates(coordinates);
-        return updatedReport.build();
-      }
-    }
-
-    public static class RelocationGpsMutation implements ReportMutation {
-      private final GpsCoordinates coordinates;
-
-      public RelocationGpsMutation(GpsCoordinates coordinates) {
-        this.coordinates = coordinates;
-      }
-
-      @Override
-      public Report apply(Report oldReport) {
-        Report.Builder updatedReport = oldReport.toBuilder();
-        updatedReport.getInterventionBuilder().getRelocationBuilder().setCoordinates(coordinates);
-        return updatedReport.build();
-      }
-    }
-
-
-    public static class AddPhotoMutation implements ReportMutation {
-      private final String fileName;
-
-      public AddPhotoMutation(String fileName) {
-        this.fileName = fileName;
-      }
-
-      @Override
-      public Report apply(Report oldReport) {
-        Report.Builder updatedReport = oldReport.toBuilder();
-        updatedReport.addImageBuilder().setFileName(fileName);
-        return updatedReport.build();
-      }
-    }
-
-
-    public static class DeletePhotoMutation implements ReportMutation {
-      private final String fileName;
-
-      public DeletePhotoMutation(String fileName) {
-        this.fileName = fileName;
-      }
-
-      @Override
-      public Report apply(Report oldReport) {
-        Report.Builder updatedReport = oldReport.toBuilder();
-        for (int i = 0; i < updatedReport.getImageCount(); ++i) {
-          if (updatedReport.getImage(i).getFileName().equals(fileName)) {
-            updatedReport.removeImage(i);
-            break;
-          }
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            WashEvent.Builder washOver = (condition.getWashOverCount() <= ordinal) ?
+                    WashEvent.newBuilder() : condition.getWashOver(ordinal).toBuilder();
+            washOver.setStormName(name);
+            return condition.setWashOver(ordinal, washOver);
         }
-        return updatedReport.build();
-      }
     }
 
+    public static class DeleteWashOverMutation extends ReportMutation {
+        private final Integer ordinal;
 
-    public static class UpdatePhotoMutation
-            implements ReportMutation, ReportMutation.RequiresReportsModel {
-      // Don't need this now but leaving it for future use.
-      @SuppressWarnings("unused")
-      private final String fileName;
+        public DeleteWashOverMutation(Integer ordinal) {
+            this.ordinal = ordinal;
+        }
 
-      public UpdatePhotoMutation(String fileName) {
-        this.fileName = fileName;
-      }
-
-      private ReportsModel model;
-
-      @Override
-      public void setModel(ReportsModel model) {
-        this.model = model;
-      }
-
-      @Override
-      public Report apply(Report oldReport) {
-        // Will implicitly get the update by checking filesystem timestamps.
-        model.updateImages(model.getActiveReport());
-        return oldReport;
-      }
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            Preconditions.checkNotNull(ordinal);
+            return condition.removeWashOver(ordinal);
+        }
     }
 
+    public static class InundatedEventDateMutation extends ReportMutation {
+        private final Integer ordinal;
+        private final Optional<Date> maybeDate;
 
-    public static class SpeciesMutation implements ReportMutation {
-      private final Species species;
+        public InundatedEventDateMutation(Integer ordinal, Optional<Date> maybeDate) {
+            this.ordinal = ordinal;
+            this.maybeDate = maybeDate;
+        }
 
-      public SpeciesMutation(Species species) {
-        this.species = species;
-      }
-
-      @Override
-      public Report apply(Report oldReport) {
-        Report.Builder updatedReport = oldReport.toBuilder();
-        updatedReport.setSpecies(species);
-        return updatedReport.build();
-      }
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            WashEvent.Builder inundatedEvent = (condition.getInundatedEventCount() <= ordinal) ?
+                    WashEvent.newBuilder() : condition.getInundatedEvent(ordinal).toBuilder();
+            if (maybeDate.isPresent()) {
+                inundatedEvent.setTimestampMs(maybeDate.get().getTimestampMs());
+            } else {
+                inundatedEvent.clearTimestampMs();
+            }
+            return condition.setInundatedEvent(ordinal, inundatedEvent);
+        }
     }
-  public static class ControlMethodDescriptionMutation implements ReportMutation {
-    private final String other;
 
-    public ControlMethodDescriptionMutation(String other) {
-      this.other = other;
+    public static class InundatedEventStormNameMutation extends ReportMutation {
+        private final Integer ordinal;
+        private final String name;
+
+        public InundatedEventStormNameMutation(Integer ordinal, String name) {
+            this.ordinal = ordinal;
+            this.name = name;
+        }
+
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            WashEvent.Builder inundatedEvent = (condition.getInundatedEventCount() <= ordinal) ?
+                    WashEvent.newBuilder() : condition.getInundatedEvent(ordinal).toBuilder();
+            inundatedEvent.setStormName(name);
+            return condition.setInundatedEvent(ordinal, inundatedEvent);
+        }
     }
 
-    @Override
-    public Report apply(Report oldReport) {
-      Report.Builder updatedReport = oldReport.toBuilder();
-      updatedReport.getConditionBuilder().setDescribeControlMethods(other);
-      return updatedReport.build();
+    public static class InundatedEventOccuredPriorToHatchingMutation extends ReportMutation {
+        private final Integer ordinal;
+        private final boolean isTrue;
+
+        public InundatedEventOccuredPriorToHatchingMutation(Integer ordinal, boolean isTrue) {
+            this.ordinal = ordinal;
+            this.isTrue = isTrue;
+        }
+
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            WashEvent.Builder inundatedEvent = (condition.getInundatedEventCount() <= ordinal) ?
+                    WashEvent.newBuilder() : condition.getInundatedEvent(ordinal).toBuilder();
+            inundatedEvent.setEventPriorToHatching(isTrue);
+            return condition.setInundatedEvent(ordinal, inundatedEvent);
+        }
     }
-  }
 
-    public static class SpeciesOtherMutation implements ReportMutation {
-      private final String other;
+    public static class DeleteInundatedEventMutation extends ReportMutation {
+        private final Integer ordinal;
 
-      public SpeciesOtherMutation(String other) {
-        this.other = other;
-      }
+        public DeleteInundatedEventMutation(Integer ordinal) {
+            this.ordinal = ordinal;
+        }
 
-      @Override
-      public Report apply(Report oldReport) {
-        Report.Builder updatedReport = oldReport.toBuilder();
-        updatedReport.setSpeciesOther(other);
-        return updatedReport.build();
-      }
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            return condition.removeInundatedEvent(ordinal);
+        }
     }
-  }
+
+    public static class PredationDateMutation extends ReportMutation {
+        private final Integer ordinal;
+        Optional<Date> maybeDate;
+
+        public PredationDateMutation(Integer ordinal, Optional<Date> maybeDate) {
+            this.ordinal = ordinal;
+            this.maybeDate = maybeDate;
+        }
+
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            PreditationEvent.Builder preditation = (condition.getPreditationCount() <= ordinal)
+                    ? PreditationEvent.newBuilder() : condition.getPreditation(ordinal).toBuilder();
+            if (maybeDate.isPresent()) {
+                preditation.setTimestampMs(maybeDate.get().getTimestampMs());
+            } else {
+                preditation.clearTimestampMs();
+            }
+
+            return condition.setPreditation(ordinal, preditation);
+        }
+    }
+
+    public static class PredationNumEggsMutation extends ReportMutation {
+        private final Integer ordinal;
+        private final Optional<Integer> numEggs;
+
+        public PredationNumEggsMutation(Integer ordinal, Optional<Integer> numEggs) {
+            this.ordinal = ordinal;
+            this.numEggs = numEggs;
+        }
+
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            PreditationEvent.Builder preditation = (condition.getPreditationCount() <= ordinal)
+                    ? PreditationEvent.newBuilder() : condition.getPreditation(ordinal).toBuilder();
+            if (numEggs.isPresent()) {
+                preditation.setNumberOfEggs(numEggs.get());
+            } else {
+                preditation.clearNumberOfEggs();
+            }
+
+            return condition.setPreditation(ordinal, preditation);
+        }
+    }
+
+    public static class PredationPredatorMutation extends ReportMutation {
+        private final Integer ordinal;
+        private final String predator;
+
+        public PredationPredatorMutation(Integer ordinal, String predator) {
+            this.ordinal = ordinal;
+            this.predator = predator;
+        }
+
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            PreditationEvent.Builder preditation = (condition.getPreditationCount() <= ordinal)
+                    ? PreditationEvent.newBuilder() : condition.getPreditation(ordinal).toBuilder();
+            preditation.setPredator(predator);
+
+            return condition.setPreditation(ordinal, preditation);
+        }
+    }
+
+    public static class ActivelyRecordPredationMutation extends ReportMutation {
+        private final boolean isTrue;
+
+        public ActivelyRecordPredationMutation(boolean isTrue) {
+            this.isTrue = isTrue;
+        }
+
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            return condition.setActivelyRecordEvents(isTrue);
+        }
+    }
+
+    public static class DeletePredationMutation extends ReportMutation {
+        private final Integer ordinal;
+
+        public DeletePredationMutation(Integer ordinal) {
+            this.ordinal = ordinal;
+        }
+
+        @Override
+        public Report apply(Report oldReport) {
+            Preconditions.checkNotNull(ordinal);
+            Report.Builder updatedReport = oldReport.toBuilder();
+            return updatedReport.build();
+        }
+    }
+
+    public static class GpsMutation extends ReportMutation {
+        private final GpsCoordinates coordinates;
+
+        public GpsMutation(GpsCoordinates coordinates) {
+            this.coordinates = coordinates;
+        }
+
+        @Override
+        public Report apply(Report oldReport) {
+
+            Report.Builder updatedReport = oldReport.toBuilder();
+            updatedReport.setLocation(updatedReport.getLocation().toBuilder().setCoordinates(coordinates));
+            return updatedReport.build();
+        }
+    }
+
+    public static class RelocationGpsMutation extends ReportMutation {
+        private final GpsCoordinates coordinates;
+
+        public RelocationGpsMutation(GpsCoordinates coordinates) {
+            this.coordinates = coordinates;
+        }
+
+        @Override
+        public ReportProto.Relocation.Builder applyRelocation(
+                ReportProto.Relocation.Builder relocation) {
+            return relocation.setCoordinates(coordinates);
+        }
+    }
+
+    public static class SpeciesMutation extends ReportMutation {
+        private final Species species;
+
+        public SpeciesMutation(Species species) {
+            this.species = species;
+        }
+
+        @Override
+        public Report apply(Report oldReport) {
+            Report.Builder updatedReport = oldReport.toBuilder();
+            updatedReport.setSpecies(species);
+            return updatedReport.build();
+        }
+    }
+
+    public static class ControlMethodDescriptionMutation extends ReportMutation {
+        private final String other;
+
+        public ControlMethodDescriptionMutation(String other) {
+            this.other = other;
+        }
+
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            return condition.setDescribeControlMethods(other);
+        }
+    }
+
+    public static class SpeciesOtherMutation extends ReportMutation {
+        private final String other;
+
+        public SpeciesOtherMutation(String other) {
+            this.other = other;
+        }
+
+        @Override
+        public Report apply(Report oldReport) {
+            Report.Builder updatedReport = oldReport.toBuilder();
+            updatedReport.setSpeciesOther(other);
+            return updatedReport.build();
+        }
+    }
+}
 

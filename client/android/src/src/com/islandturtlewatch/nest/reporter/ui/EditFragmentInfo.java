@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 
 import com.google.common.base.Optional;
+import com.google.firebase.auth.FirebaseAuth;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.Report.NestStatus;
 import com.islandturtlewatch.nest.data.ReportProto.Report.Species;
@@ -28,7 +29,6 @@ import com.islandturtlewatch.nest.reporter.data.ReportMutations.SpeciesMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.SpeciesOtherMutation;
 import com.islandturtlewatch.nest.reporter.util.DateUtil;
 import com.islandturtlewatch.nest.reporter.util.DialogUtil;
-import com.islandturtlewatch.nest.reporter.util.SettingsUtil;
 
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -83,9 +83,8 @@ public class EditFragmentInfo extends EditFragment {
   }
 
   private void updateSectionNumber() {
-    SharedPreferences settings =
-        getActivity().getSharedPreferences(SettingsUtil.SETTINGS_ID, Activity.MODE_PRIVATE);
-    String username = settings.getString(SettingsUtil.KEY_USERNAME, "");
+
+    String username = FirebaseAuth.getInstance().getCurrentUser() != null ? FirebaseAuth.getInstance().getCurrentUser().getEmail() : "";
     Matcher matcher = USERNAME_PATTERN.matcher(username);
     if (matcher.matches()) {
       sectionNumber = Integer.parseInt(matcher.group(1));

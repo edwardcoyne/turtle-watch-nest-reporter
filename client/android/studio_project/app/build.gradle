@@ -1,16 +1,16 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.cloud.tools.endpoints-framework-client'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.protobuf'
+
 buildscript {
     repositories {
         jcenter()
     }
     dependencies {
-        classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:1.0.2'
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.14'
     }
 }
-
 android {
-//    useLibrary 'org.apache.http.legacy'
     signingConfigs {
         debug {
             keyAlias 'turtle nest reporter'
@@ -23,23 +23,26 @@ android {
     }
     lintOptions {
         abortOnError true
-//        warning 'InvalidPackage'
     }
-    compileSdkVersion 26 //from 19
+    compileSdkVersion 29
     defaultConfig {
-        applicationId "com.islandturtlewatch.nest.reporter"
+        applicationId "com.islandturtlewatch.nest.reporter.v2"
         minSdkVersion 16
-        targetSdkVersion 26
+        targetSdkVersion 29
         multiDexEnabled true
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8
             targetCompatibility JavaVersion.VERSION_1_8
         }
     }
-    configurations {
-        all {
-            exclude module: 'commons-logging'
-            exclude module: 'httpclient'
+    configurations.all {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            def requested = details.requested
+            if (requested.group == "androidx.appcompat") {
+                if (!requested.name.startsWith("multidex")) {
+                    details.useVersion "1.+"
+                }
+            }
         }
     }
     packagingOptions {
@@ -58,45 +61,55 @@ android {
         }
     }
     sourceSets {
-        main.java.srcDirs = ['../../src/src/', '../../../../proto/generated/']
+        //main.java.srcDirs = ['../../src/src/', '../../../../proto/generated/']
+        main.java.srcDirs = ['../../src/src/']
+        main.proto.srcDirs = ['../../../../proto']
     }
-
-    // We use this to upload images.
-    useLibrary  'org.apache.http.legacy'
 }
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     // androidTestCompile compiles instrumentation tests written using Espresso
     // used by Firebase Test Lab
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     testImplementation 'junit:junit:4.12'
-    // V2: Endpoints Framework v2 migration
-    endpointsServer project(path: ':backend', configuration: 'endpoints')
-    implementation 'com.google.api-client:google-api-client:1.25.0'
-    implementation 'com.google.api-client:google-api-client-android:1.25.0'
-    implementation 'com.google.http-client:google-http-client-android:1.25.0'
-    implementation 'com.google.http-client:google-http-client-jackson2:1.25.0'
-    implementation 'com.google.http-client:google-http-client-gson:1.25.0'
+
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.drawerlayout:drawerlayout:1.1.1'
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
     annotationProcessor 'org.projectlombok:lombok:1.16.2'
     compileOnly 'org.projectlombok:lombok:1.16.2'
-    implementation 'com.android.support:support-v4:26.1.0'
-    implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'joda-time:joda-time:2.3'
-    implementation 'com.google.protobuf:protobuf-java:3.4.0'
-    implementation 'org.apache.httpcomponents:httpcore:4.4.6'
-    implementation 'com.google.android.gms:play-services-identity:15.0.1'
-    implementation 'com.google.android.gms:play-services-auth:16.0.0'
-    implementation 'com.google.android.gms:play-services-base:15.0.1'
-    implementation 'org.apache.httpcomponents:httpmime:4.3.5'
-    endpointsServer project(path: ':backend', configuration: 'endpoints')
-    annotationProcessor 'com.google.appengine:appengine-api-1.0-sdk:1.9.64'
-    compileOnly 'com.google.appengine:appengine-api-1.0-sdk:1.9.64'
+    implementation("com.google.protobuf:protobuf-javalite") {
+        version {
+            // The version packaged with firebase has broken serialization :(
+            strictly '3.11.0'
+        }
+    }
+
+    implementation platform('com.google.firebase:firebase-bom:26.4.0')
+    implementation 'com.google.firebase:firebase-firestore'
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.firebaseui:firebase-ui-auth:6.4.0'
+
 }
+
+protobuf {
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.8.0'
+    }
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                java {
+                    option "lite"
+                }
+            }
+        }
+    }
+}
+
 repositories {
     mavenCentral()
 }
