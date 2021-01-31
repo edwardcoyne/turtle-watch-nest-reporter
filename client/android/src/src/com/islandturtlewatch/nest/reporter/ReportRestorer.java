@@ -86,7 +86,7 @@ public class ReportRestorer {
 
           DocumentSnapshot version = Tasks.await(versionRef.get());
 
-          Log.e(TAG, "Result: " + version.getData().toString());
+          Log.d(TAG, "Report version data: " + version.getData().toString());
 
           Report reportProto = Report.parseFrom(
                   BaseEncoding.base64().decode(version.get("proto", String.class)));
@@ -104,6 +104,14 @@ public class ReportRestorer {
 
           publishProgress(++reportNum, reportsTotal);
         }
+        // If we successfully restored remote data, let's remove a vestigial "report 1" if this
+        // was a new app install (likely).
+        LocalDataStore.CachedReportWrapper report1 = store.getReport(1);
+        if (!report1.getReportId().isPresent() && report1.isSynched()) {
+          Log.i(TAG, "Deleting empty local report 1.");
+          store.deleteReport(1);
+        }
+
         callback.run();
 
       } catch (ExecutionException | InterruptedException | InvalidProtocolBufferException e) {
