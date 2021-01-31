@@ -1,6 +1,5 @@
 package com.islandturtlewatch.nest.reporter;
 
-import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 import android.app.ProgressDialog;
@@ -12,7 +11,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
 import com.google.common.io.BaseEncoding;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -21,9 +19,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.protobuf.InvalidProtocolBufferException;
-import com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef;
-import com.islandturtlewatch.nest.data.ImageProto.ImageRef;
-import com.islandturtlewatch.nest.data.ReportProto.Image;
 import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
 import com.islandturtlewatch.nest.data.ReportProto.ReportWrapper;
