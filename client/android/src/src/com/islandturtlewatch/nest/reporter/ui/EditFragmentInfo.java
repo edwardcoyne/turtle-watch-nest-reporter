@@ -83,7 +83,8 @@ public class EditFragmentInfo extends EditFragment {
   }
 
   private void updateSectionNumber() {
-    String username = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+
+    String username = FirebaseAuth.getInstance().getCurrentUser() != null ? FirebaseAuth.getInstance().getCurrentUser().getEmail() : "";
     Matcher matcher = USERNAME_PATTERN.matcher(username);
     if (matcher.matches()) {
       sectionNumber = Integer.parseInt(matcher.group(1));

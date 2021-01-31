@@ -1,16 +1,26 @@
 package com.islandturtlewatch.nest.reporter;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.io.BaseEncoding;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.protobuf.InvalidProtocolBufferException;
 import com.islandturtlewatch.nest.data.ImageProto.ImageDownloadRef;
 import com.islandturtlewatch.nest.data.ImageProto.ImageRef;
 import com.islandturtlewatch.nest.data.ReportProto.Image;
@@ -19,6 +29,7 @@ import com.islandturtlewatch.nest.data.ReportProto.ReportRef;
 import com.islandturtlewatch.nest.data.ReportProto.ReportWrapper;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore;
 import com.islandturtlewatch.nest.reporter.util.DialogUtil;
+import com.islandturtlewatch.nest.reporter.util.FirestoreUtil;
 
 public class ReportRestorer {
   private static final String TAG = ReportRestorer.class.getSimpleName();
@@ -27,21 +38,11 @@ public class ReportRestorer {
   LocalDataStore store;
   Runnable callback;
   ProgressDialog dialog;
+  private FirebaseFirestore db;
 
   public ReportRestorer(Context context) {
     this.context = context;
-    /*
-    Optional<ReportEndpoint> reportServiceOpt =
-        EndPointFactory.createReportEndpoint(context, ApplicationName.REPORT_RESTORE);
-    Preconditions.checkArgument(reportServiceOpt.isPresent());
-    reportService = reportServiceOpt.get();
-
-    Optional<ImageEndpoint> imageServiceOpt =
-        EndPointFactory.createImageEndpoint(context, ApplicationName.REPORT_RESTORE);
-    Preconditions.checkArgument(imageServiceOpt.isPresent());
-    imageService = imageServiceOpt.get();
-
-     */
+    db = FirebaseFirestore.getInstance();
     store = new LocalDataStore(context);
   }
 
@@ -50,17 +51,10 @@ public class ReportRestorer {
     final int progressDialogTotal = 10000;
     dialog.setProgress((reportsDone/reportsTotal) * progressDialogTotal);
     String line1 = "Downloading Report " + reportsDone + "/" + reportsTotal;
-    String line2 = (photosDone.isPresent() && photosTotal.isPresent()) ?
-        "\n\tPhoto " + photosDone.get() + "/" + photosTotal.get() : "";
-    dialog.setMessage(line1 + line2);
-    if (photosDone.isPresent() && photosTotal.isPresent()) {
-      dialog.setProgress(photosDone.get());
-      dialog.setMax(photosTotal.get());
-    }
+    dialog.setMessage(line1);
   }
 
   public void restoreReports(Runnable callback) {
-    /*
     this.callback = callback;
     dialog = new ProgressDialog(context);
     dialog.setTitle("Restoring reports from server.");
@@ -68,75 +62,57 @@ public class ReportRestorer {
     dialog.setIndeterminate(false);
     dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
     dialog.show();
-    new Worker().execute(reportService);
-
-     */
+    new Worker().execute(db);
   }
-/*
-  private class Worker extends AsyncTask<ReportEndpoint, Integer, Boolean> {
+  private class Worker extends AsyncTask<FirebaseFirestore, Integer, Boolean> {
     @Override
-    protected Boolean doInBackground(ReportEndpoint... params) {
+    protected Boolean doInBackground(FirebaseFirestore... params) {
       try {
-        CollectionResponseEncodedReportRef encodedRefs =
-            reportService.getLatestRefsForUser().execute();
-        if (encodedRefs.getItems() == null) {
-          // no reports to dl.
-          return true;
-        }
 
+        CollectionReference reportRef = db.collection(FirestoreUtil.UserPath() + "/report");
+        Task<QuerySnapshot> read_reports = reportRef.get();
+
+        QuerySnapshot reports = Tasks.await(read_reports);
         int reportNum = 0;
-        int reportsTotal = encodedRefs.getItems().size();
-        for (EncodedReportRef encodedRef : encodedRefs.getItems()) {
-          publishProgress(++reportNum, reportsTotal);
-          EncodedReport encodedReport = reportService.fetchReport(encodedRef).execute();
-          long startTimestamp = System.currentTimeMillis();
+        final int reportsTotal = reports.size();
+        for (QueryDocumentSnapshot report : reports) {
+          if (report.get("deleted", Boolean.class)) {
+            Log.d(TAG, "Skipping deleted report.");
+            continue;
+          }
 
-          Report report = Report.parseFrom(
-              BaseEncoding.base64().decode(encodedReport.getReportEncoded()));
+          final Integer latest_version = report.get("last_version", Integer.class);
+          Preconditions.checkArgument(latest_version >= 0);
 
-          Log.d(TAG, String.format("Decoded proto in %f s.",
-              (System.currentTimeMillis() - startTimestamp) / 1000.0));
-          ReportRef ref =
-              ReportRef.parseFrom(BaseEncoding.base64().decode(encodedRef.getRefEncoded()));
+          DocumentReference versionRef = reportRef.document(report.getId())
+                  .collection("version")
+                  .document(latest_version.toString());
+          Log.d(TAG, "Fetching version from path: " + versionRef.getPath());
+
+          DocumentSnapshot version = Tasks.await(versionRef.get());
+
+          Log.e(TAG, "Result: " + version.getData().toString());
+
+          Report reportProto = Report.parseFrom(
+                  BaseEncoding.base64().decode(version.get("proto", String.class)));
+
+          ReportRef.Builder ref = ReportRef.newBuilder()
+                  .setReportId(Long.parseLong(report.getId()))
+                  .setVersion(latest_version);
 
           ReportWrapper wrapper = ReportWrapper.newBuilder()
-              .setActive(true)
-              .setRef(ref)
-              .setReport(report)
-              .build();
+                  .setActive(true)
+                  .setRef(ref)
+                  .setReport(reportProto)
+                  .build();
           store.updateFromServer(wrapper);
 
-          long localId = store.getLocalReportId(ref.getReportId());
-          int imageNum = 0;
-          for (Image image : report.getImageList()) {
-            publishProgress(reportNum, reportsTotal,
-                ++imageNum, report.getImageList().size());
-            if (!store.hasImage(localId, image.getFileName())) {
-              ImageRef imageRef = ImageRef.newBuilder()
-                  .setOwnerId(ref.getOwnerId())
-                  .setReportId(ref.getReportId())
-                  .setImageName(image.getFileName())
-                  .build();
-              EncodedImageRef encodedImageRef = new EncodedImageRef().setRefEncoded(
-                  BaseEncoding.base64().encode(imageRef.toByteArray()));
-
-              SerializedProto resultProto = imageService.imageDownload(encodedImageRef).execute();
-
-              ImageDownloadRef.Builder downloadRef = ImageDownloadRef.newBuilder();
-              TextFormat.merge(resultProto.getSerializedProto(), downloadRef);
-
-              ImageUtil.downloadImage(context, downloadRef.build());
-
-              store.addImage(localId, image.getFileName(),
-                  ImageUtil.getModifiedTime(context, image.getFileName()));
-              store.markImagesSynced(localId, ImmutableList.of(image.getFileName()));
-            }
-          }
+          publishProgress(++reportNum, reportsTotal);
         }
-        Log.d(TAG, "Done restoring reports");
         callback.run();
-      } catch (IOException e) {
-        e.printStackTrace();
+
+      } catch (ExecutionException | InterruptedException | InvalidProtocolBufferException e) {
+        Log.e(TAG, "Reading documents failed: ", e);
         return false;
       } finally {
         dialog.dismiss();
@@ -162,6 +138,4 @@ public class ReportRestorer {
       }
     }
   }
-
- */
 }

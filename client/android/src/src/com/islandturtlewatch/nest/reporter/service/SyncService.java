@@ -52,6 +52,7 @@ import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore;
 import com.islandturtlewatch.nest.reporter.data.LocalDataStore.CachedReportWrapper;
 import com.islandturtlewatch.nest.reporter.util.ErrorUtil;
+import com.islandturtlewatch.nest.reporter.util.FirestoreUtil;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -309,12 +310,6 @@ public class SyncService extends Service {
       }
     }
 
-    private String UserPath() {
-      final String username =
-              FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0];
-      return "/season/" + Calendar.getInstance().get(Calendar.YEAR) + "/user/" + username;
-    }
-
     private boolean handleCreate(CachedReportWrapper wrapper) throws IOException {
       Log.i(TAG, "Creating report on server");
 
@@ -322,7 +317,7 @@ public class SyncService extends Service {
       Task<Long> transaction = db.runTransaction(new Transaction.Function<Long>() {
         @Override
         public Long apply(Transaction transaction) throws FirebaseFirestoreException {
-          DocumentSnapshot userData = transaction.get(db.document(UserPath()));
+          DocumentSnapshot userData = transaction.get(db.document(FirestoreUtil.UserPath()));
 
           // Find id for new report.
           Long last_report_id = userData.getLong("last_report_id");
@@ -332,7 +327,8 @@ public class SyncService extends Service {
                   SetOptions.merge());
 
           // Set version to 1.
-          DocumentReference reportRef = db.document(UserPath() + "/report/" + newId);
+          DocumentReference reportRef =
+                  db.document(FirestoreUtil.UserPath() + "/report/" + newId);
           transaction.set(reportRef,
                   ImmutableMap.of("last_version", 1, "deleted", false),
                   SetOptions.merge());
@@ -369,7 +365,7 @@ public class SyncService extends Service {
         @Override
         public Long apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
           DocumentReference reportRef =
-                  db.document(UserPath() + "/report/" + wrapper.getReportId().get());
+                  db.document(FirestoreUtil.UserPath() + "/report/" + wrapper.getReportId().get());
 
           // Find id for new report.
           Long newVersion = transaction.get(reportRef).getLong("last_version") + 1;
@@ -388,9 +384,9 @@ public class SyncService extends Service {
 
       try {
         Long versionId = Tasks.await(transaction);
-        ReportRef.Builder ref = ReportRef.newBuilder();
-        ref.setReportId(wrapper.getReportId().get());
-        ref.setVersion(versionId);
+        ReportRef.Builder ref = ReportRef.newBuilder()
+                .setReportId(wrapper.getReportId().get())
+                .setVersion(versionId);
         dataStore.setServerSideData(wrapper.getLocalId(), ref.build());
         return true;
 
@@ -413,7 +409,7 @@ public class SyncService extends Service {
         @Override
         public Void apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
           DocumentReference reportRef =
-                  db.document(UserPath() + "/report/" + wrapper.getReportId().get());
+                  db.document(FirestoreUtil.UserPath() + "/report/" + wrapper.getReportId().get());
           Log.i(TAG, "ref: " + reportRef.getPath());
           transaction.update(reportRef, "deleted", true);
           return null;
