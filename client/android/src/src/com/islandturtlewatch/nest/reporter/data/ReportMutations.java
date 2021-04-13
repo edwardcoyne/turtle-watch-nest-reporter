@@ -1088,10 +1088,12 @@ public class ReportMutations {
         @Override
         public ReportProto.NestCondition.Builder applyCondition(
                 ReportProto.NestCondition.Builder condition) {
-            PreditationEvent.Builder preditation = (condition.getPreditationCount() <= ordinal) ?
+            boolean is_new = condition.getPreditationCount() <= ordinal;
+            PreditationEvent.Builder preditation = is_new ?
                     PreditationEvent.newBuilder() : condition.getPreditation(ordinal).toBuilder();
             preditation.setPredatedPrior(option);
-            return condition.setPreditation(ordinal, preditation);
+            return is_new ? condition.addPreditation(preditation)
+                    : condition.setPreditation(ordinal, preditation);
         }
     }
 
@@ -1108,13 +1110,15 @@ public class ReportMutations {
         public ReportProto.NestCondition.Builder applyCondition(
                 ReportProto.NestCondition.Builder condition) {
             Preconditions.checkNotNull(ordinal);
+            boolean is_new = condition.getPreditationCount() <= ordinal;
 
-            PreditationEvent.Builder preditation = (condition.getPreditationCount() <= ordinal) ?
+            PreditationEvent.Builder preditation = is_new ?
                     PreditationEvent.newBuilder() : condition.getPreditation(ordinal).toBuilder();
 
             preditation.setPredatorSpinnerText(predator);
 
-            return condition.setPreditation(ordinal, preditation);
+            return is_new ? condition.addPreditation(preditation)
+                    : condition.setPreditation(ordinal, preditation);
         }
     }
 
@@ -1540,14 +1544,16 @@ public class ReportMutations {
         @Override
         public ReportProto.NestCondition.Builder applyCondition(
                 ReportProto.NestCondition.Builder condition) {
-            WashEvent.Builder accretion = (condition.getAccretionCount() <= ordinal)
+            boolean is_new = condition.getAccretionCount() <= ordinal;
+            WashEvent.Builder accretion = is_new
                     ? WashEvent.newBuilder() : condition.getAccretion(ordinal).toBuilder();
             if (maybeDate.isPresent()) {
                 accretion.setTimestampMs(maybeDate.get().getTimestampMs());
             } else {
                 accretion.clearTimestampMs();
             }
-            return condition.setAccretion(ordinal, accretion);
+            return is_new ?  condition.addAccretion(accretion)
+                    : condition.setAccretion(ordinal, accretion);
         }
     }
 
@@ -1563,10 +1569,12 @@ public class ReportMutations {
         @Override
         public ReportProto.NestCondition.Builder applyCondition(
                 ReportProto.NestCondition.Builder condition) {
-            WashEvent.Builder accretion = (condition.getAccretionCount() <= ordinal)
+            boolean is_new = condition.getAccretionCount() <= ordinal;
+            WashEvent.Builder accretion = is_new
                     ? WashEvent.newBuilder() : condition.getAccretion(ordinal).toBuilder();
             accretion.setStormName(name);
-            return condition.setAccretion(ordinal, accretion);
+            return is_new ?  condition.addAccretion(accretion)
+                    : condition.setAccretion(ordinal, accretion);
         }
     }
 
@@ -1598,10 +1606,11 @@ public class ReportMutations {
         @Override
         public ReportProto.NestCondition.Builder applyCondition(
                 ReportProto.NestCondition.Builder condition) {
-            WashEvent.Builder erosion = (condition.getErosionCount() <= ordinal)
+            boolean is_new = condition.getErosionCount() <= ordinal;
+            WashEvent.Builder erosion = is_new
                     ? WashEvent.newBuilder() : condition.getErosion(ordinal).toBuilder();
             erosion.setEventPriorToHatching(isTrue);
-            return condition.setErosion(ordinal, erosion);
+            return is_new ? condition.addErosion(erosion) : condition.setErosion(ordinal, erosion);
         }
     }
 
@@ -1617,14 +1626,15 @@ public class ReportMutations {
         @Override
         public ReportProto.NestCondition.Builder applyCondition(
                 ReportProto.NestCondition.Builder condition) {
-            WashEvent.Builder erosion = (condition.getErosionCount() <= ordinal)
+            boolean is_new = condition.getErosionCount() <= ordinal;
+            WashEvent.Builder erosion = is_new
                     ? WashEvent.newBuilder() : condition.getErosion(ordinal).toBuilder();
             if (maybeDate.isPresent()) {
                 erosion.setTimestampMs(maybeDate.get().getTimestampMs());
             } else {
                 erosion.clearTimestampMs();
             }
-            return condition.setErosion(ordinal, erosion);
+            return is_new ? condition.addErosion(erosion) : condition.setErosion(ordinal, erosion);
         }
     }
 
@@ -1640,10 +1650,11 @@ public class ReportMutations {
         @Override
         public ReportProto.NestCondition.Builder applyCondition(
                 ReportProto.NestCondition.Builder condition) {
-            WashEvent.Builder erosion = (condition.getErosionCount() <= ordinal)
+            boolean is_new = condition.getErosionCount() <= ordinal;
+            WashEvent.Builder erosion = is_new
                     ? WashEvent.newBuilder() : condition.getErosion(ordinal).toBuilder();
             erosion.setStormName(name);
-            return condition.setErosion(ordinal, erosion);
+            return is_new ? condition.addErosion(erosion) : condition.setErosion(ordinal, erosion);
         }
     }
 
@@ -1674,14 +1685,16 @@ public class ReportMutations {
         @Override
         public ReportProto.NestCondition.Builder applyCondition(
                 ReportProto.NestCondition.Builder condition) {
-            WashEvent.Builder washOver = (condition.getWashOverCount() <= ordinal) ?
+            boolean is_new = condition.getWashOverCount() <= ordinal;
+            WashEvent.Builder washOver = is_new ?
                     WashEvent.newBuilder() : condition.getWashOver(ordinal).toBuilder();
             if (maybeDate.isPresent()) {
                 washOver.setTimestampMs(maybeDate.get().getTimestampMs());
             } else {
                 washOver.clearTimestampMs();
             }
-            return condition.setWashOver(ordinal, washOver);
+            return is_new ? condition.addWashOver(washOver)
+                    : condition.setWashOver(ordinal, washOver);
         }
     }
 
@@ -1697,10 +1710,12 @@ public class ReportMutations {
         @Override
         public ReportProto.NestCondition.Builder applyCondition(
                 ReportProto.NestCondition.Builder condition) {
-            WashEvent.Builder washOver = (condition.getWashOverCount() <= ordinal) ?
+            boolean is_new = condition.getWashOverCount() <= ordinal;
+            WashEvent.Builder washOver = is_new ?
                     WashEvent.newBuilder() : condition.getWashOver(ordinal).toBuilder();
             washOver.setStormName(name);
-            return condition.setWashOver(ordinal, washOver);
+            return is_new ? condition.addWashOver(washOver)
+                    : condition.setWashOver(ordinal, washOver);
         }
     }
 
@@ -1731,14 +1746,16 @@ public class ReportMutations {
         @Override
         public ReportProto.NestCondition.Builder applyCondition(
                 ReportProto.NestCondition.Builder condition) {
-            WashEvent.Builder inundatedEvent = (condition.getInundatedEventCount() <= ordinal) ?
+            boolean is_new = condition.getInundatedEventCount() <= ordinal;
+            WashEvent.Builder inundatedEvent = is_new ?
                     WashEvent.newBuilder() : condition.getInundatedEvent(ordinal).toBuilder();
             if (maybeDate.isPresent()) {
                 inundatedEvent.setTimestampMs(maybeDate.get().getTimestampMs());
             } else {
                 inundatedEvent.clearTimestampMs();
             }
-            return condition.setInundatedEvent(ordinal, inundatedEvent);
+            return is_new ? condition.addInundatedEvent(inundatedEvent)
+                    : condition.setInundatedEvent(ordinal, inundatedEvent);
         }
     }
 
@@ -1754,10 +1771,12 @@ public class ReportMutations {
         @Override
         public ReportProto.NestCondition.Builder applyCondition(
                 ReportProto.NestCondition.Builder condition) {
-            WashEvent.Builder inundatedEvent = (condition.getInundatedEventCount() <= ordinal) ?
+            boolean is_new = condition.getInundatedEventCount() <= ordinal;
+            WashEvent.Builder inundatedEvent = is_new ?
                     WashEvent.newBuilder() : condition.getInundatedEvent(ordinal).toBuilder();
             inundatedEvent.setStormName(name);
-            return condition.setInundatedEvent(ordinal, inundatedEvent);
+            return is_new ? condition.addInundatedEvent(inundatedEvent)
+                    : condition.setInundatedEvent(ordinal, inundatedEvent);
         }
     }
 
@@ -1773,10 +1792,12 @@ public class ReportMutations {
         @Override
         public ReportProto.NestCondition.Builder applyCondition(
                 ReportProto.NestCondition.Builder condition) {
-            WashEvent.Builder inundatedEvent = (condition.getInundatedEventCount() <= ordinal) ?
+            boolean is_new = condition.getInundatedEventCount() <= ordinal;
+            WashEvent.Builder inundatedEvent = is_new ?
                     WashEvent.newBuilder() : condition.getInundatedEvent(ordinal).toBuilder();
             inundatedEvent.setEventPriorToHatching(isTrue);
-            return condition.setInundatedEvent(ordinal, inundatedEvent);
+            return is_new ? condition.addInundatedEvent(inundatedEvent)
+                    : condition.setInundatedEvent(ordinal, inundatedEvent);
         }
     }
 
@@ -1806,7 +1827,8 @@ public class ReportMutations {
         @Override
         public ReportProto.NestCondition.Builder applyCondition(
                 ReportProto.NestCondition.Builder condition) {
-            PreditationEvent.Builder preditation = (condition.getPreditationCount() <= ordinal)
+            boolean is_new = condition.getPreditationCount() <= ordinal;
+            PreditationEvent.Builder preditation = is_new
                     ? PreditationEvent.newBuilder() : condition.getPreditation(ordinal).toBuilder();
             if (maybeDate.isPresent()) {
                 preditation.setTimestampMs(maybeDate.get().getTimestampMs());
@@ -1814,7 +1836,8 @@ public class ReportMutations {
                 preditation.clearTimestampMs();
             }
 
-            return condition.setPreditation(ordinal, preditation);
+            return is_new ? condition.addPreditation(preditation)
+                    : condition.setPreditation(ordinal, preditation);
         }
     }
 
@@ -1830,7 +1853,8 @@ public class ReportMutations {
         @Override
         public ReportProto.NestCondition.Builder applyCondition(
                 ReportProto.NestCondition.Builder condition) {
-            PreditationEvent.Builder preditation = (condition.getPreditationCount() <= ordinal)
+            boolean is_new = condition.getPreditationCount() <= ordinal;
+            PreditationEvent.Builder preditation = is_new
                     ? PreditationEvent.newBuilder() : condition.getPreditation(ordinal).toBuilder();
             if (numEggs.isPresent()) {
                 preditation.setNumberOfEggs(numEggs.get());
@@ -1838,7 +1862,8 @@ public class ReportMutations {
                 preditation.clearNumberOfEggs();
             }
 
-            return condition.setPreditation(ordinal, preditation);
+            return is_new ? condition.addPreditation(preditation)
+                    : condition.setPreditation(ordinal, preditation);
         }
     }
 
@@ -1854,11 +1879,13 @@ public class ReportMutations {
         @Override
         public ReportProto.NestCondition.Builder applyCondition(
                 ReportProto.NestCondition.Builder condition) {
-            PreditationEvent.Builder preditation = (condition.getPreditationCount() <= ordinal)
+            boolean is_new = condition.getPreditationCount() <= ordinal;
+            PreditationEvent.Builder preditation = is_new
                     ? PreditationEvent.newBuilder() : condition.getPreditation(ordinal).toBuilder();
             preditation.setPredator(predator);
 
-            return condition.setPreditation(ordinal, preditation);
+            return is_new ? condition.addPreditation(preditation)
+                    : condition.setPreditation(ordinal, preditation);
         }
     }
 
