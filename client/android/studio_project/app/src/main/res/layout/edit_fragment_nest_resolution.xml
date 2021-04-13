@@ -239,6 +239,24 @@
 	              onTextChangeHandler="handleTextChange"/>
 		   </TableRow>
 		   <TableRow
+			   android:layout_width="wrap_content"
+			   android:layout_height="wrap_content" >
+
+			   <TextView
+				   android:layout_width="0dp"
+				   android:layout_height="wrap_content"
+				   android:layout_weight="1"
+				   android:text="@string/excavation_data_outside_nest" />
+
+			   <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
+				   android:id="@+id/fieldEggsOutsideNest"
+				   android:inputType="number"
+				   android:layout_width="0dp"
+				   android:layout_height="wrap_content"
+				   android:layout_weight="1"
+				   onTextChangeHandler="handleTextChange"/>
+		   </TableRow>
+		   <TableRow
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content" >
 		

@@ -291,6 +291,7 @@ message Excavation {
   optional int32 eggs_destroyed = 11;
   optional bool inundated = 12;
   optional int32 eggs_damaged = 13;
+  optional int32 eggs_outside_nest = 14;
 }
 
 // ids 7-10 temporarily blocked until test data is wiped.

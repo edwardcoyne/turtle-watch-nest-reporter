@@ -993,6 +993,25 @@ public class ReportMutations {
         }
     }
 
+    public static class ExcavationOutsideNestMutation extends ReportMutation {
+        private final Optional<Integer> eggs;
+
+        public ExcavationOutsideNestMutation(Optional<Integer> eggs) {
+            this.eggs = eggs;
+        }
+
+        @Override
+        public ReportProto.Excavation.Builder applyExcavation(
+                ReportProto.Excavation.Builder excavation) {
+            if (eggs.isPresent()) {
+                excavation.setEggsOutsideNest(eggs.get());
+            } else {
+                excavation.clearEggsOutsideNest();
+            }
+            return excavation;
+        }
+    }
+
     public static class ExcavationDeadPippedMutation extends ReportMutation {
         private final Optional<Integer> hatchlings;
 

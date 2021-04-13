@@ -55,7 +55,8 @@ public class EditFragmentNestResolution extends EditFragment {
           new HandleUpdateLiveInNest(),
           new HandleUpdateLivePipped(),
           new HandleUpdateWholeUnhatched(),
-          new HandleUpdateReasonOther());
+          new HandleUpdateReasonOther(),
+          new HandleUpdateEggsOutsideNest());
 
   @Override
   public Map<Integer, ClickHandler> getClickHandlers() {
@@ -121,6 +122,8 @@ public class EditFragmentNestResolution extends EditFragment {
         excavation.hasDeadInNest() ? Integer.toString(excavation.getDeadInNest()) : "");
     setText(R.id.fieldLiveInNest,
         excavation.hasLiveInNest() ? Integer.toString(excavation.getLiveInNest()) : "");
+    setText(R.id.fieldEggsOutsideNest,
+            excavation.hasEggsOutsideNest() ? Integer.toString(excavation.getEggsOutsideNest()) : "");
 
     Adder adder = new Adder();
     setText(R.id.fieldHatchedShells,
@@ -306,6 +309,17 @@ public class EditFragmentNestResolution extends EditFragment {
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
       updateHandler.applyMutation(new ExcavationHatchedMutation(getInteger(newText)));
+    }
+  }
+  private static class HandleUpdateEggsOutsideNest extends TextChangeHandler {
+    protected HandleUpdateEggsOutsideNest() {
+      super(R.id.fieldEggsOutsideNest);
+    }
+
+    @Override
+    public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(
+              new ReportMutations.ExcavationOutsideNestMutation(getInteger(newText)));
     }
   }
   private static class HandleUpdateDeadPipped extends TextChangeHandler {
