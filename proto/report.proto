@@ -293,6 +293,7 @@ message Excavation {
   optional int32 eggs_damaged = 13;
   optional int32 eggs_outside_nest = 14;
   optional string hatchlings_handled = 15;
+  optional string why_not_excavated = 16;
 }
 
 // ids 7-10 temporarily blocked until test data is wiped.

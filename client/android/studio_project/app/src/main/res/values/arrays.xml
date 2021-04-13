@@ -41,4 +41,18 @@
         <item>Other-enter details in "Additional Notes"</item>
     </string-array>
 
+    <string-array name="why_not_excavated" >
+        <item></item>
+        <item>Complete Predation</item>
+        <item>Complete Wash Out</item>
+        <item>Could not Locate</item>
+        <item>Could not Locate due to Accretion</item>
+        <item>Data Lost</item>
+        <item>In Shorebird Protected Area</item>
+        <item>Poached</item>
+        <item>Project Limitations</item>
+        <item>Staff Limitations</item>
+        <item>Other-enter details in "Additional Notes"</item>
+    </string-array>
+
 </resources>

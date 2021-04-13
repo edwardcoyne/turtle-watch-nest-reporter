@@ -124,6 +124,7 @@
 	   </TableRow>
 
 		<TableRow
+			android:id="@+id/rowInundated"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content" >
 			<TextView
@@ -154,72 +155,25 @@
 					style="@style/CheckboxHeader"
 					android:text="@string/excavation_data_reason_no_excavation" />
 			</TableRow>
-	   <TableRow
-	       android:layout_width="wrap_content"
-	       android:layout_height="wrap_content"
-	       android:id="@+id/rowWhyNotExcavatedFields1" >
-	       <CheckBox
-	           android:id="@+id/fieldEggsNotFound"
-	           android:layout_width="0dp"
-	           android:layout_height="wrap_content"
-	           android:layout_weight="1"
-	           android:text="@string/excavation_data_eggs_not_found"
-	           android:onClick="handleClick" />
-	       
-	       <CheckBox
-	           android:id="@+id/fieldEggsTooDecayed"
-	           android:layout_width="0dp"
-	           android:layout_height="wrap_content"
-	           android:layout_weight="1"
-             android:layout_marginBottom="5dp"
-	           android:text="@string/excavation_data_eggs_too_decayed"
-	           android:onClick="handleClick" />
-	   </TableRow>
 
-	   <TableRow
-	       android:layout_width="wrap_content"
-	       android:layout_height="wrap_content"
-	       android:id="@+id/rowWhyNotExcavatedFields2" >
-
-		   <CheckBox
-			   android:id="@+id/fieldCompleteWashout"
-			   android:layout_width="0dp"
-			   android:layout_height="match_parent"
-			   android:layout_weight="1"
-			   android:onClick="handleClick"
-			   android:text="@string/complete_washout" />
-
-		   <CheckBox
-	           android:id="@+id/fieldNoExcavationOther"
-	           android:layout_width="0dp"
-	           android:layout_height="wrap_content"
-	           android:layout_weight="1"
-	           android:text="@string/other"
-	           android:onClick="handleClick" />
-
-	       <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
-	            android:id="@+id/fieldNoExcavationOtherValue"
-	            android:inputType="textMultiLine"
-	            android:layout_width="0dp"
-	            android:layout_height="wrap_content"
-	            android:layout_weight="2"
-	            onTextChangeHandler="handleTextChange" />
-	   </TableRow>
-
-		<TableRow>
-			<TextView
+			<TableRow
 				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_weight="1"
-				android:text="@string/give_reason_text"
-				android:id="@+id/textPleaseSpecify" />
-		</TableRow>
+				android:layout_height="wrap_content" >
+
+				<com.islandturtlewatch.nest.reporter.ui.MonitoredSpinner
+					android:id="@+id/fieldWhyNotExcavated"
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:entries="@array/why_not_excavated"
+					OnItemSelected="handleItemSelected"
+					/>
+			</TableRow>
 
 		</TableLayout>
 
 	   <TableLayout 
 	            android:id="@+id/tableExcavationCounts">
-		   
+
 		   <TableRow
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content" >
