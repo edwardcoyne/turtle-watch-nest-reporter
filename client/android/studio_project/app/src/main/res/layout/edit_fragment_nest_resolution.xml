@@ -300,10 +300,10 @@
 		            android:layout_width="0dp"
 		            android:layout_height="wrap_content"
 		            android:layout_weight="1"
-		            android:text="@string/excavation_data_eggs_destroyed" />
+		            android:text="@string/excavation_data_eggs_damaged" />
 		
 		        <com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
-		            android:id="@+id/fieldEggsDestroyed"
+		            android:id="@+id/fieldEggsDamaged"
 		            android:inputType="number"
 		            android:layout_width="0dp"
 		            android:layout_height="wrap_content"

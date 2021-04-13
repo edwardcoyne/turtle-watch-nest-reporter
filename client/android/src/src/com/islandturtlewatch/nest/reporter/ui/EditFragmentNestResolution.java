@@ -20,7 +20,6 @@ import com.islandturtlewatch.nest.reporter.data.ReportMutations.DisorentationMut
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.ExcavationDateMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.ExcavationDeadInNestMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.ExcavationDeadPippedMutation;
-import com.islandturtlewatch.nest.reporter.data.ReportMutations.ExcavationEggsDestroyedMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.ExcavationFailureMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.ExcavationFailureOtherMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.ExcavationHatchedMutation;
@@ -51,7 +50,7 @@ public class EditFragmentNestResolution extends EditFragment {
       TextChangeHandler.toMap(
           new HandleUpdateDeadInNest(),
           new HandleUpdateDeadPipped(),
-          new HandleUpdateEggsDestroyed(),
+          new HandleUpdateEggsDamaged(),
           new HandleUpdateHatchedShells(),
           new HandleUpdateLiveInNest(),
           new HandleUpdateLivePipped(),
@@ -136,8 +135,8 @@ public class EditFragmentNestResolution extends EditFragment {
     setText(R.id.fieldWholeUnhatched,
         excavation.hasWholeUnhatched() ? Integer.toString(adder.add(excavation.getWholeUnhatched()))
             : "");
-    setText(R.id.fieldEggsDestroyed,
-        excavation.hasEggsDestroyed() ? Integer.toString(adder.add(excavation.getEggsDestroyed()))
+    setText(R.id.fieldEggsDamaged,
+        excavation.hasEggsDamaged() ? Integer.toString(adder.add(excavation.getEggsDamaged()))
             : "");
     setText(R.id.displayTotalEggs, Integer.toString(adder.total));
   }
@@ -339,14 +338,15 @@ public class EditFragmentNestResolution extends EditFragment {
       updateHandler.applyMutation(new ExcavationWholeUnhatchedMutation(getInteger(newText)));
     }
   }
-  private static class HandleUpdateEggsDestroyed extends TextChangeHandler {
-    protected HandleUpdateEggsDestroyed() {
-      super(R.id.fieldEggsDestroyed);
+  private static class HandleUpdateEggsDamaged extends TextChangeHandler {
+    protected HandleUpdateEggsDamaged() {
+      super(R.id.fieldEggsDamaged);
     }
 
     @Override
     public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(new ExcavationEggsDestroyedMutation(getInteger(newText)));
+      updateHandler.applyMutation(
+              new ReportMutations.ExcavationEggsDamagedMutation(getInteger(newText)));
     }
   }
   private static class HandleUpdateReasonOther extends TextChangeHandler {

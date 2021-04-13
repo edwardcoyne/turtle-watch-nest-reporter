@@ -1051,10 +1051,10 @@ public class ReportMutations {
     }
 
 
-    public static class ExcavationEggsDestroyedMutation extends ReportMutation {
+    public static class ExcavationEggsDamagedMutation extends ReportMutation {
         private final Optional<Integer> eggs;
 
-        public ExcavationEggsDestroyedMutation(Optional<Integer> eggs) {
+        public ExcavationEggsDamagedMutation(Optional<Integer> eggs) {
             this.eggs = eggs;
         }
 
@@ -1062,9 +1062,9 @@ public class ReportMutations {
         public ReportProto.Excavation.Builder applyExcavation(
                 ReportProto.Excavation.Builder excavation) {
             if (eggs.isPresent()) {
-                excavation.setEggsDestroyed(eggs.get());
+                excavation.setEggsDamaged(eggs.get());
             } else {
-                excavation.clearEggsDestroyed();
+                excavation.clearEggsDamaged();
             }
             return excavation;
         }
