@@ -123,6 +123,24 @@
 	           android:onClick="handleClick"/>
 	   </TableRow>
 
+		<TableRow
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" >
+			<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/excavation_data_inundated" />
+
+			<ToggleButton
+				android:textOn="Yes"
+				android:textOff="No"
+				android:id="@+id/fieldInundated"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:onClick="handleClick"/>
+		</TableRow>
+
 
 		<TableLayout
 			android:id="@+id/whyNotExcavatedFields"

@@ -112,6 +112,7 @@
     
     <string name="excavation_data_title">Excavation Data</string>
     <string name="excavation_data_excavated">Excavated</string>
+    <string name="excavation_data_inundated">Standing water in cavity?</string>
     <string name="excavation_data_reason_no_excavation">Why not?</string>
     <string name="excavation_data_eggs_not_found">Eggs not found</string>
     <string name="excavation_data_eggs_too_decayed">Eggs / Hatchlings too decayed to inventory</string>

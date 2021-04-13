@@ -875,6 +875,20 @@ public class ReportMutations {
         }
     }
 
+    public static class WasExcavationInundatedMutation extends ReportMutation {
+        private final boolean isTrue;
+
+        public WasExcavationInundatedMutation(boolean isTrue) {
+            this.isTrue = isTrue;
+        }
+
+        @Override
+        public ReportProto.Excavation.Builder applyExcavation(
+                ReportProto.Excavation.Builder excavation) {
+            return excavation.setInundated(isTrue);
+        }
+    }
+
     public static class ExcavationFailureMutation extends ReportMutation {
         private final ExcavationFailureReason reason;
 

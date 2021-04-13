@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
-import android.widget.Toast;
 
 import com.google.common.base.Optional;
 import com.islandturtlewatch.nest.data.ReportProto.Excavation;
@@ -42,6 +41,7 @@ public class EditFragmentNestResolution extends EditFragment {
           new HandleSetEggsTooDecayed(),
           new HandleSetCompleteWashout(),
           new HandleSetExcavated(),
+          new HandleSetExcavationInundated(),
           new HandleSetExcavationDate(),
           new HandleSetHatchDate(),
           new HandleSetReasonOther(),
@@ -94,6 +94,7 @@ public class EditFragmentNestResolution extends EditFragment {
 
     Excavation excavation = report.getIntervention().getExcavation();
     setChecked(R.id.fieldExcavated, excavation.getExcavated());
+    setChecked(R.id.fieldInundated, excavation.getInundated());
 
 
     setVisible(R.id.whyNotExcavatedFields,!excavation.getExcavated());
@@ -199,6 +200,16 @@ public class EditFragmentNestResolution extends EditFragment {
 //      if (isChecked(view)) {
         updateHandler.applyMutation(new ExcavationFailureMutation(ExcavationFailureReason.UNSET_REASON));
 //      }
+    }
+  }
+  private static class HandleSetExcavationInundated extends ClickHandler {
+    protected HandleSetExcavationInundated() {
+      super(R.id.fieldInundated);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(
+              new ReportMutations.WasExcavationInundatedMutation(isChecked(view)));
     }
   }
   private static class HandleSetEggsNotFound extends ClickHandler {
