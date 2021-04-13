@@ -245,17 +245,16 @@
 				android:layout_height="wrap_content"
 				android:layout_weight="1"
 
-				android:text="Reason for Change in Nest Protection"/>
+				android:text="Reason for Change in Nest Treatment"/>
 			</TableRow>
 		<TableRow>
-			<com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
-				android:id="@+id/fieldChangeProtectionReason"
-				android:layout_width="0dp"
+			<com.islandturtlewatch.nest.reporter.ui.MonitoredSpinner
+				android:id="@+id/fieldChangeTreatmentReason"
 				android:layout_height="wrap_content"
-				android:layout_weight="2"
-				android:inputType="textMultiLine"
-				android:lines="4"
-				onTextChangeHandler="handleTextChange" />
+				android:layout_width="wrap_content"
+				android:entries="@array/nest_treatments"
+				OnItemSelected="handleItemSelected"
+				/>
 
 		</TableRow>
 		<!--End protection changed section-->

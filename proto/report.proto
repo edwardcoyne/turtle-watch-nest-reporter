@@ -259,13 +259,14 @@ message Intervention {
   optional ProtectionEvent protection_event = 1;
   optional ProtectionEvent protection_changed_event = 6;
   optional string protection_changed_reason = 7;
+  optional string treatment_changed_reason = 8;
 
   optional Relocation relocation = 2;
   optional Excavation excavation = 3;
 
   optional bool adopted = 4;
   optional string adoptee = 5;
-  //NEXT ID = 8
+  //NEXT ID = 9
 }
 
 message Excavation {

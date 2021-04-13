@@ -55,4 +55,13 @@
         <item>Other-enter details in "Additional Notes"</item>
     </string-array>
 
+    <string-array name="nest_treatments" >
+        <item></item>
+        <item>Nearby Nest Predated</item>
+        <item>Nest Predated</item>
+        <item>Nest Exposed</item>
+        <item>Close to Hatching-Cage Applied</item>
+        <item>Other-enter details in "Additional Notes"</item>
+    </string-array>
+
 </resources>

@@ -689,6 +689,19 @@ public class ReportMutations {
         }
     }
 
+    public static class ChangeNestTreatmentReasonMutation extends ReportMutation {
+        private final String reason;
+
+        public ChangeNestTreatmentReasonMutation(String reason) {
+            this.reason = reason;
+        }
+
+        @Override
+        public ReportProto.Intervention.Builder applyIntervention(
+                ReportProto.Intervention.Builder intervention) {
+            return intervention.setTreatmentChangedReason(reason);
+        }
+    }
 //end section
 
     public static class RelocatedMutation extends ReportMutation {

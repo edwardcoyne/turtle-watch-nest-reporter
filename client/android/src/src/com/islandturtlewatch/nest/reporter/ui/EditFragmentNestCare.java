@@ -55,9 +55,13 @@ public class EditFragmentNestCare extends EditFragment {
           new HandleUpdateNewAddress(),
           new HandleUpdateReasonOther(),
           new HandleUpdateReasonChangeOther(),
-          new HandleUpdateProtectionChange(),
           new HandleUpdateEggsDestroyed());
 
+  private static final Map<Integer, OnItemSelectedHandler> ITEM_SELECTED_HANDLERS =
+          OnItemSelectedHandler.toMap(
+                  new HandleSelectChangeTreatmentReason()
+                  //add handlers
+          );
   @Override
   public Map<Integer, ClickHandler> getClickHandlers() {
     return CLICK_HANDLERS;
@@ -67,6 +71,9 @@ public class EditFragmentNestCare extends EditFragment {
   public Map<Integer, TextChangeHandler> getTextChangeHandlers() {
     return TEXT_CHANGE_HANDLERS;
   }
+
+  @Override
+  public Map<Integer,OnItemSelectedHandler> getOnItemSelectedHandlers() {return ITEM_SELECTED_HANDLERS;}
 
   @Override
   public View onCreateView(LayoutInflater inflater,
@@ -104,7 +111,8 @@ public class EditFragmentNestCare extends EditFragment {
             intervention.getProtectionEvent().getReason() == Reason.OTHER);
     setText(R.id.fieldReasonOtherValue,
             intervention.getProtectionEvent().getReasonOther());
-    setText(R.id.fieldChangeProtectionReason,intervention.getProtectionChangedReason());
+    setSpinnerIndex(R.id.fieldChangeTreatmentReason, R.array.nest_treatments,
+            intervention.getTreatmentChangedReason());
 //    pete and repeat
 
     if (intervention.getProtectionChangedEvent().hasTimestampMs()) {
@@ -323,15 +331,6 @@ private static class HandleSetChangeProtectedDate extends DatePickerClickHandler
     }
   }
 
-  private static class HandleUpdateProtectionChange extends TextChangeHandler {
-    protected HandleUpdateProtectionChange() {
-      super(R.id.fieldChangeProtectionReason);
-    }
-    @Override
-    public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(new ReportMutations.ChangeNestProtectionReasonMutation(newText));
-    }
-  }
   //End badwrong
 
   private static class HandleUpdateNewAddress extends TextChangeHandler {
@@ -373,6 +372,17 @@ private static class HandleSetChangeProtectedDate extends DatePickerClickHandler
       });
 
       dialog.show(((Activity)view.getContext()).getFragmentManager(), "GPS");
+    }
+  }
+
+  private static class HandleSelectChangeTreatmentReason extends OnItemSelectedHandler {
+    protected HandleSelectChangeTreatmentReason() {
+      super(R.id.fieldChangeTreatmentReason);
+    }
+    @Override
+    public void handleItemSelected(String selected, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(
+              new ReportMutations.ChangeNestTreatmentReasonMutation(selected));
     }
   }
 }
