@@ -24,7 +24,6 @@ import com.islandturtlewatch.nest.reporter.data.ReportMutations.EggsDestroyedMut
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.NewAddressMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.RelocationGpsMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.ProtectionTypeMutation;
-import com.islandturtlewatch.nest.reporter.data.ReportMutations.WasAdoptedMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.WhyProtectedMutation;
 import com.islandturtlewatch.nest.reporter.ui.GpsCoordinateDialog.GpsLocationCallback;
 
@@ -33,7 +32,6 @@ import java.util.Map;
 public class EditFragmentNestCare extends EditFragment {
   private static final Map<Integer, ClickHandler> CLICK_HANDLERS =
       ClickHandler.toMap(
-          new HandleSetAdopted(),
           new HandleSetAfterPredation(),
           new HandleSetBeforePredation(),
           new HandleSetLightProblem(),
@@ -42,20 +40,19 @@ public class EditFragmentNestCare extends EditFragment {
           new HandleSetSelfRealeasingCage(),
           new HandleSetSelfRealeasingFlat(),
           new HandleSetProtectedDate(),
-              new HandleSetChangeAfterPredation(),
-              new HandleSetChangeBeforePredation(),
-              new HandleSetChangeLightProblem(),
-              new HandleSetChangeRestrainingCage(),
-              new HandleSetChangeSelfRealeasingCage(),
-              new HandleSetChangeSelfRealeasingFlat(),
-              new HandleSetChangeProtectedDate(),
-              new HandleSetReasonChangeOther(),
+          new HandleSetChangeAfterPredation(),
+          new HandleSetChangeBeforePredation(),
+          new HandleSetChangeLightProblem(),
+          new HandleSetChangeRestrainingCage(),
+          new HandleSetChangeSelfRealeasingCage(),
+          new HandleSetChangeSelfRealeasingFlat(),
+          new HandleSetChangeProtectedDate(),
+          new HandleSetReasonChangeOther(),
           new HandleSetNewGps());
 
   private static final Map<Integer, TextChangeHandler> TEXT_CHANGE_HANDLERS =
       TextChangeHandler.toMap(
           new HandleUpdateNewAddress(),
-          new HandleUpdateAdoptee(),
           new HandleUpdateReasonOther(),
           new HandleUpdateReasonChangeOther(),
           new HandleUpdateProtectionChange(),
@@ -81,9 +78,6 @@ public class EditFragmentNestCare extends EditFragment {
   @Override
   public void updateSection(Report report) {
     Intervention intervention = report.getIntervention();
-    setChecked(R.id.fieldNestAdopted, intervention.getAdopted());
-    setVisible(R.id.fieldAdoptee,intervention.getAdopted());
-    setText(R.id.fieldAdoptee,intervention.getAdoptee());
 
     if (intervention.getProtectionEvent().hasTimestampMs()) {
       setDate(R.id.buttonProtectedDate, intervention.getProtectionEvent().getTimestampMs());
@@ -340,16 +334,6 @@ private static class HandleSetChangeProtectedDate extends DatePickerClickHandler
   }
   //End badwrong
 
-  private static class HandleSetAdopted extends ClickHandler {
-    protected HandleSetAdopted() {
-      super(R.id.fieldNestAdopted);
-    }
-    @Override
-    public void handleClick(View view, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(new WasAdoptedMutation(isChecked(view)));
-    }
-  }
-
   private static class HandleUpdateNewAddress extends TextChangeHandler {
     protected HandleUpdateNewAddress() {
       super(R.id.fieldNewAddress);
@@ -360,16 +344,6 @@ private static class HandleSetChangeProtectedDate extends DatePickerClickHandler
       updateHandler.applyMutation(new NewAddressMutation(newText));
     }
   }
-
-  private static class HandleUpdateAdoptee extends TextChangeHandler {
-  protected HandleUpdateAdoptee() {
-    super(R.id.fieldAdoptee);
-  }
-  @Override
-  public void handleTextChange(String newText, DataUpdateHandler updateHandler) {
-    updateHandler.applyMutation(new ReportMutations.AdopteeNameMutation(newText));
-  }
-}
 
   private static class HandleUpdateEggsDestroyed extends TextChangeHandler {
     protected HandleUpdateEggsDestroyed() {

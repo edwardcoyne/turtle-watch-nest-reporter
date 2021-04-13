@@ -794,22 +794,6 @@ public class ReportMutations {
         }
     }
 
-
-    public static class WasAdoptedMutation extends ReportMutation {
-        private final boolean isTrue;
-
-        public WasAdoptedMutation(boolean isTrue) {
-            this.isTrue = isTrue;
-        }
-
-        @Override
-        public ReportProto.Intervention.Builder applyIntervention(
-                ReportProto.Intervention.Builder intervention) {
-            return intervention.setAdopted(isTrue);
-        }
-    }
-
-
     public static class HatchDateMutation extends ReportMutation {
         private final Optional<Date> maybeDate;
 
@@ -889,20 +873,6 @@ public class ReportMutations {
         public ReportProto.Excavation.Builder applyExcavation(
                 ReportProto.Excavation.Builder excavation) {
             return excavation.setFailureReason(reason);
-        }
-    }
-
-    public static class AdopteeNameMutation extends ReportMutation {
-        private final String adoptee;
-
-        public AdopteeNameMutation(String adoptee) {
-            this.adoptee = adoptee;
-        }
-
-        @Override
-        public ReportProto.Intervention.Builder applyIntervention(
-                ReportProto.Intervention.Builder intervention) {
-            return intervention.setAdoptee(adoptee);
         }
     }
 
