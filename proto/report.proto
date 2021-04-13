@@ -147,6 +147,7 @@ message NestCondition {
     }
     optional int64 timestamp_ms = 1;
     optional string predator = 2;
+    optional string secondary_predator = 6;
     optional int32 number_of_eggs = 3;
     optional string predator_spinner_text = 4;
     enum PredationTimeOption {
@@ -156,6 +157,7 @@ message NestCondition {
     }
     optional PredationTimeOption predated_prior = 5;
 
+    // Next tag = 7
   }
   repeated PreditationEvent preditation = 9;
   optional bool actively_record_events = 27 [default = true];

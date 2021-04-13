@@ -173,10 +173,10 @@
 
 		<TableRow>
 			<com.islandturtlewatch.nest.reporter.ui.MonitoredEditText
-				android:id="@+id/fieldPredatorOther"
+				android:id="@+id/fieldSecondaryPredator"
 				android:layout_height="wrap_content"
 				android:layout_width="wrap_content"
-				android:hint="@string/edit_specify_predator"
+				android:hint="@string/edit_secondary_predator"
 				onTextChangeHandler="handleTextChange"/>
 		</TableRow>
 

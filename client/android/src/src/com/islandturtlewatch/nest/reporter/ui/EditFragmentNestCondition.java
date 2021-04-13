@@ -14,7 +14,6 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.Toast;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
@@ -79,7 +78,7 @@ public class EditFragmentNestCondition extends EditFragment {
       TextChangeHandler.toMap(
               new HandleDescribeControlMethods(),
               new HandleUpdateNumEggs(),
-              new HandleUpdatePredatorOther());
+              new HandleUpdateSecondaryPredator());
 
   @Override
   public Map<Integer, TextChangeHandler> getTextChangeHandlers() {
@@ -150,7 +149,7 @@ if (condition.getPreditationCount()>0) {
     showFieldOther = false;
     pSpinner.setSelection(0,false);
   }
-  setText(R.id.fieldPredatorOther, condition.getPreditation(0).getPredator());
+  setText(R.id.fieldSecondaryPredator, condition.getPreditation(0).getSecondaryPredator());
 } else {
   clearDate(R.id.buttonPredatorDate);
   setText(R.id.fieldNumberEggs, "");
@@ -163,7 +162,6 @@ if (condition.getPreditationCount()>0) {
     setChecked(R.id.fieldDamageEggsDamagedByAnotherTurtle,condition.getEggsDamagedByAnotherTurtle());
     setChecked(R.id.fieldDamageNestDepredated, condition.getNestDepredated());
 
-    setVisible(R.id.fieldPredatorOther, showFieldOther);
     setVisible(R.id.fieldGhostCrabsDamaged10OrLess,(pSpinner.getSelectedItemPosition() >= 10
             && pSpinner.getSelectedItemPosition() < 13));
     setChecked(R.id.fieldGhostCrabsDamaged10OrLess,condition.getGhostDamage10OrLess());
@@ -621,14 +619,14 @@ if (condition.getPreditationCount()>0) {
     }
   }
 
-  private static class HandleUpdatePredatorOther extends TextChangeHandler {
-    protected HandleUpdatePredatorOther() {
-      super(R.id.fieldPredatorOther);
+  private static class HandleUpdateSecondaryPredator extends TextChangeHandler {
+    protected HandleUpdateSecondaryPredator() {
+      super(R.id.fieldSecondaryPredator);
     }
 
     @Override
-    public void handleTextChange(String newName, DataUpdateHandler updateHandler) {
-      updateHandler.applyMutation(new ReportMutations.PredationPredatorMutation(0,newName));
+    public void handleTextChange(String value, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.PredationSecondaryPredatorMutation(0,value));
     }
   }
 

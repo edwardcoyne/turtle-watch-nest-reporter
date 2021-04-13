@@ -1902,6 +1902,28 @@ public class ReportMutations {
         }
     }
 
+    public static class PredationSecondaryPredatorMutation extends ReportMutation {
+        private final Integer ordinal;
+        private final String predator;
+
+        public PredationSecondaryPredatorMutation(Integer ordinal, String predator) {
+            this.ordinal = ordinal;
+            this.predator = predator;
+        }
+
+        @Override
+        public ReportProto.NestCondition.Builder applyCondition(
+                ReportProto.NestCondition.Builder condition) {
+            boolean is_new = condition.getPreditationCount() <= ordinal;
+            PreditationEvent.Builder preditation = is_new
+                    ? PreditationEvent.newBuilder() : condition.getPreditation(ordinal).toBuilder();
+            preditation.setSecondaryPredator(predator);
+
+            return is_new ? condition.addPreditation(preditation)
+                    : condition.setPreditation(ordinal, preditation);
+        }
+    }
+
     public static class ActivelyRecordPredationMutation extends ReportMutation {
         private final boolean isTrue;
 

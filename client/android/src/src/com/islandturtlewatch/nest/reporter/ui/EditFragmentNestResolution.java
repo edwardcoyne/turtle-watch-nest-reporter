@@ -98,17 +98,17 @@ public class EditFragmentNestResolution extends EditFragment {
 
     setVisible(R.id.whyNotExcavatedFields,!excavation.getExcavated());
 
-      setChecked(R.id.fieldEggsNotFound,
-              excavation.getFailureReason() == ExcavationFailureReason.EGGS_NOT_FOUND);
-      setChecked(R.id.fieldEggsTooDecayed,
-              excavation.getFailureReason() == ExcavationFailureReason.EGGS_HATCHLINGS_TOO_DECAYED);
-      setChecked(R.id.fieldCompleteWashout,
-              excavation.getFailureReason() == ExcavationFailureReason.COMPLETE_WASHOUT);
-      setChecked(R.id.fieldNoExcavationOther,
-              excavation.getFailureReason() == ExcavationFailureReason.OTHER);
-      setEnabled(R.id.fieldNoExcavationOtherValue,
-              excavation.getFailureReason() == ExcavationFailureReason.OTHER);
-      setText(R.id.fieldNoExcavationOtherValue, excavation.getFailureOther());
+    setChecked(R.id.fieldEggsNotFound,
+            excavation.getFailureReason() == ExcavationFailureReason.EGGS_NOT_FOUND);
+    setChecked(R.id.fieldEggsTooDecayed,
+            excavation.getFailureReason() == ExcavationFailureReason.EGGS_HATCHLINGS_TOO_DECAYED);
+    setChecked(R.id.fieldCompleteWashout,
+            excavation.getFailureReason() == ExcavationFailureReason.COMPLETE_WASHOUT);
+    setChecked(R.id.fieldNoExcavationOther,
+            excavation.getFailureReason() == ExcavationFailureReason.OTHER);
+    setEnabled(R.id.fieldNoExcavationOtherValue,
+            excavation.getFailureReason() == ExcavationFailureReason.OTHER);
+    setText(R.id.fieldNoExcavationOtherValue, excavation.getFailureOther());
     if (excavation.hasTimestampMs()) {
       setDate(R.id.buttonExcavationDate, excavation.getTimestampMs());
     } else {
