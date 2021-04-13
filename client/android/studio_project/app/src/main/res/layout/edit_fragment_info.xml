@@ -233,5 +233,24 @@
               android:layout_weight="2"
               onTextChangeHandler="handleTextChange" />
      </TableRow>
+
+		<TableRow
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" >
+			<TextView
+				style="@style/Header"
+				android:text="@string/edit_info_label_marking_strategy" />
+		</TableRow>
+		<TableRow
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+			<com.islandturtlewatch.nest.reporter.ui.MonitoredSpinner
+				android:id="@+id/fieldMarkingStrategy"
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:entries="@array/marking_strategy"
+				OnItemSelected="handleItemSelected"
+				/>
+		</TableRow>
 	</TableLayout>
 </ScrollView>

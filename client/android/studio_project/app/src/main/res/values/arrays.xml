@@ -16,8 +16,17 @@
         <item>Raccoon and Ghost Crab</item>
         <item>Coyote and Ghost Crab</item>
         <item>Other</item>
-
-        </string-array>
-
+    </string-array>
+    <string-array name="marking_strategy" >
+        <item>Yes: Marking Strategy Was Used</item>
+        <item>No: Clerical Error</item>
+        <item>No: Educational</item>
+        <item>No: Geotube</item>
+        <item>No: Opportunistic</item>
+        <item>No: Relocated</item>
+        <item>No: Research</item>
+        <item>No: Restraining Caged</item>
+        <item>No: Other-enter details in "Additional Notes"</item>
+    </string-array>
 
 </resources>

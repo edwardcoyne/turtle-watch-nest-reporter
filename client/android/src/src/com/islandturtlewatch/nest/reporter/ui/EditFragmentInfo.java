@@ -59,6 +59,12 @@ public class EditFragmentInfo extends EditFragment {
           new HandleUpdatePossibleFalseCrawlNumber(),
           new HandleUpdateSpeciesOther());
 
+  private static final Map<Integer, OnItemSelectedHandler> ITEM_SELECTED_HANDLERS =
+          OnItemSelectedHandler.toMap(
+                  new HandleSelectMarkingStrategy()
+                  //add handlers
+          );
+
   // Determined from user name.
   private int sectionNumber;
   private static final Pattern USERNAME_PATTERN =
@@ -73,6 +79,9 @@ public class EditFragmentInfo extends EditFragment {
   public Map<Integer, TextChangeHandler> getTextChangeHandlers() {
     return TEXT_CHANGE_HANDLERS;
   }
+
+  @Override
+  public Map<Integer,OnItemSelectedHandler> getOnItemSelectedHandlers() {return ITEM_SELECTED_HANDLERS;}
 
   @Override
   public View onCreateView(LayoutInflater inflater,
@@ -335,6 +344,18 @@ public class EditFragmentInfo extends EditFragment {
       DialogUtil.acknowledge(view.getContext(),
           "Need photos of this species and please contact Suzi.");
       updateHandler.applyMutation(new SpeciesMutation(Species.OTHER));
+    }
+  }
+
+  private static class HandleSelectMarkingStrategy extends OnItemSelectedHandler {
+    boolean firstCall = true;
+
+    protected HandleSelectMarkingStrategy() {
+      super(R.id.fieldMarkingStrategy);
+    }
+    @Override
+    public void handleItemSelected(String value, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.MarkingStrategyMutation(value));
     }
   }
 }

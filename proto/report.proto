@@ -61,7 +61,9 @@ message Report {
   optional string additional_notes = 11;
 
   repeated Image image = 12;
-  //NEXT ID = 18
+
+  optional string marking_strategy = 18;
+  //NEXT ID = 19
 }
 
 message Image {

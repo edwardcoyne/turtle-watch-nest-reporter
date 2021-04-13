@@ -1991,5 +1991,18 @@ public class ReportMutations {
             return updatedReport.build();
         }
     }
+
+    public static class MarkingStrategyMutation extends ReportMutation {
+        private final String value;
+
+        public MarkingStrategyMutation(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public Report apply(Report oldReport) {
+            return oldReport.toBuilder().setMarkingStrategy(value).build();
+        }
+    }
 }
 
