@@ -32,4 +32,13 @@
         <item>No: Other-enter details in "Additional Notes"</item>
     </string-array>
 
+    <string-array name="hatchlings_handled_options" >
+        <item></item>
+        <item>Immediately released</item>
+        <item>Held until nightfall then released</item>
+        <item>Taken to Rehab Facility</item>
+        <item>Live Pipped reburied</item>
+        <item>Other-enter details in "Additional Notes"</item>
+    </string-array>
+
 </resources>

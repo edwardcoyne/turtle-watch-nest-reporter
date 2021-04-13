@@ -58,6 +58,11 @@ public class EditFragmentNestResolution extends EditFragment {
           new HandleUpdateReasonOther(),
           new HandleUpdateEggsOutsideNest());
 
+  private static final Map<Integer, OnItemSelectedHandler> ITEM_SELECTED_HANDLERS =
+          OnItemSelectedHandler.toMap(
+                  new HandleSelectHatchingsHandled()
+                  //add handlers
+          );
   @Override
   public Map<Integer, ClickHandler> getClickHandlers() {
     return CLICK_HANDLERS;
@@ -68,6 +73,9 @@ public class EditFragmentNestResolution extends EditFragment {
     return TEXT_CHANGE_HANDLERS;
   }
 
+  @Override
+  public Map<Integer,OnItemSelectedHandler> getOnItemSelectedHandlers() {return ITEM_SELECTED_HANDLERS;}
+  
   @Override
   public View onCreateView(LayoutInflater inflater,
       ViewGroup container,
@@ -142,6 +150,10 @@ public class EditFragmentNestResolution extends EditFragment {
         excavation.hasEggsDamaged() ? Integer.toString(adder.add(excavation.getEggsDamaged()))
             : "");
     setText(R.id.displayTotalEggs, Integer.toString(adder.total));
+
+    setVisible(R.id.rowHatchlingsHandled, excavation.getLiveInNest() > 10);
+    setSpinnerIndex(R.id.fieldHatchlingsHandled,
+            R.array.hatchlings_handled_options, excavation.getHatchlingsHandled());
   }
 
   private static class Adder{
@@ -374,4 +386,16 @@ public class EditFragmentNestResolution extends EditFragment {
     }
   }
 
+  private static class HandleSelectHatchingsHandled extends OnItemSelectedHandler {
+    boolean firstCall = true;
+
+    protected HandleSelectHatchingsHandled() {
+      super(R.id.fieldHatchlingsHandled);
+    }
+    @Override
+    public void handleItemSelected(String selected, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(
+              new ReportMutations.ExcavationHatchlingsHandledMutation(selected));
+    }
+  }
 }

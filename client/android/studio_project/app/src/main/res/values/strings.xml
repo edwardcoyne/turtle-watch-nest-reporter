@@ -126,6 +126,7 @@
     <string name="excavation_data_eggs_damaged">Eggs damaged</string>
     <string name="excavation_data_total_eggs">Total eggs</string>
     <string name="excavation_data_outside_nest">Eggs outside nest</string>
+    <string name="excavation_data_hatchlings_handled">How were hatchlings handled?</string>
    
     <string name="edit_pictures_capture_image">Capture Image</string>
     <string name="edit_nest_condition_post_hatch_washout">Complete Washout Occured Post-Hatch,\n but Pre-Inventory</string>

@@ -917,6 +917,20 @@ public class ReportMutations {
         }
     }
 
+    public static class ExcavationHatchlingsHandledMutation extends ReportMutation {
+        private final String reason;
+
+        public ExcavationHatchlingsHandledMutation(String reason) {
+            this.reason = reason;
+        }
+
+        @Override
+        public ReportProto.Excavation.Builder applyExcavation(
+                ReportProto.Excavation.Builder excavation) {
+            return excavation.setHatchlingsHandled(reason);
+        }
+    }
+
     public static class ExcavationDateMutation extends ReportMutation {
         private final Optional<Date> maybeDate;
 

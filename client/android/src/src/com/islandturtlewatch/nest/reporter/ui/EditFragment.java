@@ -19,9 +19,12 @@ import com.islandturtlewatch.nest.reporter.data.Date;
 import com.islandturtlewatch.nest.reporter.ui.split.SplitEditActivity.ListenerProvider;
 import com.islandturtlewatch.nest.reporter.util.DateUtil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public abstract class EditFragment extends Fragment {
@@ -139,6 +142,18 @@ public abstract class EditFragment extends Fragment {
       ((CompoundButton) view).setChecked(checked);
     } else {
       throw new UnsupportedOperationException("We don't support setChecked on " + view);
+    }
+  }
+
+  protected void setSpinnerIndex(int spinner_id, int array_id, String value) {
+    List<String> values = Arrays.asList(getResources().getStringArray(array_id));
+    int index = values.indexOf(value);
+
+    View view = getActivity().findViewById(spinner_id);
+    if (view instanceof Spinner) { // This includes CheckBoxes and ToggleButtons.
+      ((Spinner) view).setSelection(index < 0 ? 0 : index);
+    } else {
+      throw new UnsupportedOperationException("We don't support setSelection on " + view);
     }
   }
 
