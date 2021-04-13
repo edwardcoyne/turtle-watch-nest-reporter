@@ -108,6 +108,7 @@
     <string name="hatch_data_hatch_date">Actual hatch date</string>
     <string name="hatch_data_hatch_add_date">Additional hatch date</string>
     <string name="hatch_data_disorientation">Disorientation?</string>
+    <string name="hatch_data_monitor_daily">Did you monitor the nest daily?</string>
     
     <string name="excavation_data_title">Excavation Data</string>
     <string name="excavation_data_excavated">Excavated</string>

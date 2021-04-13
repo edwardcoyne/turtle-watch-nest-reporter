@@ -15,6 +15,7 @@ import com.islandturtlewatch.nest.data.ReportProto.Report;
 import com.islandturtlewatch.nest.reporter.EditPresenter.DataUpdateHandler;
 import com.islandturtlewatch.nest.reporter.R;
 import com.islandturtlewatch.nest.reporter.data.Date;
+import com.islandturtlewatch.nest.reporter.data.ReportMutations;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.AdditionalHatchDateMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.DisorentationMutation;
 import com.islandturtlewatch.nest.reporter.data.ReportMutations.ExcavationDateMutation;
@@ -43,7 +44,8 @@ public class EditFragmentNestResolution extends EditFragment {
           new HandleSetExcavated(),
           new HandleSetExcavationDate(),
           new HandleSetHatchDate(),
-          new HandleSetReasonOther());
+          new HandleSetReasonOther(),
+          new HandleSetMonitorDaily());
 
   private static final Map<Integer, TextChangeHandler> TEXT_CHANGE_HANDLERS =
       TextChangeHandler.toMap(
@@ -88,6 +90,7 @@ public class EditFragmentNestResolution extends EditFragment {
       clearDate(R.id.buttonAdditionalHatchDate);
     }
     setChecked(R.id.fieldDisorientation, condition.getDisorientation());
+    setChecked(R.id.fieldMonitorDaily, report.getMonitorDaily());
 
     Excavation excavation = report.getIntervention().getExcavation();
     setChecked(R.id.fieldExcavated, excavation.getExcavated());
@@ -255,6 +258,15 @@ public class EditFragmentNestResolution extends EditFragment {
     }
   }
 
+  private static class HandleSetMonitorDaily extends ClickHandler {
+    protected HandleSetMonitorDaily() {
+      super(R.id.fieldMonitorDaily);
+    }
+    @Override
+    public void handleClick(View view, DataUpdateHandler updateHandler) {
+      updateHandler.applyMutation(new ReportMutations.MonitorDailyMutation(isChecked(view)));
+    }
+  }
 
   private static class HandleUpdateDeadInNest extends TextChangeHandler {
     protected HandleUpdateDeadInNest() {

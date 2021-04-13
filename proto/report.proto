@@ -63,7 +63,8 @@ message Report {
   repeated Image image = 12;
 
   optional string marking_strategy = 18;
-  //NEXT ID = 19
+  optional bool monitor_daily = 19 [default = true];
+  //NEXT ID = 20
 }
 
 message Image {

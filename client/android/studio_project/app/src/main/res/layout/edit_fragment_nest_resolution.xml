@@ -64,6 +64,23 @@
 	           android:layout_height="wrap_content" 
 	            android:onClick="handleClick"/>
 	   </TableRow>
+		<TableRow
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" >
+			<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/hatch_data_monitor_daily" />
+
+			<ToggleButton
+				android:textOn="Yes"
+				android:textOff="No"
+				android:id="@+id/fieldMonitorDaily"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:onClick="handleClick"/>
+		</TableRow>
 	   <TableRow
 	       android:layout_width="wrap_content"
 	       android:layout_height="wrap_content" >

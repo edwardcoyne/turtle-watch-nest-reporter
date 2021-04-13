@@ -848,6 +848,19 @@ public class ReportMutations {
         }
     }
 
+    public static class MonitorDailyMutation extends ReportMutation {
+        private final boolean isTrue;
+
+        public MonitorDailyMutation(boolean isTrue) {
+            this.isTrue = isTrue;
+        }
+
+        @Override
+        public Report apply(Report oldReport) {
+            return oldReport.toBuilder().setMonitorDaily(isTrue).build();
+        }
+    }
+
     public static class WasExcavatedMutation extends ReportMutation {
         private final boolean isTrue;
 
